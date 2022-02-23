@@ -1,4 +1,4 @@
-baseURL = "http://localhost:1313/"
+baseURL = "https://czyt.tech/"
 languageCode = "zh-cn"
 title = "虫子樱桃の博客"
 theme = "minimal"

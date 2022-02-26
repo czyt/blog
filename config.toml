@@ -54,12 +54,12 @@ googleAnalytics = ""
 
 [[menu.icon]]
     url = "https://github.dev/czyt/blog"
-    name = "fa-duotone fa-pen-clip"
+    name = "fab fa-pen-clip"
     weight = 3
 
 [[menu.icon]]
     url = "https://www.yuque.com/czyt"
-    name = "fa-brands fa-golang"
+    name = "fab fa-golang"
     weight = 4
 
 

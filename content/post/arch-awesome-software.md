@@ -84,24 +84,34 @@ Chrome 安装 `yay -S google-chrome`
 ## 翻译软件
 
 有道词典 安装 `yay -S youdao-dict`
+
 金山词霸 安装 `yay -S powerword-bin` 
+
 goldendict 安装 `yay -S goldendict` [词库](https://github.com/czytcn/goldendict)
 
 
 ## 聊天软件
 
-微信 安装 `yay -S deepin-wine-wechat`
+微信 安装 `yay -S deepin-wine-wechat` 
+
 QQ 安装 `yay -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`
+
 tim `yay -S com.qq.tim.spark` 
+
 ipmsg 安装`yay -S iptux`
+
 mattermost 安装 `yay -S mattermost-desktop`
+
 zoom 安装 `yay -S zoom`
+
 slack 安装 `yay -S slack-desktop` 
 
 ### 可自建的聊天软件
 
 mattermost 安装 `yay -S mattermost` [参阅](https://wiki.archlinux.org/title/Mattermost)
+
 rocketchat-server 安装 `yay -S rocketchat-server ` 
+
 说明：
 
 1. 安装微信后可能不能启动，需要修改内容，参考 [https://github.com/countstarlight/deepin-wine-wechat-arch](https://github.com/countstarlight/deepin-wine-wechat-arch)
@@ -122,22 +132,36 @@ export QT_IM_MODULE="fcitx"
 sudo sed -i "s/PKGEXT='.pkg.tar.xz'/PKGEXT='.pkg.tar'/g" /etc/makepkg.conf
 ```
 
-参考 [https://printempw.github.io/setting-up-manjaro-linux/](https://printempw.github.io/setting-up-manjaro-linux/)
+参考
+
+ [https://printempw.github.io/setting-up-manjaro-linux/](https://printempw.github.io/setting-up-manjaro-linux/)
 
 ## 下载上传
 
 OneDive 安装 `yay -S onedrive` 或者 `yay -S onedrive-abraunegg`
+
 百度云 安装 `yay -S baidunetdisk-bin` 或者 安装深度的版本 `yay -S deepin-baidu-pan`
+
 坚果云 安装 `yay -S nutstore`
+
 DropBox 安装 `yay -S dropbox` 
+
 resilio sync 安装 ` yay -S rslsync` 
+
 迅雷linux版本 安装 `yay -S xunlei-bin` 
+
 迅雷极速版 `yay -S deepin-wine-thunderspeed`
+
 axel 安装 `yay -S axel`
+
 zssh 安装 `yay -S zssh` 配合lrzsz(安装命令 `yay -S lrzsz`)食用效果最佳。
+
 motrix 安装 `yay -S motrix`  
+
 Mega网盘安装 `yay -S megatools-git` 
+
 moose 支持边下边播的BT工具 `yay -S moose ` 
+
 参考
 
 - dreamcast的网盘 http://dreamcast2.ys168.com
@@ -146,33 +170,62 @@ moose 支持边下边播的BT工具 `yay -S moose `
 ## 办公软件
 
 [看雪安全接入](https://ksa.kanxue.com)ksa 安装 `yay -S ksa` 
+
 [tailscale](https://tailscale.com) 安装 `yay -S tailscale` 
+
 [达芬奇视频剪辑](http://www.blackmagicdesign.com/products/davinciresolve/) 安装 `yay -S davinci-resolve` 
+
 [zettlr](https://www.zettlr.com) markdown编辑器 安装 `yay -S zettlr ` 
+
 [vnode](https://tamlok.github.io/vnote/zh_cn/#!index.md) markdown编辑器 安装 `yay -S vnote` 
+
 Wps 安装 `yay -S wps-office ttf-wps-fonts wps-office-mui-zh-cn  wps-office-mime`
+
 libreoffice 安装  `yay -S libreoffice` 
+
 flameshot 截图工具 安装 `yay -S flameshot` 
+
 福昕pdf阅读器 `yay -S foxitreader` 
+
 Teamviewer `yay -S teamviewer`如果一直显示未连接，则请退出teamviewer，执行`sudo teamviewer --daemon enable` 再打开试试
+
 向日葵 安装 `yay -S sunloginclient` (需要设置开机启动服务 `systemctl enable runsunloginclient` 启动服务 `systemctl start runsunloginclient` )
+
 toDesk远程工具 安装 `yay -S todesk-bin` (设置服务 `systemctl start\enable todeskd` 才能正常运行)
+
 parsec 远程工具 安装 `yay -S parsec-bin ` 
+
 v2ray 安装 `yay -S v2ray`  （安装配置工具`yay -S qv2ray ` ，[福利订阅](https://jiang.netlify.app) 新版已经使用AppImage格式发布，下载AppImage格式即可 或者 v2rayDesktop `yay -S v2ray-desktop` ）
+
 n2n [VPN软件](https://www.meirenji.info/2018/02/03/N2N%E7%BB%84%E7%BD%91-%E5%AE%9E%E7%8E%B0%E5%AE%B6%E9%87%8C%E8%AE%BF%E4%B8%8E%E5%85%AC%E5%8F%B8%E7%BD%91%E7%BB%9C%E4%BA%92%E8%AE%BF-%E7%B2%BE%E7%BC%96%E7%89%88/) `yay -S n2n` 
+
 proxychains-ng 安装 `yay -S proxychains-ng`
+
 evernote 开源版本 nixnote2 安装 `yay -S nixnote2` 
+
 joplin 安装 `yay -S joplin` 
+
 Okular （[KDE上的通用文档阅读器](https://www.appinn.com/okular/)）` yay -S okular` 
+
 Foliate [简单、现代的电子书阅读器](https://www.appinn.com/foliate-for-linux/) 安装 `yay -S foliate` 
+
 Screen屏幕共享软件 安装 `yay -S screen-desktop ` 
+
 U盘启动制作[etcher](https://github.com/balena-io/etcher) `yay -S etcher-bin` 
+
 xmind-2020 安装 `yay -S xmind-2020` ([福利链接](https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g))
+
 钉钉 安装 `yay -S  dingtalk-electron ` 
+
 企业微信 `yay -S deepin-wine-wxwork` 
+
 剪切板工具 [uniclip](https://github.com/quackduck/uniclip) `yay -S uniclip`
+
 onenote `yay -S p3x-onenote` 
-[macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `yay -S macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
+
+[macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `yay -S 
+macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
+
 在线流程图工具 [https://excalidraw.com](https://excalidraw.com)
 参考
 
@@ -184,10 +237,14 @@ onenote `yay -S p3x-onenote`
 ### fcitx
 
 sun输入法 安装 `yay -S fcitx fcitx-im fcitx-configtool fcitx-sunpinyin fcitx-googlepinyin fcitx-cloudpinyin fcitx-libpinyin`
+
 皮肤 安装 `yay -S fcitx-skin-material` 
+
 百度输入法 安装 `yay -S fcitx-baidupinyin` 安装完成以后记得重启下，不然输入候选框会乱码。
+
 讯飞输入法 安装 `yay -S  iflyime` 
 or `yay -S manjaro-asian-input-support-fcitx` 
+
 KDM, GDM, LightDM 等显示管理器，请使用 ~/.xprofile 
 警告: 上述用户不要在~/.xinitrc中加入下述脚本，否则会造成无法登陆。(但在里头加了也没挂) 如果您用 startx 或者 Slim 启动，请使用~/.xinitrc 中加入
 
@@ -233,7 +290,9 @@ ibus-daemon -d -x
 ## 媒体软件
 
 网易云音乐 安装 `yay -S netease-cloud-music` 不能播放高清音乐，解决办法参考 https://blog.eh5.me/fix-ncm-ldac-playing/
+
 腾讯视频 安装 `yay -S tenvideo`
+
 全聚合影视 安装 `yay -S vst-video-bin` 
 
 ## 美化
@@ -243,9 +302,11 @@ ibus-daemon -d -x
 `yay -S docky`
 或者
 `yay -S plank` (这个比较简单，推荐)
+
 如果是KDE桌面
 `yay -S latte-dock` 
 （KDE推荐安装部件 `appication title` `全局菜单` `Launchpad plasma` `latte Spacer` `Event calendar` (个人google三色时间配置 `'<font color="#EB4334">'hh'</font>':'<font color="#35AA53">'mm'</font>':'<font color="#4586F3">'ss'</font>'` )）
+
 
 ### ohmyzh 安装
 
@@ -320,47 +381,88 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 
 ## 开发工具
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/457321/1614603794625-665e0a99-64dd-42f1-8691-95e2a82b4dab.png#height=1050&id=iNflR&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1050&originWidth=1500&originalType=binary&ratio=1&size=783458&status=done&style=none&width=1500)
 redis `yay -S redis` 
+
 redis管理工具 `yay -S redis-desktop-manager` 
+
 github-cli 安装 `yay -S github-cli-bin` 
+
 minicom串口工具 安装 `yay -S minicom` (设置参数 `sudo minicom -s` )
+
 串口助手 安装 `yay -S serialtool` 
+
 nodejs 安装 ` yay -S nodejs npm` （安装cnpm `npm install -g cnpm --registry=https://registry.npm.taobao.org  ` ）
+
 跨平台编译工具链 安装 `yay -S arm-linux-gnueabihf-g++ arm-linux-gnueabihf-gcc` 
+
 c/c++开发  安装 `yay -S make cmake gdb gcc` 
+
 goland 安装 `yay -S goland goland-jre`
+
 datagrip 安装 `yay -S datagrip datagrip-jre`
+
 clion 安装 `yay -S clion clion-jre` 
+
 pycharm 安装 `yay -S pycharm pycharm-jre` 
+
 rider安装 `yay -S rider` 
+
 webstorm 安装 `yay -S webstorm webstorm-jre` 
+
 vmware 安装 `yay -S vmware-workstation`
+
 postman 安装 `yay -S postman` [汉化文件](https://github.com/hlmd/Postman-cn)（jetbrains新版自带的resful 测试工具，可以不用安装）
+
 Typora markdown编辑器 安装 `yay -S typora`
+
 dnspy 安装 `yay -S dnspy` (需要使用blackarch源)
+
 tmux 终端工具 安装 `yay -S tmux`
+
 byobu 终端工具 安装 `yay -S byobu`
+
 API文档工具 zeal 安装 `yay -S zeal` 
+
 bcompare 安装 `yay -S bcompare ` 
+
 tldr 简化版文档工具 ` yay -S tldr` （rust版本 `yay -S  tealdeer ` ）
+
 .net core 安装 `yay -S dotnet-sdk-bin` 
+
 vscode 安装 `yay -S visual-studio-code-bin` 
+
 终端录屏幕[asciinema](https://asciinema.org/) 安装 `yay -S asciinema` 
+
 证书生成工具 mkcert 安装 `yay -S mkcert` 
+
 netcat `yay -S  --noconfirm gnu-netcat` 或者 `yay -S --noconfirm openbsd-netcat ` 
+
 微信开发者工具 `yay -S wechat-devtool ` 
+
 Platform-Tools for Google Android SDK (adb and fastboot) 安装 `yay -S android-sdk-platform-tools` 
+
 编译链工具[xmake](http://xmake.io) 安装 `yay -S xmake` 
+
 percona-toolkit (mysql辅助分析工具) `yay -S percona-toolkit` 
-注：jetbrains系列软件，自带更新功能，但是我们一般使用非root用户进行登录，这时需要将安装目录授权给当前登录用户即可。以goland为例，只需要执行 ` chown -R $(whoami) /opt/goland ` 即可进行自动升级。 
+
+注：
+
+jetbrains系列软件，自带更新功能，但是我们一般使用非root用户进行登录，这时需要将安装目录授权给当前登录用户即可。以goland为例，只需要执行 ` chown -R $(whoami) /opt/goland ` 即可进行自动升级。 
+
 strace `yay -S strace` 
+
 dtrace `yay -S dtrace-utils`  (使用[教程](https://zhuanlan.zhihu.com/p/180053751))
+
 cloudflare Argo tunnel `yay -S cloudflared` （使用[教程](https://www.blueskyxn.com/202102/4176.html)）
+
 nmon `yay -S nmon` 
+
 nload `yay -S nload` 
+
 tcpflow `yay -S tcpflow` 
+
 tiup (可以快速启动tidb的playground) `curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh`
+
 参考
 
 - vmware安装后报错的问题 https://blog.csdn.net/weixin_43968923/article/details/100184356
@@ -372,23 +474,37 @@ tiup (可以快速启动tidb的playground) `curl --proto '=https' --tlsv1.2 -sSf
 ### 数据库
 
 percona-Server `yay -S percona-server`
+
 [Mariadb](https://wiki.archlinux.org/title/MariaDB) `yay -S mariadb`
 
 ## 其他
 
 screenfetch (终端打印出你的系统信息) 安装 `yay -S screenfetch`
+
 neofetch `yay -S neofetch`
+
 copyQ (类似ditto) 安装 `yay -S copyq`
+
 ifconfig、netstat 安装 `yay -S net-tools`
+
 文件搜索albert（类似mac上的Spotlight） 安装 `yay -S albert`
+
 Stow配置管理软件 安装 `yay -S stow`
+
 snap 安装 `yay -S --noconfirm --needed snapd`
+
 figlet 字符串logo生成工具 `yay -S figlet` 
+
 软件包降级工具 downgrade `yay -S downgrade` 
+
 thefuck输错命令更正工具 `yay -S thefuck` 
+
 appimagelauncher 安装 `yay -S  appimagelauncher` 
+
 终端文件管理器ranger 安装 `yay -S ranger` 
+
 硬盘自动休眠 [hd-idle](http://hd-idle.sourceforge.net) 安装 `yay -S hd-idle`  （或者 `hdparam` ）
+
 参考
 
 - 使用 Stow 管理多台机器配置[https://blog.csdn.net/F8qG7f9YD02Pe/article/details/104046845](https://blog.csdn.net/F8qG7f9YD02Pe/article/details/104046845)
@@ -421,7 +537,9 @@ thinkpad thinkfan 安装`yay -S thinkfan`
 
 ## 网卡
 
-8811cu `yay -S rtl8821cu-dkms-git ` 参考[链接](https://wiki.archlinux.org/index.php/Network_configuration/Wireless#rtl8811cu/rtl8821cu)
+8811cu `yay -S rtl8821cu-dkms-git `
+
+ 参考[链接](https://wiki.archlinux.org/index.php/Network_configuration/Wireless#rtl8811cu/rtl8821cu)
 
 ## 系统参数调优
 

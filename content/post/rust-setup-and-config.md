@@ -26,6 +26,7 @@ export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 ```
 ## crates.io 镜像
 编辑 `~/.cargo/config `
+
 ```
 [source.crates-io]
 replace-with = 'rsproxy'
@@ -38,13 +39,15 @@ index = "https://rsproxy.cn/crates.io-index"
 
 [net]
 git-fetch-with-cli = true
+
 ```
 ## 
 
 
 ## 安装Rust
 安装rust即可。可以参考我的步骤
-```bash
+
+``` bash
 Current installation options:
 
 
@@ -121,6 +124,7 @@ info: default toolchain set to 'stable'
 
 
 Rust is installed now. Great!
+
 ```
 ## 配置cargo镜像
 参考 

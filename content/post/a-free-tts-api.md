@@ -13,7 +13,7 @@ https://dds.dui.ai/runtime/v1/synthesize?voiceId=ppangf_csn&text=您好世界&sp
 + speed  语速
 + volume  声音大小
 + voiceId  发音类型可以取下面的值：
-``` 
+``` json
 qiumum_0gushi精品秋木  活泼开朗适合有声读物等场景
 kaolam_diantai 精品考拉 电台男声温柔的电台男声
 juan1f 小美 客服女声声音甜美热情，客服、营销场景均适用
@@ -85,6 +85,7 @@ linbaf_qingxin 零八 清新推荐有声读物的场景
 xiyaof_laoshi 小妖 女老师推荐武侠小说等场景
 anonyg 佚佚成人女声模仿女童音色
 luyaof 瑶瑶 自然亲切可用与情感电台等场景
+
 ```
 
 官方网站   https://www.talkinggenie.com/tts

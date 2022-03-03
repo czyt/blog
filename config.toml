@@ -1,6 +1,6 @@
 baseURL = "https://czyt.tech/"
 languageCode = "zh-cn"
-title = "虫子樱桃の博客"
+title = "虫子樱桃"
 theme = "minimal"
 disqusShortname = "czyt" # delete this to disable disqus comments
 googleAnalytics = ""

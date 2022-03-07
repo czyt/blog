@@ -17,6 +17,12 @@ googleAnalytics = ""
     highlightStyle = "default"
     favicon = "/img/favicon.ico" 
     highlightLanguages = ["go", "Csharp", "dart", "bash", "swift"]
+    
+[params.utteranc]
+    enable = true
+    repo = "czyt/comments"
+    issueTerm = "pathname"
+    theme = "github-light"       
 
 [[menu.main]]
     url = "/"

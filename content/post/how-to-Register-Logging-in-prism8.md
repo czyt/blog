@@ -6,15 +6,17 @@ draft: false
 ---
 
 ## Nuget包
- ### 基础包
+
+### 基础包
+
 + [Microsoft Logging Abstractions](https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions/)
 +  [Microsoft Extensions DependencyInjection](https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection)
 
 ### 可选日志包
-可以按实际需求进行选择，如`NLog`等,我们这里采用的是 `Serilog `这个Nuget包
-+ [Serilog Extensions Logging](https://www.nuget.org/packages/Serilog.Extensions.Logging)
+可以按实际需求进行选择，如`NLog`等,我们这里采用的是 `Serilog `这个Nuget包[Serilog Extensions Logging](https://www.nuget.org/packages/Serilog.Extensions.Logging)
 
 根据日志输出的目标不同，可以选择不同的扩展方法包
+
 | 目标   |      包名      |  说明 |
 |--------|:--------------:|------:|
 | 文件|[Serilog.Sinks.File](https://www.nuget.org/packages/serilog.sinks.file/)|WiteTo可以使用File方法[详细说明](https://github.com/serilog/serilog-sinks-file)

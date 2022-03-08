@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>api on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/api/</link>
+    <description>Recent content in api on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 28 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/api/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一个免费的TTS接口</title>
+      <link>https://czyt.tech/post/a-free-tts-api/</link>
+      <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/a-free-tts-api/</guid>
+      <description>https://dds.dui.ai/runtime/v1/synthesize?voiceId=ppangf_csn&amp;amp;text=您好世界&amp;amp;speed=1&amp;amp;volume=50&amp;amp;audioType=wav
+参数说明：
+ text 要转音频的文本内容 （200字以内） speed 语速 volume 声音大小 voiceId 发音类型可以取下面的值：     VoiceId 名称 说明     qiumum_0gushi 精品秋木 活泼开朗适合有声读物等场景   kaolam_diantai 精品考拉 电台男声温柔的电台男声   juan1f 小美 客服女声声音甜美热情，客服、营销场景均适用   xmguof 婷婷 营销女声音色亲切大方，适用于电话销售、调研回访等场景   xmamif 小咪 营销女声活力甜美，适用于电话营销、邀约等场景   lunaif_ctn 晓健 标准粤语女声偏正式的标准粤语，适用于新闻播报等场景   hchunf_ctn 何春 自然粤语女声音色偏甜美自然，适用于家居播报等场景   dayaof_csd 大瑶 山东话女声音色偏甜美自然，适用于家居播报等场景   wqingf_csn 文卿 四川话女声音色偏甜美自然，适用于车载导航等场景   ppangf_csn 胖胖 四川话女声音色偏甜美自然，适用于家居播报等场景   yezi1f_csh 叶子 上海话女声音色偏甜美自然，适用于家居播报等场景   madoufp_yubo 麻豆 娱播女声甜美欢快的女声，适合做娱乐新闻的播报   madoufp_wenrou 麻豆 甜美温柔客服、营销、阅读听书的场景均可使用   xjingfp 小静 甜美女声音色甜美知性，可用于娱乐新闻等播报   xjingf_gushi 小静 自然音色甜美知性，可用于娱乐新闻等播报   xjingf 小静 商务知性音色甜美知性，可用于娱乐新闻等播报   zhilingfp 小玲 甜美女神音色亲切、欢快、自然，适合用于各种场景   zhilingfp_huankuai 小玲 欢快自然音色亲切、欢快、自然，适合用于各种场景   zhilingfa 小玲 标准小玲的音色亲切，甜美，自然，适合用于各种场景   zhilingf 传统小玲 甜美性感音色甜美、自然、性感，适合用于各种场景   anonyf 小佚 平和沉稳音色沉稳严肃，适合用于新闻播报等   xbekef 贝壳 可爱女童童真可爱，适合讲幼儿故事   xijunma 精品小军 新闻播报适合新闻播报等场景   xijunm 传统小军 标准正式标准发音，适合新闻播报等场景   geyou 葛爷 淡定风趣模仿葛优音色   gdgm 纲叔 沉稳幽默模仿郭德纲音色   zxcm 星哥 风趣幽默模仿周星驰音色   qianranf 传统然然 天真俏皮成人女声模仿女童音色   hyanif 小妮 温柔亲切适合情感电台播报等场景   gqlanf 标准小兰 邻家女声温柔的邻家女声，适合做客服音色   gqlanfp 精品小兰 温柔甜美温柔的邻家女声，适合做客服音色   qianranfa 标准然然 天真俏皮语速1.</description>
+    </item>
+    
+  </channel>
+</rss>

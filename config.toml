@@ -1,8 +1,7 @@
 baseURL = "https://czyt.tech/"
-languageCode = "zh-cn"
+languageCode = "zh"
 title = "虫子樱桃"
-theme = "minimal"
-disqusShortname = "" # delete this to disable disqus comments
+theme = "PaperMod"
 googleAnalytics = ""
 
 [params]
@@ -17,6 +16,12 @@ googleAnalytics = ""
     highlightStyle = "default"
     favicon = "/img/favicon.ico" 
     highlightLanguages = ["go", "Csharp", "dart", "bash", "swift"]
+    ShowCodeCopyButtons = true
+    comments = true
+    ShowReadingTime = true
+    ShowToc = true
+    ShowPostNavLinks = true
+    ShowBreadCrumbs = true
 
 [params.utteranc]
     enable = true

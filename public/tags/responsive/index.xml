@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>responsive on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/responsive/</link>
+    <description>Recent content in responsive on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language><atom:link href="https://czyt.tech/tags/responsive/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Project 3</title>
+      <link>https://czyt.tech/project/project3/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/project/project3/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

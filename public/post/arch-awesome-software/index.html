@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html
+ lang="zh-cn"
+  prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#"
+>
+  
+
+
+
+  
+  
+
+
+<head lang="zh-cn">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="更换软件源 使用中国的镜像排名
+sudo pacman-mirrors -i -c China -m rank //更新镜像排名 sudo pacman -Syy //更新数据源 sudo pacman-mirrors -g //排列数据源 添加archlinuxcn源编辑命令 sudo nano /etc/pacman.conf 添加下面的内容
+[archlinuxcn] SigLevel = Optional TrustedOnly #中科大源 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch #清华源 # Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch # 163源 # Server = http://mirrors.163.com/archlinux-cn/$arch 然后再更新软件数据源
+sudo pacman -Syy sudo pacman -S archlinux-keyring archlinuxcn-keyring 因为本文的软件使用yay进行安装，故需要使用命令进行安装，命令为  sudo pacman -S yay 设置yay的mirror
+yay --aururl &#34;https://aur.tuna.tsinghua.edu.cn&#34; --save 可选安装 编译包 yay -S base-devel 注：类似的包管理器还可以用 paru" />
+  <meta name="author" content="czyt">
+  <meta name="keywords" content="linux, Arch, Manjaro, tools">
+  <title>Arch Linux 常用软件 | 虫子樱桃</title>
+  <link rel="canonical" href="https://czyt.tech/post/arch-awesome-software/" />
+  
+
+  
+  <meta property="og:type" content="article" />
+  <meta property="og:description" content="更换软件源 使用中国的镜像排名
+sudo pacman-mirrors -i -c China -m rank //更新镜像排名 sudo pacman -Syy //更新数据源 sudo pacman-mirrors -g //排列数据源 添加archlinuxcn源编辑命令 sudo nano /etc/pacman.conf 添加下面的内容
+[archlinuxcn] SigLevel = Optional TrustedOnly #中科大源 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch #清华源 # Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch # 163源 # Server = http://mirrors.163.com/archlinux-cn/$arch 然后再更新软件数据源
+sudo pacman -Syy sudo pacman -S archlinux-keyring archlinuxcn-keyring 因为本文的软件使用yay进行安装，故需要使用命令进行安装，命令为  sudo pacman -S yay 设置yay的mirror
+yay --aururl &#34;https://aur.tuna.tsinghua.edu.cn&#34; --save 可选安装 编译包 yay -S base-devel 注：类似的包管理器还可以用 paru" />
+  <meta property="og:title" content="Arch Linux 常用软件" />
+  <meta property="og:site_name" content="虫子樱桃" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:url" content="https://czyt.tech/post/arch-awesome-software/" />
+  <meta property="og:locale" content="zh-cn" />
+
+  
+    <meta property="article:published_time" content="2022-02-23" />
+    <meta property="article:modified_time" content="2022-02-23" />
+     
+      <meta property="article:tag" content="linux" />
+    
+      <meta property="article:tag" content="Arch" />
+    
+      <meta property="article:tag" content="Manjaro" />
+    
+      <meta property="article:tag" content="tools" />
+     
+  
+
+  
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Arch Linux 常用软件 | 虫子樱桃" />
+  <meta name="twitter:description" content="更换软件源 使用中国的镜像排名
+sudo pacman-mirrors -i -c China -m rank //更新镜像排名 sudo pacman -Syy //更新数据源 sudo pacman-mirrors -g //排列数据源 添加archlinuxcn源编辑命令 sudo nano /etc/pacman.conf 添加下面的内容
+[archlinuxcn] SigLevel = Optional TrustedOnly #中科大源 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch #清华源 # Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch # 163源 # Server = http://mirrors.163.com/archlinux-cn/$arch 然后再更新软件数据源
+sudo pacman -Syy sudo pacman -S archlinux-keyring archlinuxcn-keyring 因为本文的软件使用yay进行安装，故需要使用命令进行安装，命令为  sudo pacman -S yay 设置yay的mirror
+yay --aururl &#34;https://aur.tuna.tsinghua.edu.cn&#34; --save 可选安装 编译包 yay -S base-devel 注：类似的包管理器还可以用 paru" />
+  <meta name="twitter:domain" content="https://czyt.tech/post/arch-awesome-software/" />
+
+  
+  
+  
+  
+  
+
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/modern-normalize@1.0.0/modern-normalize.min.css">
+
+  
+  
+  
+
+  
+
+  
+    
+    <link rel="stylesheet" href="https://czyt.tech/style.min.48e5ec6fd942f9e276c2e6c0e68ff62c2f9868f093f305d31e7f34ecfade234b.css" integrity="sha256-SOXsb9lC&#43;eJ2wubA5o/2LC&#43;YaPCT8wXTHn807PreI0s=" rel="preload stylesheet" as="style"/>
+  
+
+  
+  
+    
+  
+</head>
+
+  <body>
+    <script>
+  const currentTheme = window.localStorage.getItem('theme')
+  if (currentTheme === "dark") {
+    document.body.classList.toggle("theme-dark");
+  } else if (currentTheme == "light") {
+    document.body.classList.toggle("theme-light");
+  }
+</script>
+<header id="header">
+  <div class="row">
+    <div class="container has-padding nav">
+      <button id="navbar-toggler" class="navbar-button" aria-hidden="true">
+
+
+
+
+
+
+
+
+
+
+
+<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M64 384h384v-42.67H64zm0-106.67h384v-42.66H64zM64 128v42.67h384V128z'/></svg>
+
+
+
+
+
+</button>
+      <div class="navbar-brand">
+        <a class="logo navbar-button" href="https://czyt.tech/" title="虫子樱桃">
+          <span>虫子樱桃</span>
+        </a>
+      </div>
+      <nav class="navbar" role="navigation">
+        <ul>
+          
+          
+            <li class="nav-bar-item">
+              <a class="nav-link navbar-button" href="/" title="Home">
+                <span>home</span>
+              </a>
+            </li>
+          
+            <li class="nav-bar-item">
+              <a class="nav-link navbar-button" href="/about/" title="About">
+                <span>about</span>
+              </a>
+            </li>
+          
+            <li class="nav-bar-item">
+              <a class="nav-link navbar-button" href="/post/" title="Posts">
+                <span>posts</span>
+              </a>
+            </li>
+          
+            <li class="nav-bar-item">
+              <a class="nav-link navbar-button" href="/project/" title="Projects">
+                <span>projects</span>
+              </a>
+            </li>
+          
+        </ul>
+      </nav>
+      <div class="theme-selector">
+        <button class="button is-text" id="theme-selector-button" title="toggle theme">
+          <span class="label icon">
+
+
+
+
+
+<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M256 32C132.29 32 32 132.29 32 256s100.29 224 224 224 224-100.29 224-224S379.71 32 256 32zM128.72 383.28A180 180 0 01256 76v360a178.82 178.82 0 01-127.28-52.72z'/></svg>
+
+
+
+
+
+
+
+
+
+
+
+</span>
+        </button>
+      </div>
+    </div>
+    <div class="container has-padding">
+      <div class="breadcrumb">
+        
+<ol  class="breadcrumb-nav">
+  
+
+  
+
+  
+
+<li >
+  <a href="https://czyt.tech/">Home</a>
+</li>
+
+
+<li >
+  <a href="https://czyt.tech/post/">Posts</a>
+</li>
+
+
+<li class="active">
+  <a href="https://czyt.tech/post/arch-awesome-software/">Arch Linux 常用软件</a>
+</li>
+
+</ol>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</header>
+
+    
+
+<main id="main">
+  <div class="container has-padding">
+    <div class="article-card post single">
+      <h1 class="title">Arch Linux 常用软件</h1>
+      <div class="post-info">
+        <span>
+
+
+
+<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M32 456a24 24 0 0024 24h400a24 24 0 0024-24V176H32zm320-244a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm0 80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm-80-80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm0 80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm0 80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm-80-80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm0 80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm-80-80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm0 80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zM456 64h-55.92V32h-48v32H159.92V32h-48v32H56a23.8 23.8 0 00-24 23.77V144h448V87.77A23.8 23.8 0 00456 64z'/></svg>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<time datetime=2022-02-23T00:00:00Z class="date">February 23, 2022</time></span>
+        <span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M256 48C141.13 48 48 141.13 48 256c0 114.69 93.32 208 208 208 114.86 0 208-93.14 208-208 0-114.69-93.31-208-208-208zm108 240H244a4 4 0 01-4-4V116a4 4 0 014-4h24a4 4 0 014 4v140h92a4 4 0 014 4v24a4 4 0 01-4 4z'/></svg>
+6 mins to read</span>
+        
+          <span>
+
+
+
+
+
+
+
+
+
+
+
+
+<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M256 256a112 112 0 10-112-112 112 112 0 00112 112zm0 32c-69.42 0-208 42.88-208 128v64h416v-64c0-85.12-138.58-128-208-128z'/></svg>
+
+
+
+
+czyt</span>
+        
+        
+        
+          <span>post </span>
+        
+      </div>
+      <article class="post-entry content">
+        <h2 id="更换软件源">更换软件源</h2>
+<p>使用中国的镜像排名</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo pacman-mirrors -i -c China -m rank //更新镜像排名
+sudo pacman -Syy //更新数据源
+sudo pacman-mirrors -g //排列数据源
+</code></pre></div><p>添加archlinuxcn源编辑命令 <code>sudo nano /etc/pacman.conf</code> 添加下面的内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>archlinuxcn<span style="color:#f92672">]</span>
+ 
+SigLevel <span style="color:#f92672">=</span> Optional TrustedOnly
+
+<span style="color:#75715e">#中科大源</span>
+
+Server <span style="color:#f92672">=</span> https://mirrors.ustc.edu.cn/archlinuxcn/$arch
+
+<span style="color:#75715e">#清华源</span>
+
+<span style="color:#75715e"># Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch</span>
+
+<span style="color:#75715e"># 163源</span>
+
+<span style="color:#75715e"># Server = http://mirrors.163.com/archlinux-cn/$arch</span>
+</code></pre></div><p>然后再更新软件数据源</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo pacman -Syy
+sudo pacman -S archlinux-keyring archlinuxcn-keyring
+</code></pre></div><p>因为本文的软件使用yay进行安装，故需要使用命令进行安装，命令为  <code> sudo pacman -S yay</code>
+设置yay的mirror</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">yay --aururl <span style="color:#e6db74">&#34;https://aur.tuna.tsinghua.edu.cn&#34;</span> --save
+</code></pre></div><p>可选安装 编译包 <code>yay -S base-devel</code> 
+注：类似的包管理器还可以用 <code>paru</code></p>
+<h2 id="ssh管理工具">SSH管理工具</h2>
+<p>Remmina 安装 <code>yay -S remmina</code>
+可以选装这些插件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">remmina-plugin-teamviewer remmina-plugin-webkit remmina-plugin-rdesktop remmina-plugin-anydesk-git
+</code></pre></div><p>终端：
+深度终端 安装 <code>yay -S deepin-terminal</code> 
+alacritty 安装 <code>yay -S alacritty </code> 
+终端渐变色工具lolcat <code>yay -S lolcat</code></p>
+<h2 id="浏览器">浏览器</h2>
+<p>vivaldi 安装 <code>yay -S vivaldi</code>
+Chrome 安装 <code>yay -S google-chrome</code>
+参考</p>
+<ul>
+<li>解决打开Chrome出现 输入密码以解锁您的登录密钥环 <a href="https://blog.csdn.net/kangear/article/details/20789451">https://blog.csdn.net/kangear/article/details/20789451</a></li>
+<li>bilibili视频不能播放的问题 需要安装对应浏览器的解码包。<code>yay -S vivaldi-ffmpeg-codecs  chromium-codecs-ffmpeg  chromium-codecs-ffmpeg-extra opera-ffmpeg-codecs</code>  (只需安装对应浏览器的包即可，不必全部安装)</li>
+</ul>
+<h2 id="翻译软件">翻译软件</h2>
+<p>有道词典 安装 <code>yay -S youdao-dict</code></p>
+<p>金山词霸 安装 <code>yay -S powerword-bin</code></p>
+<p>goldendict 安装 <code>yay -S goldendict</code> <a href="https://github.com/czytcn/goldendict">词库</a></p>
+<h2 id="聊天软件">聊天软件</h2>
+<p>微信 安装 <code>yay -S deepin-wine-wechat</code></p>
+<p>QQ 安装 <code>yay -S deepin-wine-qq</code>如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 <code>sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/&quot;Program Files&quot;/Tencent</code></p>
+<p>tim <code>yay -S com.qq.tim.spark</code></p>
+<p>ipmsg 安装<code>yay -S iptux</code></p>
+<p>mattermost 安装 <code>yay -S mattermost-desktop</code></p>
+<p>zoom 安装 <code>yay -S zoom</code></p>
+<p>slack 安装 <code>yay -S slack-desktop</code></p>
+<h3 id="可自建的聊天软件">可自建的聊天软件</h3>
+<p>mattermost 安装 <code>yay -S mattermost</code> <a href="https://wiki.archlinux.org/title/Mattermost">参阅</a></p>
+<p>rocketchat-server 安装 <code>yay -S rocketchat-server </code></p>
+<p>说明：</p>
+<ol>
+<li>安装微信后可能不能启动，需要修改内容，参考 <a href="https://github.com/countstarlight/deepin-wine-wechat-arch">https://github.com/countstarlight/deepin-wine-wechat-arch</a></li>
+<li>微信安装使用时，有透明的窗口问题 使用命令 <code>sudo sed -i 's/env WINEPREFIX/env GTK_IM_MODULE=&quot;fcitx&quot; XMODIFIERS=&quot;@im=fcitx&quot; QT_IM_MODULE=&quot;fcitx&quot; WINEPREFIX/' /opt/deepinwine/apps/Deepin-WeChat/run.sh</code> 执行即可</li>
+<li>QQ、微信不能输入中文，在微信的安装目录<code>/opt/deepinwine/apps/Deepin-WeChat</code>下的<code>run.sh</code>前面添加</li>
+</ol>
+<pre tabindex="0"><code>env locale=zh_CN
+export XIM=&quot;fcitx&quot;
+export XMODIFIERS=&quot;@im=fcitx&quot;
+export GTK_IM_MODULE=&quot;fcitx&quot;
+export QT_IM_MODULE=&quot;fcitx&quot;
+</code></pre><p>设置构建包时压缩安装包不进行压缩</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sudo sed -i <span style="color:#e6db74">&#34;s/PKGEXT=&#39;.pkg.tar.xz&#39;/PKGEXT=&#39;.pkg.tar&#39;/g&#34;</span> /etc/makepkg.conf
+</code></pre></div><p>参考</p>
+<p><a href="https://printempw.github.io/setting-up-manjaro-linux/">https://printempw.github.io/setting-up-manjaro-linux/</a></p>
+<h2 id="下载上传">下载上传</h2>
+<p>OneDive 安装 <code>yay -S onedrive</code> 或者 <code>yay -S onedrive-abraunegg</code></p>
+<p>百度云 安装 <code>yay -S baidunetdisk-bin</code> 或者 安装深度的版本 <code>yay -S deepin-baidu-pan</code></p>
+<p>坚果云 安装 <code>yay -S nutstore</code></p>
+<p>DropBox 安装 <code>yay -S dropbox</code></p>
+<p>resilio sync 安装 <code> yay -S rslsync</code></p>
+<p>迅雷linux版本 安装 <code>yay -S xunlei-bin</code></p>
+<p>迅雷极速版 <code>yay -S deepin-wine-thunderspeed</code></p>
+<p>axel 安装 <code>yay -S axel</code></p>
+<p>zssh 安装 <code>yay -S zssh</code> 配合lrzsz(安装命令 <code>yay -S lrzsz</code>)食用效果最佳。</p>
+<p>motrix 安装 <code>yay -S motrix</code></p>
+<p>Mega网盘安装 <code>yay -S megatools-git</code></p>
+<p>moose 支持边下边播的BT工具 <code>yay -S moose </code></p>
+<p>参考</p>
+<ul>
+<li>dreamcast的网盘 <a href="http://dreamcast2.ys168.com">http://dreamcast2.ys168.com</a></li>
+<li>zssh介绍 <a href="http://www.v5b7.com/other/zssh.html">http://www.v5b7.com/other/zssh.html</a></li>
+</ul>
+<h2 id="办公软件">办公软件</h2>
+<p><a href="https://ksa.kanxue.com">看雪安全接入</a>ksa 安装 <code>yay -S ksa</code></p>
+<p><a href="https://tailscale.com">tailscale</a> 安装 <code>yay -S tailscale</code></p>
+<p><a href="http://www.blackmagicdesign.com/products/davinciresolve/">达芬奇视频剪辑</a> 安装 <code>yay -S davinci-resolve</code></p>
+<p><a href="https://www.zettlr.com">zettlr</a> markdown编辑器 安装 <code>yay -S zettlr </code></p>
+<p><a href="https://tamlok.github.io/vnote/zh_cn/#!index.md">vnode</a> markdown编辑器 安装 <code>yay -S vnote</code></p>
+<p>Wps 安装 <code>yay -S wps-office ttf-wps-fonts wps-office-mui-zh-cn  wps-office-mime</code></p>
+<p>libreoffice 安装  <code>yay -S libreoffice</code></p>
+<p>flameshot 截图工具 安装 <code>yay -S flameshot</code></p>
+<p>福昕pdf阅读器 <code>yay -S foxitreader</code></p>
+<p>Teamviewer <code>yay -S teamviewer</code>如果一直显示未连接，则请退出teamviewer，执行<code>sudo teamviewer --daemon enable</code> 再打开试试</p>
+<p>向日葵 安装 <code>yay -S sunloginclient</code> (需要设置开机启动服务 <code>systemctl enable runsunloginclient</code> 启动服务 <code>systemctl start runsunloginclient</code> )</p>
+<p>toDesk远程工具 安装 <code>yay -S todesk-bin</code> (设置服务 <code>systemctl start\enable todeskd</code> 才能正常运行)</p>
+<p>parsec 远程工具 安装 <code>yay -S parsec-bin </code></p>
+<p>v2ray 安装 <code>yay -S v2ray</code>  （安装配置工具<code>yay -S qv2ray </code> ，<a href="https://jiang.netlify.app">福利订阅</a> 新版已经使用AppImage格式发布，下载AppImage格式即可 或者 v2rayDesktop <code>yay -S v2ray-desktop</code> ）</p>
+<p>n2n <a href="https://www.meirenji.info/2018/02/03/N2N%E7%BB%84%E7%BD%91-%E5%AE%9E%E7%8E%B0%E5%AE%B6%E9%87%8C%E8%AE%BF%E4%B8%8E%E5%85%AC%E5%8F%B8%E7%BD%91%E7%BB%9C%E4%BA%92%E8%AE%BF-%E7%B2%BE%E7%BC%96%E7%89%88/">VPN软件</a> <code>yay -S n2n</code></p>
+<p>proxychains-ng 安装 <code>yay -S proxychains-ng</code></p>
+<p>evernote 开源版本 nixnote2 安装 <code>yay -S nixnote2</code></p>
+<p>joplin 安装 <code>yay -S joplin</code></p>
+<p>Okular （<a href="https://www.appinn.com/okular/">KDE上的通用文档阅读器</a>）<code> yay -S okular</code></p>
+<p>Foliate <a href="https://www.appinn.com/foliate-for-linux/">简单、现代的电子书阅读器</a> 安装 <code>yay -S foliate</code></p>
+<p>Screen屏幕共享软件 安装 <code>yay -S screen-desktop </code></p>
+<p>U盘启动制作<a href="https://github.com/balena-io/etcher">etcher</a> <code>yay -S etcher-bin</code></p>
+<p>xmind-2020 安装 <code>yay -S xmind-2020</code> (<a href="https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g">福利链接</a>)</p>
+<p>钉钉 安装 <code>yay -S  dingtalk-electron </code></p>
+<p>企业微信 <code>yay -S deepin-wine-wxwork</code></p>
+<p>剪切板工具 <a href="https://github.com/quackduck/uniclip">uniclip</a> <code>yay -S uniclip</code></p>
+<p>onenote <code>yay -S p3x-onenote</code></p>
+<p><a href="https://github.com/xfangfang/Macast">macast-git</a>跨平台的 DLNA 投屏接收端 <code>yay -S  macast-git</code>(需要安装相关pip包 <code>pip install -U urllib3 requests</code> <code>pip install requests[socks]</code>)</p>
+<p>在线流程图工具 <a href="https://excalidraw.com">https://excalidraw.com</a>
+参考</p>
+<ul>
+<li>proxychains-ng 使用 <a href="https://wsgzao.github.io/post/proxychains/">https://wsgzao.github.io/post/proxychains/</a></li>
+<li>Linux中制作U盘启动盘的三种方法 <a href="https://ywnz.com/linuxjc/5620.html">https://ywnz.com/linuxjc/5620.html</a></li>
+</ul>
+<h2 id="输入法">输入法</h2>
+<h3 id="fcitx">fcitx</h3>
+<p>sun输入法 安装 <code>yay -S fcitx fcitx-im fcitx-configtool fcitx-sunpinyin fcitx-googlepinyin fcitx-cloudpinyin fcitx-libpinyin</code></p>
+<p>皮肤 安装 <code>yay -S fcitx-skin-material</code></p>
+<p>百度输入法 安装 <code>yay -S fcitx-baidupinyin</code> 安装完成以后记得重启下，不然输入候选框会乱码。</p>
+<p>讯飞输入法 安装 <code>yay -S  iflyime</code> 
+or <code>yay -S manjaro-asian-input-support-fcitx</code></p>
+<p>KDM, GDM, LightDM 等显示管理器，请使用 ~/.xprofile 
+警告: 上述用户不要在~/.xinitrc中加入下述脚本，否则会造成无法登陆。(但在里头加了也没挂) 如果您用 startx 或者 Slim 启动，请使用~/.xinitrc 中加入</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">export GTK_IM_MODULE<span style="color:#f92672">=</span>fcitx 
+export QT_IM_MODULE<span style="color:#f92672">=</span>fcitx 
+export @<span style="color:#f92672">=</span>fcitx
+</code></pre></div><p>如果你使用的是较新版本的GNOME，使用 Wayland 显示管理器，则请在/etc/environment中加入</p>
+<pre tabindex="0"><code>GTK_IM_MODULE=fcitx 
+QT_IM_MODULE=fcitx 
+@=fcitx
+</code></pre><p>安装相关字体</p>
+<pre tabindex="0"><code>yay -S wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-code-pro-fonts  adobe-source-han-sans-cn-fonts ttf-monaco noto-fonts-emoji ttf-fira-code 
+ttf-ms-fonts ttf-sarasa-gothic
+</code></pre><p>输入法有问题，需要重置，使用命令 <code>rm -r ~/.config/fcitx</code> 然后注销即可。</p>
+<h3 id="rime">rime</h3>
+<p>参考官网 <a href="https://rime.im">传送门</a>
+基本库 <code>yay -S ibus ibus-qt ibus-rime</code> 
+配置文件内容</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json"><span style="color:#960050;background-color:#1e0010">export</span> <span style="color:#960050;background-color:#1e0010">GTK_IM_MODULE=ibus</span>
+<span style="color:#960050;background-color:#1e0010">export</span> <span style="color:#960050;background-color:#1e0010">XMODIFIERS=@im=ibus</span>
+<span style="color:#960050;background-color:#1e0010">export</span> <span style="color:#960050;background-color:#1e0010">QT_IM_MODULE=ibus</span>
+<span style="color:#960050;background-color:#1e0010">ibus-daemon</span> <span style="color:#960050;background-color:#1e0010">-d</span> <span style="color:#960050;background-color:#1e0010">-x</span>
+</code></pre></div><p><a href="https://github.com/fkxxyz/rime-cloverpinyin">四叶草输入法</a> <code>yay -S rime-cloverpinyin</code> 
+参考 <a href="https://wiki.archlinux.org/index.php/Fcitx">https://wiki.archlinux.org/index.php/Fcitx</a></p>
+<h2 id="媒体软件">媒体软件</h2>
+<p>网易云音乐 安装 <code>yay -S netease-cloud-music</code> 不能播放高清音乐，解决办法参考 <a href="https://blog.eh5.me/fix-ncm-ldac-playing/">https://blog.eh5.me/fix-ncm-ldac-playing/</a></p>
+<p>腾讯视频 安装 <code>yay -S tenvideo</code></p>
+<p>全聚合影视 安装 <code>yay -S vst-video-bin</code></p>
+<h2 id="美化">美化</h2>
+<h3 id="docky-安装">docky 安装</h3>
+<p><code>yay -S docky</code>
+或者
+<code>yay -S plank</code> (这个比较简单，推荐)</p>
+<p>如果是KDE桌面
+<code>yay -S latte-dock</code> 
+（KDE推荐安装部件 <code>appication title</code> <code>全局菜单</code> <code>Launchpad plasma</code> <code>latte Spacer</code> <code>Event calendar</code> (个人google三色时间配置 <code>'&lt;font color=&quot;#EB4334&quot;&gt;'hh'&lt;/font&gt;':'&lt;font color=&quot;#35AA53&quot;&gt;'mm'&lt;/font&gt;':'&lt;font color=&quot;#4586F3&quot;&gt;'ss'&lt;/font&gt;'</code> )）</p>
+<h3 id="ohmyzh-安装">ohmyzh 安装</h3>
+<p><code>yay -S zsh &amp;&amp; sh -c &quot;$(curl -fsSL https://fastgit.czyt.tech/https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&quot;</code>
+安装插件</p>
+<pre tabindex="0"><code>git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions
+</code></pre><p>配置插件 <code> vim ~/.zshrc</code></p>
+<pre tabindex="0"><code>plugins=(git zsh-syntax-highlighting docker docker-compose zsh-autosuggestions zsh-completions)
+</code></pre><p>zsh在使用nohup执行任务的时候，可能会出现session注销后，nohup自动被终止的情况，若要保持运行，请执行<code>setopt NO_HUP</code> 参考<a href="http://zsh.sourceforge.net/Guide/zshguide02.html">Zsh</a>文档</p>
+<blockquote>
+<p><strong>HUP</strong>
+&hellip; In zsh, if you have a background job running when the shell exits, the shell will assume you want that to be killed; in this case it is sent a particular signal called SIGHUP&hellip; If you often start jobs that should go on even when the shell has exited, then you can set the option NO_HUP, and background jobs will be left alone.</p>
+</blockquote>
+<h3 id="fish">fish</h3>
+<p><code>yay -S fish</code> 
+安装oh-my-fish</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -L https://get.oh-my.fish | fish 
+</code></pre></div><p>推荐插件
+wttr天气插件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">omf install wttr
+</code></pre></div><p>fisher</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+</code></pre></div><p>参考<a href="https://zhuanlan.zhihu.com/p/35448750">知乎</a>这篇文章</p>
+<h3 id="nushell">nushell</h3>
+<p>安装 <code>yay -S nushell</code></p>
+<h3 id="自定义主题">自定义主题</h3>
+<p>需要事先安装软件 <code>yay -S gnome-tweaks chrome-gnome-shell</code></p>
+<h4 id="手动安装">手动安装</h4>
+<h5 id="gnome">Gnome</h5>
+<p>解压主题到 <code>/usr/share/themes</code>解压图标到 <code>/usr/share/icons</code>然后在gnome-tweaks启用即可。
+参考</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/71588449">https://zhuanlan.zhihu.com/p/71588449</a></li>
+<li><a href="https://blog.triplez.cn/manjaro-quick-start">https://blog.triplez.cn/manjaro-quick-start</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/37852274">https://zhuanlan.zhihu.com/p/37852274</a></li>
+</ul>
+<h5 id="kde">KDE</h5>
+<p>/usr/share/plasma/desktoptheme 这是存放plasma主题
+/usr//share/plasma/look-and-feel/ 存放全局主题
+/usr/share/plasma/plasmoids/ 存放插件</p>
+<h2 id="开发工具">开发工具</h2>
+<p>redis <code>yay -S redis</code></p>
+<p>redis管理工具 <code>yay -S redis-desktop-manager</code></p>
+<p>github-cli 安装 <code>yay -S github-cli-bin</code></p>
+<p>minicom串口工具 安装 <code>yay -S minicom</code> (设置参数 <code>sudo minicom -s</code> )</p>
+<p>串口助手 安装 <code>yay -S serialtool</code></p>
+<p>nodejs 安装 <code> yay -S nodejs npm</code> （安装cnpm <code>npm install -g cnpm --registry=https://registry.npm.taobao.org  </code> ）</p>
+<p>跨平台编译工具链 安装 <code>yay -S arm-linux-gnueabihf-g++ arm-linux-gnueabihf-gcc</code></p>
+<p>c/c++开发  安装 <code>yay -S make cmake gdb gcc</code></p>
+<p>goland 安装 <code>yay -S goland goland-jre</code></p>
+<p>datagrip 安装 <code>yay -S datagrip datagrip-jre</code></p>
+<p>clion 安装 <code>yay -S clion clion-jre</code></p>
+<p>pycharm 安装 <code>yay -S pycharm pycharm-jre</code></p>
+<p>rider安装 <code>yay -S rider</code></p>
+<p>webstorm 安装 <code>yay -S webstorm webstorm-jre</code></p>
+<p>vmware 安装 <code>yay -S vmware-workstation</code></p>
+<p>postman 安装 <code>yay -S postman</code> <a href="https://github.com/hlmd/Postman-cn">汉化文件</a>（jetbrains新版自带的resful 测试工具，可以不用安装）</p>
+<p>Typora markdown编辑器 安装 <code>yay -S typora</code></p>
+<p>dnspy 安装 <code>yay -S dnspy</code> (需要使用blackarch源)</p>
+<p>tmux 终端工具 安装 <code>yay -S tmux</code></p>
+<p>byobu 终端工具 安装 <code>yay -S byobu</code></p>
+<p>API文档工具 zeal 安装 <code>yay -S zeal</code></p>
+<p>bcompare 安装 <code>yay -S bcompare </code></p>
+<p>tldr 简化版文档工具 <code> yay -S tldr</code> （rust版本 <code>yay -S  tealdeer </code> ）</p>
+<p>.net core 安装 <code>yay -S dotnet-sdk-bin</code></p>
+<p>vscode 安装 <code>yay -S visual-studio-code-bin</code></p>
+<p>终端录屏幕<a href="https://asciinema.org/">asciinema</a> 安装 <code>yay -S asciinema</code></p>
+<p>证书生成工具 mkcert 安装 <code>yay -S mkcert</code></p>
+<p>netcat <code>yay -S  --noconfirm gnu-netcat</code> 或者 <code>yay -S --noconfirm openbsd-netcat </code></p>
+<p>微信开发者工具 <code>yay -S wechat-devtool </code></p>
+<p>Platform-Tools for Google Android SDK (adb and fastboot) 安装 <code>yay -S android-sdk-platform-tools</code></p>
+<p>编译链工具<a href="http://xmake.io">xmake</a> 安装 <code>yay -S xmake</code></p>
+<p>percona-toolkit (mysql辅助分析工具) <code>yay -S percona-toolkit</code></p>
+<p>注：</p>
+<p>jetbrains系列软件，自带更新功能，但是我们一般使用非root用户进行登录，这时需要将安装目录授权给当前登录用户即可。以goland为例，只需要执行 <code>chown -R $(whoami) /opt/goland</code> 即可进行自动升级。</p>
+<p>strace <code>yay -S strace</code></p>
+<p>dtrace <code>yay -S dtrace-utils</code>  (使用<a href="https://zhuanlan.zhihu.com/p/180053751">教程</a>)</p>
+<p>cloudflare Argo tunnel <code>yay -S cloudflared</code> （使用<a href="https://www.blueskyxn.com/202102/4176.html">教程</a>）</p>
+<p>nmon <code>yay -S nmon</code></p>
+<p>nload <code>yay -S nload</code></p>
+<p>tcpflow <code>yay -S tcpflow</code></p>
+<p>tiup (可以快速启动tidb的playground) <code>curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh</code></p>
+<p>参考</p>
+<ul>
+<li>vmware安装后报错的问题 <a href="https://blog.csdn.net/weixin_43968923/article/details/100184356">https://blog.csdn.net/weixin_43968923/article/details/100184356</a></li>
+<li>科学技术大学blackarch源使用说明 <a href="https://lug.ustc.edu.cn/wiki/mirrors/help/blackarch">https://lug.ustc.edu.cn/wiki/mirrors/help/blackarch</a></li>
+<li>jetbrains系列软件markdown插件无预览标签 <code>yay -S  java-openjfx-bin</code> ，参考<a href="https://intellij-support.jetbrains.com/hc/en-us/community/posts/360001515959-Markdown-Support-plugin-preview-not-working-in-Linux">链接</a></li>
+</ul>
+<h2 id="服务器组件">服务器组件</h2>
+<h3 id="数据库">数据库</h3>
+<p>percona-Server <code>yay -S percona-server</code></p>
+<p><a href="https://wiki.archlinux.org/title/MariaDB">Mariadb</a> <code>yay -S mariadb</code></p>
+<h2 id="其他">其他</h2>
+<p>screenfetch (终端打印出你的系统信息) 安装 <code>yay -S screenfetch</code></p>
+<p>neofetch <code>yay -S neofetch</code></p>
+<p>copyQ (类似ditto) 安装 <code>yay -S copyq</code></p>
+<p>ifconfig、netstat 安装 <code>yay -S net-tools</code></p>
+<p>文件搜索albert（类似mac上的Spotlight） 安装 <code>yay -S albert</code></p>
+<p>Stow配置管理软件 安装 <code>yay -S stow</code></p>
+<p>snap 安装 <code>yay -S --noconfirm --needed snapd</code></p>
+<p>figlet 字符串logo生成工具 <code>yay -S figlet</code></p>
+<p>软件包降级工具 downgrade <code>yay -S downgrade</code></p>
+<p>thefuck输错命令更正工具 <code>yay -S thefuck</code></p>
+<p>appimagelauncher 安装 <code>yay -S  appimagelauncher</code></p>
+<p>终端文件管理器ranger 安装 <code>yay -S ranger</code></p>
+<p>硬盘自动休眠 <a href="http://hd-idle.sourceforge.net">hd-idle</a> 安装 <code>yay -S hd-idle</code>  （或者 <code>hdparam</code> ）</p>
+<p>参考</p>
+<ul>
+<li>使用 Stow 管理多台机器配置<a href="https://blog.csdn.net/F8qG7f9YD02Pe/article/details/104046845">https://blog.csdn.net/F8qG7f9YD02Pe/article/details/104046845</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/106593833?utm_source=wechat_session&amp;utm_medium=social&amp;utm_oi=33332939194368">https://zhuanlan.zhihu.com/p/106593833?utm_source=wechat_session&amp;utm_medium=social&amp;utm_oi=33332939194368</a></li>
+<li>在Arch Linux/Manjaro上安装Snap <a href="https://ywnz.com/linuxjc/4635.html">https://ywnz.com/linuxjc/4635.html</a></li>
+<li>修改主目录为英文 <a href="https://www.jianshu.com/p/73299b8e3f58">原文</a></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#a6e22e">sudo</span> <span style="color:#a6e22e">pacman</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">S</span> <span style="color:#a6e22e">xdg</span><span style="color:#f92672">-</span><span style="color:#a6e22e">user</span><span style="color:#f92672">-</span><span style="color:#a6e22e">dirs</span><span style="color:#f92672">-</span><span style="color:#a6e22e">gtk</span>
+<span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#a6e22e">export</span> <span style="color:#a6e22e">LANG</span>=<span style="color:#a6e22e">en_US</span>
+<span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#a6e22e">xdg</span><span style="color:#f92672">-</span><span style="color:#a6e22e">user</span><span style="color:#f92672">-</span><span style="color:#a6e22e">dirs</span><span style="color:#f92672">-</span><span style="color:#a6e22e">gtk</span><span style="color:#f92672">-</span><span style="color:#a6e22e">update</span>
+<span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">然后会有个窗口提示语言更改</span><span style="color:#960050;background-color:#1e0010">，</span><span style="color:#a6e22e">更新名称即可</span>
+<span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#a6e22e">export</span> <span style="color:#a6e22e">LANG</span>=<span style="color:#a6e22e">zh_CN</span>.<span style="color:#a6e22e">UTF</span><span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>
+<span style="color:#960050;background-color:#1e0010">$</span> <span style="color:#a6e22e">sudo</span> <span style="color:#a6e22e">pacman</span> <span style="color:#f92672">-</span><span style="color:#a6e22e">Rs</span> <span style="color:#a6e22e">xdg</span><span style="color:#f92672">-</span><span style="color:#a6e22e">user</span><span style="color:#f92672">-</span><span style="color:#a6e22e">dirs</span><span style="color:#f92672">-</span><span style="color:#a6e22e">gtk</span>
+
+</code></pre></div><h2 id="品牌笔记本支持">品牌笔记本支持</h2>
+<p>thinkpad thinkfan 安装<code>yay -S thinkfan</code>
+参考</p>
+<ul>
+<li><a href="https://wiki.archlinux.org/index.php/Laptop/Lenovo">https://wiki.archlinux.org/index.php/Laptop/Lenovo</a></li>
+<li>TLP  <a href="https://wiki.archlinux.org/index.php/TLP_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">https://wiki.archlinux.org/index.php/TLP_(简体中文)</a></li>
+<li>thinkfan 配置及启动参考 <a href="https://wiki.archlinux.org/index.php/Thinkpad_Fan_Control">https://wiki.archlinux.org/index.php/Thinkpad_Fan_Control</a></li>
+<li><a href="https://www.cnblogs.com/henryau/archive/2012/03/03/ubuntu_thinkfan.html">https://www.cnblogs.com/henryau/archive/2012/03/03/ubuntu_thinkfan.html</a></li>
+<li>GDM <a href="https://wiki.archlinux.org/index.php/GDM">https://wiki.archlinux.org/index.php/GDM</a></li>
+<li>强制登陆界面在主显示器上显示 <a href="https://askubuntu.com/questions/11738/force-gdm-login-screen-to-the-primary-monitor">https://askubuntu.com/questions/11738/force-gdm-login-screen-to-the-primary-monitor</a></li>
+<li>指纹识别 <a href="https://wiki.archlinux.org/index.php/Fprint">https://wiki.archlinux.org/index.php/Fprint</a></li>
+</ul>
+<h2 id="网卡">网卡</h2>
+<p>8811cu <code>yay -S rtl8821cu-dkms-git </code></p>
+<p>参考<a href="https://wiki.archlinux.org/index.php/Network_configuration/Wireless#rtl8811cu/rtl8821cu">链接</a></p>
+<h2 id="系统参数调优">系统参数调优</h2>
+<ul>
+<li><a href="https://averagelinuxuser.com/10-things-to-do-after-installing-manjaro/">https://averagelinuxuser.com/10-things-to-do-after-installing-manjaro/</a></li>
+<li>字体渲染 <a href="http://www.badwolfbay.cn/2020/03/17/manjaro-setting/">http://www.badwolfbay.cn/2020/03/17/manjaro-setting/</a></li>
+</ul>
+
+      </article>
+    </div>
+
+    
+      <div class="meta article-card">
+    <div class="row">
+      <span class="label">
+
+
+
+<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M32 456a24 24 0 0024 24h400a24 24 0 0024-24V176H32zm320-244a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm0 80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm-80-80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm0 80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm0 80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm-80-80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm0 80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm-80-80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zm0 80a4 4 0 014-4h40a4 4 0 014 4v40a4 4 0 01-4 4h-40a4 4 0 01-4-4zM456 64h-55.92V32h-48v32H159.92V32h-48v32H56a23.8 23.8 0 00-24 23.77V144h448V87.77A23.8 23.8 0 00456 64z'/></svg>
+
+
+
+
+
+
+
+
+
+
+
+
+
+Published At</span><time>2022-02-23 08:00 CST</time>
+      
+    </div>
+
+    
+      <div class="row">
+        <span class="label">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M288 16L0 304l176 176 288-288V16zm80 128a32 32 0 1132-32 32 32 0 01-32 32z'/><path d='M480 64v144L216.9 471.1 242 496l270-272V64h-32z'/></svg>
+
+
+
+Tagged with</span>
+        <ul class="tags">
+        
+          <li class="hashed-tag"><a href="https://czyt.tech/tags/linux">linux</a></li>
+        
+          <li class="hashed-tag"><a href="https://czyt.tech/tags/arch">Arch</a></li>
+        
+          <li class="hashed-tag"><a href="https://czyt.tech/tags/manjaro">Manjaro</a></li>
+        
+          <li class="hashed-tag"><a href="https://czyt.tech/tags/tools">tools</a></li>
+        
+        </ul>
+      </div>
+    
+
+    <div class="row social-share">
+      <span class="label">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512'><path d='M272 176v161h-32V176H92a12 12 0 00-12 12v280a12 12 0 0012 12h328a12 12 0 0012-12V188a12 12 0 00-12-12zM272 92.63l64 64L358.63 134 256 31.37 153.37 134 176 156.63l64-64V176h32V92.63z'/></svg>
+
+Share with</span>
+      
+      
+        
+      
+      <a
+        target="_blank"
+        title="share to reddit"
+        rel="noopener noreferrer"
+        aria-label="share Arch Linux 常用软件 on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2fczyt.tech%2fpost%2farch-awesome-software%2f&title=Arch%20Linux%20%e5%b8%b8%e7%94%a8%e8%bd%af%e4%bb%b6">
+        
+
+
+
+
+
+
+
+
+
+<svg xmlns='http://www.w3.org/2000/svg' class='ionicon' viewBox='0 0 512 512' fill="currentColor" stroke="currentColor" stroke-width="10"><path d='M324 256a36 36 0 1036 36 36 36 0 00-36-36z'/><circle cx='188' cy='292' r='36' transform='rotate(-22.5 187.997 291.992)'/><path d='M496 253.77c0-31.19-25.14-56.56-56-56.56a55.72 55.72 0 00-35.61 12.86c-35-23.77-80.78-38.32-129.65-41.27l22-79 66.41 13.2c1.9 26.48 24 47.49 50.65 47.49 28 0 50.78-23 50.78-51.21S441 48 413 48c-19.53 0-36.31 11.19-44.85 28.77l-90-17.89-31.1 109.52-4.63.13c-50.63 2.21-98.34 16.93-134.77 41.53A55.38 55.38 0 0072 197.21c-30.89 0-56 25.37-56 56.56a56.43 56.43 0 0028.11 49.06 98.65 98.65 0 00-.89 13.34c.11 39.74 22.49 77 63 105C146.36 448.77 199.51 464 256 464s109.76-15.23 149.83-42.89c40.53-28 62.85-65.27 62.85-105.06a109.32 109.32 0 00-.84-13.3A56.32 56.32 0 00496 253.77zM414 75a24 24 0 11-24 24 24 24 0 0124-24zM42.72 253.77a29.6 29.6 0 0129.42-29.71 29 29 0 0113.62 3.43c-15.5 14.41-26.93 30.41-34.07 47.68a30.23 30.23 0 01-8.97-21.4zM390.82 399c-35.74 24.59-83.6 38.14-134.77 38.14S157 423.61 121.29 399c-33-22.79-51.24-52.26-51.24-83A78.5 78.5 0 0175 288.72c5.68-15.74 16.16-30.48 31.15-43.79a155.17 155.17 0 0114.76-11.53l.3-.21.24-.17c35.72-24.52 83.52-38 134.61-38s98.9 13.51 134.62 38l.23.17.34.25A156.57 156.57 0 01406 244.92c15 13.32 25.48 28.05 31.16 43.81a85.44 85.44 0 014.31 17.67 77.29 77.29 0 01.6 9.65c-.01 30.72-18.21 60.19-51.25 82.95zm69.6-123.92c-7.13-17.28-18.56-33.29-34.07-47.72A29.09 29.09 0 01440 224a29.59 29.59 0 0129.41 29.71 30.07 30.07 0 01-8.99 21.39z'/><path d='M323.23 362.22c-.25.25-25.56 26.07-67.15 26.27-42-.2-66.28-25.23-67.31-26.27a4.14 4.14 0 00-5.83 0l-13.7 13.47a4.15 4.15 0 000 5.89c3.4 3.4 34.7 34.23 86.78 34.45 51.94-.22 83.38-31.05 86.78-34.45a4.16 4.16 0 000-5.9l-13.71-13.47a4.13 4.13 0 00-5.81 0z'/></svg>
+
+
+
+
+
+
+
+
+      </a>
+      <a
+        target="_blank" 
+        title="share to twitter"
+        rel="noopener noreferrer"
+        aria-label="share Arch Linux 常用软件 on twitter"
+        href="https://twitter.com/intent/tweet/?text=Arch%20Linux%20%e5%b8%b8%e7%94%a8%e8%bd%af%e4%bb%b6&amp;url=https%3a%2f%2fczyt.tech%2fpost%2farch-awesome-software%2f&amp;hashtags=linux%2cArch%2cManjaro%2ctools">
+        
+
+
+
+
+
+
+
+
+
+
+<svg class="ionicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="fill:none;" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+
+
+
+
+
+
+
+      </a>
+      <a
+        target="_blank"
+        title="share to facebook"
+        rel="noopener noreferrer"
+        aria-label="share Arch Linux 常用软件 on facebook"
+        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fczyt.tech%2fpost%2farch-awesome-software%2f">
+        
+
+
+
+
+
+
+
+
+<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 24 24" style="fill:none;" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+
+
+
+
+
+
+
+
+
+      </a>
+    </div>
+
+    
+</div>
+
+    
+
+    
+
+  </div>
+</main>
+
+    <footer id="footer">
+  <div class="container has-padding is-flex">
+    <ul class="links">
+      
+      <li>
+        <a class="nav-link navbar-button" href="https://czyt.tech/index.xml" type="application/rss+xml">RSS</a>
+      </li>
+      <li>
+        <a
+          rel="nofollow"
+          target="_blank"
+          href="https://github.com/wayjam/hugo-theme-fluency"
+          title="using Hugo theme fluency">
+          Theme Fluency
+        </a>
+      </li>
+      <li>
+        <a rel="nofollow" target="_blank" href="https://gohugo.io" title="Built with hugo">Built with Hugo</a>
+      </li>
+    </ul>
+    <div class="copyright">
+       &copy; 2022 虫子樱桃
+      
+    </div>
+  </div>
+</footer>
+
+<script>
+    window.FluencyCopyIcon = '\n\n\n\n\n\n\n\u003csvg xmlns=\u0027http:\/\/www.w3.org\/2000\/svg\u0027 class=\u0027ionicon\u0027 viewBox=\u00270 0 512 512\u0027\u003e\u003crect x=\u0027128\u0027 y=\u0027128\u0027 width=\u0027336\u0027 height=\u0027336\u0027 rx=\u002757\u0027 ry=\u002757\u0027 stroke-linejoin=\u0027round\u0027 class=\u0027ionicon-fill-none ionicon-stroke-width\u0027\/\u003e\u003cpath d=\u0027M383.5 128l.5-24a56.16 56.16 0 00-56-56H112a64.19 64.19 0 00-64 64v216a56.16 56.16 0 0056 56h24\u0027 stroke-linecap=\u0027round\u0027 stroke-linejoin=\u0027round\u0027 class=\u0027ionicon-fill-none ionicon-stroke-width\u0027\/\u003e\u003c\/svg\u003e\n\n\n\n\n\n\n\n\n\n\n'
+</script>
+
+
+<script defer src="https://czyt.tech/js/main.min.7685c4d03abca7fd02a772a2e64c7a8aa3a7031024bbab70a17975e8928cb004.js" integrity="sha256-doXE0Dq8p/0Cp3Ki5kx6iqOnAxAku6twoXl16JKMsAQ=" crossorigin="anonymous" async></script>
+
+
+
+<noscript>
+<style type=text/css>#theme-selector-button{display:none}</style>
+</noscript>
+
+
+
+
+  </body>
+</html>

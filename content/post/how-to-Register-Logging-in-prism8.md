@@ -91,3 +91,4 @@ public class MyService : IMyService
 
 ## 参考连接
 + [How To Register Logging in a Prism 8 WPF App](https://www.andicode.com/prism/wpf/logging/2021/05/21/Logging-In-Prism.html)
++ [WPF Prism8.0中注册Nlog日志服务](https://www.cnblogs.com/zh7791/p/15162484.html)

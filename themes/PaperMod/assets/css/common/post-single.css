@@ -193,6 +193,8 @@
     display: none;
 }
 
+
+
 .post-content code {
     margin: auto 4px;
     padding: 4px 6px;
@@ -211,6 +213,18 @@
     border-radius: 0;
     overflow-x: auto;
     word-break: break-all;
+}
+
+.post-content pre code::before {
+	    background: #fc625d;
+			border-radius: 50%;
+			box-shadow: 20px 0 #fdbc40, 40px 0 #35cd4b;
+			content: '';
+			height: 12px;
+			left: 12px;
+			margin-top: -22px;
+			position: absolute;
+			width: 12px;
 }
 
 .post-content blockquote {

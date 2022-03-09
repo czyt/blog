@@ -79,8 +79,6 @@ Chrome 安装 `yay -S google-chrome`
 
 
 
-
-
 ## 翻译软件
 
 有道词典 安装 `yay -S youdao-dict`
@@ -295,6 +293,8 @@ ibus-daemon -d -x
 
 全聚合影视 安装 `yay -S vst-video-bin` 
 
+OBS推流工具 `yay -S obs-studio` 
+
 ## 美化
 
 ### docky 安装
@@ -398,6 +398,8 @@ nodejs 安装 ` yay -S nodejs npm` （安装cnpm `npm install -g cnpm --registry
 c/c++开发  安装 `yay -S make cmake gdb gcc` 
 
 goland 安装 `yay -S goland goland-jre`
+
+[commitizen-go](https://github.com/lintingzhen/commitizen-go) 安装 `yay -S commitizen-go `  相似的程序[gitcz](https://github.com/xiaoqidun/gitcz)
 
 datagrip 安装 `yay -S datagrip datagrip-jre`
 

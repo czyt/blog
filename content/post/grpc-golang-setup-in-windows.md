@@ -237,7 +237,11 @@ go install \
 - protoc-gen-go failed :: The import path must contain at least one forward slash ('/') character."
 
        修改proto定义中的 `option go_package="pb";` 为 `option go_package = "./;pb";`
-       参考[链接](https://github.com/techschool/pcbook-go/issues/3)
+
+参考
+
+ [链接](https://github.com/techschool/pcbook-go/issues/3)
+
 ## 参考教程
 
 1. [https://www.liwenzhou.com/posts/Go/gRPC/](https://www.liwenzhou.com/posts/Go/gRPC/)

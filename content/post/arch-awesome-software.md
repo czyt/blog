@@ -547,3 +547,13 @@ thinkpad thinkfan 安装`yay -S thinkfan`
 
 - [https://averagelinuxuser.com/10-things-to-do-after-installing-manjaro/](https://averagelinuxuser.com/10-things-to-do-after-installing-manjaro/)
 - 字体渲染 [http://www.badwolfbay.cn/2020/03/17/manjaro-setting/](http://www.badwolfbay.cn/2020/03/17/manjaro-setting/)
+
+## 常见问题
+- invalid or corrupted package (PGP signature)
+
+```bash
+sudo rm -R /etc/pacman.d/gnupg/
+sudo pacman-key --init
+sudo pacman-key --populate archlinux
+sudo pacman-key --populate archlinuxcn
+```

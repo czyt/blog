@@ -1,7 +1,7 @@
 ---
 title:"判断是否是UEFI启动的代码"
 date: 2016-01-30
-tags:[ "AU3"]
+tags: [ "AU3"]
 draft: false
 ---
 

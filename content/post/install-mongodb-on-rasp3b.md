@@ -67,4 +67,20 @@ draft: false
      bindIp: 0.0.0.0
    ```
 
+   3. 创建用户。执行`mongo`命令，执行下面的命令。
    
+      ```bash
+      use admin;
+      db.addUser('admin','123456')
+      ```
+   
+      修改配置文件`/etc/mongodb.conf`，启用授权连接。
+   
+      ```yaml
+      security:
+          authorization: enabled
+      ```
+   
+      重启mongodb服务 `systemctl restart mongodb` 使配置生效。
+   
+      

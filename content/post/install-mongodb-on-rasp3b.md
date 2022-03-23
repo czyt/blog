@@ -33,9 +33,9 @@ draft: false
 
 使用命令 `yay -S mongodb44-bin`进行安装，安装完毕后
 
-启用服务 `systemctl enable mongodb`
++ 启用服务 `systemctl enable mongodb`
 
-检查服务状态 `systemctl status mongodb`
++ 检查服务状态 `systemctl status mongodb`
 
 ``` bash
 ● mongodb.service - MongoDB Database Server
@@ -48,8 +48,23 @@ draft: false
              └─624895 /usr/bin/mongod --config /etc/mongodb.conf
 ```
 
-说明：
+## 遇到的问题
 
-   开始使用的是 `yay -S mongodb-bin`进行安装，结果运行后老是报错``,后搜索官方论坛解决。
+1. 启动服务报错 `非法指令 (核心已转储)`英文系统可能是`(Illegal instruction(core dumped))`
+
+   开始使用的是 `yay -S mongodb-bin`进行安装，后搜索官方论坛发现是官方打包的时候默认使用了最新架构，但是树莓派是老设备，可能不支持部分指令，换成上文的指令安装`4.x`版本后解决。
 
   原帖 https://www.mongodb.com/community/forums/t/core-dump-on-mongodb-5-0-on-rpi-4/115291/13
+
+2. 启动服务后不能连接到mongoDB
+
+   需要修改配置文件，默认是`/etc/mongodb.conf`,修改其中的监听地址为`0.0.0.0`或者您要访问MongoDB服务的网段中当前设备的IP。
+
+   ```yaml
+   # network interfaces
+   net:
+     port: 27017
+     bindIp: 0.0.0.0
+   ```
+
+   

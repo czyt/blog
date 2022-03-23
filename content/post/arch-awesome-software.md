@@ -383,6 +383,8 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 
 redis `yay -S redis` 
 
+mongoDB `yay -S mongodb-bin` (mongosh `yay -S mongosh-bin`)
+
 redis管理工具 `yay -S redis-desktop-manager` 
 
 github-cli 安装 `yay -S github-cli-bin` 

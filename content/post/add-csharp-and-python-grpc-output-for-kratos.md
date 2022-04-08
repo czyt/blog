@@ -12,8 +12,6 @@ draft: false
 
 1. 解压 找到tools中对应系统架构的软件，设置下环境变量，让系统可以找到就行。
 
-![img](https://cdn.nlark.com/yuque/0/2022/png/457321/1648737388899-4088871f-2f9a-4587-bab0-26a976426da3.png)
-
 Linux 需要创建一个符号链接 
 
 ```bash

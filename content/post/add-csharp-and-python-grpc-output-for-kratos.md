@@ -61,13 +61,13 @@ https://github.com/grpc/grpc/blob/master/src/csharp/BUILD-INTEGRATION.md
 /usr/sbin/protoc-gen-grpclib_python
 ```
 
-1. 如法炮制，创建软链接
+3. 如法炮制，创建软链接
 
 ```bash
 ln -s /usr/sbin/protoc-gen-grpclib_python /usr/sbin/protoc-gen-grpc_python
 ```
 
-1. 修改Makefile 添加下面的内容,再执行`make api`生成api即可。
+4. 修改Makefile 添加下面的内容,再执行`make api`生成api即可。
 
 ```makefile
 --python_out=./api \

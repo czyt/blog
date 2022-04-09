@@ -327,6 +327,42 @@ plugins=(git zsh-syntax-highlighting docker docker-compose zsh-autosuggestions z
 
 zsh在使用nohup执行任务的时候，可能会出现session注销后，nohup自动被终止的情况，若要保持运行，请执行`setopt NO_HUP` 参考[Zsh](http://zsh.sourceforge.net/Guide/zshguide02.html)文档
 
+另外还有一个[SpaceShip](https://github.com/spaceship-prompt/spaceship-prompt)的插件也不错，可以试下。参考[这篇文章](https://garrytrinder.github.io/2020/12/my-wsl2-windows-terminal-setup)，下面是引用部分
+
+> ## paceship ZSH
+>
+> I use [Spaceship ZSH](https://denysdovhan.com/spaceship-prompt/) as my shell theme, not only does it make my prompt look nice but it also provides extensions that helps improve my developer workflow, bringing information like the current git branch, git status, npm package version and current node version into my shell prompt for increased visibility.
+>
+> I ran the script at the command line to download and install.
+>
+> ```
+> git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+> ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+> ```
+>
+> I set `ZSH_THEME="spaceship"` and uncommented the line in `.zshrc`.
+>
+> I added `SPACESHIP_PROMPT_ORDER` array to `.zshrc` above `source $ZSH/oh-my-zsh.sh` line.
+>
+> ```
+> SPACESHIP_PROMPT_ORDER=(
+>   dir           # Current directory section
+>   git           # Git section (git_branch + git_status)
+>   package       # Package version
+>   node          # Node.js section
+>   dotnet        # .NET section
+>   ruby          # Ruby section
+>   exec_time     # Execution time
+>   line_sep      # Line break
+>   battery       # Battery level and status
+>   jobs          # Background jobs indicator
+>   exit_code     # Exit code section
+>   char          # Prompt character
+> )
+> ```
+>
+> > The `SPACESHIP_PROMPT_ORDER` array enables you to define which sections are enabled or disabled in the prompt, this is optional but can improve the performance of the prompt. The less sections are loaded the faster the shell will load, so I enable the sections that are of use to me.
+
 > **HUP**
 > ... In zsh, if you have a background job running when the shell exits, the shell will assume you want that to be killed; in this case it is sent a particular signal called SIGHUP... If you often start jobs that should go on even when the shell has exited, then you can set the option NO_HUP, and background jobs will be left alone.
 
@@ -357,6 +393,8 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 ### nushell
 
 安装 `yay -S nushell` 
+
+[Warp Terminal](https://www.warp.dev) （有Linux版本的计划，暂未发布）
 
 ### 自定义主题
 

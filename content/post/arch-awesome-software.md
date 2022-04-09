@@ -465,6 +465,8 @@ byobu 终端工具 安装 `yay -S byobu`
 
 API文档工具 zeal 安装 `yay -S zeal` 
 
+[windterm](https://github.com/kingToolbox/WindTerm) 安装 `yay -S windterm-bin `
+
 bcompare 安装 `yay -S bcompare ` 
 
 tldr 简化版文档工具 ` yay -S tldr` （rust版本 `yay -S  tealdeer ` ）
@@ -524,6 +526,8 @@ percona-Server `yay -S percona-server`
 screenfetch (终端打印出你的系统信息) 安装 `yay -S screenfetch`
 
 neofetch `yay -S neofetch`
+
+![image-20220409140401125](https://assets.czyt.tech/img/image-20220409140401125.png)
 
 copyQ (类似ditto) 安装 `yay -S copyq`
 

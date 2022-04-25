@@ -175,6 +175,21 @@ else if (GetSystemMetrics(SystemMetric.SM_SYSTEMDOCKED) == 0)
 }
 ```
 
+修改键盘布局
+
+[MSDN](https://docs.microsoft.com/en-gb/windows/win32/api/winuser/nf-winuser-loadkeyboardlayouta?redirectedfrom=MSDN) LoadKeyboardLayout
+
+```c#
+[DllImport("user32.dll")]
+static extern IntPtr LoadKeyboardLayout(string pwszKLID, uint Flags);
+```
+
+调用例子
+
+```c#
+LoadKeyboardLayout("00010409", 1)
+```
+
 
 
 ## 参考

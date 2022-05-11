@@ -507,7 +507,7 @@ tcpflow `yay -S tcpflow`
 
  pyroscope性能监测工具  `yay -S pyroscope-bin` (使用[教程](https://colobu.com/2022/01/27/pyroscope-a-continuous-profiling-platform/) [官方教程](https://pyroscope.io/docs/server-install-linux/))
 
-tiup (可以快速启动tidb的playground) `curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh`
+
 
 参考
 
@@ -521,7 +521,15 @@ tiup (可以快速启动tidb的playground) `curl --proto '=https' --tlsv1.2 -sSf
 
 percona-Server `yay -S percona-server`
 
+postresql `yay -S postgresql` 
+
+mongoDB `yay -S mongodb ` 
+
+percona-mongoDB `yay -S percona-server-mongodb-bin`
+
 [Mariadb](https://wiki.archlinux.org/title/MariaDB) `yay -S mariadb`
+
+tiup (可以快速启动tidb的playground) `curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh`
 
 clickhouse `yay -S clickhouse` ([官方文档](https://clickhouse.com/docs/en/getting-started/install))
 

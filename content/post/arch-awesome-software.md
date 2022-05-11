@@ -505,6 +505,8 @@ nload `yay -S nload`
 
 tcpflow `yay -S tcpflow` 
 
+ pyroscope性能监测工具  `yay -S pyroscope-bin` (使用[教程](https://colobu.com/2022/01/27/pyroscope-a-continuous-profiling-platform/) [官方教程](https://pyroscope.io/docs/server-install-linux/))
+
 tiup (可以快速启动tidb的playground) `curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh`
 
 参考

@@ -523,6 +523,8 @@ percona-Server `yay -S percona-server`
 
 [Mariadb](https://wiki.archlinux.org/title/MariaDB) `yay -S mariadb`
 
+clickhouse `yay -S clickhouse` ([官方文档](https://clickhouse.com/docs/en/getting-started/install))
+
 ## 其他
 
 screenfetch (终端打印出你的系统信息) 安装 `yay -S screenfetch`

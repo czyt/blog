@@ -25,3 +25,4 @@ type stripeLock struct {Fabian Reinartz, 5 years ago: • Replace single head lo
 + https://dariodip.medium.com/false-sharing-an-example-with-go-bc7e90594f3f
 + https://github.com/glebarez/false-sharing-demo
 + https://betterprogramming.pub/when-io-bound-hides-inside-cpu-e6e7f9df3187
++ https://colobu.com/2019/01/24/cacheline-affects-performance-in-go/

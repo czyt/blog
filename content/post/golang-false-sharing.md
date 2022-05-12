@@ -5,6 +5,8 @@ tags: ["golang"]
 draft: false
 ---
 
+![image-20220512210618415](https://assets.czyt.tech/img/image-20220512210618415.png)
+
 ## 缘起
 
 来自于一段[prometheus](https://github.com/prometheus/prometheus/blob/main/tsdb/head.go#L1341)代码

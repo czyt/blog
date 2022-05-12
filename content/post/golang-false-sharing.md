@@ -51,3 +51,4 @@ type stripeLock struct {
 + https://betterprogramming.pub/when-io-bound-hides-inside-cpu-e6e7f9df3187
 + https://colobu.com/2019/01/24/cacheline-affects-performance-in-go/
 + https://www.shouxicto.com/article/3984.html
++ https://www.wangt.cc/2021/11/golang-%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90%E5%92%8C%E4%BC%AA%E5%85%B1%E4%BA%ABfalse-sharing/

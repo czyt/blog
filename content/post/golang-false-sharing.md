@@ -12,7 +12,7 @@ draft: false
 来自于一段[prometheus](https://github.com/prometheus/prometheus/blob/main/tsdb/head.go#L1341)代码
 
 ```go
-type stripeLock struct {Fabian Reinartz, 5 years ago: • Replace single head lock with granular locks
+type stripeLock struct { 
 	sync.RWMutex
 	// Padding to avoid multiple locks being on the same cache line.
 	_ [40]byte
@@ -50,3 +50,4 @@ type stripeLock struct {Fabian Reinartz, 5 years ago: • Replace single head lo
 + https://github.com/glebarez/false-sharing-demo
 + https://betterprogramming.pub/when-io-bound-hides-inside-cpu-e6e7f9df3187
 + https://colobu.com/2019/01/24/cacheline-affects-performance-in-go/
++ https://www.shouxicto.com/article/3984.html

@@ -15,5 +15,6 @@ collections:
     fields:
       - { label: '标题', name: 'title', widget: 'string' }
       - { label: '日期', name: 'date', widget: 'datetime' }
-      - { label: 'Tag', name: 'tags', widget: 'string' }
+      - { label: 'Tag', name: 'tags', widget: 'list' , allow_add: true,default: ["golang"] }
+      - { label: '保存为草稿', name: 'draft', widget: "boolean", default: true }
       - { label: '正文', name: 'body', widget: 'markdown' }

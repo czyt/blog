@@ -5,13 +5,13 @@ media_folder: static/img
 public_folder: /img
 publish_mode: editorial_workflow
 collections:
-  - name: 'Post'
-    label: 'Post'
+  - name: 'posts'
+    label: '文章'
     folder: 'content/post'
     create: true
     slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
     editor:
-      preview: false
+      preview: true
     fields:
       - { label: '标题', name: 'title', widget: 'string' }
       - { label: '日期', name: 'date', widget: 'datetime' }

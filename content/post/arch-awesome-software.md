@@ -443,6 +443,8 @@ goland 安装 `yay -S goland goland-jre`
 
 datagrip 安装 `yay -S datagrip datagrip-jre`
 
+Android Studio 安装 `yay -S android-studio` (安卓SDK `yay -S android-sdk`) 
+
 clion 安装 `yay -S clion clion-jre` 
 
 pycharm 安装 `yay -S pycharm pycharm-jre` 

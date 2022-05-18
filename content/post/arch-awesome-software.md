@@ -140,7 +140,9 @@ OneDive 安装 `yay -S onedrive` 或者 `yay -S onedrive-abraunegg`
 
 百度云 安装 `yay -S baidunetdisk-bin` 或者 安装深度的版本 `yay -S deepin-baidu-pan`
 
-坚果云 安装 `yay -S nutstore`
+坚果云 安装 `yay -S nutstore` 或者 坚果云实验版 `yay -S nutstore-experimental `
+
+[^坚果云窗口太小，看不到输入框。]: 可以用 `sudo pacman -S gvfs libappindicator-gtk3`
 
 DropBox 安装 `yay -S dropbox` 
 
@@ -417,11 +419,17 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 /usr//share/plasma/look-and-feel/ 存放全局主题
 /usr/share/plasma/plasmoids/ 存放插件
 
+## 编程语言
+
+go 安装 `yay -S go`
+
+rust 安装 `yay -S rustup`
+
+flutter 安装 `yay -S flutter`
+
+.net core 安装 `yay -S dotnet-sdk-bin` 
+
 ## 开发工具
-
-redis `yay -S redis` 
-
-mongoDB `yay -S mongodb-bin` (mongosh `yay -S mongosh-bin`)
 
 redis管理工具 `yay -S redis-desktop-manager` 
 
@@ -430,6 +438,8 @@ github-cli 安装 `yay -S github-cli-bin`
 minicom串口工具 安装 `yay -S minicom` (设置参数 `sudo minicom -s` )
 
 串口助手 安装 `yay -S serialtool` 
+
+[serial-studio](https://github.com/Serial-Studio/Serial-Studio/blob/master/doc/README_ZH.md) 串行数据可视化工具 安装 `yay -S serial-studio-git`
 
 nodejs 安装 ` yay -S nodejs npm` （安装cnpm `npm install -g cnpm --registry=https://registry.npm.taobao.org  ` ）
 
@@ -470,8 +480,6 @@ API文档工具 zeal 安装 `yay -S zeal`
 bcompare 安装 `yay -S bcompare ` 
 
 tldr 简化版文档工具 ` yay -S tldr` （rust版本 `yay -S  tealdeer ` ）
-
-.net core 安装 `yay -S dotnet-sdk-bin` 
 
 vscode 安装 `yay -S visual-studio-code-bin` 
 
@@ -519,13 +527,15 @@ tcpflow `yay -S tcpflow`
 
 ### 数据库
 
+redis `yay -S redis` 
+
 percona-Server `yay -S percona-server`
 
 postresql `yay -S postgresql` 
 
-mongoDB `yay -S mongodb ` 
+mongoDB `yay -S mongodb ` 或者 `yay -S mongodb-bin` 
 
-percona-mongoDB `yay -S percona-server-mongodb-bin`
+percona-mongoDB `yay -S percona-server-mongodb-bin`  (mongosh `yay -S mongosh-bin`)
 
 [Mariadb](https://wiki.archlinux.org/title/MariaDB) `yay -S mariadb`
 
@@ -562,6 +572,8 @@ appimagelauncher 安装 `yay -S  appimagelauncher`
 终端文件管理器ranger 安装 `yay -S ranger` 
 
 硬盘自动休眠 [hd-idle](http://hd-idle.sourceforge.net) 安装 `yay -S hd-idle`  （或者 `hdparam` ）
+
+宽带连接 rp-pppoe 安装 `yay -S rp-pppoe` （参考[官方wiki](https://wiki.archlinux.org/title/NetworkManager_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))）
 
 参考
 
@@ -613,3 +625,7 @@ sudo pacman-key --init
 sudo pacman-key --populate archlinux
 sudo pacman-key --populate archlinuxcn
 ```
+
+## 参考连接
+
+- [archlinux 简明指南](https://arch.icekylin.online)

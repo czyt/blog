@@ -307,7 +307,14 @@ OBS推流工具 `yay -S obs-studio`
 
 如果是KDE桌面
 `yay -S latte-dock` 
-（KDE推荐安装部件 `appication title` `全局菜单` `Launchpad plasma` `latte Spacer` `Event calendar` (个人google三色时间配置 `'<font color="#EB4334">'hh'</font>':'<font color="#35AA53">'mm'</font>':'<font color="#4586F3">'ss'</font>'` )）
+
+KDE
+
+（KDE推荐安装部件([下载网站](https://store.kde.org/),最好安装ocs-url `yay -S ocs-url`) `appication title` `全局菜单` `Launchpad plasma` `latte Spacer` `Event calendar` (个人google三色时间配置 `'<font color="#EB4334">'hh'</font>':'<font color="#35AA53">'mm'</font>':'<font color="#4586F3">'ss'</font>'` )）
+
+KDE whitesur主题 安装 `yay -S whitesur-kde-theme-git`
+
+[conky](https://github.com/brndnmtthws/conky) 性能显示组件 安装 `yay -S conky conky-manager`
 
 
 ### ohmyzh 安装
@@ -576,6 +583,17 @@ appimagelauncher 安装 `yay -S  appimagelauncher`
 硬盘自动休眠 [hd-idle](http://hd-idle.sourceforge.net) 安装 `yay -S hd-idle`  （或者 `hdparam` ）
 
 宽带连接 rp-pppoe 安装 `yay -S rp-pppoe` （参考[官方wiki](https://wiki.archlinux.org/title/NetworkManager_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))）
+
+磁盘清理
+
+ ```bash
+ sudo pacman -Scc
+ journalctl --disk-usage
+ sudo journalctl --vacuum-size=50M
+ sudo rm /var/lib/systemd/coredump/*
+ ```
+
+
 
 参考
 

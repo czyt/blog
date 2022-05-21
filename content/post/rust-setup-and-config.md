@@ -248,7 +248,7 @@ Rust is installed now. Great!
 
 参考
 
-+ [[Cross-compilation](https://rust-lang.github.io/rustup/cross-compilation.html#cross-compilation)]
++ [Cross-compilation](https://rust-lang.github.io/rustup/cross-compilation.html#cross-compilation)
 
 + [compiling-rust-for-raspberry-pi-arm](https://medium.com/swlh/compiling-rust-for-raspberry-pi-arm-922b55dbb050)
 

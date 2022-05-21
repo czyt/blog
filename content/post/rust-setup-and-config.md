@@ -246,7 +246,11 @@ Rust is installed now. Great!
 
   安装完成后可以通过Cargo进行编译 `cargo build --target=aarch64-unknown-linux-gnu`
 
+参考
 
++ [[Cross-compilation](https://rust-lang.github.io/rustup/cross-compilation.html#cross-compilation)]
+
+  
 
 -- 全文完 --
 

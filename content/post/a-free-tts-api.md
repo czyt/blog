@@ -5,7 +5,20 @@ tags: ["tts", "api"]
 draft: false
 ---
 
+
+
+```
 https://dds.dui.ai/runtime/v1/synthesize?voiceId=ppangf_csn&text=您好世界&speed=1&volume=50&audioType=wav
+```
+
+使用步骤
+
+{{<mermaid>}}
+graph LR
+选择发音-->输入汉字-->通过浏览器播放
+{{<mermaid>}}
+
+
 
 参数说明：
 

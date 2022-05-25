@@ -7,4 +7,7 @@
 ```bash
 git config --global http.https://github.com.proxy socks5://127.0.0.1:10808
 ```
+## Mermaid相关资料
++ [少数派Mermaid](https://sspai.com/post/63055#)
++ [官网](https://mermaid-js.github.io/mermaid/)
 

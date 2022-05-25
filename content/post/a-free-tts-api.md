@@ -6,7 +6,7 @@ draft: false
 ---
 
 
-
+示例：
 ```
 https://dds.dui.ai/runtime/v1/synthesize?voiceId=ppangf_csn&text=您好世界&speed=1&volume=50&audioType=wav
 ```
@@ -14,9 +14,9 @@ https://dds.dui.ai/runtime/v1/synthesize?voiceId=ppangf_csn&text=您好世界&sp
 使用步骤
 
 {{<mermaid>}}
-graph LR
-选择发音-->输入汉字-->通过浏览器播放
-{{<mermaid>}}
+graph LR;
+ 选择声音 --> 输入要转语音文本 --> 拼接URL  --> 使用语音
+{{</mermaid>}}
 
 
 

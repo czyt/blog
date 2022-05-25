@@ -31,7 +31,28 @@
             localStorage.setItem("menu-scroll-position", menu.scrollLeft);
         }
     }
-
+const loadScript = (url, onloadFunction) => {
+    var newScript = document.createElement("script");
+    newScript.onerror =  (oError) => {
+      throw new URIError("The script " + oError.target.src + " didn't load correctly.");
+    };
+    if (onloadFunction) { newScript.onload = onloadFunction; }
+    document.head.insertAdjacentElement('beforeend', newScript);
+    newScript.src = url;
+  }
+  
+if (document.querySelectorAll('.mermaid').length > 0) {
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.6.3/mermaid.min.js', () => {
+        document.head.insertAdjacentHTML("beforeend", `<style>.mermaid svg { background-color: #dadcd8 !important; }</style>`);
+        // default, dark, neutral, forest
+        mermaid.initialize({ startOnLoad: false, securityLevel: "strict", logLevel: 1, theme: "neutral" });
+        // https://github.com/mermaid-js/mermaid/blob/e6e94ad57ea06ef8627bf91ddfbd88f5082952bf/src/mermaid.js#L153
+        // mermaid.contentLoaded();
+        mermaid.init();
+        console.log("mermaid init done");
+      })
+    }
+    
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener("click", function (e) {
             e.preventDefault();

@@ -42,7 +42,7 @@ const loadScript = (url, onloadFunction) => {
   }
   
 if (document.querySelectorAll('.mermaid').length > 0) {
-      loadScript('https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.6.3/mermaid.min.js', () => {
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.1/mermaid.min.js', () => {
         document.head.insertAdjacentHTML("beforeend", `<style>.mermaid svg { background-color: #dadcd8 !important; }</style>`);
         // default, dark, neutral, forest
         mermaid.initialize({ startOnLoad: false, securityLevel: "strict", logLevel: 1, theme: "neutral" });

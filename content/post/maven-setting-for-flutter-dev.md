@@ -1,11 +1,12 @@
 ---
 title: "Flutter开发Maven配置"
-date: 2022-05-28
-tags: ["flutter", "andoid"]
+date: 2022-05-27
+tags: ["flutter", "android"]
 draft: false
 ---
 
-​      在Flutter开发时，可能因为网络等原因导致maven不能正常工作，造成Flutter项目卡住的情况。下面是解决办法.
+在Flutter开发时，可能因为网络等原因导致maven不能正常工作，造成Flutter项目卡住的情况。下面是解决办法。
+
 ## Flutter SDK配置修改
 
 flutter的maven设置在`<安装目录>\packages\flutter_tools\gradle\flutter.gradle` 

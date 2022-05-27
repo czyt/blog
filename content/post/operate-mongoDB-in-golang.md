@@ -316,5 +316,15 @@ db.c.find().limit(3)
 
 ## 数据库定义与设计
 
+![Use Cases vs Patterns Matrix](https://webassets.mongodb.com/_com_assets/cms/patternsmatrix-xv1kqjlrpb.png)
+
 WIP
+
+
+
+## 参考
+
++ [Building with Patterns: A Summary](https://www.mongodb.com/blog/post/building-with-patterns-a-summary)
+
+
 

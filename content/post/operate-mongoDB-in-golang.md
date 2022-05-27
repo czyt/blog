@@ -165,18 +165,24 @@ drop用于删除collection
 
 #### 一般更新
 
-常见更新操作符
+一般更新使用`findOneAndReplace` `updateOne` `updateMany`方法。
+
+常见逻辑操作符
 
 | 操作符       | 含义                                                         | 示例                                                         |
 | ------------ | ------------------------------------------------------------ | :----------------------------------------------------------- |
 | $inc         | 数值类型数据增加。可用于数值类型 `integer` `long` `double` `decimal`的增加及减小。 | `db.analytics.updateOne({"url" : "www.example.com"}, {"$inc" : {"pageviews" : 1}})` |
+| $mul         | 乘法（$mul）运算符用于将一个数字字段的值乘以 给定的数字。    | `db.movies.findOneAndUpdate( {"title" : "Macbeth"},{$mul : {"rating" : 2}},{returnNewDocument : true})` |
+| $rename      | $rename操作符用于重命名字段。                                | `db.movies.findOneAndUpdate({"title" : "Macbeth"},{$rename : {"num_mflix_comments" : "comments",     "imdb_rating" : "rating"}}, {returnNewDocument : true})` |
 | $set         | 更新字段值，不存在会自动创建。                               | `db.user.updateOne({_id:2},{"$set":{"lovemusic":"jaychou"}});` |
+| $setOnInsert | $setOnInsert与$set类似，但是，它只在upsert插入操作时设置给定的字段。如果要更新的文档存在则不更新。 | `db.products.update(  { _id: 1 },  {     $set: { item: "apple" },     $setOnInsert: { defaultQty: 100 }  },  { upsert: true } )` |
 | $unset       | 删除键及对应的值                                             | `db.user.updateOne({_id:2},{"$unset":{"lovemusic":"jaychou"}});` |
 | $push        | 当字段为数组对象时，更新字段使用。可以往数组对象添加记录。   | `db.blog.posts.updateOne({"title" : "A blog post"},{"$push" : {"comments" :{"name" : "joe", "email" : "joe@example.com","content" : "nice post."}}})` |
 | $each        | 和$push配合使用，适用于一次操作添加多个记录的情况            | `db.stock.ticker.updateOne({"_id" : "GOOG"}, {"$push" : {"hourly" : {"$each" : [562.776, 562.790, 559.123]}}})` |
 | $slice       | 配合$push和$each使用，用于限制字段数组的最大长度。右侧的示例意思为，将数组内容限制为10条记录，导入优先级从后向前。单独使用，可以实现TOP的效果 | 配合使用`db.movies.updateOne({"genre" : "horror"}, {"$push" : {"top10" : {"$each" : ["Nightmare on Elm Street", "Saw"], "$slice" : -10}}})`单独使用`db.blog.posts.findOne(criteria, {"comments" : {"$slice" : 10}})`返回前10条记录`db.blog.posts.findOne(criteria, {"comments" : {"$slice" : [23, 10]}})`返回从24条开始的10条数据 ` db.blog.posts.findOne(criteria, {"comments" : {"$slice" : -1}})`返回最后一条评论 |
 | $sort        | 配合$push和$each使用,用于设置添加记录字段的排序，1升序 -1 降序 | `db.movies.updateOne({"genre" : "horror"}, {"$push" : {"top10" : {"$each" : [{"name" : "Nightmare on Elm Street", "rating" : 6.6}, {"name" : "Saw", "rating" : 4.3}], "$slice" : -10, "$sort" : {"rating" : -1}}}})` |
 | $ne          | 判断记录是否已经存在于数组。可以理解为Is Not Exist           | `db.papers.updateOne({"authors cited" : {"$ne" : "Richie"}},{$push : {"authors cited" : "Richie"}})` |
+| $currentDate | $currentDate用于设置一个给定字段的值为当前的 日期或时间戳。  | `db.movies.findOneAndUpdate( {"title" : "Macbeth"}, {$currentDate : {   "created_date" : true,       "last_updated.date" : {$type : "date"},      "last_updated.timestamp" : {$type : "timestamp"},}}, {returnNewDocument : true})` |
 | $addToSet    | 功能与$ne有部分重叠，添加前会检查是否存在以避免重复，适用于$ne不适用的场景且有更好的描述性。 | `db.users.updateOne({"_id" : ObjectId("4b2d75476cc613d5ee930164")},{"$addToSet" : {"emails" : "joe@hotmail.com"}})` |
 | $pop         | 从数组尾部移除。{"$pop" : {"key" : 1}}从尾部移除1条记录，{"$pop" : {"key" : -1}}从前面移除1条记录。 |                                                              |
 | $pull        | 移除所有满足条件的记录。例如记录为[1,2,3,1]调用$pull删除1，则只剩下[2,3] | 插入几条数据` db.lists.insertOne({"todo" : ["dishes",dishes", "laundry", "dry cleaning"]})   `  删除一条数据` db.lists.updateOne({}, {"$pull" : {"todo" : "dishes"}})` |
@@ -208,6 +214,7 @@ MongoDB 常用查询的逻辑操作符如下：
 | $nin       | not in                                                       |
 | $or        | or                                                           |
 | $not       | not                                                          |
+| $nor       | $nor操作符在语法上与$or相似，但行为方式相反。$nor运算符$nor操作符以数组的形式接受多个条件表达式，并且 返回不满足任何给定条件的文档。`db.movies.find({$nor:[{"rated" : "G"},{"year" : 2005},       {"num_mflix_comments" : {$gte : 5}}]})` |
 | $mod       | mod取模运算。如` db.users.find({"id_num" : {"$mod" : [5, 1]}})`返回用户id为1 ,  6 ,  11 ,  16等符合取模运算的记录。 |
 | $regex     | 正则匹配                                                     |
 | $all       | **所有** 满足条件的记录                                      |
@@ -306,6 +313,23 @@ db.raffle.find({"$or" : [{"ticket_no" : 725}, {"winner" : true}]})
 ```sql
 db.c.find().limit(3)
 ```
+####  distinct
+
+查询去重。
+
+```sql
+db.movies.distinct("rated", {"year" : 1994}) 
+```
+
+#### countDocuments/count/estimatedDocumentCount
+
+查询统计
+
+```sql
+db.movies.countDocuments({"year": 1999})
+```
+
+
 
 #### 聚合查询 Aggregation
 

@@ -214,6 +214,7 @@ MongoDB 常用查询的逻辑操作符如下：
 | $size      | 将数组长度作为查询的一部分。如`db.food.find({"fruit" : {"$size" : 3}})`表示查询所有fruit字段值为3元素数组的记录。 |
 | $elemMatch | 强迫MongoDB用一个单个数组元素进行比较，不匹配非数组元素.`db.test.find({"x" : {"$elemMatch" : {"$gt" : 10, "$lt" : 20}}})`表示查询字段为数组且数组元素均满足 10<x<20的记录。 |
 | $where     |                                                              |
+| $match     | `db.companies.aggregate([{$match: {founded_year: 2004}}])`等价于`db.companies.find({founded_year: 2004})` |
 
 
 
@@ -305,6 +306,10 @@ db.raffle.find({"$or" : [{"ticket_no" : 725}, {"winner" : true}]})
 ```sql
 db.c.find().limit(3)
 ```
+
+#### 聚合查询 Aggregation
+
+![image-20220527160917081](https://assets.czyt.tech/img/mongodb_aggregation_pipe_line.png)
 
 
 

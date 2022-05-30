@@ -389,13 +389,14 @@ db.movies.countDocuments({"year": 1999})
 
 ![Use Cases vs Patterns Matrix](https://webassets.mongodb.com/_com_assets/cms/patternsmatrix-xv1kqjlrpb.png)
 
-WIP
-
 
 
 ## 参考
 
 + [Building with Patterns: A Summary](https://www.mongodb.com/blog/post/building-with-patterns-a-summary)
++ [mogodb go driver usage excample](https://www.mongodb.com/docs/drivers/go/current/usage-examples/)
++ [MongoDB 进阶模式设计](https://mongoing.com/mongodb-advanced-pattern-design)
++ [MongoDB设计方法及技巧](https://www.cnblogs.com/zimug/p/13175156.html)
 
 
 

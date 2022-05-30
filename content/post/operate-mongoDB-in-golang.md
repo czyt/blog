@@ -341,7 +341,7 @@ db.movies.countDocuments({"year": 1999})
 | -------- | ------------------------------------------------------------ |
 | $project | 投射操作符，用于重构每一个文档的字段，可以提取字段，重命名字段，甚至可以对原有字段进行操作后新增字段。如`db.users.aggregate([{ $project : { userId: '$_id', _id: 0 } }]);`将`_id` 字段重命名为`userId `，不显示字段`_id`。 |
 | $match   | 匹配操作符，用于对文档集合进行筛选。                         |
-| $group   | 分组操作符，用于对文档集合进行分组。`db.users.aggregate([{$group : {_id: '$sex',avgAge: { $avg: '$age' }, count: { $sum: 1 }}} ]);`将用户按性别分组并显示各性别的平均年龄，最后返回各性别人数。 |
+| $group   | 分组操作符，用于对文档集合进行分组。`_id`字段是必须的。`db.users.aggregate([{$group : {_id: '$sex',avgAge: { $avg: '$age' }, count: { $sum: 1 }}} ]);`将用户按性别分组并显示各性别的平均年龄，最后返回各性别人数。 |
 | $unwind  | 拆分操作符，用于将数组中的每一个值拆分为单独的文档。         |
 | $sort    | 排序操作符，用于根据一个或多个字段对文档进行排序。如`db.users.aggregate([{ $sort : { age: 1 } }]);`将用户按字段`age`升序排列。 |
 | $limit   | 限制操作符，用于限制返回文档的数量。                         |

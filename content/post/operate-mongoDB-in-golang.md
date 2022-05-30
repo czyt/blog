@@ -335,6 +335,24 @@ db.movies.countDocuments({"year": 1999})
 
 ![image-20220527160917081](https://assets.czyt.tech/img/mongodb_aggregation_pipe_line.png)
 
+​	MongoDB聚合查询用于对数据文档进行变换和组合。实现上，MongoDB聚合管道基于数据流的概念，数据进入管道经过多个stage操作（主要有筛选、投射、分组、排序、限制及跳过），最终输出。常用管道操作符参考下表：
+
+| 操作符   | 简述                                                         |
+| -------- | ------------------------------------------------------------ |
+| $project | 投射操作符，用于重构每一个文档的字段，可以提取字段，重命名字段，甚至可以对原有字段进行操作后新增字段。如`db.users.aggregate([{ $project : { userId: '$_id', _id: 0 } }]);`将`_id` 字段重命名为`userId `，不显示字段`_id`。 |
+| $match   | 匹配操作符，用于对文档集合进行筛选。                         |
+| $group   | 分组操作符，用于对文档集合进行分组。`db.users.aggregate([{$group : {_id: '$sex',avgAge: { $avg: '$age' }, count: { $sum: 1 }}} ]);`将用户按性别分组并显示各性别的平均年龄，最后返回各性别人数。 |
+| $unwind  | 拆分操作符，用于将数组中的每一个值拆分为单独的文档。         |
+| $sort    | 排序操作符，用于根据一个或多个字段对文档进行排序。如`db.users.aggregate([{ $sort : { age: 1 } }]);`将用户按字段`age`升序排列。 |
+| $limit   | 限制操作符，用于限制返回文档的数量。                         |
+| $skip    | 跳过操作符，用于跳过指定数量的文档。                         |
+| $lookup  | 连接操作符，用于连接同一个数据库中另一个集合，并获取指定的文档，类似于populate。 |
+| $count   | 统计操作符，用于统计文档的数量。                             |
+| $sum     | 对文档字段求和。                                             |
+| $avg     | 对文档字段进行平均值计算。                                   |
+
+   更多管道操作符,参考[官网](https://link.jianshu.com/?t=https://docs.mongodb.com/manual/reference/operator/aggregation/)。             
+
 
 
 

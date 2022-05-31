@@ -1,5 +1,5 @@
 ---
-title: "使用Golang操作MongoDB"
+title: "MongoDB操作指北"
 date: 2022-05-26
 tags: ["golang", "mongoDB"]
 draft: false
@@ -8,8 +8,6 @@ draft: false
 **TL;DR**
 
 ## 环境准备
-
-+ golang
 
 + mongoDB
 
@@ -67,7 +65,7 @@ MongoDB的连接字符串为如下格式
 
 #### 数据库驱动
 
-MongoDB的`CRUD` 操作如下，本文使用MongoDB标准数据库驱动，未使用ODM框架如[mgm](https://github.com/Kamva/mgm)、[upper/db](https://github.com/upper/db)、[mango](https://github.com/amorist/mango)等。引入方法
+这里以Golang语言为例。本文使用MongoDB标准数据库驱动，未使用ODM框架如[mgm](https://github.com/Kamva/mgm)、[upper/db](https://github.com/upper/db)、[mango](https://github.com/amorist/mango)等。引入方法
 
 ```go
 import "go.mongodb.org/mongo-driver/mongo"
@@ -144,7 +142,7 @@ bson.D{{
 }}
 ```
 
-`Raw`类型家族用于验证字节切片。你还可以使用`Lookup()`从原始类型检索单个元素。如果你不想要将BSON反序列化成另一种类型的开销，那么这是很有效的一种手段。
+`Raw`类型家族用于验证字节切片。你还可以使用`Lookup()`从原始类型检索单个元素。如果你不想要将BSON反序列化成另一种类型的开销，那么这是很有效的一种手段。下面介绍MongoDB的一些基本操作。
 
 ### 新增数据
 

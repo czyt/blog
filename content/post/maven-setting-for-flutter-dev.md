@@ -13,7 +13,7 @@ flutter的maven设置在`<安装目录>\packages\flutter_tools\gradle\flutter.gr
 
 ### 打包配置
 
-```json
+```
 buildscript {
     repositories {
         maven { url 'https://maven.aliyun.com/repository/google' }
@@ -32,7 +32,7 @@ buildscript {
 
 ### FlutterPlugin配置
 
-```json
+```
 class FlutterPlugin implements Plugin<Project> {
     // private static final String DEFAULT_MAVEN_HOST = "https://storage.googleapis.com";
         private static final String MAVEN_REPO = "https://storage.flutter-io.cn/download.flutter.io";
@@ -41,7 +41,7 @@ class FlutterPlugin implements Plugin<Project> {
 
 ### 所有项目设置
 
-```json
+```
 rootProject.allprojects {
             repositories {
                 maven {
@@ -59,7 +59,7 @@ rootProject.allprojects {
 
 修改`Flutter`项目下的`android`下的`build.gradle`
 
-```json
+```
 buildscript {
     ext.kotlin_version = '1.6.10'
     repositories {

@@ -57,7 +57,7 @@ func (model *Book) CollectionName() string {
 coll:=mgm.Coll(&Book{})
 ```
 
-### struct Tags
+#### struct Tags
 
 ​     不知您是否注意到模型定义的struct tags。**struct tags**修改 Go 驱动程序的默认编组和解组行为 ，这是附加到 struct 字段的可选元数据片段。struct 标记最常见的用途是指定 BSON 文档中与 struct 字段对应的字段名称。下表描述了mongoDB 的 Go 驱动程序中的常见结构标记：
 

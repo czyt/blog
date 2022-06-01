@@ -17,6 +17,8 @@ draft: false
 
 ## 模型定义
 
+### 定义
+
 定义模型
 
 ```go
@@ -55,9 +57,27 @@ func (model *Book) CollectionName() string {
 coll:=mgm.Coll(&Book{})
 ```
 
+### struct Tags
 
+​     不知您是否注意到模型定义的struct tags。**struct tags**修改 Go 驱动程序的默认编组和解组行为 ，这是附加到 struct 字段的可选元数据片段。struct 标记最常见的用途是指定 BSON 文档中与 struct 字段对应的字段名称。下表描述了mongoDB 的 Go 驱动程序中的常见结构标记：
+
+| 结构标签    | 描述                                                         |
+| :---------- | :----------------------------------------------------------- |
+| `omitempty` | 如果将字段设置为对应于字段类型的零值，则不会对字段进行编组。 |
+| `minsize`   | 如果字段类型是 int64、uint、uint32 或 uint64 类型，并且该字段的值可以适合带符号的 int32，则该字段将被序列化为 BSON int32 而不是 BSON int64。如果该值不适合带符号的 int32，则忽略此标记。 |
+| `truncate`  | 如果字段类型是非浮点数字类型，则未编组到该字段中的 BSON 双精度将在小数点处被截断。 |
+| `inline`    | 如果字段类型是 struct 或 map 字段，则该字段将在编组时展平，在解组时不展平。 |
+
+如果没有来自结构标签的额外指令，Go Driver 将使用以下规则编组结构：
+
+1. Go Driver 仅对导出的字段进行编组和解组。
+2. Go Driver 使用相应结构字段的小写字母生成 BSON 密钥。
+3. Go 驱动程序将嵌入的结构字段编组为子文档。每个键都是字段类型的小写。
+4. 如果指针非 nil，Go Driver 将指针字段编组为基础类型。如果指针为 nil，则驱动程序将其编组为 BSON 空值。
+5. 解组时，Go Driver 跟随[这些 D/M 类型映射](https://pkg.go.dev/go.mongodb.org/mongo-driver@v1.9.0/bson#hdr-Native_Go_Types) 对于类型的字段`interface{}`。驱动程序将未编组的 BSON 文档`interface{}`作为`D`类型解组到字段中。
 
 #### 模型默认字段
+
 每个模型的都包含`mgm.DefaultModel`,包含下面三个字段:
 
 - `_id` : 文档 Id.
@@ -307,4 +327,5 @@ err := mgm.Transaction(func(session mongo.Session, sc mongo.SessionContext) erro
 
 - 官方文档 [Quick Start: Golang & MongoDB - Data Aggregation Pipeline](https://www.mongodb.com/blog/post/quick-start-golang--mongodb--data-aggregation-pipeline)
 - [Go By Example](https://golangexample.com/mongo-go-models-a-fast-and-simple-mongodb-odm-for-go-based-on-official-mongo-go-driver/)
+- [官方GO驱动使用详解](https://www.mongodb.com/docs/drivers/go/current/)
 

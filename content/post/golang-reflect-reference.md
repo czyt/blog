@@ -230,7 +230,41 @@ func main() {
 	fmt.Println(mapStringInt2)
 }
 ```
+#### 检查struct是否实现接口
+
+例如下面的定义
+
+```go
+type shape interface {
+    getNumSides() int
+    getArea() int
+}
+
+type square struct {
+    len int
+}
+
+func (s square) getNumSides() int {
+    return 4
+}
+```
+
+常规做法 可以使用`var _ shape = (*square)(nil)`来进行判断，但是某些情况下我们需要使用反射来实现，具体代码如下：
+
+```go
+func IsShaperImpl(checkTarget interface{}) bool {
+	c := reflect.TypeOf(checkTarget)
+	modelType := reflect.TypeOf((*shape)(nil)).Elem()
+	return c.Implements(modelType)
+}
+fmt.Println(IsShaperImpl(&square{}))
+// 打印 false
+```
+
+
+
 #### 通过Field offset修改struct字段值
+
 ```go
 	type B_struct struct {
 		B_int    int
@@ -444,3 +478,4 @@ func createCases(chs ...chan int) []reflect.SelectCase {
 ## 参考文档
 
 + [Reflections in Go](https://go101.org/article/reflection.html)
++ [Go语言反射的实现原理](https://draveness.me/golang/docs/part2-foundation/ch04-basic/golang-reflect/)

@@ -170,6 +170,8 @@ err := mgm.Coll(book).Delete(book)
 
 ### 更新
 
+常规更新
+
 ```go
 // Find your book
 book:=findMyFavoriteBook()
@@ -179,11 +181,25 @@ book.Name="Moulin Rouge!"
 err:=mgm.Coll(book).Update(book)
 ```
 
+upsert更新
+
+```go
+filter := bson.D{{"type", "Oolong"}}
+update := bson.D{{"$set", bson.D{{"rating", 8}}}}
+opts := options.Update().SetUpsert(true)
+result, err := mgm.Coll(book).UpdateOne(mgm.Ctx(), filter, update, opts)
+if err != nil {
+   panic(err)
+}
+```
+
 
 
 ### 查询
 
-基础查询
+#### 基础查询
+
+简单查询
 
 ```go
 //Get document's collection
@@ -199,7 +215,6 @@ _ = coll.First(bson.M{}, book)
 // Get first doc of collection with filter
 _ = coll.First(bson.M{"page":400}, book)
 ```
-
 查询并返回列表
 
 ```go
@@ -209,6 +224,16 @@ err := mgm.Coll(&Book{}).SimpleFind(&result, bson.M{"age": bson.M{operator.Gt: 2
 ```
 
 
+
+#### 自定义返回字段
+
+查询并隐藏`_id`字段
+
+```go
+opts := options.FindOne().SetProjection(bson.D{{"_id", 0}})
+// 如果是调用的Find方法就应该是opts := options.Find().SetProjection(bson.D{{"_id", 0}})
+err := mgm.Coll(&Book{}).FindOne(nil, bson.M{}, opts)
+```
 
 ### 聚合
 

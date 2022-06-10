@@ -5,11 +5,22 @@ tags: ["golang", "cap'n", "proto"]
 draft: false
 ---
 
-Cap'n proto 号称是比protobuff更快的proto语言。官网截图
+[Cap'n proto](https://capnproto.org) 号称是比protobuff更快的proto语言。官网截图
 
 > Cap’n Proto is an insanely fast data interchange format and capability-based RPC system. Think JSON, except binary. Or think [Protocol Buffers](https://github.com/protocolbuffers/protobuf), except faster. In fact, in benchmarks, Cap’n Proto is INFINITY TIMES faster than Protocol Buffers.
 
 ![img](https://capnproto.org/images/infinity-times-faster.png)
+
+协议特性
+
+> Cap’n Proto’s RPC protocol has the following notable features. Since the protocol is complicated, the feature set has been divided into numbered “levels”, so that implementations may declare which features they have covered by advertising a level number.
+>
+> - **Level 1:** Object references and promise pipelining, as described above.
+> - **Level 2:** Persistent capabilities. You may request to “save” a capability, receiving a persistent token which can be used to “restore” it in the future (on a new connection). Not all capabilities can be saved; the host app must implement support for it. Building this into the protocol makes it possible for a Cap’n-Proto-based data store to transparently save structures containing capabilities without knowledge of the particular capability types or the application built on them, as well as potentially enabling more powerful analysis and visualization of stored data.
+> - **Level 3:** Three-way interactions. A network of Cap’n Proto vats (nodes) can pass object references to each other and automatically form direct connections as needed. For instance, if Alice (on machine A) sends Bob (on machine B) a reference to Carol (on machine C), then machine B will form a new connection to machine C so that Bob can call Carol directly without proxying through machine A.
+> - **Level 4:** Reference equality / joining. If you receive a set of capabilities from different parties which should all point to the same underlying objects, you can verify securely that they in fact do. This is subtle, but enables many security patterns that rely on one party being able to verify that two or more other parties agree on something (imagine a digital escrow agent). See [E’s page on equality](http://erights.org/elib/equality/index.html).
+
+目前GO只支持Level 1的特性，Level3的RPC特性已经在[安排](https://github.com/capnproto/go-capnproto2/issues/160)。
 
 下面整理其在Windows环境下的编译环境搭建步骤。
 

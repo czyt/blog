@@ -1,9 +1,10 @@
 ---
 title: "Go性能优化参考"
-date: 2022-06-12
+date: 2022-06-11
 tags: ["golang", "perf"]
 draft: false
 ---
+
 
 ## 电子书
 
@@ -23,10 +24,8 @@ draft: false
 + Go execution tracer : https://blog.gopheracademy.com/advent-2017/go-execution-tracer/ (see also the The tracer design doc link)
 + A whirlwind tour of Go’s runtime environment variables (see godebug) : https://dave.cheney.net/2015/11/29/a-whirlwind-tour-of-gos-runtime-environment-variables
 + benchstat : https://godoc.org/golang.org/x/perf/cmd/benchstat
++ [pyroscope: 一个简单易用的持续剖析平台](https://colobu.com/2022/01/27/pyroscope-a-continuous-profiling-platform/)
 
 ## 性能监控系统
 
 + [pyroscope](https://pyroscope.io)
-  
-  > [pyroscope: 一个简单易用的持续剖析平台](https://colobu.com/2022/01/27/pyroscope-a-continuous-profiling-platform/)
-

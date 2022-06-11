@@ -10,8 +10,8 @@ draft: false
 ## 理论
 
 + [ebf官网](https://ebpf.io)
-+ B站视频   *eBPF 和 Go，超能力组合*
-  {{< **bilibili** BV14v4y1w7NK >}}  
++ B站视频   eBPF 和 Go，超能力组合
+  {{< bilibili BV14v4y1w7NK >}}  
 
 ## 实践
 

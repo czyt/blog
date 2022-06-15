@@ -25,6 +25,8 @@ draft: false
 + A whirlwind tour of Go’s runtime environment variables (see godebug) : https://dave.cheney.net/2015/11/29/a-whirlwind-tour-of-gos-runtime-environment-variables
 + benchstat : https://godoc.org/golang.org/x/perf/cmd/benchstat
 + [pyroscope: 一个简单易用的持续剖析平台](https://colobu.com/2022/01/27/pyroscope-a-continuous-profiling-platform/)
++ [VSCODE可视化调试Go程序](https://mp.weixin.qq.com/s/pmNCkj55UeCx2LosjF9mjA)
++ [Jetbrains官方Goland代码调试文档](https://www.jetbrains.com/help/go/debugging-code.html)
 
 ## 性能监控系统
 

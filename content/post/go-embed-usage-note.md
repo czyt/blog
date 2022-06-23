@@ -1,6 +1,6 @@
 ---
 title: "go embed 使用小记"
-date: 2020-06-23
+date: 2022-06-23
 tags: ["golang", "embed"]
 draft: false
 ---

@@ -196,4 +196,5 @@ func main() {
 + https://medium.com/learning-the-go-programming-language/streaming-io-in-go-d93507931185
 + https://www.jianshu.com/p/aa207155ca7d
 + https://www.ohyee.cc/post/note_go_io_pipe
++ https://golang.hotexamples.com/examples/io/-/Pipe/golang-pipe-function-examples.html
 

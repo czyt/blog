@@ -195,4 +195,5 @@ func main() {
 + https://zetcode.com/golang/pipe/
 + https://medium.com/learning-the-go-programming-language/streaming-io-in-go-d93507931185
 + https://www.jianshu.com/p/aa207155ca7d
++ https://www.ohyee.cc/post/note_go_io_pipe
 

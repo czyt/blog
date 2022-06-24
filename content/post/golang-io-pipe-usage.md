@@ -2,10 +2,10 @@
 title: "Golang io.Pipe 使用"
 date: 2022-06-24
 tags: ["golang", "io"]
-draft: true
+draft: false
 ---
 
-## TODO
+## 介绍
 
 > // Pipe creates a synchronous in-memory pipe.
 > // It can be used to connect code expecting an io.Reader

@@ -53,10 +53,27 @@ draft: false
 1. 启动服务报错 `非法指令 (核心已转储)`英文系统可能是`(Illegal instruction(core dumped))`
 
    开始使用的是 `yay -S mongodb-bin`进行安装，后搜索官方论坛发现是官方打包的时候默认使用了最新架构，但是树莓派是老设备，可能不支持部分指令，换成上文的指令安装`4.x`版本后解决。
-   注意：默认安装是不在mongodb tools的，所以需要执行 `yay -S mongodb-tools-bin`进行安装。下面是一个恢复bson的例子
+   注意：默认安装是不在mongodb tools的，所以需要执行 `yay -S mongodb-tools-bin`进行安装。参考下面语句：
+   
+   备份
+   
+   ```bash
+   mongodump -h <host>:<port> -u <username> -p <password> -d ubertower-new -o /path/to/destination/directory
+   
+   ```
+   
+   恢复
+   
+   ```bash
+   mongorestore -h <host>:<port> -u <username> -p <password> -d <DBNAME> /path/to/destination/directory/<DBNAME>
+   ```
+   
+   恢复文件夹下的bson文件
    
    ```bash
    for FILENAME in *.bson; do mongorestore -d nts -c "${FILENAME%.*}" $FILENAME; done
+   // 带权限的恢复
+   for FILENAME in *.bson; do mongorestore  --authenticationDatabase="admin" -d "nts" -u="xxxx" -p="yyyy"  -c "${FILENAME%.*}" $FILENAME; done
    ```
    
    

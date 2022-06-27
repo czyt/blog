@@ -53,6 +53,7 @@ draft: false
 1. 启动服务报错 `非法指令 (核心已转储)`英文系统可能是`(Illegal instruction(core dumped))`
 
    开始使用的是 `yay -S mongodb-bin`进行安装，后搜索官方论坛发现是官方打包的时候默认使用了最新架构，但是树莓派是老设备，可能不支持部分指令，换成上文的指令安装`4.x`版本后解决。
+   默认安装是不在mongodb tools的，所以需要执行 `yay -S mongodb-tools-bin`进行安装。
 
   原帖 https://www.mongodb.com/community/forums/t/core-dump-on-mongodb-5-0-on-rpi-4/115291/13
 

@@ -95,16 +95,25 @@ draft: false
    
       ```bash
       use admin;
-      db.addUser('admin','123456')
+      db.createUser(   
+      {
+          user: "admin",
+          pwd: "admin_Pwd", 
+          roles: [ { role: "readAnyDatabase", db: "admin" } ]  
+      } );
       ```
-   
+      
       修改配置文件`/etc/mongodb.conf`，启用授权连接。
    
       ```yaml
       security:
           authorization: enabled
       ```
-   
+      
       重启mongodb服务 `systemctl restart mongodb` 使配置生效。
-   
+      
+      ##  参考连接
+      
+      - https://dba.stackexchange.com/questions/283843/create-user-for-all-databases-in-mongodb
+      
       

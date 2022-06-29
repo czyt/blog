@@ -103,8 +103,10 @@ draft: false
       } );
       ```
       
-      修改配置文件`/etc/mongodb.conf`，启用授权连接。
+      后期如果需要调整角色，可以使用语句`db.grantRolesToUser("admin",["userAdminAnyDatabase"])`
    
+      修改配置文件`/etc/mongodb.conf`，启用授权连接。
+      
       ```yaml
       security:
           authorization: enabled
@@ -115,5 +117,6 @@ draft: false
       ##  参考连接
       
       - https://dba.stackexchange.com/questions/283843/create-user-for-all-databases-in-mongodb
+      - https://www.guru99.com/mongodb-create-user.html
       
       

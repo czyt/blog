@@ -506,6 +506,8 @@ Platform-Tools for Google Android SDK (adb and fastboot) 安装 `yay -S android-
 
 编译链工具[xmake](http://xmake.io) 安装 `yay -S xmake` 
 
+[goreleaser](https://goreleaser.com) 安装 `yay -S goreleaser-bin`
+
 percona-toolkit (mysql辅助分析工具) `yay -S percona-toolkit` 
 
 注：

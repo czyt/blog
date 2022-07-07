@@ -664,3 +664,4 @@ sudo pacman-key --populate archlinuxcn
 ## 参考连接
 
 - [archlinux 简明指南](https://arch.icekylin.online)
+- [How to Flush DNS Cache on Linux](https://www.bitslovers.com/linux-how-to-flush-dns/)

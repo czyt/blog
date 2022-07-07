@@ -189,6 +189,8 @@ flameshot 截图工具 安装 `yay -S flameshot`
 
 Teamviewer `yay -S teamviewer`如果一直显示未连接，则请退出teamviewer，执行`sudo teamviewer --daemon enable` 再打开试试
 
+Xrdp `yay -S xrdp xorgxrdp-git` ([参考文档](https://rajasekaranp.medium.com/how-to-setup-xrdp-in-manjaro-linux-e176b22bd347))
+
 向日葵 安装 `yay -S sunloginclient` (需要设置开机启动服务 `systemctl enable runsunloginclient` 启动服务 `systemctl start runsunloginclient` )
 
 toDesk远程工具 安装 `yay -S todesk-bin` (设置服务 `systemctl start\enable todeskd` 才能正常运行)

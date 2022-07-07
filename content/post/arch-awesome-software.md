@@ -652,6 +652,15 @@ sudo pacman-key --populate archlinux
 sudo pacman-key --populate archlinuxcn
 ```
 
++ 刷新dns[参考](https://wiki.archlinux.org/title/Systemd-resolved)
+
+  ```bash
+  sudo systemctl enable systemd-resolved.service
+  sudo resolvectl flush-caches
+  ```
+
+  
+
 ## 参考连接
 
 - [archlinux 简明指南](https://arch.icekylin.online)

@@ -28,6 +28,8 @@ draft: false
 + [VSCODE可视化调试Go程序](https://mp.weixin.qq.com/s/pmNCkj55UeCx2LosjF9mjA)
 + [Jetbrains官方Goland代码调试文档](https://www.jetbrains.com/help/go/debugging-code.html)
 + https://github.com/cch123/perf_workshop_2021
++ [GO高性能编程精华](https://zhuanlan.zhihu.com/p/482107438)
++ [Go 语言中各式各样的优化手段](https://zhuanlan.zhihu.com/p/403417640)
 
 ## 性能监控系统
 

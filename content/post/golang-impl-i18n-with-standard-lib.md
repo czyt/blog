@@ -4,6 +4,7 @@ date: 2020-06-10
 tags: ["golang", "i18n"]
 draft: false
 ---
+## 示例
 ```go
 package main
 
@@ -32,6 +33,9 @@ func main() {
 
 ```
 
-参考
+## 参考
 
- https://zyfdegh.github.io/post/201805-translation-go-i18n/
++ https://zyfdegh.github.io/post/201805-translation-go-i18n
++ https://www.alexedwards.net/blog/i18n-managing-translations
++ https://phrase.com/blog/posts/internationalisation-in-go-with-go-i18n/
++ https://lokalise.com/blog/go-internationalization-using-go-i18n/

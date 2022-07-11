@@ -39,3 +39,4 @@ func main() {
 + https://www.alexedwards.net/blog/i18n-managing-translations
 + https://phrase.com/blog/posts/internationalisation-in-go-with-go-i18n/
 + https://lokalise.com/blog/go-internationalization-using-go-i18n/
++ https://go.googlesource.com/proposal/+/master/design/12750-localization.md

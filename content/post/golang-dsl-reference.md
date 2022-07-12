@@ -12,6 +12,7 @@ draft: false
 ## 文章
 + [使用ANTLR和Go实现DSL入门](https://tonybai.com/2022/05/10/introduction-of-implement-dsl-using-antlr-and-go/)
 + 手把手教你使用ANTLR和Go实现一门DSL语言[part1](https://tonybai.com/2022/05/24/an-example-of-implement-dsl-using-antlr-and-go-part1/) [part2](https://tonybai.com/2022/05/25/an-example-of-implement-dsl-using-antlr-and-go-part2/)[part3](https://tonybai.com/2022/05/27/an-example-of-implement-dsl-using-antlr-and-go-part3/)[part4](https://tonybai.com/2022/05/28/an-example-of-implement-dsl-using-antlr-and-go-part4/)[part5](https://tonybai.com/2022/05/30/an-example-of-implement-dsl-using-antlr-and-go-part5/)
++ [Parsing with ANTLR 4 and Go](https://blog.gopheracademy.com/advent-2017/parsing-with-antlr4-and-go/)
 
 ## 实例代码
 + bilibili gengine [link](https://github.com/bilibili/gengine/blob/main/internal/iantlr)

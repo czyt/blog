@@ -16,6 +16,7 @@ draft: false
 ## 实例代码
 + bilibili gengine [link](https://github.com/bilibili/gengine/blob/main/internal/iantlr)
 + go-zero [link](https://github.com/zeromicro/go-zero/tree/master/tools/goctl/api/parser)
++ [grule-rule-engine](https://github.com/hyperjumptech/grule-rule-engine)
 
 # Others
 
@@ -28,5 +29,10 @@ draft: false
 
 ## 文章
 + [Build your own DSL with Go & HCL](https://blog.devgenius.io/build-your-own-dsl-with-go-hcl-602c92ce24c0)
+
 + [How to Write Syntax Tree-Based Domain-Specific Languages in Go](https://betterprogramming.pub/how-to-write-syntax-tree-based-domain-specific-languages-in-go-b15537f0d2f3)
+
 + [Handwritten Parsers & Lexers in Go](https://blog.gopheracademy.com/advent-2014/parsers-lexers/)
+
+## 实例代码
++ [expr](https://github.com/antonmedv/expr)

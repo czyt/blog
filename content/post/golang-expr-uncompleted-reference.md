@@ -622,3 +622,203 @@ type Fetcher interface {
 
 当您需要获取字段时，将使用该方法代替反射函数。 如果未找到该字段，则 Fetch 必须返回 nil。 要为您的类型生成 Fetch，请使用 [Exprgen](https://github.com/antonmedv/expr/blob/master/docs/Exprgen.md)。
 
+## 语言参考
+
+**Expr** 包使用特定的语法。 在本文档中，您可以找到所有支持的语法。
+
+### 支持的类型
+
+包支持下面的数据类型:
+
+- **strings** - 使用单引号或双引号包裹 (e.g. `"hello"`, `'hello'`)
+- **numbers** - e.g. `103`, `2.5`, `.5`
+- **arrays** - e.g. `[1, 2, 3]`
+- **maps** - e.g. `{foo: "bar"}`
+- **booleans** - `true` 和`false`
+- **nil** - `nil`
+
+### 数字分隔符
+
+整数文字可能包含数字分隔符，以允许数字分组为更清晰的形式进行显示。
+
+例子：
+
+```
+10_000_000_000
+```
+
+### 访问公共属性
+
+可以使用 `.` 语法访问结构上的公共属性。 如果将数组传递给表达式，请使用 `[]` 语法访问数组键。
+
+```
+foo.Array[0].Value
+```
+
+### 函数和方法
+
+可以使用 `()` 调用函数。 `.` 也可用于调用结构上的方法。
+
+```
+price.String()
+```
+
+### 支持的运算符
+
+本包带支持下面的运算符：
+
+#### 算数运算符
+
+- `+` (addition)
+- `-` (subtraction)
+- `*` (multiplication)
+- `/` (division)
+- `%` (modulus)
+- `**` (pow)
+
+Example:
+
+```
+life + universe + everything
+```
+
+#### 比较运算符
+
+- `==` (equal)
+- `!=` (not equal)
+- `<` (less than)
+- `>` (greater than)
+- `<=` (less than or equal to)
+- `>=` (greater than or equal to)
+
+#### 逻辑运算符
+
+- `not` or `!`
+- `and` or `&&`
+- `or` or `||`
+
+Example:
+
+```
+life < universe || life < everything
+```
+
+#### 字符串运算符
+
+- `+` (concatenation)
+- `matches` (regex match)
+- `contains` (string contains)
+- `startsWith` (has prefix)
+- `endsWith` (has suffix)
+
+要测试字符串是否*not*匹配正则表达式，请结合使用逻辑 `not` 运算符和 `matches` 运算符：
+
+```
+not ("foo" matches "^b.+")
+```
+
+您必须使用括号，因为一元运算符 `not` 优先于二元运算符 `matches`。
+
+例子：
+
+```
+'Arthur' + ' ' + 'Dent'
+```
+
+结果为 `Arthur Dent`.
+
+#### 成员操作符
+
+- `in` (包含)
+- `not in` (不包含)
+
+例子:
+
+```
+user.Group in ["human_resources", "marketing"]
+"foo" in {foo: 1, bar: 2}
+```
+
+#### 数字操作符
+
+- `..` (range)
+
+例子:
+
+```
+user.Age in 18..45
+```
+
+range区间是全开的，也就是范围也包括在内:
+
+```
+1..3 == [1, 2, 3]
+```
+
+#### 三元运算符
+
+- `foo ? 'yes' : 'no'`
+
+例子:
+
+```
+user.Age > 30 ? "mature" : "immature"
+```
+
+### 内置函数
+
+- `len` (length of array, map or string)
+- `all` (will return `true` if all element satisfies the predicate)
+- `none` (will return `true` if all element does NOT satisfies the predicate)
+- `any` (will return `true` if any element satisfies the predicate)
+- `one` (will return `true` if exactly ONE element satisfies the predicate)
+- `filter` (filter array by the predicate)
+- `map` (map all items with the closure)
+- `count` (returns number of elements what satisfies the predicate)
+
+例子:
+
+确保所有推文少于 280 个字符。
+
+```
+all(Tweets, {.Size < 280})
+```
+
+确保只有一位获胜者。
+
+```
+one(Participants, {.Winner})
+```
+
+### 闭包
+
+- `{...}` (closure)
+
+只有内置函数才允许闭包。 要访问当前项目，请使用 `#` 符号。
+
+```
+map(0..9, {# / 2})
+```
+
+如果数组的项是 struct，则可以使用省略的 `#` 符号访问 struct 的字段（`#.Value` 变为 `.Value`）。
+
+```
+filter(Tweets, {len(.Value) > 280})
+```
+
+### 切片
+
+- `array[:]` (slice)
+
+切片可以处理数组或字符串。
+
+例子:
+
+变量`array` 为`[1,2,3,4,5]`.
+
+```
+array[1:5] == [2,3,4] 
+array[3:] == [4,5]
+array[:4] == [1,2,3]
+array[:] == array
+```

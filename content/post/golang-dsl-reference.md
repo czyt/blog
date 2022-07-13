@@ -7,7 +7,7 @@ draft: false
 #  ANTLR 4
 ## 图书
 
-+ The definitive ANTLR 4 reference (2014) [下载](https://libgen.czyt.tech/book/index.php?md5=6C0EB707351F336CA286F2F7E39274AC)
++ The definitive ANTLR 4 reference (2014) [英文版下载](https://libgen.czyt.tech/book/index.php?md5=6C0EB707351F336CA286F2F7E39274AC) [中文版下载](https://kodbox.xiaozao520.cn:81/?sitemap/file/7XVzZXAQ&view=ANTLR%204%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/ANTLR%204%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97.pdf)
 
 ## 文章
 + [使用ANTLR和Go实现DSL入门](https://tonybai.com/2022/05/10/introduction-of-implement-dsl-using-antlr-and-go/)

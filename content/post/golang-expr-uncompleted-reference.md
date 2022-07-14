@@ -1009,3 +1009,6 @@ func (p *customerPatcher) Exit(node *ast.Node) {
 }
 ```
 
+## 参考
+
++ 类似的库 https://github.com/Knetic/govaluate

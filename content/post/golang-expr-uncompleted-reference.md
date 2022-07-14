@@ -816,9 +816,77 @@ filter(Tweets, {len(.Value) > 280})
 
 变量`array` 为`[1,2,3,4,5]`.
 
-```
+```go
 array[1:5] == [2,3,4] 
 array[3:] == [4,5]
 array[:4] == [1,2,3]
 array[:] == array
 ```
+
+## 更多的例子
+
+### 函数替换
+
+下面的例子实现了将函数及函数的参数进行替换
+
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+
+	"github.com/antonmedv/expr"
+	"github.com/antonmedv/expr/ast"
+)
+
+type customEnv struct {
+}
+
+func (c *customEnv) SayHi(u string) error {
+	log.Println("Hi", u)
+	return nil
+}
+
+func (c *customEnv) SayBye(u string) error {
+	log.Println("bye", u)
+	return nil
+}
+
+func main() {
+	env := &customEnv{}
+
+	code := `SayHi("czyt")` // will output 3
+
+	program, err := expr.Compile(code, expr.Env(env), expr.Patch(&customerPatcher{}))
+	if err != nil {
+		panic(err)
+	}
+
+	output, err := expr.Run(program, env)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Print(output)
+}
+
+type customerPatcher struct{}
+
+func (p *customerPatcher) Enter(node *ast.Node) {
+	log.Println("enter")
+}
+func (p *customerPatcher) Exit(node *ast.Node) {
+	log.Println("Exit")
+	f, ok := (*node).(*ast.FunctionNode)
+	if !ok {
+		return
+	}
+	if f.Name == "SayHi" {
+		f.Name = "SayBye"
+		f.Arguments = []ast.Node{&ast.StringNode{Value: "jay zhou"}}
+	}
+
+}
+
+```
+

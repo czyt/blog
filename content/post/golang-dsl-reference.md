@@ -36,6 +36,13 @@ draft: false
 
 + [Handwritten Parsers & Lexers in Go](https://blog.gopheracademy.com/advent-2014/parsers-lexers/)
 
++ [goyacc实战](https://zhuanlan.zhihu.com/p/264367718)
+
++ [TiDB SQL Parser 的实现](https://pingcap.com/zh/blog/tidb-source-code-reading-5)
+
++ [GopherCon 2018 - How to Write a Parser in Go](https://about.sourcegraph.com/blog/go/gophercon-2018-how-to-write-a-parser-in-go)
+
 ## 实例代码
 + [expr](https://github.com/antonmedv/expr)
 + [hof](https://github.com/hofstadter-io)
++ [Go Parser Tutorial](https://github.com/sougou/parser_tutorial)

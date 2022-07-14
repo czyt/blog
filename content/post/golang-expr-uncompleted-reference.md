@@ -825,9 +825,11 @@ array[:] == array
 
 ## 更多的例子
 
-### 函数替换
+### 方法的替换
 
-下面的例子实现了将函数及函数的参数进行替换
+#### 方法及参数全部替换
+
+下面的例子实现了将方法及方法的参数进行替换
 
 ```go
 package main
@@ -888,5 +890,122 @@ func (p *customerPatcher) Exit(node *ast.Node) {
 
 }
 
+```
+
+#### 从方法名称取参数并执行
+
+下面的例子从传入的方法名中取参数值并替换执行：
+
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+	"strings"
+	"time"
+
+	"github.com/antonmedv/expr"
+	"github.com/antonmedv/expr/ast"
+)
+
+type customEnv struct {
+}
+
+func (c *customEnv) Run(user ...string) error {
+	log.Println(user, "run At", time.Now())
+	return nil
+}
+
+func main() {
+	env := &customEnv{}
+
+	code := `Run_czyt()`
+
+	program, err := expr.Compile(code, expr.Env(env), expr.Patch(&customerPatcher{}))
+	if err != nil {
+		panic(err)
+	}
+
+	output, err := expr.Run(program, env)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Print(output)
+}
+
+type customerPatcher struct{}
+
+func (p *customerPatcher) Enter(node *ast.Node) {
+	log.Println("enter")
+}
+func (p *customerPatcher) Exit(node *ast.Node) {
+	log.Println("Exit")
+	f, ok := (*node).(*ast.FunctionNode)
+	if !ok {
+		return
+	}
+	fn := strings.Split(f.Name, "_")
+	ast.Patch(node, &ast.FunctionNode{
+		Name: fn[0],
+		Arguments: []ast.Node{
+			&ast.StringNode{Value: fn[1]},
+		},
+	})
+
+}
+```
+
+#### 使用三元运算按条件执行
+
+```go
+package main
+
+import (
+	"fmt"
+	"log"
+
+	"github.com/antonmedv/expr"
+	"github.com/antonmedv/expr/ast"
+)
+
+type customEnv struct {
+	Temperature float64
+}
+
+func (c *customEnv) Ready() error {
+	log.Println("Ready to GO!😊")
+	return nil
+}
+func (c *customEnv) UnReady() error {
+	log.Println("not Ready to GO!😂")
+	return nil
+}
+
+func main() {
+	env := &customEnv{Temperature: 32}
+
+	code := `Temperature<30?Ready():UnReady()`
+
+	program, err := expr.Compile(code, expr.Env(env), expr.Patch(&customerPatcher{}))
+	if err != nil {
+		panic(err)
+	}
+
+	output, err := expr.Run(program, env)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Print(output)
+}
+
+type customerPatcher struct{}
+
+func (p *customerPatcher) Enter(node *ast.Node) {
+	log.Println("enter")
+}
+func (p *customerPatcher) Exit(node *ast.Node) {
+	log.Println("Exit")
+}
 ```
 

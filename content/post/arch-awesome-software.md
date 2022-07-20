@@ -221,6 +221,8 @@ xmind-2020 安装 `yay -S xmind-2020` ([福利链接](https://mega.nz/folder/Mxp
 
 企业微信 `yay -S deepin-wine-wxwork` 
 
+飞书 `yay -S feishu-bin`
+
 剪切板工具 [uniclip](https://github.com/quackduck/uniclip) `yay -S uniclip`
 
 onenote `yay -S p3x-onenote` 

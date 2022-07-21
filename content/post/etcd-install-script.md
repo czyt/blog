@@ -29,3 +29,5 @@ ${INSTALL_DIR}/etcdutl version
 ```
 
 其中的`ARCH`请根据实际情况修改。
+
+![image-20220721105000902](https://assets.czyt.tech/img/image-20220721105000902.png)

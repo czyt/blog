@@ -1,6 +1,6 @@
 ---
 title: "ETCD一键安装脚本"
-date: 2022-06-21
+date: 2022-07-21
 tags: ["etcd", "linux"]
 draft: false
 ---
@@ -31,3 +31,7 @@ ${INSTALL_DIR}/etcdutl version
 其中的`ARCH`请根据实际情况修改。
 
 ![image-20220721105000902](https://assets.czyt.tech/img/image-20220721105000902.png)
+
+## 参考
+
++ https://etcd.io/docs/v3.5/demo/

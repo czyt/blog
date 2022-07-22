@@ -100,7 +100,7 @@ ipmsg 安装`yay -S iptux`
 
 mattermost 安装 `yay -S mattermost-desktop`
 
-zoom 安装 `yay -S zoom`
+ --python_out=./api \--grpc_python_out=./api \makefile
 
 slack 安装 `yay -S slack-desktop` 
 

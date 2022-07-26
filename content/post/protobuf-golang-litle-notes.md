@@ -467,9 +467,98 @@ user := User{
 
 ### 示例proto
 
-TODO
+定义一个proto
 
-### Json使用
+```protobuf
+import "google/protobuf/field_mask.proto";
+// 更新用户请求
+message UpdateUserReq{
+  string id = 1;
+  User payload = 2;
+  optional google.protobuf.FieldMask update_mask = 3;
+}
+```
+
+生成消息体
+
+```go
+// 更新用户请求
+type UpdateUserReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id         string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Payload    *User                  `protobuf:"bytes,2,opt,name=payload,proto3" json:"payload,omitempty"`
+	UpdateMask *fieldmaskpb.FieldMask `protobuf:"bytes,3,opt,name=update_mask,json=updateMask,proto3,oneof" json:"update_mask,omitempty"`
+}
+
+func (x *UpdateUserReq) Reset() {
+	*x = UpdateUserReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_v1_user_reqresp_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *UpdateUserReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateUserReq) ProtoMessage() {}
+
+func (x *UpdateUserReq) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_user_reqresp_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateUserReq.ProtoReflect.Descriptor instead.
+func (*UpdateUserReq) Descriptor() ([]byte, []int) {
+	return file_v1_user_reqresp_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *UpdateUserReq) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateUserReq) GetPayload() *User {
+	if x != nil {
+		return x.Payload
+	}
+	return nil
+}
+
+func (x *UpdateUserReq) GetUpdateMask() *fieldmaskpb.FieldMask {
+	if x != nil {
+		return x.UpdateMask
+	}
+	return nil
+}
+
+```
+
+使用
+
+```go
+for _, v := range req.UpdateMask.GetPaths() {
+		log.Info("v: ", v)
+	}
+```
+
+更多API，参考 https://pkg.go.dev/google.golang.org/protobuf/types/known/fieldmaskpb
+
+### Http中使用的注意事项
 
 参考 issue：https://github.com/golang/protobuf/issues/1273
 

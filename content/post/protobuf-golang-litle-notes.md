@@ -473,5 +473,5 @@ TODO
 + [protocol buffers官方文档](https://developers.google.com/protocol-buffers)
 + https://github.com/mennanov/fieldmask-utils
 + Netflix实用API设计1：Protobuf FieldMask实践 [part1](http://dockone.io/article/2434655) [part2](https://dockone.io/article/2434656)
-+ [go-kratos HTTP方法支持以及FieldMask的使用简介](https://chunlife.top/2022/05/06/go-kratos-HTTP%E6%96%B9%E6%B3%95%E6%94%AF%E6%8C%81%E4%BB%A5%E5%8F%8AFieldMask%E7%9A%84%E4%BD%BF%E7%94%A8%E7%AE%80%E4%BB%8B/#fieldmask%E5%8F%82%E6%95%B0)
++ [go-kratos HTTP方法支持以及FieldMask的使用简介](https://zhuanlan.zhihu.com/p/510438339)
 + [Protobuf and Go: Handling Oneof Field type](https://software-factotum.medium.com/protobuf-and-go-handling-oneof-field-type-172ca780ec47)

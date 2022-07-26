@@ -469,6 +469,30 @@ user := User{
 
 TODO
 
+### Json使用
+
+参考 issue：https://github.com/golang/protobuf/issues/1273
+
+> Field masks have special syntax in the JSON encoding:
+> https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#json-encoding-of-field-masks
+
+Thanks, it looks grammar has changed. In gateway(v1) can be used as flow:
+
+```json
+  "update_mask": {
+      "paths": [
+          "hello",
+          "world"
+      ]
+  }
+```
+
+but in gateway(v2) need to update the field format
+
+```json
+"update_mask":  "hello,world"
+```
+
 ## 参考
 + [protocol buffers官方文档](https://developers.google.com/protocol-buffers)
 + https://github.com/mennanov/fieldmask-utils

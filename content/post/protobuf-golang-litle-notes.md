@@ -457,7 +457,7 @@ user := User{
 
 使用FieldMask 需要引用`google/protobuf/field_mask.proto`。参考[Google的文档](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf?hl=zh-cn#fieldmask)。
 
-> FieldMask 是一个 protobuf 消息，包含一个名为 paths 的字段，用于指定用于指定读取操作返回或更新操作修改的字段
+> FieldMask 是一个 protobuf 消息，包含一个名为 paths 的字段，用于指定用于指定读取操作返回或更新操作修改的字段。空的FieldMask默认应用到全部字段。
 >
 > ```protobuf
 > message FieldMask {
@@ -472,6 +472,7 @@ TODO
 ## 参考
 + [protocol buffers官方文档](https://developers.google.com/protocol-buffers)
 + https://github.com/mennanov/fieldmask-utils
-+ Netflix实用API设计1：Protobuf FieldMask实践 [part1](http://dockone.io/article/2434655) [part2](https://dockone.io/article/2434656)
++ Netflix实用API设计：Protobuf FieldMask实践 [part1](http://dockone.io/article/2434655) [part2](https://dockone.io/article/2434656)
 + [go-kratos HTTP方法支持以及FieldMask的使用简介](https://zhuanlan.zhihu.com/p/510438339)
 + [Protobuf and Go: Handling Oneof Field type](https://software-factotum.medium.com/protobuf-and-go-handling-oneof-field-type-172ca780ec47)
++ [google api design: update](https://cloud.google.com/apis/design/standard_methods#update)

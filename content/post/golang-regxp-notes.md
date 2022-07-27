@@ -155,14 +155,7 @@ POSIX字符组:
 [[:xdigit:]]   hex digit (== [0-9A-Fa-f])
 ```
 
-golang不支持零宽断言和反向引用。如果需要这些功能，可以使用第三方库 https://github.com/dlclark/regexp2
-
-```
-(?=re)    before text matching re (NOT SUPPORTED)
-(?!re)    before text not matching re (NOT SUPPORTED)
-(?<=re)   after text matching re (NOT SUPPORTED)
-(?<!re)   after text not matching re (NOT SUPPORTED)
-```
+golang不支持零宽断言和反向引用等功能（具体列表参考 [官方wiki](https://github.com/google/re2/wiki/Syntax)）。如果需要这些功能，可以使用第三方库 https://github.com/dlclark/regexp2 的相关实现。
 
 ## 参考
 

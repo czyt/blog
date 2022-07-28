@@ -322,6 +322,8 @@ KDE whitesur主题 安装 `yay -S whitesur-kde-theme-git`
 
 XFCE whitesur主题  https://github.com/vinceliuice/WhiteSur-gtk-theme
 
+mcmojave-circle-icon-theme-git 图标主题 `yay -S mcmojave-circle-icon-theme-git`
+
 [conky](https://github.com/brndnmtthws/conky) 性能显示组件 安装 `yay -S conky conky-manager`
 
 

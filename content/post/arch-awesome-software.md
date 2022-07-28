@@ -156,6 +156,8 @@ axel 安装 `yay -S axel`
 
 zssh 安装 `yay -S zssh` 配合lrzsz(安装命令 `yay -S lrzsz`)食用效果最佳。
 
+[trzsz](https://github.com/trzsz/trzsz) 安装 `yay -S trzsz ` 
+
 motrix 安装 `yay -S motrix`  
 
 Mega网盘安装 `yay -S megatools-git` 

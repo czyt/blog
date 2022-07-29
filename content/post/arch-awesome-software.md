@@ -313,6 +313,8 @@ OBS推流工具 `yay -S obs-studio`
 或者
 `yay -S plank` (这个比较简单，推荐)
 
+> XFCE桌面下安装plank后可能会出现屏幕下方会有一条阴影直线，十分影响视觉。解决方案是在开始菜单的设置管理器(Settings Manager)-窗口管理器微调(Window Manager Tweaks)-合成器(Compositor)中去掉dock阴影(Show shadows under dock windows)前面的勾。
+
 如果是KDE桌面
 `yay -S latte-dock` 
 

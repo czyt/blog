@@ -90,7 +90,7 @@ goldendict 安装 `yay -S goldendict` [词库](https://github.com/czytcn/goldend
 
 ## 聊天软件
 
-微信 安装 `yay -S deepin-wine-wechat` 
+微信 安装 `yay -S deepin-wine-wechat`  (新版可能卡死，可以使用下面的命令`killall WeChatBrowser.exe && /opt/deepinwine/tools/sendkeys.sh w wechat 4`)
 
 QQ 安装 `yay -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`
 

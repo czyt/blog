@@ -387,7 +387,56 @@ zsh在使用nohup执行任务的时候，可能会出现session注销后，nohup
 > **HUP**
 > ... In zsh, if you have a background job running when the shell exits, the shell will assume you want that to be killed; in this case it is sent a particular signal called SIGHUP... If you often start jobs that should go on even when the shell has exited, then you can set the option NO_HUP, and background jobs will be left alone.
 
-[starship](https://github.com/starship/starship) 安装 `yay -S startship` (如是安装的zsh，安装完成后在~/.zshrc 加入`eval "$(starship init zsh)"`即可,[配置文档](https://starship.rs/config/))
+[starship](https://github.com/starship/starship) 安装 `yay -S startship` (如是安装的zsh，安装完成后在~/.zshrc 加入`eval "$(starship init zsh)"`即可,[配置文档](https://starship.rs/config/)),个人配置文件(通过`mkdir -p ~/.config && touch ~/.config/starship.toml`创建)
+
+```toml
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+continuation_prompt = "▶▶"
+
+[username]
+style_user = "white bold"
+style_root = "red bold"
+format = "user: [$user]($style) "
+disabled = false
+show_always = true
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character] # The name of the module we are configuring is "character"
+success_symbol = "[➜](bold green)" # The "success_symbol" segment is being set to "➜" with the color "bold green"
+
+[golang]
+format = "via [🏎💨 $version](bold cyan) "
+
+[git_status]
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+up_to_date = "✓"
+untracked = "🤷"
+stashed = "📦"
+modified = "📝"
+staged = '[++\($count\)](green)'
+renamed = "👅"
+deleted = "🗑"
+
+[sudo]
+style = "bold green"
+symbol = "👩‍💻 "
+disabled = false
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
+```
+
+
 
 ### fish
 

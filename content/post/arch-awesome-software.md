@@ -152,6 +152,8 @@ resilio sync 安装 ` yay -S rslsync`
 
 迅雷极速版 `yay -S deepin-wine-thunderspeed`
 
+rclone 同步工具 `yay -S rclone` ([同步onedrive配置](https://rclone.org/onedrive/) [GUI](https://rclone.org/gui/))
+
 axel 安装 `yay -S axel`
 
 zssh 安装 `yay -S zssh` 配合lrzsz(安装命令 `yay -S lrzsz`)食用效果最佳。

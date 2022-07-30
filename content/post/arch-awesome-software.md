@@ -693,6 +693,29 @@ $ sudo pacman -Rs xdg-user-dirs-gtk
 ## 品牌笔记本支持
 
 thinkpad thinkfan 安装`yay -S thinkfan`
+
+> 获取温度传感器 `find /sys/devices -type f -name "temp*_input"`,Thinkpad T430 显示如下：
+>
+> sys/devices/platform/thinkpad_hwmon/hwmon/hwmon3/temp6_input
+> /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon3/temp3_input
+> /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon3/temp7_input
+> /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon3/temp4_input
+> /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon3/temp8_input
+> /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon3/temp1_input
+> /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon3/temp5_input
+> /sys/devices/platform/thinkpad_hwmon/hwmon/hwmon3/temp2_input
+> /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp3_input
+> /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp4_input
+> /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input
+> /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp5_input
+> /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp2_input
+> /sys/devices/virtual/thermal/thermal_zone0/hwmon1/temp1_input
+
+
+
+
+thinkpad 充电阀值软件 `yay -S tlp tp_smapi acpi_call  threshy threshy-gui` （ 需要 `systemctl enable tlp`）
+
 参考
 
 - https://wiki.archlinux.org/index.php/Laptop/Lenovo

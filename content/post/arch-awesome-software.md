@@ -556,6 +556,8 @@ dnspy 安装 `yay -S dnspy` (需要使用blackarch源)
 
 tmux 终端工具 安装 `yay -S tmux`
 
+[pre-commit](https://github.com/pre-commit/pre-commit) 安装 `yay -S python-pre-commit` (管理和维护 pre-commit hooks的工具. [官网](https://pre-commit.com/) )
+
 byobu 终端工具 安装 `yay -S byobu`
 
 API文档工具 zeal 安装 `yay -S zeal` 

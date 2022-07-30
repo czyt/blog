@@ -162,6 +162,8 @@ motrix 安装 `yay -S motrix`
 
 Mega网盘安装 `yay -S megatools-git` 
 
+qbittorrent 安装  `yay -S qbittorrent`([增强版](https://github.com/c0re100/qBittorrent-Enhanced-Edition/releases) `yay -S qbittorrent-enhanced-git`)
+
 moose 支持边下边播的BT工具 `yay -S moose ` 
 
 参考

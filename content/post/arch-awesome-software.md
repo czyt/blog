@@ -299,7 +299,7 @@ ibus-daemon -d -x
 
 ## 媒体软件
 
-网易云音乐 安装 `yay -S netease-cloud-music` 不能播放高清音乐，解决办法参考 https://blog.eh5.me/fix-ncm-ldac-playing/
+网易云音乐 安装 `yay -S netease-cloud-music` 
 
 腾讯视频 安装 `yay -S tenvideo`
 

@@ -100,8 +100,6 @@ ipmsg 安装`yay -S iptux`
 
 mattermost 安装 `yay -S mattermost-desktop`
 
- --python_out=./api \--grpc_python_out=./api \makefile
-
 slack 安装 `yay -S slack-desktop` 
 
 ### 可自建的聊天软件
@@ -329,6 +327,15 @@ KDE whitesur主题 安装 `yay -S whitesur-kde-theme-git`
 XFCE whitesur主题  https://github.com/vinceliuice/WhiteSur-gtk-theme
 
 mcmojave-circle-icon-theme-git 图标主题 `yay -S mcmojave-circle-icon-theme-git`
+
+xfce全局菜单([参考链接1](https://blog.csdn.net/kewen_123/article/details/115465909) [参考链接2](https://www.cnblogs.com/maxwell-blog/p/10337514.html)) `yay -S vala-panel-appmenu-xfce appmenu-gtk-module appmenu-qt4  vala-panel-appmenu-registrar` 启用使用下面的命令
+
+```
+xfconf-query -c xsettings -p /Gtk/ShellShowsAppmenu -n -t bool -s true
+xfconf-query -c xsettings -p /Gtk/ShellShowsMenubar -n -t bool -s true
+```
+
+
 
 [conky](https://github.com/brndnmtthws/conky) 性能显示组件 安装 `yay -S conky conky-manager`
 

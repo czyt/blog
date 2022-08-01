@@ -221,6 +221,8 @@ U盘启动制作[etcher](https://github.com/balena-io/etcher) `yay -S etcher-bin
 
 xmind-2020 安装 `yay -S xmind-2020` ([福利链接](https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g))
 
+drawio  安装` yay -S drawio-desktop-bin` 或者 ` yay -S drawio-desktop`
+
 钉钉 安装 `yay -S  dingtalk-electron ` 
 
 企业微信 `yay -S deepin-wine-wxwork` 

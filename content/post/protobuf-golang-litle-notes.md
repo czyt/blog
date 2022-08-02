@@ -589,3 +589,4 @@ but in gateway(v2) need to update the field format
 + [go-kratos HTTP方法支持以及FieldMask的使用简介](https://zhuanlan.zhihu.com/p/510438339)
 + [Protobuf and Go: Handling Oneof Field type](https://software-factotum.medium.com/protobuf-and-go-handling-oneof-field-type-172ca780ec47)
 + [google api design: update](https://cloud.google.com/apis/design/standard_methods#update)
++ [protobuf中使用oneof、WrapValue和FieldMask](https://www.liwenzhou.com/posts/Go/oneof-wrappers-field_mask/)

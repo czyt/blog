@@ -71,3 +71,5 @@ mockgen . Conn,Driver
 ### 参考
 
 + https://github.com/golang/mock
+##  网络情况模拟
+＋　https://github.com/tylertreat/comcast

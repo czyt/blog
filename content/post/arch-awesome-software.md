@@ -274,7 +274,7 @@ QT_IM_MODULE=fcitx
 @=fcitx
 ```
 
-安装相关字体
+安装相关字体fcitx5
 
 ```
 yay -S wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-code-pro-fonts  adobe-source-han-sans-cn-fonts ttf-monaco noto-fonts-emoji ttf-fira-code 
@@ -282,6 +282,47 @@ ttf-ms-fonts ttf-sarasa-gothic
 ```
 
 输入法有问题，需要重置，使用命令 `rm -r ~/.config/fcitx` 然后注销即可。
+
+### fcitx5
+
+基本安装 `yay -S fxitx5-im fcitx5-chinese-addons  `
+
+或者 `yay -S manjaro-asian-input-support-fcitx5 fcitx5 fcitx5-configtool fcitx5-chinese-addons fcitx5-qt fcitx5-gtk`
+
+安装字典 `yay -S fcitx5-pinyin-zhwiki fcitx5-pinyin-sougou`
+
+安装皮肤：
+
+- [fcitx5-breeze](https://aur.archlinux.org/packages/fcitx5-breeze/)：提供了与KDE默认的Breeze主题匹配的外观。
+- [fcitx5-nord](https://archlinux.org/packages/?name=fcitx5-nord) ：[Nord颜色](https://github.com/tonyfettes/fcitx5-nord) 的主题
+- [fcitx5-material-color](https://archlinux.org/packages/?name=fcitx5-material-color)：提供了类似微软拼音的外观。
+- [fcitx5-solarized](https://aur.archlinux.org/packages/fcitx5-solarized/)：[Solarized颜色](https://ethanschoonover.com/solarized/) 主题
+- [fcitx5-skin-fluentdark-git](https://aur.archlinux.org/packages/fcitx5-skin-fluentdark-git/)：具有模糊效果和阴影的 Fluent-Design 深色主题
+
+> 编辑 `/etc/environment` 并添加以下几行，然后重新登录
+>
+> ```
+> GTK_IM_MODULE=fcitx
+> QT_IM_MODULE=fcitx
+> XMODIFIERS=@im=fcitx
+> SDL_IM_MODULE=fcitx
+> GLFW_IM_MODULE=ibus
+> ```
+>
+> 如果使用 en_US.UTF-8 时，遇到 GTK2 无法激活 fcitx5，可专门为该 GTK2 应用程序设置输入法为 xim，如
+>
+> ```
+> $ env GTK_IM_MODULE=xim <your_gtk2_application>
+> ```
+>
+> 请勿将 `GTK_IM_MODULE` 全局设置为 xim，因为它也会影响 GTK3 程序。XIM 有各种问题（比如输入法重启之后再无法输入），尽可能不要使用。
+>
+> **注意：**
+>
+> - SDL_IM_MODULE 是为了让一些使用特定版本 SDL2 库的游戏能正常使用输入法。
+> - GLFW_IM_MODULE 是为了让 kitty 启用输入法支持。此环境变量的值只能为 ibus。
+
+更多内容 参考 [wiki](https://wiki.archlinux.org/title/Fcitx5_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
 
 ### rime
 

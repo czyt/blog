@@ -597,6 +597,8 @@ vmware 安装 `yay -S vmware-workstation`
 
 postman 安装 `yay -S postman` [汉化文件](https://github.com/hlmd/Postman-cn)（jetbrains新版自带的resful 测试工具，可以不用安装）
 
+apifox 安装 `yay -S apifox`
+
 Typora markdown编辑器 安装 `yay -S typora`
 
 dnspy 安装 `yay -S dnspy` (需要使用blackarch源)

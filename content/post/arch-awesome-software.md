@@ -807,43 +807,32 @@ sudo systemctl start fstrim.timer
 - 重启后可查看swappiness的值，是10即可：cat /proc/sys/vm/swappiness
 
 - 其他关于swap调整大小等等操作请参考“[ArchWiki关于Swap](https://wiki.archlinux.org/index.php/Swap)”
+### Systemd journal size limit
+参考 https://wiki.archlinux.org/index.php/systemd#Journal_size_limit
 
+修改`/etc/systemd/journald.conf` 中的`SystemMaxUse`参数
+
+```
+SystemMaxUse=50M
+```
 ### 其他
-
-  
 
 - [https://averagelinuxuser.com/10-things-to-do-after-installing-manjaro/](https://averagelinuxuser.com/10-things-to-do-after-installing-manjaro/)
 - 字体渲染 [http://www.badwolfbay.cn/2020/03/17/manjaro-setting/](http://www.badwolfbay.cn/2020/03/17/manjaro-setting/)
 
 ## 常见问题
-- invalid or corrupted package (PGP signature)
+- swappinessinvalid or corrupted package (PGP signature)
 
 ```bash
 sudo rm -R /etc/pacman.d/gnupg/
 sudo pacman-key --init
-sudo pacman-key --populate archlinux
+sudo pacman-key --populate archliswappinessnux
 sudo pacman-key --populate archlinuxcn
 ```
 
 + 刷新dns[参考](https://wiki.archlinux.org/title/Systemd-resolved)
 
   ```bash
-  sudo systemctl enable systemd-resolved.ser优化配置
-  TRM
-  如果你的manjaro根目录安装在固态硬盘上，那么建议你输入以下命令，TRM会帮助清理SSD中的块，从而延长SSD的使用寿命：
-  
-  sudo systemctl enable fstrim.timer
-  1
-  SWAP设置
-  系统开机以后内存占用1.7g左右，通常有8-16g内存的电脑可以将swap使用率调低，这样可以提高电脑的性能。
-  
-  查看swap使用率，一般是60，意思是60%的概率将内存整理到swap：cat /proc/sys/vm/swappiness
-  修改swap使用策略为10%，即10%的概率将内存整理到swap：sudo sysctl -w vm.swappiness=10
-  修改配置文件：sudo xed /etc/sysctl.d/99-swappiness.conf
-  在文件末尾加上下面这行内容：
-  vm.swappiness=10
-  重启后可查看swappiness的值，是10即可：cat /proc/sys/vm/swappiness
-  其他关于swap调整大小等等操作请参考“ArchWiki关于Swap”vice
   sudo resolvectl flush-caches
   ```
   
@@ -851,6 +840,6 @@ sudo pacman-key --populate archlinuxcn
 
 ## 参考连接
 
-- [archlinux 简明指南](https://arch.icekylin.online)
+- [swappinessarchlinux 简明指南](https://arch.icekylin.online)
 - [How to Flush DNS Cache on Linux](https://www.bitslovers.com/linux-how-to-flush-dns/)
 - [Manjaro 字体调优](https://wiki.manjaro.org/index.php/Improve_Font_Rendering)

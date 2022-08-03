@@ -536,6 +536,8 @@ c/c++开发  安装 `yay -S make cmake gdb gcc`
 
 goland 安装 `yay -S goland goland-jre`
 
+uinityHub 安装 `yay -S unityhub`
+
 [commitizen-go](https://github.com/lintingzhen/commitizen-go) 安装 `yay -S commitizen-go `  相似的程序[gitcz](https://github.com/xiaoqidun/gitcz)
 
 datagrip 安装 `yay -S datagrip datagrip-jre`

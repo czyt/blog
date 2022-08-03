@@ -285,7 +285,7 @@ ttf-ms-fonts ttf-sarasa-gothic
 
 ### fcitx5
 
-基本安装 `yay -S fxitx5-im fcitx5-chinese-addons  `
+基本安装 `yay -S fcitx5-im fcitx5-chinese-addons  `
 
 或者 `yay -S manjaro-asian-input-support-fcitx5 fcitx5 fcitx5-configtool fcitx5-chinese-addons fcitx5-qt fcitx5-gtk`
 

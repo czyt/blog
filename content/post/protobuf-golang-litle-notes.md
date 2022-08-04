@@ -566,7 +566,7 @@ for _, v := range req.UpdateMask.GetPaths() {
 > https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#json-encoding-of-field-masks
 
 Thanks, it looks grammar has changed. In gateway(v1) can be used as flow:
-
+bug fix
 ```json
   "update_mask": {
       "paths": [
@@ -574,14 +574,41 @@ Thanks, it looks grammar has changed. In gateway(v1) can be used as flow:
           "world"
       ]
   }
-```
+```bug fix
 
 but in gateway(v2) need to update the field format
 
 ```json
 "update_mask":  "hello,world"
 ```
+### Json Mapping
+protobuf 3 的`int64``fixed64` `uint64`类型在json序列化时会被转换为string。
+Proto3支持JSON中的规范编码，从而更容易在系统之间共享数据。在下表中以类型为基础描述编码。如果在JSON编码的数据中缺少一个值，或者其值为null，则将其解释为解析为协议缓冲区的适当默认值。如果一个字段在协议缓冲区中具有默认值，则默认情况下将在JSON编码的数据中省略它以节省空间。实现可以提供在JSON编码输出中发射具有默认值的字段的选项。
 
+| proto3                 | JSON          | JSON example                              | Notes                                                        |
+| :--------------------- | :------------ | :---------------------------------------- | :----------------------------------------------------------- |
+| message                | object        | `{"fooBar": v, "g": null, …}`             | Generates JSON objects. Message field names are mapped to lowerCamelCase and become JSON object keys. If the `json_name` field option is specified, the specified value will be used as the key instead. Parsers accept both the lowerCamelCase name (or the one specified by the `json_name` option) and the original proto field name. `null` is an accepted value for all field types and treated as the default value of the corresponding field type. |
+| enum                   | string        | `"FOO_BAR"`                               | The name of the enum value as specified in proto is used. Parsers accept both enum names and integer values. |
+| map<K,V>               | object        | `{"k": v, …}`                             | All keys are converted to strings.                           |
+| repeated V             | array         | `[v, …]`                                  | `null` is accepted as the empty list `[]`.                   |
+| bool                   | true, false   | `true, false`                             |                                                              |
+| string                 | string        | `"Hello World!"`                          |                                                              |
+| bytes                  | base64 string | `"YWJjMTIzIT8kKiYoKSctPUB+"`              | JSON value will be the data encoded as a string using standard base64 encoding with paddings. Either standard or URL-safe base64 encoding with/without paddings are accepted. |
+| int32, fixed32, uint32 | number        | `1, -10, 0`                               | JSON value will be a decimal number. Either numbers or strings are accepted. |
+| int64, fixed64, uint64 | string        | `"1", "-10"`                              | JSON value will be a decimal string. Either numbers or strings are accepted. |
+| float, double          | number        | `1.1, -10.0, 0, "NaN", "Infinity"`        | JSON value will be a number or one of the special string values "NaN", "Infinity", and "-Infinity". Either numbers or strings are accepted. Exponent notation is also accepted. -0 is considered equivalent to 0. |
+| Any                    | `object`      | `{"@type": "url", "f": v, … }`            | If the `Any` contains a value that has a special JSON mapping, it will be converted as follows: `{"@type": xxx, "value": yyy}`. Otherwise, the value will be converted into a JSON object, and the `"@type"` field will be inserted to indicate the actual data type. |
+| Timestamp              | string        | `"1972-01-01T10:00:20.021Z"`              | Uses RFC 3339, where generated output will always be Z-normalized and uses 0, 3, 6 or 9 fractional digits. Offsets other than "Z" are also accepted. |
+| Duration               | string        | `"1.000340012s", "1s"`                    | Generated output always contains 0, 3, 6, or 9 fractional digits, depending on required precision, followed by the suffix "s". Accepted are any fractional digits (also none) as long as they fit into nano-seconds precision and the suffix "s" is required. |
+| Struct                 | `object`      | `{ … }`                                   | Any JSON object. See `struct.proto`.                         |
+| Wrapper types          | various types | `2, "2", "foo", true, "true", null, 0, …` | Wrappers use the same representation in JSON as the wrapped primitive type, except that `null` is allowed and preserved during data conversion and transfer. |
+| FieldMask              | string        | `"f.fooBar,h"`                            | See `field_mask.proto`.                                      |
+| ListValue              | array         | `[foo, bar, …]`                           |                                                              |
+| Value                  | value         |                                           | Any JSON value. Check [google.protobuf.Value](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Value) for details. |
+| NullValue              | null          |                                           | JSON null                                                    |
+| Empty                  | object        | `{}`                                      | An empty JSON object                                         |
+
+参考 https://developers.google.com/protocol-buffers/docs/proto3#json
 ## 参考
 + [protocol buffers官方文档](https://developers.google.com/protocol-buffers)
 + https://github.com/mennanov/fieldmask-utils

@@ -223,6 +223,8 @@ xmind-2020 安装 `yay -S xmind-2020` ([福利链接](https://mega.nz/folder/Mxp
 
 drawio  安装` yay -S drawio-desktop-bin` 或者 ` yay -S drawio-desktop`
 
+[excalidraw-desktop-git](https://aur.archlinux.org/packages/excalidraw-desktop-git) 安装 `yay -S excalidraw-desktop-git `
+
 钉钉 安装 `yay -S  dingtalk-electron ` 
 
 企业微信 `yay -S deepin-wine-wxwork` 

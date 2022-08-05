@@ -71,7 +71,11 @@ alacritty 安装 `yay -S alacritty `
 ## 浏览器
 
 vivaldi 安装 `yay -S vivaldi`
+
+microsoft Edge `yay -S microsoft-edge-stable-bin`
+
 Chrome 安装 `yay -S google-chrome`
+
 参考
 
 - 解决打开Chrome出现 输入密码以解锁您的登录密钥环 [https://blog.csdn.net/kangear/article/details/20789451](https://blog.csdn.net/kangear/article/details/20789451)
@@ -222,8 +226,6 @@ U盘启动制作[etcher](https://github.com/balena-io/etcher) `yay -S etcher-bin
 xmind-2020 安装 `yay -S xmind-2020` ([福利链接](https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g))
 
 drawio  安装` yay -S drawio-desktop-bin` 或者 ` yay -S drawio-desktop`
-
-[excalidraw-desktop-git](https://aur.archlinux.org/packages/excalidraw-desktop-git) 安装 `yay -S excalidraw-desktop-git `
 
 钉钉 安装 `yay -S  dingtalk-electron ` 
 

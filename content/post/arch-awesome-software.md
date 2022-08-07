@@ -239,6 +239,8 @@ onenote `yay -S p3x-onenote`
 
 realvnc-server `yay -S realvnc-vnc-server ` (安装完毕后需要注册`sudo vnclicense -add 3TH6P-DV5AE-BLHY6-PNENS-B3AQA`,启动服务 `systemctl enable vncserver-x11-serviced`)
 
+realvnc-viewer `yay -S realvnc-vnc-viewer`
+
 [macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `yay -S 
 macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
 

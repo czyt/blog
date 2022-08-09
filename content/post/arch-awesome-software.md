@@ -565,6 +565,8 @@ flutter 安装 `yay -S flutter`
 
 ## 开发工具
 
+[github520](https://github.com/521xueweihan/GitHub520) `sed -i "/# GitHub520 Host Start/Q" /etc/hosts && curl https://raw.hellogithub.com/hosts >> /etc/hosts`
+
 [lapce](https://github.com/lapce/lapce) `yay -S lapce`
 
 redis管理工具 `yay -S redis-desktop-manager` 
@@ -661,7 +663,7 @@ tcpflow `yay -S tcpflow`
 
  pyroscope性能监测工具  `yay -S pyroscope-bin` (使用[教程](https://colobu.com/2022/01/27/pyroscope-a-continuous-profiling-platform/) [官方教程](https://pyroscope.io/docs/server-install-linux/))
 
-
+crontab `yay -S cronie`
 
 参考
 

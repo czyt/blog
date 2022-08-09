@@ -157,7 +157,22 @@ book:=NewBook("Pride and Prejudice", 345)
 err := mgm.Coll(book).Create(book)
 ```
 
+如果需要设置数据在某一时间自动过期（清除),那么可以使用下面的语句：
 
+```go
+book:=NewBook("Pride and Prejudice", 345)
+model := mongo.IndexModel{
+    Keys: bson.D{
+        {"created_at", 1},
+        {"expireAfterSeconds", t.data.temporaryRecordExpireSeconds}},
+}
+	_, err = mgm.Coll(book).Indexes().CreateOne(ctx, model)
+	if err != nil {
+		return "", "", err
+	}
+```
+
+更多详情，请参考 [expire data](https://www.mongodb.com/docs/v4.4/tutorial/expire-data/) [index ttl](https://www.mongodb.com/docs/v4.4/core/index-ttl/)
 
 ### 删除
 
@@ -193,7 +208,7 @@ if err != nil {
 }
 ```
 
-
+60
 
 ### 查询
 

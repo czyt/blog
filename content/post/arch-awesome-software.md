@@ -569,6 +569,8 @@ flutter 安装 `yay -S flutter`
 
 [lapce](https://github.com/lapce/lapce) `yay -S lapce`
 
+[lazygit](https://github.com/jesseduffield/lazygit) `yay -S lazygit`
+
 代码生成图片[silicon](https://github.com/Aloxaf/silicon) `yay -S --needed pkgconf freetype2 fontconfig libxcb xclip silicon `
 
 redis管理工具 `yay -S redis-desktop-manager` 

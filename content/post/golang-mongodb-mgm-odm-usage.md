@@ -208,8 +208,6 @@ if err != nil {
 }
 ```
 
-60
-
 ### 查询
 
 #### 基础查询
@@ -247,6 +245,12 @@ err := mgm.Coll(&Book{}).SimpleFind(&result, bson.M{"age": bson.M{operator.Gt: 2
 ```go
 opts := options.FindOne().SetProjection(bson.D{{"_id", 0}})
 // 如果是调用的Find方法就应该是opts := options.Find().SetProjection(bson.D{{"_id", 0}})
+err := mgm.Coll(&Book{}).FindOne(nil, bson.M{}, opts)
+```
+查询并返回`name`和`publish_year`字段
+```go
+opts := options.FindOne().SetProjection(bson.D{{"_id", 0},{"name",1},{"publish_year",1}})
+// 如果是调用的Find方法就应该是opts := options.Find().SetProjection(bson.D{{"_id", 0},{"name",1},{"publish_year",1}})
 err := mgm.Coll(&Book{}).FindOne(nil, bson.M{}, opts)
 ```
 

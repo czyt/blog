@@ -7,6 +7,24 @@ draft: false
 ## 自定义接口返回内容
 通过[Response Encoder](https://go-kratos.dev/docs/component/transport/http#responseencoderen-encoderesponsefunc-serveroption)实现。
 
+## 通过Context取得信息
+
+取JWT中的key数据
+
+```go
+func getPayloadFromCtx(ctx context.Context, partName string) (string, error) {
+	if claims, ok := jwt.FromContext(ctx); ok {
+		if m, ok := claims.(jwtV4.MapClaims); ok {
+			if v, ok := m[partName].(string); ok {
+				return v, nil
+			}
+		}
+	}
+	return "", errors.New("invalid Jwt")
+}
+```
+
+
 
 
 

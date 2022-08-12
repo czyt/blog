@@ -609,6 +609,48 @@ Proto3支持JSON中的规范编码，从而更容易在系统之间共享数据�
 | Empty                  | object        | `{}`                                      | An empty JSON object                                         |
 
 参考 https://developers.google.com/protocol-buffers/docs/proto3#json
+
+## protobuf 自定义Go字段的json Tag
+
+[官方文档](https://developers.google.com/protocol-buffers/docs/proto3#json_options) 说明
+
+>A proto3 JSON implementation may provide the following options:
+>
+>- **Emit fields with default values**: Fields with default values are omitted by default in proto3 JSON output. An implementation may provide an option to override this behavior and output fields with their default values.
+>- **Ignore unknown fields**: Proto3 JSON parser should reject unknown fields by default but may provide an option to ignore unknown fields in parsing.
+>- **Use proto field name instead of lowerCamelCase name**: By default proto3 JSON printer should convert the field name to lowerCamelCase and use that as the JSON name. An implementation may provide an option to use proto field name as the JSON name instead. Proto3 JSON parsers are required to accept both the converted lowerCamelCase name and the proto field name.
+>- **Emit enum values as integers instead of strings**: The name of an enum value is used by default in JSON output. An option may be provided to use the numeric value of the enum value instead.
+
+proto 
+
+```protobuf
+message Blog {
+  int64 id = 1 [json_name = "uid"];
+  string titleName = 2;
+  string author_name = 3[json_name = "author_name"];
+  string img = 4;
+  int64 CountNum = 5;
+}
+```
+
+生成go文件
+
+```go
+type Blog struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Id         int64  `protobuf:"varint,1,opt,name=id,json=uid,proto3" json:"id,omitempty"`
+	TitleName  string `protobuf:"bytes,2,opt,name=titleName,proto3" json:"titleName,omitempty"`
+	AuthorName string `protobuf:"bytes,3,opt,name=author_name,json=author_name,proto3" json:"author_name,omitempty"`
+	Img        string `protobuf:"bytes,4,opt,name=img,proto3" json:"img,omitempty"`
+	CountNum   int64  `protobuf:"varint,5,opt,name=CountNum,proto3" json:"CountNum,omitempty"`
+}
+```
+
+
+
 ## 参考
 + [protocol buffers官方文档](https://developers.google.com/protocol-buffers)
 + https://github.com/mennanov/fieldmask-utils

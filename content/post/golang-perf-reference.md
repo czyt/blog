@@ -10,6 +10,8 @@ draft: false
 
 + [编写和优化Go代码](https://github.com/dgryski/go-perfbook)
 + [Go Optimizations 101](https://go101.org/optimizations/101.html)
++ https://github.com/dgryski/go-perfbook
++ https://github.com/bobstrecansky/HighPerformanceWithGo/
 
 ## Go package
 

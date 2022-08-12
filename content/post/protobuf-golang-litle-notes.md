@@ -649,6 +649,12 @@ type Blog struct {
 }
 ```
 
+goland的实时模板如下,方便快速使用
+
+```
+[json_name = "$FIELD_NAME$"$END$]
+```
+
 
 
 ## 参考

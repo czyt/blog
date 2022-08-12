@@ -9,7 +9,7 @@ draft: false
 
 ## 通过Context取得信息
 
-取JWT中的key数据
+Server端取JWT中的key数据
 
 ```go
 func getPayloadFromCtx(ctx context.Context, partName string) (string, error) {

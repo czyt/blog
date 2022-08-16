@@ -183,6 +183,8 @@ moose 支持边下边播的BT工具 `yay -S moose `
 
 [达芬奇视频剪辑](http://www.blackmagicdesign.com/products/davinciresolve/) 安装 `yay -S davinci-resolve` 
 
+handbrake 视频格式转换工具 `yay -S handbrake-full`
+
 [zettlr](https://www.zettlr.com) markdown编辑器 安装 `yay -S zettlr ` 
 
 [vnode](https://tamlok.github.io/vnote/zh_cn/#!index.md) markdown编辑器 安装 `yay -S vnote` 

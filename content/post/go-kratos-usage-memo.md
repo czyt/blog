@@ -24,6 +24,18 @@ func getPayloadFromCtx(ctx context.Context, partName string) (string, error) {
 }
 ```
 
+middleware中，还可以将context转换为`http.Transport`获取更多的信息。
+
+```go
+if tr, ok := transport.FromServerContext(ctx); ok {
+    // 可以取header等信息
+    if hr, ok := tr.(*http.Transport); ok {
+      // 可以取request等信息
+   }
+}
+
+```
+
 
 
 

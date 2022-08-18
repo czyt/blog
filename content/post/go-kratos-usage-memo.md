@@ -76,6 +76,147 @@ h := NewHelper(
 
 TODO:按奇偶进行读取的意思
 
+## 一个接口对应多个httpPath
+
+下面是官网的文档中的一个例子（[原文](https://go-kratos.dev/docs/component/api#%E5%AE%9A%E4%B9%89%E6%8E%A5%E5%8F%A3)）：
+
+```protobuf
+syntax = "proto3";
+
+package helloworld.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/go-kratos/service-layout/api/helloworld/v1;v1";
+option java_multiple_files = true;
+option java_package = "dev.kratos.api.helloworld.v1";
+option java_outer_classname = "HelloWorldProtoV1";
+
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply)  {
+    option (google.api.http) = {
+        // 定义一个 GET 接口，并且把 name 映射到 HelloRequest
+        get: "/helloworld/{name}",
+        // 可以添加附加接口
+        additional_bindings {
+            // 定义一个 POST 接口，并且把 body 映射到 HelloRequest
+            post: "/v1/greeter/say_hello",
+            body: "*",
+        }
+    };
+  }
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
+```
+
+## 支持文件上传
+
+因为protobuf官方限制，并不能通过protobuf生成http服务，需要创建相关逻辑，参考[example](https://github.com/go-kratos/examples/tree/main/http/upload)中的实现：
+
+```go
+package main
+
+import (
+	"io"
+	"log"
+	"os"
+
+	"github.com/go-kratos/kratos/v2"
+	"github.com/go-kratos/kratos/v2/transport/http"
+)
+
+func uploadFile(ctx http.Context) error {
+	req := ctx.Request()
+
+	fileName := req.FormValue("name")
+	file, handler, err := req.FormFile("file")
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	f, err := os.OpenFile(handler.Filename, os.O_WRONLY|os.O_CREATE, 0o666)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	_, _ = io.Copy(f, file)
+
+	return ctx.String(200, "File "+fileName+" Uploaded successfully")
+}
+
+func main() {
+	httpSrv := http.NewServer(
+		http.Address(":8000"),
+	)
+	route := httpSrv.Route("/")
+	route.POST("/upload", uploadFile)
+
+	app := kratos.New(
+		kratos.Name("upload"),
+		kratos.Server(
+			httpSrv,
+		),
+	)
+	if err := app.Run(); err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
+## 静态文件托管
+
+官方例子
+
+```go
+package main
+
+import (
+	"embed"
+	"log"
+	"net/http"
+
+	"github.com/go-kratos/kratos/v2"
+	transhttp "github.com/go-kratos/kratos/v2/transport/http"
+	"github.com/gorilla/mux"
+)
+
+//go:embed assets/*
+var f embed.FS
+
+func main() {
+	router := mux.NewRouter()
+	// example: /assets/index.html
+	router.PathPrefix("/assets").Handler(http.FileServer(http.FS(f)))
+
+	httpSrv := transhttp.NewServer(transhttp.Address(":8000"))
+	httpSrv.HandlePrefix("/", router)
+
+	app := kratos.New(
+		kratos.Name("static"),
+		kratos.Server(
+			httpSrv,
+		),
+	)
+	if err := app.Run(); err != nil {
+		log.Fatal(err)
+	}
+}
+```
+
+
+
 ## 参考
 
 + [三分钟小课堂 - 如何控制接口返回值](https://mp.weixin.qq.com/s/4ocdoAVXXKTvJ3U65YXltw)

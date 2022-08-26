@@ -32,6 +32,8 @@ draft: false
 
 - entimport `go install ariga.io/entimport/cmd/entimport@latest`
 
+- entproto `go install entgo.io/contrib/entproto/cmd/entproto@latest`
+
 - wire `go install github.com/google/wire/cmd/wire@latest`
 
 - 规范化git commit消息工具 comet `go install github.com/liamg/comet@latest`

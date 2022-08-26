@@ -195,6 +195,8 @@ libreoffice 安装  `yay -S libreoffice`
 
 flameshot 截图工具 安装 `yay -S flameshot` 
 
+geogebra 几何绘图软件 `yay -S geogebra  `
+
 福昕pdf阅读器 `yay -S foxitreader` 
 
 Teamviewer `yay -S teamviewer`如果一直显示未连接，则请退出teamviewer，执行`sudo teamviewer --daemon enable` 再打开试试

@@ -13,6 +13,8 @@ draft: false
 
 - [Golang Downloads Mirrors](https://gomirrors.org)
 
+  更多请参考 [Thanks Mirror](https://github.com/eryajf/Thanks-Mirror#golang)
+
 
   ## 环境设置
 

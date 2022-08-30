@@ -1,6 +1,6 @@
 ---
 title: "在Alibaba Cloud Linux上安装MongoDB"
-date: 2022-03-23
+date: 2022-08-30
 tags: ["mongodb", "alibaba", "linux"]
 draft: false 
 ---

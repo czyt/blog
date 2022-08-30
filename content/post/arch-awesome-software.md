@@ -59,7 +59,7 @@ Remmina 安装 `yay -S remmina`
 
 
 ```bash
-remmina-plugin-teamviewer remmina-plugin-webkit remmina-plugin-rdesktop remmina-plugin-anydesk-git
+freerdp remmina-plugin-teamviewer remmina-plugin-webkit remmina-plugin-rdesktop remmina-plugin-anydesk-git
 ```
 
 终端：

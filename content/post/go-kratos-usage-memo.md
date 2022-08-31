@@ -215,7 +215,11 @@ func main() {
 }
 ```
 
+## Service和Biz层的区分
 
+Service 层：协议转换，比如grpc转http 和一些简单的validate。
+
+Biz层：具体的Biz业务，跟协议无关。
 
 ## 参考
 

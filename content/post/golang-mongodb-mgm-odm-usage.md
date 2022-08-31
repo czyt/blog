@@ -132,7 +132,7 @@ coll:=mgm.Coll(&Book{})
 
 ## 使用
 
-开始使用之前，先设置默认配置选项：
+开始使用之前，先设置默认配置选项：Descending
 
 ```go
 import (

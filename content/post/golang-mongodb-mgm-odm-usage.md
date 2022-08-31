@@ -253,6 +253,24 @@ opts := options.FindOne().SetProjection(bson.D{{"_id", 0},{"name",1},{"publish_y
 // 如果是调用的Find方法就应该是opts := options.Find().SetProjection(bson.D{{"_id", 0},{"name",1},{"publish_year",1}})
 err := mgm.Coll(&Book{}).FindOne(nil, bson.M{}, opts)
 ```
+#### 自定义排序
+查询并设置按字段排序.`1`表示升序，`-1`表示降序，下面的例子是按创建时间升序排列。
+
+```go
+opts := options.FindOne().SetSort(bson.M{"created_at": 1})
+// 如果是调用的Find方法就应该是opts := options.Find().SetSort(bson.M{"created_at": 1})
+err := mgm.Coll(&Book{}).FindOne(nil, bson.M{}, opts)
+```
+
+按多个字段进行排序
+
+```go
+opts := options.FindOne().SetSort(bson.D{{"created_at",1},{"price",-1}})
+// 如果是调用的Find方法就应该是opts := options.Find().SetSort(bson.D{{"created_at",1},{"price",-1}})
+err := mgm.Coll(&Book{}).FindOne(nil, bson.M{}, opts)
+```
+
+
 
 ### 聚合
 

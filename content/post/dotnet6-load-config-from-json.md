@@ -1,7 +1,7 @@
 ---
-title: ".NET6 从json获取配置"
+title: ".NET6 从JSON获取配置"
 date: 2022-09-06
-tags: ["golang", "ebpf"]
+tags: [".net", "json"]
 draft: false
 ---
 ## 环境准备

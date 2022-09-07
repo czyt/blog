@@ -8,7 +8,6 @@ draft: false
 ### nuget包
 + Microsoft.Extensions.Configuration
 + Microsoft.Extensions.Configuration.Binder 
-+ Serilog.Sinks.File.Archive （日志文件rotation功能）
 + Microsoft.Extensions.Configuration.Json (当需要从Json文件添加记录时，安装此nuget包)
 + Microsoft.Extensions.Configuration.EnvironmentVariables (当需要从环境变量添加记录时，安装此nuget包)
 ### C#开发环境

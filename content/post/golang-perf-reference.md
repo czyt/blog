@@ -32,6 +32,7 @@ draft: false
 + https://github.com/cch123/perf_workshop_2021
 + [GO高性能编程精华](https://zhuanlan.zhihu.com/p/482107438)
 + [Go 语言中各式各样的优化手段](https://zhuanlan.zhihu.com/p/403417640)
++ [Go 中简单的内存节省技巧](https://mp.weixin.qq.com/s/iaYpz51xe45RJfNWPyIqHw)
 
 ## 性能监控系统
 

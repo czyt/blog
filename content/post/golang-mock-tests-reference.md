@@ -71,5 +71,12 @@ mockgen . Conn,Driver
 ### 参考
 
 + https://github.com/golang/mock
+
+## Ginkgo（BDD行为驱动开发）测试框架
+### 安装
+使用命令安装 `go install github.com/onsi/ginkgo/v2/ginkgo@latest`
+## 文档
++ [官方文档](https://onsi.github.io/ginkgo/)
++ [中文文档](https://www.ginkgo.wiki)
 ##  网络情况模拟
 ＋　https://github.com/tylertreat/comcast

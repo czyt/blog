@@ -288,7 +288,7 @@ QT_IM_MODULE=fcitx
 
 ```
 yay -S wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-code-pro-fonts  adobe-source-han-sans-cn-fonts ttf-monaco noto-fonts-emoji ttf-fira-code 
-ttf-ms-fonts ttf-sarasa-gothic
+ttf-ms-fonts ttf-sarasa-gothic nerd-fonts-complete
 ```
 
 输入法有问题，需要重置，使用命令 `rm -r ~/.config/fcitx` 然后注销即可。

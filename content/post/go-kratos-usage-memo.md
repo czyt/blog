@@ -221,6 +221,25 @@ Service 层：协议转换，比如grpc转http 和一些简单的validate。
 
 Biz层：具体的Biz业务，跟协议无关。
 
+## 集成实时的metric
+### statsviz
+在服务的入口添加下面的代码
+```go
+imports(
+    ....
+    "github.com/arl/statsviz"
+    ....
+)
+func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
+	statsviz.RegisterDefault()
+	....
+	}
+```
+然后在服务监听地址(默认是http://localhost:8000)后面加上`/debug/statsviz/`访问即可。
+
+![image-20220908220623248](https://assets.czyt.tech/img/statsviz-demo-screenshot.png)
+
+
 ## 参考
 
 + [三分钟小课堂 - 如何控制接口返回值](https://mp.weixin.qq.com/s/4ocdoAVXXKTvJ3U65YXltw)

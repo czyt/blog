@@ -223,6 +223,13 @@ Biz层：具体的Biz业务，跟协议无关。
 
 ## 集成实时的metric
 ### statsviz
+
+[官方网站](https://github.com/arl/statsviz)说明
+
+>Visualise Go program runtime metrics data in real time: heap, objects, goroutines, GC pauses, scheduler, etc. in your browser.
+>
+>实时可视化Go程序运行时度量数据：在浏览器中的堆、对象、goroutine、GC暂停、调度程序等。
+
 在服务的入口添加下面的代码
 ```go
 imports(

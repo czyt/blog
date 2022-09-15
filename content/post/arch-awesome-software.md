@@ -673,6 +673,8 @@ tcpflow `yay -S tcpflow`
 
 crontab `yay -S cronie`
 
+charles抓包工具  `yay -S charles ` ([注册码生成](https://www.charles.ren))
+
 参考
 
 - vmware安装后报错的问题 https://blog.csdn.net/weixin_43968923/article/details/100184356

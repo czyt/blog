@@ -673,7 +673,7 @@ tcpflow `yay -S tcpflow`
 
 crontab `yay -S cronie`
 
-charles抓包工具  `yay -S charles ` ([注册码生成](https://www.charles.ren))
+charles抓包工具  `yay -S charles ` ([注册码生成](https://www.charles.ren) [汉化](https://github.com/cuiqingandroid/CharlesZH))
 
 参考
 

@@ -678,8 +678,16 @@ charles抓包工具  `yay -S charles ` ([注册码生成](https://www.charles.re
 参考
 
 - vmware安装后报错的问题 https://blog.csdn.net/weixin_43968923/article/details/100184356
+
 - 科学技术大学blackarch源使用说明 [https://lug.ustc.edu.cn/wiki/mirrors/help/blackarch](https://lug.ustc.edu.cn/wiki/mirrors/help/blackarch)
+
 - jetbrains系列软件markdown插件无预览标签 `yay -S  java-openjfx-bin` ，参考[链接](https://intellij-support.jetbrains.com/hc/en-us/community/posts/360001515959-Markdown-Support-plugin-preview-not-working-in-Linux)
+
+- 安装charless证书。导出根证书保存为pem格式。转换为crt格式
+
+  `openssl x509 -in charles.pem -inform PEM -out ca.crt`
+
+  信任证书`sudo trust anchor ca.crt`,done
 
 ## 服务器组件
 

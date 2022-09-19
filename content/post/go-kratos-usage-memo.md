@@ -246,6 +246,19 @@ func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
 
 ![image-20220908220623248](https://assets.czyt.tech/img/statsviz-demo-screenshot.png)
 
+## 服务端配置选项
+
+参考[官方项目](https://github.com/go-kratos/beer-shop/blob/main/app/shop/interface/internal/server/http.go)
+
+```go
+http.Filter(handlers.CORS(
+			handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),// 允许的header
+			handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}),// 允许方法
+			handlers.AllowedOrigins([]string{"*"}),//允许的请求源
+		)),
+```
+
+需要引用包`"github.com/gorilla/handlers"`
 
 ## 参考
 

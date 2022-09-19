@@ -246,6 +246,14 @@ func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
 
 ![image-20220908220623248](https://assets.czyt.tech/img/statsviz-demo-screenshot.png)
 
+类似的还有：
+
++ https://github.com/felixge/fgtrace 
+
+  >fgtrace is an experimental profiler/tracer that is capturing wallclock timelines for each goroutine. It's very similar to the Chrome profiler.
+  >
+  >⚠️ fgtrace may cause noticeable stop-the-world pauses in your applications. It is intended for dev and testing environments for now.
+
 ## 服务端配置选项
 
 参考[官方项目](https://github.com/go-kratos/beer-shop/blob/main/app/shop/interface/internal/server/http.go)

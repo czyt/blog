@@ -715,6 +715,8 @@ screenfetch (终端打印出你的系统信息) 安装 `yay -S screenfetch`
 
 neofetch `yay -S neofetch`
 
+easystroke 鼠标手势 `yay -S easystroke`
+
 ![image-20220409140401125](https://assets.czyt.tech/img/image-20220409140401125.png)
 
 copyQ (类似ditto) 安装 `yay -S copyq`

@@ -85,7 +85,6 @@ ln -s /usr/sbin/protoc-gen-grpclib_python /usr/sbin/protoc-gen-grpc_python
 1. 安装proto工具 `go get go.einride.tri p tech/protoc-gen-typescript-http`
 
 2. 在MakeFile中添加一行
-3. 
    ```bash
      --typescript-http_out [OUTPUT DIR] \
      [.proto files ...]

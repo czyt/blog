@@ -1,5 +1,5 @@
 ---
-title: "为Kratos prtobuf文件添加Csharp及Python编译输出"
+title: "为Kratos prtobuf文件添加多种编译输出"
 date: 2022-04-08
 tags: ["golang", "kratos", "csharp","python"]
 draft: false
@@ -73,3 +73,44 @@ ln -s /usr/sbin/protoc-gen-grpclib_python /usr/sbin/protoc-gen-grpc_python
 --python_out=./api \
 --grpc_python_out=./api \
 ```
+
+## TypeScript 
+
+### 纯typescript类
+
++ [ts-proto](https://github.com/stephenh/ts-proto)
+
+### typescript类+服务
+
+1. 安装proto工具 `go get go.einride.tri p tech/protoc-gen-typescript-http`
+
+2. 在MakeFile中添加一行
+3. 
+   ```bash
+     --typescript-http_out [OUTPUT DIR] \
+     [.proto files ...]
+   ```
+
+3. 生成的示例代码
+
+   ```typescript
+   const rootUrl = "...";
+   
+   type Request = {
+     path: string,
+     method: string,
+     body: string | null
+   }
+   
+   function fetchRequestHandler({path, method, body}: Request) {
+     return fetch(rootUrl + path, {method, body}).then(response => response.json())
+   }
+   
+   export function siteClient() {
+     return createShipperServiceClient(fetchRequestHandler);
+   }
+   ```
+
+   ### 其他 
+   
+   + [在线proto转typescript](https://geotho.github.io/protobuf-to-typescript/)

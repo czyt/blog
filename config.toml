@@ -19,6 +19,7 @@ googleAnalytics = ""
 	ShowCodeCopyButtons = true
 	comments = true
 	ShowReadingTime = true
+	ShowShareButtons = true
 	ShowToc = true
 	ShowPostNavLinks = true
 	ShowBreadCrumbs = true

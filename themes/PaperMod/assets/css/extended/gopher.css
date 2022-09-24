@@ -1,11 +1,3 @@
-body {
-  align-items: center;
-  background-color: #D5C4FF;
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-}
-
 .gopher {
   height: 20rem;
   width: 20rem;

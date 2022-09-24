@@ -23,7 +23,7 @@ googleAnalytics = ""
 	ShowToc = true
 	ShowPostNavLinks = true
 	ShowBreadCrumbs = true
-[params.fuseOpts]:
+[params.fuseOpts]
 	isCaseSensitive= false
 	shouldSort= true
 	location= 0

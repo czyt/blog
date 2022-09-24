@@ -5,29 +5,37 @@ theme = "PaperMod"
 googleAnalytics = ""
 
 [params]
-    author = "czyt"
-    description = "我来问道无馀说，云在青天水在瓶。"
-    githubUsername = "czyt"
-    accent = "red"
-    showBorder = true
-    backgroundColor = "white"
-    font = "Raleway" # should match the name on Google Fonts!
-    highlight = true
-    highlightStyle = "default"
-    favicon = "/img/favicon.ico" 
-    highlightLanguages = ["go", "Csharp", "dart", "bash", "swift"]
-    ShowCodeCopyButtons = true
-    comments = true
-    ShowReadingTime = true
-    ShowToc = true
-    ShowPostNavLinks = true
-    ShowBreadCrumbs = true
+	author = "czyt"
+	description = "我来问道无馀说，云在青天水在瓶。"
+	githubUsername = "czyt"
+	accent = "red"
+	showBorder = true
+	backgroundColor = "white"
+	font = "Raleway" # should match the name on Google Fonts!
+	highlight = true
+	highlightStyle = "default"
+	favicon = "/img/favicon.ico" 
+	highlightLanguages = ["go", "c#", "dart", "bash", "swift","rust","json","xml"]
+	ShowCodeCopyButtons = true
+	comments = true
+	ShowReadingTime = true
+	ShowToc = true
+	ShowPostNavLinks = true
+	ShowBreadCrumbs = true
+[params.fuseOpts]:
+	isCaseSensitive= false
+	shouldSort= true
+	location= 0
+	distance= 1000
+	threshold= 0.4
+	minMatchCharLength= 0
+	keys= ["title", "permalink", "summary", "content"]
 
 [params.utteranc]
-    enable = true
-    repo = "czyt/comments"
-    issueTerm = "pathname"
-    theme = "github-light"       
+	enable = true
+	repo = "czyt/comments"
+	issueTerm = "pathname"
+	theme = "github-light"       
 
 [[menu.main]]
     url = "/"
@@ -73,4 +81,6 @@ googleAnalytics = ""
     name = "fab fa-golang"
     weight = 4
 
+[outputs]
+home=["HTML","RSS","JSON"]
 

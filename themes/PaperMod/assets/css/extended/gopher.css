@@ -1,0 +1,356 @@
+  body {
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, hsl(146,99,30), hsl(146,99,30));
+  }
+
+h1 {
+  text-align: center;
+  margin-top: 2em;
+}
+
+  .gopher {
+    --main-color: #01CEDF;
+    --hand-color: #F8D79E;
+    // width: 185px;
+    // height: 250px;
+    width: 62vh;
+    height: 83vh;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .body {
+    background: var(--main-color);
+    position: absolute;
+    z-index: 2;
+
+    &--1 {
+      top: -1%;
+      left: 8%;
+      width: 80%;
+      height: 63%;
+      border-radius: 48% 48% 25% 25% / 40% 40% 55% 55%;
+      border: 2px solid #000;
+    }
+
+    &--2 {
+      bottom: 3%;
+      border-radius: 10% 10% 46% 48% / 50% 58% 40% 34%;
+      height: 65%;
+      width: 80%;
+      left: 9%;
+      border: 2px solid #000;
+      border-top: none;
+
+      &::before,
+      &::after {
+        content: "";
+        display: block;
+        background: inherit;
+        position: absolute;
+      }
+
+      &::before {
+        border-left: 2px solid #000;
+        width: 10%;
+        height: 8%;
+        left: 1%;
+        top: 15%;
+        transform: rotate(-3deg);
+      }
+
+      &::after {
+        height: 20%;
+        width: 10%;
+        left: 1.5%;
+        top: -2%;
+        background: inherit;
+      }
+    }
+    
+    &--3 {
+      width: 10%;
+      height: 7%;
+      border-right: 2px solid #000;
+      top: 36%;
+      right: 12.5%;
+      transform: rotate(3deg);
+      
+      &::before {
+        content: "";
+        display: block;
+        width: 80%;
+        height: 170%;
+        background: inherit;
+        right: 2%;
+        top: -70%;
+        position: absolute;
+      }
+    }
+  }
+
+  .hand {
+    background: var(--hand-color);
+    width: 12%;
+    height: 4%;
+    position: absolute;
+    border: 2px solid #000;
+    top: 49%;
+    border-radius: 50%;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 70%;
+      background: inherit;
+      border-radius: 40%;
+      top: 30%;
+      border: 2px solid #000;
+      border-top: none;
+    }
+
+    &--1 {
+      left: 0.5%;
+      transform: rotate(-15deg);
+
+      &::before {
+        top: 30%;
+        left: 2%;
+        border-top: none;
+      }
+    }
+
+    &--2 {
+      right: .7%;
+      transform: rotate(20deg);
+
+      &::before {
+        height: 80%;
+        border-radius: 50%;
+        right: 2%;
+      }
+    }
+  }
+
+  .ear {
+    position: absolute;
+    background: var(--main-color);
+    width: 18%;
+    height: 13%;
+    border: 2px solid #000;
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 50%;
+      height: 60%;
+      background: #000;
+      border-radius: 50%;
+    }
+
+    &--1 {
+      transform: rotate(-50deg);
+      border-radius: 50% 50% 20% 40%;
+      top: 5%;
+      left: 2%;
+
+      &::before {
+        top: 35%;
+        left: 25%;
+      }
+    }
+
+    &--2 {
+      right: 5%;
+      top: 4%;
+      border-radius: 50% 50% 40% 30%;
+      transform: rotate(50deg);
+
+      &::before {
+        top: 35%;
+        right: 30%;
+      }
+    }
+  }
+
+  .foot {
+    background: var(--hand-color);
+    width: 15%;
+    height: 5%;
+    position: absolute;
+    border: 2px solid #000;
+    top: 90%;
+    border-radius: 50%;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 100%;
+      height: 70%;
+      background: inherit;
+      border-radius: 40%;
+      top: 30%;
+      border: 2px solid #000;
+      border-top: none;
+    }
+
+    &--1 {
+      left: 10%;
+      transform: rotate(-36deg);
+
+      &::before {
+        top: 30%;
+        left: 2%;
+        border-top: none;
+      }
+    }
+
+    &--2 {
+      right: 10%;
+      top: 89%;
+      transform: rotate(36deg);
+
+      &::before {
+        width: 90%;
+        top: 30%;
+        border-radius: 50%;
+        left: 2%;
+        border-top: none;
+      }
+    }
+
+  }
+
+  .eye {
+    position: absolute;
+    width: 22%;
+    height: 15.5%;
+    border: 2px solid #000;
+    background: #fff;
+    border-radius: 50% 50% 50% 40%;
+    z-index: 3;
+
+    &--1 {
+      top: 7%;
+      left: 20%;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      display: block;
+      background: #000;
+      position: absolute;
+      border-radius: inherit;
+    }
+
+    &::before {
+      width: 30%;
+      height: 35%;
+      top: 34%;
+      left: 9%;
+    }
+
+    &::after {
+      background: #fff;
+      width: 8%;
+      height: 8%;
+      bottom: 40%;
+      left: 22%;
+    }
+
+    &--2 {
+      right: 25%;
+      top: 6%;
+      transform: scale(1.05,1)
+    }
+  }
+
+  .nose-1 {
+    width: 10%;
+    height: 5%;
+    background: var(--hand-color);
+    border-radius: 50%;
+    position: absolute;
+    top: 23.5%;
+    left: 43%;
+    z-index: 5;
+
+    &::after {
+      content: "";
+      display: block;
+      background: #000;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      border-radius: 50%;
+      top: -50%;
+    }
+  }
+
+  .nose-2 {
+    width: 7%;
+    height: 6%;
+    background: var(--hand-color);
+    border-radius: 50%;
+    position: absolute;
+    top: 22.5%;
+    left: 45.5%;
+    z-index: 4;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 200%;
+      height: 80%;
+      border: 2px solid #000;
+      border-radius: 45%;
+      background: inherit;
+      top: -20%;
+    }
+
+    &::before {
+      right: 0;
+      transform: rotate(-20deg);
+      transform-origin: top right;
+    }
+
+    &::after {
+      left: 0;
+      transform: rotate(20deg);
+      transform-origin: top left;
+      border-width: 2px 2px 2px 0;
+    }
+  }
+
+  .tooth {
+    width: 5%;
+    height: 10%;
+    border: 2px solid #000;
+    background: #fff;
+    z-index: 3;
+    position: absolute;
+    top: 24.5%;
+    left: 41%;
+    border-radius: 0 0 35% 35% / 0 0 40% 50%;
+    
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      border: inherit;
+      background: inherit;
+      left: 95%;
+      top: -10%;
+    }
+  }

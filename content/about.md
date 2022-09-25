@@ -7,8 +7,6 @@ description: 个人基本信息?
 I'm  a Programmer in chengdu!
 
 
-![czyt's github stats](https://github-readme-stats.vercel.app/api?username=czyt&show_icons=true&theme=synthwave)
-
 - [yuque](https://www.yuque.com/czyt)
 - [ys168](http://czyt.ys168.com)
 

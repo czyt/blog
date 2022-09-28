@@ -9,7 +9,72 @@ draft: false
 
 + 错误的序列化逻辑通过[ErrorEncoder](https://go-kratos.dev/docs/component/transport/http#errorencoderen-encodeerrorfunc-serveroption)实现。
 
-  **注意**：自定义Encoder后，可能会遇到零值字段被忽略的情况，可以参考这个[issue](https://github.com/go-kratos/kratos/issues/1952)
+**注意**：自定义Encoder后，可能会遇到零值字段被忽略的情况，可以参考这个[issue](https://github.com/go-kratos/kratos/issues/1952)。具体的解决办法是
+
+  1. proto定义返回内容，然后将生成的类型在encoder中使用。
+  
+  2. 简单代码大致如下：
+  
+     proto定义
+  
+     ```protobuf
+     import "google/protobuf/any.proto";
+     // BaseResponse is the  base response
+     message BaseResponse{
+       int32  code = 1 [json_name = "code"];
+       google.protobuf.Any data = 2 [json_name = "data"];
+     }
+     ```
+  
+     go代码
+  
+     ```go
+     func CustomResponseEncoder() http.ServerOption {
+     	return http.ResponseEncoder(func(w http.ResponseWriter, r *http.Request, i interface{}) error {
+     		reply := &v1.BaseResponse{
+     			Code: 0,
+     		}
+     		if m, ok := i.(proto.Message); ok {
+     			payload, err := anypb.New(m)
+     			if err != nil {
+     				return err
+     			}
+     			reply.Data = payload
+     		}
+     
+     		//reply := &Response{
+     		//	Code: 0,
+     		//	Data: i,
+     		//}
+     		codec := encoding.GetCodec("json")
+     		data, err := codec.Marshal(reply)
+     		if err != nil {
+     			return err
+     		}
+     		w.Header().Set("Content-Type", "application/json")
+     		w.Write(data)
+     		return nil
+     	})
+     }
+     ```
+  
+     需要注意的是如果涉及enum但现有接口返回是int的情况，需要把官方的json codec拷贝出来在`MarshalOptions`添加一个选项 
+  
+     ```go
+     MarshalOptions = protojson.MarshalOptions{
+     		EmitUnpopulated: true,
+     		UseEnumNumbers:  true,
+     ```
+     然后通过下面的代码注册json的codec即可使返回的enum使用数值而不是字符串。
+  
+     ```go
+     import "github.com/go-kratos/kratos/v2/encoding"
+     func init() {
+     	encoding.RegisterCodec(codec{})
+     }
+     ```
+  
+     有个问题就是返回的json中会多出`"@type": "type.googleapis.comxxxxx"`这样的一个字段。
 
 ## 通过Context取得信息
 

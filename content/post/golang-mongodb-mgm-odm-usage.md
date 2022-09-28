@@ -270,7 +270,15 @@ opts := options.FindOne().SetSort(bson.D{{"created_at",1},{"price",-1}})
 err := mgm.Coll(&Book{}).FindOne(nil, bson.M{}, opts)
 ```
 
+#### 分页查询
 
+一般从传统关系型数据库转过来的一般会使用`skip`+`limit`的组合，但是当数据量很大的时候，这种查询会变得很慢。所以推荐使用 `range query` + `limit`的方式.
+
+参考文章：
+
++ https://isotropic.co/how-to-implement-pagination-in-mongodb/
++ https://www.mongodb.com/blog/post/paging-with-the-bucket-pattern--part-1
++ https://www.mongodb.com/blog/post/paging-with-the-bucket-pattern--part-2
 
 ### 聚合
 

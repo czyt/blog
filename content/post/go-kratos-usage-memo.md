@@ -336,7 +336,55 @@ http.Filter(handlers.CORS(
 
 需要引用包`"github.com/gorilla/handlers"`
 
+## 服务https监听开关
+在conf.proto 上的Http配置添加下面的内容
+
+```protobuf
+import "google/protobuf/wrappers.proto";
+message HTTP {
+    string network = 1;
+    string addr = 2;
+    .......
+    google.protobuf.BoolValue use_tls_bind = 4;
+    google.protobuf.StringValue server_cert_file = 5;
+    google.protobuf.StringValue server_cert_key = 6;
+  }
+```
+
+然后在http server的代码中添加配置的解析
+
+```go
+if c.Http.UseTlsBind != nil {
+		if c.Http.UseTlsBind.Value {
+			certFilePath := c.Http.ServerCertFile.Value
+			certKeyPath := c.Http.ServerCertKey.Value
+			if certFilePath != "" && certKeyPath != "" {
+				tlsConfig, err := LoadTLSConfig(certFilePath, certKeyPath)
+				if err == nil {
+					opts = append(opts, http.TLSConfig(tlsConfig))
+				}
+			}
+
+		}
+}
+
+....
+// LoadTLSConfig 从文件加载tlsConfig
+func LoadTLSConfig(certFilePath string, certKeyFilePath string) (*tls.Config, error) {
+	cer, err := tls.LoadX509KeyPair(certFilePath, certKeyFilePath)
+	if err != nil {
+		return nil, err
+	}
+	return &tls.Config{
+		Certificates: []tls.Certificate{cer},
+	}, nil
+}
+```
+
+
+
 ## 参考
+
 
 + [三分钟小课堂 - 如何控制接口返回值](https://mp.weixin.qq.com/s/4ocdoAVXXKTvJ3U65YXltw)
 

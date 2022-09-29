@@ -11,6 +11,7 @@ draft: false
 + [编写和优化Go代码](https://github.com/dgryski/go-perfbook)
 + [Go Optimizations 101](https://go101.org/optimizations/101.html)
 + https://github.com/dgryski/go-perfbook
++ https://github.com/DataDog/go-profiler-notes
 + https://github.com/bobstrecansky/HighPerformanceWithGo/
 
 ## Go package
@@ -20,6 +21,8 @@ draft: false
 ## 文章
 
 + [官方博客 Profiling Go Programs](https://go.dev/blog/pprof)
+
++ https://sumercip.com/posts/inside-the-go-cpu-profiler/
 
 + How to Write Benchmarks in Go : https://dave.cheney.net/2013/06/30/how-to-write-benchmarks-in-go
 + Debugging performance issues in Go programs : https://github.com/golang/go/wiki/Performance

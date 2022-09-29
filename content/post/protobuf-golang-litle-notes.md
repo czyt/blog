@@ -654,8 +654,8 @@ goland的实时模板如下,方便快速使用
 ```
 [json_name = "$FIELD_NAME$"$END$]
 ```
-
-
+设置参考下图
+![image-20220929093236710](https://assets.czyt.tech/img/protobuf-json-tag.png)
 
 ## 参考
 + [protocol buffers官方文档](https://developers.google.com/protocol-buffers)

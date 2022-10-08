@@ -18,7 +18,7 @@ welcome to discuss with me !
 mail: x-gopher@qq.com or go-x@qq.com
 
 [Github](https://github.com/czyt)
-
+[![wakatime](https://wakatime.com/badge/user/213e95e1-d21f-44e9-8128-e1bec47d5ab6.svg)](https://wakatime.com/@213e95e1-d21f-44e9-8128-e1bec47d5ab6)
 # Experience
 
 - .Net Devlelop from year 2016 util now.

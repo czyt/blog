@@ -21,3 +21,9 @@ draft: false
 
 
 ## 导入类方法的问题
+
+## 参考链接
+
++ [C++/C# interoperability](https://mark-borg.github.io/blog/2017/interop/)
++ [Working with C++ Interface Classes from C#](https://brokenevent.com/blog/2020-09-02)
++ [Call function in unmanaged DLL from C# and pass custom data types [Marshal]](https://dev.to/gabbersepp/call-function-in-unmanaged-dll-from-c-and-pass-custom-data-types-marshal-5c31)

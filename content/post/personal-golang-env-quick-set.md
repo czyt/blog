@@ -44,3 +44,5 @@ draft: false
 
 - 规范化git commit消息工具 comet `go install github.com/liamg/comet@latest`
 
+- https://github.com/nikolaydubina/go-recipes
+

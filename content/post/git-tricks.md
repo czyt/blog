@@ -160,3 +160,9 @@ $ git filter-branch --commit-filter '
 ```
 
 这会遍历并重写每一个提交来包含你的新邮箱地址。 因为提交包含了它们父提交的 SHA-1 校验和，这个命令会修改你的历史中的每一个提交的 SHA-1 校验和， 而不仅仅只是那些匹配邮箱地址的提交。
+
+
+
+## 参考链接
+
++ [Git常见的命令集合](https://mojotv.cn/2019/08/02/general-git-resources)

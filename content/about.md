@@ -4,6 +4,9 @@ description: 个人基本信息?
 ---
 
 # About Me
+
+![image-20221010120813657](https://assets.czyt.tech/img/shine-cat.png)
+
 I'm  a Programmer in chengdu!
 
 

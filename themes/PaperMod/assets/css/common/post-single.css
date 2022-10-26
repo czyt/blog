@@ -1,22 +1,26 @@
-.page-header,
 .post-header {
-    margin: 24px auto var(--content-gap) auto;
+    margin: var(--content-gap) 0 calc(var(--content-gap) * 1.5);
 }
 
 .post-title {
-    margin-bottom: 2px;
     font-size: 40px;
+    margin-bottom: var(--content-gap);
 }
 
 .post-description {
-    margin-top: 10px;
-    margin-bottom: 5px;
+    margin: var(--content-gap) 0;
+    color: var(--secondary);
+    opacity: .8;
+    padding-left: .5em;
+    border-left: 8px solid var(--signature);
 }
 
 .post-meta,
 .breadcrumbs {
-    color: var(--secondary);
-    font-size: 14px;
+    font-size: 15px;
+}
+
+.breadcrumbs {
     display: flex;
     flex-wrap: wrap;
 }
@@ -33,6 +37,7 @@
 }
 
 .post-content {
+    font-size: 17px;
     color: var(--content);
 }
 
@@ -42,6 +47,9 @@
 .post-content h6 {
     margin: 24px 0 16px;
 }
+.post-content h3 {
+    margin: 32px 0 24px;
+}
 
 .post-content h1 {
     margin: 40px auto 32px;
@@ -49,7 +57,7 @@
 }
 
 .post-content h2 {
-    margin: 32px auto 24px;
+    margin: 40px auto 32px;
     font-size: 32px;
 }
 
@@ -58,7 +66,7 @@
 }
 
 .post-content h4 {
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .post-content h5 {
@@ -69,15 +77,53 @@
     font-size: 12px;
 }
 
-.post-content a,
-.toc a:hover {
-    box-shadow: 0 1px 0;
+.post-content a {
+    font-weight: 500;
+    color: var(--primary);
+    box-shadow: var(--link-underline-shadow);
+    transition: var(--link-transition);
+}
+.post-content a:hover {
+    color: var(--link-hover-color);
+    box-shadow: var(--link-hover-underline-shadow);
+}
+.post-content a.anchor:hover {
+    color: var(--primary);
+    box-shadow: 0 2px 0 var(--secondary);
 }
 
 .post-content a code {
     margin: auto 0;
     border-radius: 0;
     box-shadow: 0 -1px 0 var(--primary) inset;
+}
+.post-content a:hover code {
+    box-shadow: 0 -1px 0 var(--link-hover-underline-color) inset, 0 1px 0 var(--link-hover-underline-color);
+}
+
+h1 .anchor,
+h2 .anchor,
+h3 .anchor,
+h4 .anchor,
+h5 .anchor,
+h6 .anchor {
+    box-shadow: none;
+    user-select: none;
+    font-size: .8em;
+    position: relative;
+    top: -2px;
+}
+
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+    color: var(--secondary);
+    margin-inline-start: 8px;
+    font-weight: 500;
+    display: inline-flex;
 }
 
 .post-content del {
@@ -98,12 +144,17 @@
     padding-inline-start: 20px;
 }
 
+.post-content li > ol,
+.post-content li > ul {
+    margin-bottom: 0;
+}
+
 .post-content li {
-    margin-top: 5px;
+    margin-top: .5em;
 }
 
 .post-content li p {
-    margin-bottom: 0;
+    margin-bottom: .5em;
 }
 
 .post-content dl {
@@ -153,10 +204,8 @@
     border-radius: var(--radius);
 }
 
-.post-content .highlight:not(table),
-.post-content pre {
-    margin: 10px auto;
-    background: var(--hljs-bg) !important;
+.post-content .highlight:not(table) {
+    margin: var(--content-gap) auto;
     border-radius: var(--radius);
 }
 
@@ -278,18 +327,33 @@
     border-radius: var(--radius);
     padding: 0.4em;
 }
-
-.dark .toc {
-    background: var(--entry);
+.toc.side {
+    font-size: .8em;
+}
+@media screen and (min-width: 1350px) {
+    .toc.side {
+        position: fixed;
+        top: 118px;
+        z-index: 1;
+        max-height: calc(100% - 150px);
+        overflow: auto;
+    }
+    .toc.side::-webkit-scrollbar-thumb {
+        border: 5px solid var(--code-bg);
+    }
+    .toc.side.left {
+        left: 15px;
+        width: 250px;
+    }
+    .toc.side.right {
+        right: 15px;
+        width: 265px;
+    }
 }
 
 .toc details summary {
-    cursor: zoom-in;
-    margin-inline-start: 20px;
-}
-
-.toc details[open] summary {
-    cursor: zoom-out;
+    cursor: pointer;
+    margin-inline-start: 15px;
 }
 
 .toc .details {
@@ -298,44 +362,31 @@
 }
 
 .toc .inner {
-    margin: 0 20px;
-    padding: 10px 20px;
+    padding: 10px 15px 5px 35px;
 }
 
+.toc ul {
+    margin: 0;
+    padding: 0;
+}
 .toc li ul {
-    margin-inline-start: var(--gap);
+    margin-inline-start: 20px;
+}
+.toc li a {
+    line-height: 1.5em;
+    padding: 3px 5px;
+    border-radius: 5px;
+    display: block;
+}
+.toc li a.active {
+    background-color: var(--link-background-color);
+}
+.toc li a:hover {
+    text-decoration: underline;
 }
 
 .toc summary:focus {
     outline: 0;
-}
-
-.post-footer {
-    margin-top: 56px;
-}
-
-.post-tags li {
-    display: inline-block;
-    margin-inline-end: 3px;
-    margin-bottom: 5px;
-}
-
-.post-tags a,
-.share-buttons,
-.paginav {
-    border-radius: var(--radius);
-    background: var(--code-bg);
-    border: 1px solid var(--border);
-}
-
-.post-tags a {
-    display: block;
-    padding-inline-start: 14px;
-    padding-inline-end: 14px;
-    color: var(--secondary);
-    font-size: 14px;
-    line-height: 34px;
-    background: var(--code-bg);
 }
 
 .post-tags a:hover,
@@ -412,10 +463,11 @@ h6:hover .anchor {
     border-radius: var(--radius);
 }
 
-.paginav a {
-    padding-inline-start: 14px;
-    padding-inline-end: 14px;
-    border-radius: var(--radius);
+.paginav svg {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    vertical-align: -0.125em;
 }
 
 .paginav .title {
@@ -430,7 +482,10 @@ h6:hover .anchor {
     width: 50%;
 }
 
-.paginav span:hover:not(.title) {
+.paginav a span {
+    transition: var(--link-transition);
+}
+.paginav a:hover span:not(.title) {
     box-shadow: 0 1px 0;
 }
 
@@ -441,4 +496,164 @@ h6:hover .anchor {
 
 [dir="rtl"] .paginav .next {
     text-align: left;
+}
+
+.full-width {
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    max-width: 100vw;
+    position: relative;
+    right: 50%;
+    width: 100vw;
+}
+
+.comments-divider {
+    margin: calc(var(--content-gap) * 1) 0;
+    height: 1px;
+    background-color: var(--secondary);
+}
+
+.social-links {
+    margin: calc(var(--content-gap) * 2) 0;
+}
+/* shortcode */
+.social-quote {
+    padding: 1em;
+}
+.post-content .social-quote {
+    margin-bottom: var(--content-gap);
+}
+.social-quote.tweet {
+    background-color: var(--code-bg);
+    border-left: 3px solid var(--twitter-color);
+}
+.social-quote.tweet svg {
+    color: var(--twitter-color);
+}
+.social-quote .title {
+    margin-bottom: .5em;
+    font-weight: 500;
+}
+.social-quote .title svg {
+    width: 20px;
+    height: 20px;
+    vertical-align: text-bottom;
+}
+.social-quote .title span {
+    margin-inline-start: .5em;
+}
+
+.social-quote p > a {
+    margin-inline-start: .5em;
+}
+.social-quote blockquote {
+    font-size: .8em;
+    /* reset for .post-content blockquote */
+    margin: 0 0 0 0;
+    padding: 0;
+    border-inline-start: 0;
+}
+.social-quote blockquote a {
+    font-weight: 500;
+    color: var(--primary);
+    box-shadow: var(--link-underline-shadow);
+    transition: var(--link-transition);
+}
+.social-quote blockquote > a:hover {
+    color: var(--twitter-color);
+    box-shadow: 0 2px 0 var(--twitter-color);
+}
+
+/* comments */
+.comments-box {
+    margin: calc(var(--content-gap) * 2) 0;
+    background-color: var(--code-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow-elevation-low);
+}
+
+.comments-box.telegram-widget {
+    padding: .8em;
+}
+
+.comments {
+    margin: var(--content-gap) 0;
+}
+.comments .title {
+    margin: 20px 0;
+    font-size: 1.5em;
+}
+.comments .title > span {
+    line-height: 1.5rem;
+}
+.comments .title .counter {
+    color: var(--link-hover-color);
+    font-size: 1rem;
+    font-weight: bold;
+    vertical-align: super;
+}
+
+/* footnotes */
+.footnotes {
+    font-size: .8em;
+    color: var(--primary-dim);
+    font-weight: 400;
+    padding: 1em;
+    background-color: var(--code-bg);
+}
+
+.footnotes a {
+    color: var(--primary-dim);
+    font-weight: 400;
+}
+
+.footnotes hr {
+    display: none;
+}
+.footnotes a {
+    box-shadow: none;
+    text-decoration: underline;
+}
+.footnotes a:hover {
+    box-shadow: none;
+    text-decoration: underline;
+}
+.footnotes ol {
+    margin: 0;
+}
+.footnotes ol li {
+    margin: 0 0 6px 0;
+}
+.footnotes ol li p {
+    line-height: 1.5em;
+    margin: 0;
+}
+/* fix tweet-ref makes the li markers sink at the bottom */
+.footnotes ol li > * {
+    vertical-align: top;
+}
+.footnotes ol li:target {
+    background-color: var(--link-background-color);
+}
+.footnotes ol:before {
+    content: "Footnotes";
+    font-size: 1.5em;
+    margin-left: -1em;
+    font-weight: 200;
+}
+
+/* shortcode */
+.tweet-ref {
+    width: calc(100% - 2em);
+    display: inline-block;
+}
+.tweet-ref blockquote {
+    margin: 3px 0 0 0;
+    border-inline-color: var(--tertiary);
+    line-height: 1.5em;
+}
+
+.tweet-ref blockquote a {
+    text-decoration: none;
 }

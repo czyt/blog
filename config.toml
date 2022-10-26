@@ -21,6 +21,7 @@ googleAnalytics = ""
 	ShowReadingTime = true
 	ShowShareButtons = true
 	ShowToc = true
+	TocSide = "right"
 	ShowPostNavLinks = true
 	ShowBreadCrumbs = true
 [params.fuseOpts]

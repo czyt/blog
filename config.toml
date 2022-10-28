@@ -1,7 +1,7 @@
 baseURL = "https://czyt.tech/"
 languageCode = "zh"
 title = "虫子樱桃"
-theme = "PaperMod"
+theme = ["PaperMod"]
 googleAnalytics = ""
 
 [params]

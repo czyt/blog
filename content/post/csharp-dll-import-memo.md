@@ -22,6 +22,8 @@ draft: false
 
 ## 导入类方法的问题
 
+最好的方式还是使用C++构造wrapper，然后通过windowsApi的方式调用Pinvoke
+
 ## 参考链接
 
 + [swig nuget](https://www.nuget.org/packages/swigwintools/)

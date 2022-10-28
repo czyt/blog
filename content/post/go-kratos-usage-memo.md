@@ -391,7 +391,7 @@ Casbin官网 https://casbin.io
 
 1. 因为kratos的url生成的是类似于`\api\v1\userInfo\{userid}`样式的，所以在policy中需要使用函数`keyMatch3`来进行policies的匹配，比如我的model.conf文件中就是这样(rbac with domain)
 
-   ```idl
+   ```c
    [request_definition]
    r = sub, dom, obj, act
    

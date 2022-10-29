@@ -107,6 +107,16 @@ if (document.querySelectorAll('.mermaid').length > 0) {
 {{- end }}
 
 {{- if (and (eq .Kind "page") (ne .Layout "archives") (ne .Layout "search") (.Param "ShowCodeCopyButtons")) }}
+
+
+{{/* Load mediumZoom script */}}
+{{/* It has to be loaded here because of the data-no-instant attribute */}}
+{{- $imagezoom := resources.Get "js/medium-zoom.min.js" }}
+<script src="{{ $imagezoom.RelPermalink }}" data-no-instant
+  {{- if site.Params.assets.disableFingerprinting }}integrity="{{ $imagezoom.Data.Integrity }}"{{- end }}
+></script>
+
+
 <script>
     document.querySelectorAll('pre > code').forEach((codeblock) => {
         const container = codeblock.parentNode.parentNode;
@@ -153,5 +163,6 @@ if (document.querySelectorAll('.mermaid').length > 0) {
             codeblock.parentNode.appendChild(copybutton);
         }
     });
+	
 </script>
 {{- end }}

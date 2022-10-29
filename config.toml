@@ -22,6 +22,7 @@ googleAnalytics = ""
 	ShowShareButtons = true
 	ShowToc = true
 	TocSide = "right"
+              EnableImageZoom = true
 	ShowPostNavLinks = true
 	ShowBreadCrumbs = true
 [params.fuseOpts]

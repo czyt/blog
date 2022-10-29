@@ -108,6 +108,16 @@ if (document.querySelectorAll('.mermaid').length > 0) {
 
 {{- if (and (eq .Kind "page") (ne .Layout "archives") (ne .Layout "search") (.Param "ShowCodeCopyButtons")) }}
 
+{{/* Clear ToC Scroll */}}
+<script>
+  if (window.scrollListeners) {
+    // console.log('disable toc scroll', scrollListeners)
+    for (const listener of scrollListeners) {
+      window.removeEventListener('scroll', listener)
+    }
+  }
+  window.scrollListeners = []
+</script>
 
 {{/* Load mediumZoom script */}}
 {{/* It has to be loaded here because of the data-no-instant attribute */}}
@@ -116,6 +126,9 @@ if (document.querySelectorAll('.mermaid').length > 0) {
   {{- if site.Params.assets.disableFingerprinting }}integrity="{{ $imagezoom.Data.Integrity }}"{{- end }}
 ></script>
 
+{{- if .IsPage }}
+  {{- partial "page_footer.html" . }}
+{{- end}}
 
 <script>
     document.querySelectorAll('pre > code').forEach((codeblock) => {

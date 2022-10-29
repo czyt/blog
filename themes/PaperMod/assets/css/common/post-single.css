@@ -283,6 +283,32 @@
     background: var(--entry);
 }
 
+
+.toc.side {
+    font-size: .8em;
+}
+@media screen and (min-width: 1350px) {
+    .toc.side {
+        position: fixed;
+        top: 118px;
+        z-index: 1;
+        max-height: calc(100% - 150px);
+        overflow: auto;
+    }
+    .toc.side::-webkit-scrollbar-thumb {
+        border: 5px solid var(--code-bg);
+    }
+    .toc.side.left {
+        left: 15px;
+        width: 250px;
+    }
+    .toc.side.right {
+        right: 15px;
+        width: 265px;
+    }
+}
+
+
 .toc details summary {
     cursor: zoom-in;
     margin-inline-start: 20px;
@@ -304,6 +330,11 @@
 
 .toc li ul {
     margin-inline-start: var(--gap);
+}
+
+
+.toc li a.active {
+    background-color: var(--link-background-color);
 }
 
 .toc summary:focus {

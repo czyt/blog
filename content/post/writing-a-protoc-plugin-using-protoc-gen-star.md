@@ -141,7 +141,7 @@ g.RegisterPostProcessor(copyright.New("PG* Authors"))
 #### Hierarchy 层次结构
 由PG*收集器产生的层次结构是完全链接的，从顶级的包开始，一直到消息的每个单独的字段。AST可以用下面的数字图表示。
 
-![img](https://github.com/lyft/protoc-gen-star/blob/master/testdata/ast/ast.png)
+![image-20221031224106501](https://assets.czyt.tech/img/PG-AST.png)
 
 一个包描述了在同一命名空间内加载的一组文件。正如预期的那样，一个文件代表一个单一的proto文件，它包含任何数量的Message、Enum或Service实体。一个Enum描述了一个基于整数的枚举类型，包含每个单独的EnumValue。一个服务描述了一组RPC方法，这些方法反过来又指代它们的输入和输出消息。
 

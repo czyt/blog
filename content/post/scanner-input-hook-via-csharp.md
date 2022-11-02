@@ -293,3 +293,6 @@ public class ScanerHook
             public int hwnd;
         }
     }
+```
+
+某些情况下，特别是使用类似像微软拼音之类的中文输入法时，扫码枪会出现字符被输入法截获，显示不是很友好，所以需要使用`InputMethod.SetPreferredImeState(target, InputMethodState.Off)`来关闭输入法，只能输入英文，待业务调用完成后再切换回来。`target`可以是业务的主界面窗口，也可以是foucus的输入框。

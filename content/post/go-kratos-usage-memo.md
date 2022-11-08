@@ -440,6 +440,22 @@ Casbin官网 https://casbin.io
 ### 参考
 + https://github.com/Permify/permify
 + https://github.com/open-policy-agent/opa
+## 复用proto
+
+在业务中可能需要根据职责划分多个服务，这些服务可能部分proto结构是需要复用的。
+
+1. proto单独放在一个repo，使用protoc生成go文件并发布包（业务不敏感情况下，推荐）。
+
+2. proto放在项目api目录内，使用protoc生成go文件并通过go replace做go mod的替换。go mod发布建议发布proto的顶层目录，下面按版本进行管理，这样后面也较为容易维护。
+
+   ```go
+   xxxx.tech/api v0.0.0
+   replace (
+   	xxxx.tech/api v0.0.0 => ./api/xxxx/api
+   )
+   ```
+
+   
 
 ## 系统初始化任务
 todo

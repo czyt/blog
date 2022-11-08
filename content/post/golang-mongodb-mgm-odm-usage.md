@@ -272,7 +272,36 @@ err := mgm.Coll(&Book{}).FindOne(nil, bson.M{}, opts)
 
 #### 分页查询
 
-一般从传统关系型数据库转过来的一般会使用`skip`+`limit`的组合，但是当数据量很大的时候，这种查询会变得很慢。所以推荐使用 `range query` + `limit`的方式.
+一般从传统关系型数据库转过来的一般会使用`skip`+`limit`的组合，但是当数据量很大的时候，这种查询会变得很慢。所以推荐使用 `range query` + `limit`的方式.下面是一个简单的实现：
+
+```go	
+	var lastId primitive.ObjectID
+	coll := mgm.Coll(&Book{})
+	pageOptions := options.Find()
+	pageOptions.SetSort(bson.M{"created_at": -1})
+	pageOptions.SetLimit(pageSize)
+
+	if page != 1 {
+		pageFind := options.Find()
+		pageFind.SetSort(bson.M{"created_at": -1})
+		pageFind.SetLimit((page - 1) * pageSize)
+		pageFind.SetProjection(bson.M{"_id": 1})
+		cur, err := coll.Find(context.Background(), bson.M{}, pageFind)
+		if err != nil {
+			return
+		}
+		var data []primitive.ObjectID{}
+		if err := cur.All(context.Background(), &data); err != nil {
+			return
+		}
+		id:= data[len(data)-1]
+		lastId = id
+	}
+
+	coll.Find(context.Background(), bson.M{"_id": bson.M{operator.Gt: lastId}}, pageOptions)
+```
+
+每一次分页查询，都要把当前最后的一条记录的`_id`作为参数传给下一次调用。
 
 参考文章：
 

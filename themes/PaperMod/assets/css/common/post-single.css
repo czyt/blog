@@ -36,6 +36,10 @@
     color: var(--content);
 }
 
+.dark .post-content {
+    color: var(--dark-content);
+}
+
 .post-content h3,
 .post-content h4,
 .post-content h5,

@@ -1,5 +1,6 @@
 :root {
     --gap: 24px;
+    --dark-content:rgb(153 153 153);
     --content-gap: 20px;
     --nav-width: 1024px;
     --main-width: 720px;

@@ -454,11 +454,36 @@ Casbin官网 https://casbin.io
    	xxxx.tech/api v0.0.0 => ./api/xxxx/api
    )
    ```
-
-   
-
 ## 系统初始化任务
-todo
+### 逻辑抽象
+
+初始化的逻辑，简单抽象为是否初始化判断和初始化，可以使用下面的流程图来表示
+
+![未命名绘图](https://assets.czyt.tech/img/kratos-initialize-flow.png)
+
+接口简化为下面的代码
+
+```go
+type processor interface {
+	// IsInit 是否需要初始化
+	IsInit() bool
+	// Apply 初始化数据
+	Apply(seeds []interface{}) error
+}
+```
+### 参数注入
+
+Todo
+
+## buf connect-go
+安装相关工具
+
+```bash
+$ go install github.com/bufbuild/buf/cmd/buf@latest
+$ go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+$ go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+$ go install github.com/bufbuild/connect-go/cmd/protoc-gen-connect-go@latest
+```
 
 ## 参考
 

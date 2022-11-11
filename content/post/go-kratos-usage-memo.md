@@ -473,7 +473,42 @@ type processor interface {
 ```
 ### 参数注入
 
-Todo
+kratos 3.5.3 添加了`BeforeStart`、 `BeforeStop`、 `AfterStart`、 `AfterStop`四个Option，我们可以通过这些来进行参数注入。
+
+```go
+hs := http.NewServer()
+	gs := grpc.NewServer()
+	app := New(
+		Name("kratos"),
+		Version("v1.0.0"),
+		Server(hs, gs),
+		BeforeStart(func(_ context.Context) error {
+			t.Log("BeforeStart...")
+			return nil
+		}),
+		BeforeStop(func(_ context.Context) error {
+			t.Log("BeforeStop...")
+			return nil
+		}),
+		AfterStart(func(_ context.Context) error {
+			t.Log("AfterStart...")
+			return nil
+		}),
+		AfterStop(func(_ context.Context) error {
+			t.Log("AfterStop...")
+			return nil
+		}),
+		Registrar(&mockRegistry{service: make(map[string]*registry.ServiceInstance)}),
+	)
+	time.AfterFunc(time.Second, func() {
+		_ = app.Stop()
+	})
+	if err := app.Run(); err != nil {
+		t.Fatal(err)
+	}
+```
+
+
 
 ## buf connect-go
 安装相关工具

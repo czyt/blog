@@ -262,5 +262,13 @@ PG*目前实现了pgsgo子包，为针对Go语言的插件提供这些工具。�
 
 ## 参考链接
 
+### 使用protoc-gen-star 编写的插件
+
++ [protoc-gen-gotag](https://github.com/srikrsna/protoc-gen-gotag)
++ [protoc-gen-validate](https://github.com/bufbuild/protoc-gen-validate)
+
+### 其他
+
 + [Writing a protoc plugin with google.golang.org/protobuf](https://medium.com/@tim.r.coulson/writing-a-protoc-plugin-with-google-golang-org-protobuf-cd5aa75f5777)
++ https://github.com/favadi/protoc-go-inject-tag
 

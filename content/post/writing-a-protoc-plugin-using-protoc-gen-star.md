@@ -266,6 +266,8 @@ PG*目前实现了pgsgo子包，为针对Go语言的插件提供这些工具。�
 
 + [protoc-gen-gotag](https://github.com/srikrsna/protoc-gen-gotag)
 + [protoc-gen-validate](https://github.com/bufbuild/protoc-gen-validate)
++ [protoc-gen-fuzz](https://github.com/srikrsna/protoc-gen-fuzz)
++ [protoc-gen-mock](https://github.com/srikrsna/protoc-gen-mock)
 
 ### 其他
 

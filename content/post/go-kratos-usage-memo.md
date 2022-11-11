@@ -283,6 +283,91 @@ func main() {
 }
 ```
 
+## 自定义路由继承middleware
+
+对于一些从proto不支持的场景，如文件上传等，就需要自定义路由，但是鉴权和认证可能是需要的，这些功能在kratos中是通过middleware来实现的。我们可以通过下面的方式来将middleware同样应用于自定义的路由。(代码未作优化，只是为了演示具体的实现)
+
+```go
+func NewHTTPServer(c *conf.Server, greeter *service.GreeterService, logger log.Logger) *http.Server {
+	var opts = []http.ServerOption{
+		http.Middleware(
+			recovery.Recovery(),
+			nop.UserAgent(),
+		),
+	}
+	if c.Http.Network != "" {
+		opts = append(opts, http.Network(c.Http.Network))
+	}
+	if c.Http.Addr != "" {
+		opts = append(opts, http.Address(c.Http.Addr))
+	}
+	if c.Http.Timeout != nil {
+		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
+	}
+	srv := http.NewServer(opts...)
+    // 自定义路由，添加一个echo的功能
+	route := srv.Route("/")
+	route.GET("/v1/echo/{requester}", EchoHandler)
+	v1.RegisterGreeterHTTPServer(srv, greeter)
+	return srv
+}
+
+// 请求体定义
+type echoRequest struct {
+	Requester string `json:"requester"`
+}
+// 响应
+type echoResponse struct {
+	Resp string `json:"resp"`
+}
+
+// 消息处理实现逻辑
+func echo(ctx context.Context, req *echoRequest) (*echoResponse, error) {
+	return &echoResponse{Resp: fmt.Sprintf("hello,%s", req.Requester)}, nil
+}
+
+// middware处理
+func EchoHandler(ctx http.Context) error {
+	var in echoRequest
+	if err := ctx.BindQuery(&in); err != nil {
+		return err
+	}
+	if err := ctx.BindVars(&in); err != nil {
+		return err
+	}
+	h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+		return echo(ctx, req.(*echoRequest))
+	})
+	resp, err := h(ctx, &in)
+	if err != nil {
+		return err
+	}
+	reply := resp.(*echoResponse)
+	return ctx.Result(200, reply)
+}
+
+```
+
+middleware代码如下
+
+```go
+func UserAgent() middleware.Middleware {
+	return func(handler middleware.Handler) middleware.Handler {
+		return func(ctx context.Context, req interface{}) (reply interface{}, err error) {
+			if tr, ok := transport.FromServerContext(ctx); ok {
+				userAgent:=tr.RequestHeader().Get(userAgent)
+				if strings.EqualFold(userAgent,"kratos-nb") {
+					return nil, errors.New(403, "INVALID-UA", "user agent is invalid")
+				}
+			}
+			return handler(ctx, req)
+		}
+	}
+}
+```
+
+
+
 ## Service和Biz层的区分
 
 Service 层：协议转换，比如grpc转http 和一些简单的validate。

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>dsl on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/dsl/</link>
+    <description>Recent content in dsl on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Tue, 30 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/dsl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang 默认的CGO参数编译导致的GLIBC错误</title>
+      <link>https://czyt.tech/post/golang-default-cgo-flags-caused-glibc-missing-error/</link>
+      <pubDate>Tue, 30 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-default-cgo-flags-caused-glibc-missing-error/</guid>
+      <description>问题描述 使用go正常编译了Linux下的程序，放到服务器上报错
+./app: /lib64/libc.so.6: version `GLIBC_2.34&amp;#39; not found (required by ./app) 解决 Google了下，发现相同的Issue,于是通过go env检查本机golang运行环境，发现CGO默认启用而且程序也不涉及CGO相关的东西，于是设置CGO参数为关闭。然后编译程序
+CGO_ENABLED=&amp;quot;0&amp;quot; go build -v
+重新上传，运行OK.</description>
+    </item>
+    
+    <item>
+      <title>Golang Expr不完全指南</title>
+      <link>https://czyt.tech/post/golang-expr-uncompleted-reference/</link>
+      <pubDate>Wed, 13 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-expr-uncompleted-reference/</guid>
+      <description>安装 库的说明
+Expr package provides an engine that can compile and evaluate expressions. An expression is a one-liner that returns a value (mostly, but not limited to, booleans). It is designed for simplicity, speed and safety.
+The purpose of the package is to allow users to use expressions inside configuration for more complex logic. It is a perfect candidate for the foundation of a business rule engine.
+安装
+go get -u /github.</description>
+    </item>
+    
+    <item>
+      <title>Golang DSL参考</title>
+      <link>https://czyt.tech/post/golang-dsl-reference/</link>
+      <pubDate>Mon, 11 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-dsl-reference/</guid>
+      <description>ANTLR 4 图书 The definitive ANTLR 4 reference (2014) 英文版下载 中文版下载 文章 使用ANTLR和Go实现DSL入门 手把手教你使用ANTLR和Go实现一门DSL语言part1 part2part3part4part5 Parsing with ANTLR 4 and Go 实例代码 bilibili gengine link go-zero link grule-rule-engine Others 图书 Writing A Compiler In Go Writing an Interpreter in Go µGo语言实现——从头开发一个迷你Go语言编译器 文章 Build your own DSL with Go &amp;amp; HCL
+How to Write Syntax Tree-Based Domain-Specific Languages in Go
+Handwritten Parsers &amp;amp; Lexers in Go
+goyacc实战
+TiDB SQL Parser 的实现</description>
+    </item>
+    
+  </channel>
+</rss>

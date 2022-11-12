@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>golang | 虫子樱桃</title>
+<meta name="keywords" content="" />
+<meta name="description" content="我来问道无馀说，云在青天水在瓶。">
+<meta name="author" content="czyt">
+<link rel="canonical" href="https://czyt.tech/tags/golang/" />
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.2300a0eceb56958fe6e1d606ffa0a755d9ef95657cbf4b79a3fa1d3b9dc8b654.css" integrity="sha256-IwCg7OtWlY/m4dYG/6CnVdnvlWV8v0t5o/odO53ItlQ=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://czyt.tech/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://czyt.tech/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://czyt.tech/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://czyt.tech/apple-touch-icon.png">
+<link rel="mask-icon" href="https://czyt.tech/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.105.0">
+<link rel="alternate" type="application/rss+xml" href="https://czyt.tech/tags/golang/index.xml">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:title" content="golang" />
+<meta property="og:description" content="我来问道无馀说，云在青天水在瓶。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://czyt.tech/tags/golang/" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="golang"/>
+<meta name="twitter:description" content="我来问道无馀说，云在青天水在瓶。"/>
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://czyt.tech/" accesskey="h" title="虫子樱桃 (Alt + H)">虫子樱桃</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://czyt.tech/" title="🏠Home">
+                    <span>🏠Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://czyt.tech/about/" title="🙋About">
+                    <span>🙋About</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://czyt.tech/post/" title="📚Posts">
+                    <span>📚Posts</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://czyt.tech/search/" title="🔍Search">
+                    <span>🔍Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://czyt.tech/tags/" title="🔖Tags">
+                    <span>🔖Tags</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header"><div class="breadcrumbs"><a href="https://czyt.tech/">Home</a>&nbsp;»&nbsp;<a href="https://czyt.tech/tags/">Tags</a></div>
+  <h1>golang</h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>Golang False sharing
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>缘起 来自于一段prometheus代码
+type stripeLock struct { sync.RWMutex // Padding to avoid multiple locks being on the same cache line. _ [40]byte } 简单地讲就是因为CPU读取数据的缓存机制问题，可能导致性能上的不同差异。参考资料见后文。
+常见类型的内存占用大小（Go101）：
+Kinds of Types Value Size Required by Go Specification bool 1 byte not specified int8, uint8 (byte) 1 byte 1 byte int16, uint16 2 bytes 2 bytes int32 (rune), uint32, float32 4 bytes 4 bytes int64, uint64, float64, complex64 8 bytes 8 bytes complex128 16 bytes 16 bytes int, uint 1 word architecture dependent, 4 bytes on 32-bit architectures and 8 bytes on 64-bit architectures uintptr 1 word large enough to store the uninterpreted bits of a pointer value string 2 words not specified pointer (safe or unsafe) 1 word not specified slice 3 words not specified map 1 word not specified channel 1 word not specified function 1 word not specified interface 2 words not specified struct (the sum of sizes of all fields) &#43; (the number of padding bytes) the size of a struct type is zero if it contains no fields that have a size greater than zero array (element value size) * (array length) the size of an array type is zero if its element type has zero size 参考 https://medium....</p>
+  </section>
+  <footer class="entry-footer"><span title='2022-05-12 00:00:00 +0000 UTC'>May 12, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;czyt</footer>
+  <a class="entry-link" aria-label="post link to Golang False sharing" href="https://czyt.tech/post/golang-false-sharing/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>为Kratos prtobuf文件添加多种编译输出
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>Csharp 安装Grpc.tools https://www.nuget.org/packages/Grpc.Tools/
+下载解压 nupkg文件（改扩展名为zip），也可以使用附件的7z包
+解压 找到tools中对应系统架构的软件，设置下环境变量，让系统可以找到就行。
+Linux 需要创建一个符号链接
+ln -s `which grpc_csharp_plugin` /usr/bin/protoc-gen-grpc-csharp 修改Kratos项目的Make文件 在api这个make任务中添加下面内容
+--csharp_out=./api/pipe/v1 \ --grpc-csharp_out=./api/pipe/v1 \ 完整内容为
+.PHONY: api # generate api proto api: protoc --proto_path=./api \ --proto_path=./third_party \ --go_out=paths=source_relative:./api \ --go-http_out=paths=source_relative:./api \ --go-grpc_out=paths=source_relative:./api \ --csharp_out=./api/pipe/v1 \ --grpc-csharp_out=./api/pipe/v1 \ --openapi_out==paths=source_relative:. \ 参考
+https://github.com/grpc/grpc/blob/master/src/csharp/BUILD-INTEGRATION.md
+📎tools.7z
+Python 安装必要包 pip install grpclib protobuf 查询路径 which protoc-gen-grpclib_python 或者 which protoc-gen-python_grpc我这里返回信息如下： ➜ czyt which protoc-gen-grpclib_python /usr/sbin/protoc-gen-grpclib_python 如法炮制，创建软链接 ln -s /usr/sbin/protoc-gen-grpclib_python /usr/sbin/protoc-gen-grpc_python 修改Makefile 添加下面的内容,再执行make api生成api即可。 --python_out=....</p>
+  </section>
+  <footer class="entry-footer"><span title='2022-04-08 00:00:00 +0000 UTC'>April 8, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;czyt</footer>
+  <a class="entry-link" aria-label="post link to 为Kratos prtobuf文件添加多种编译输出" href="https://czyt.tech/post/add-muti-kinds-output-for-kratos/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>个人Golang环境安装快速设置
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>下载 官方下载 https://go.dev/dl/
+Google 香港镜像
+Golang Downloads Mirrors
+更多请参考 Thanks Mirror
+环境设置 设置proxy
+go env -w GOPROXY=https://goproxy.io,https://goproxy.cn,direct 安装相关工具 框架Cli kratos go install github.com/go-kratos/kratos/cmd/kratos/v2@latest
+wire go install github.com/google/wire/cmd/wire@latest
+ent go install entgo.io/ent/cmd/ent@latest
+entimport go install ariga.io/entimport/cmd/entimport@latest
+entproto go install entgo.io/contrib/entproto/cmd/entproto@latest
+代码Lint golangci-lint go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+gofumpt go install mvdan.cc/gofumpt@latest goland设置
+GoLand doesn’t use gopls so it should be configured to use gofumpt directly. Once gofumpt is installed, follow the steps below:...</p>
+  </section>
+  <footer class="entry-footer"><span title='2022-03-24 00:00:00 +0000 UTC'>March 24, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;czyt</footer>
+  <a class="entry-link" aria-label="post link to 个人Golang环境安装快速设置" href="https://czyt.tech/post/personal-golang-env-quick-set/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>grpc-golang windows环境搭建说明
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>下载protoc，打开链接 下载后将对应的文件解压到gopath的bin目录。 下载protoc的golang插件。下载地址 链接 下载后放在protoc的同级目录（需要改扩展名为exe） 测试，定义一个Proto syntax = &#34;proto3&#34;; option go_package = &#34;.;hello&#34;; package main; message String { string value = 1; } 然后执行命令 protoc hello.proto --go_out=. ,大功告成，生成的文件内容如下：
+// Code generated by protoc-gen-go. DO NOT EDIT. // versions: // protoc-gen-go v1.24.0-devel // protoc v3.12.3 // source: hello.proto package hello import ( proto &#34;github.com/golang/protobuf/proto&#34; protoreflect &#34;google.golang.org/protobuf/reflect/protoreflect&#34; protoimpl &#34;google.golang.org/protobuf/runtime/protoimpl&#34; reflect &#34;reflect&#34; sync &#34;sync&#34; ) const ( // Verify that this generated code is sufficiently up-to-date....</p>
+  </section>
+  <footer class="entry-footer"><span title='2022-02-28 00:00:00 +0000 UTC'>February 28, 2022</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;czyt</footer>
+  <a class="entry-link" aria-label="post link to grpc-golang windows环境搭建说明" href="https://czyt.tech/post/grpc-golang-setup-in-windows/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>golang webserver with genergic base64 /favicon.ico
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>package main import ( &#34;fmt&#34; &#34;net/http&#34; ) func main() { http.HandleFunc(&#34;/favicon.ico&#34;, favicon) http.HandleFunc(&#34;/&#34;, hello) fmt.Printf(&#34;listening on http://localhost:8000/\n&#34;) http.ListenAndServe(&#34;localhost:8000&#34;, nil) } func favicon(w http.ResponseWriter, r *http.Request) { fmt.Printf(&#34;%s\n&#34;, r.RequestURI) w.Header().Set(&#34;Content-Type&#34;, &#34;image/x-icon&#34;) w.Header().Set(&#34;Cache-Control&#34;, &#34;public, max-age=7776000&#34;) fmt.Fprintln(w, &#34;data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs&#43;AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=\n&#34;) } func hello(w http.ResponseWriter, r *http.Request) { fmt.Printf(&#34;%s\n&#34;, r.RequestURI) fmt.Fprintln(w, &#34;Hello, World!&#34;) } </p>
+  </section>
+  <footer class="entry-footer"><span title='2022-02-23 00:00:00 +0000 UTC'>February 23, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;czyt</footer>
+  <a class="entry-link" aria-label="post link to golang webserver with genergic base64 /favicon.ico" href="https://czyt.tech/post/golang-web-server-add-base64-favicon/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>Golang嵌入可执行程序
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>reddit链接 On Linux it might be possible to use the memfd_create system call, but that’s not portable to other operating systems.
+need go 1.16 &#43;
+package main import ( _ &#34;embed&#34; &#34;log&#34; &#34;os&#34; &#34;os/exec&#34; &#34;strconv&#34; &#34;golang.org/x/sys/unix&#34; ) //go:embed binary var embeddedBinary []byte func main() { fd, err := unix.MemfdCreate(&#34;embedded_binary&#34;, 0) if err != nil { log.Fatal(err) } path := &#34;/proc/&#34; &#43; strconv.Itoa(os.Getpid()) &#43; &#34;/fd/&#34; &#43; strconv.Itoa(int(fd)) err = os.WriteFile(path, embeddedBinary, 0755) if err !...</p>
+  </section>
+  <footer class="entry-footer"><span title='2022-02-23 00:00:00 +0000 UTC'>February 23, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;czyt</footer>
+  <a class="entry-link" aria-label="post link to Golang嵌入可执行程序" href="https://czyt.tech/post/golang-embed-executable-file/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>Golang通过ssh连接数据库
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>Mysql Postgresql </p>
+  </section>
+  <footer class="entry-footer"><span title='2022-02-23 00:00:00 +0000 UTC'>February 23, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;czyt</footer>
+  <a class="entry-link" aria-label="post link to Golang通过ssh连接数据库" href="https://czyt.tech/post/go-connect-db-via-ssh/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>golang正则表达式小札
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>准备工作 golang正则需要引入包中的regexp包。
+import ( &#34;regexp&#34; ) 如果需要复用正则表达式对象来提高性能，可以通过Compile() 或者 MustCompile()创建一个编译好的正则表达式对象。
+支持的表达式 单个匹配:
+. any character, possibly including newline (flag s=true)[xyz] character class[^xyz] negated character class\d Perl character class\D negated Perl character class[[:alpha:]] ASCII character class[[:^alpha:]] negated ASCII character class\pN Unicode character class (one-letter name)\p{Greek} Unicode character class\PN negated Unicode character class (one-letter name)\P{Greek} negated Unicode character class 组合匹配:
+xy x followed by yx|y x or y (prefer x) 多次匹配:...</p>
+  </section>
+  <footer class="entry-footer"><span title='2021-07-27 00:00:00 +0000 UTC'>July 27, 2021</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;czyt</footer>
+  <a class="entry-link" aria-label="post link to golang正则表达式小札" href="https://czyt.tech/post/golang-regxp-notes/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>golang不创建临时文件上传网络文件
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>func UploadFromUrl(uploadUrl string, resUrl string,postFileName string, submitField string) error { method := &#34;POST&#34; payload := &amp;bytes.Buffer{} writer := multipart.NewWriter(payload) if res, err := http.Get(resUrl); err != nil { return err } else { defer func() { if res != nil { _ = res.Body.Close() } }() part, _ := writer.CreateFormFile(submitField, postFileName) if _, copyErr := io.Copy(part, res.Body); copyErr != nil { return copyErr } if err := writer.Close(); err != nil { return err } } client := &amp;http....</p>
+  </section>
+  <footer class="entry-footer"><span title='2021-05-21 00:00:00 +0000 UTC'>May 21, 2021</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;czyt</footer>
+  <a class="entry-link" aria-label="post link to golang不创建临时文件上传网络文件" href="https://czyt.tech/post/golang-upload-network-file-with-no-tmp-file/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2>golang检测网络连接是否关闭
+    </h2>
+  </header>
+  <section class="entry-content">
+    <p>_, err := conn.Read(make([]byte, 0)) if err!=io.EOF{ // this connection is invalid logger.W(&#34;conn closed....&#34;,err) }else{ byt, _:= ioutil.ReadAll(conn); } 注意：net: don’t return io.EOF from zero byte reads issue
+参考
+https://stackoverflow.com/questions/12741386/how-to-know-tcp-connection-is-closed-in-net-package</p>
+  </section>
+  <footer class="entry-footer"><span title='2020-06-11 00:00:00 +0000 UTC'>June 11, 2020</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;czyt</footer>
+  <a class="entry-link" aria-label="post link to golang检测网络连接是否关闭" href="https://czyt.tech/post/golang-check-netconnection/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="https://czyt.tech/tags/golang/page/2/">« Prev Page</a>
+    <a class="next" href="https://czyt.tech/tags/golang/page/4/">Next Page »</a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2022 <a href="https://czyt.tech/">虫子樱桃</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+        <span id="busuanzi_container_site_pv">Total visited<span id="busuanzi_value_site_pv"></span>times</span>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+const loadScript = (url, onloadFunction) => {
+    var newScript = document.createElement("script");
+    newScript.onerror =  (oError) => {
+      throw new URIError("The script " + oError.target.src + " didn't load correctly.");
+    };
+    if (onloadFunction) { newScript.onload = onloadFunction; }
+    document.head.insertAdjacentElement('beforeend', newScript);
+    newScript.src = url;
+  }
+  
+if (document.querySelectorAll('.mermaid').length > 0) {
+      loadScript('https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.1.1/mermaid.min.js', () => {
+        document.head.insertAdjacentHTML("beforeend", `<style>.mermaid svg { background-color: #dadcd8 !important; }</style>`);
+        // default, dark, neutral, forest
+        mermaid.initialize({ startOnLoad: false, securityLevel: "strict", logLevel: 1, theme: "neutral" });
+        
+        
+        mermaid.init();
+        console.log("mermaid init done");
+      })
+    }
+    
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

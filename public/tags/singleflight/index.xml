@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>singleFlight on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/singleflight/</link>
+    <description>Recent content in singleFlight on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Fri, 23 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/singleflight/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>tailscale的泛型SingleFlight</title>
+      <link>https://czyt.tech/post/generic-singleflight-by-tailscale/</link>
+      <pubDate>Fri, 23 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/generic-singleflight-by-tailscale/</guid>
+      <description>源地址 tailscale仓库
+完整代码如下
+// Copyright (c) 2022 Tailscale Inc &amp;amp; AUTHORS All rights reserved. // Use of this source code is governed by a BSD-style // license that can be found in the LICENSE file. // Copyright 2013 The Go Authors. All rights reserved. // Use of this source code is governed by a BSD-style // license that can be found in the LICENSE file. // Package singleflight provides a duplicate function call suppression // mechanism.</description>
+    </item>
+    
+  </channel>
+</rss>

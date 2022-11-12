@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>nocopy on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/nocopy/</link>
+    <description>Recent content in nocopy on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Fri, 17 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/nocopy/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang nocopy check</title>
+      <link>https://czyt.tech/post/golang-nocopy-check/</link>
+      <pubDate>Fri, 17 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-nocopy-check/</guid>
+      <description>目的 实现nocopy的目的在于，golang在进行参数传递时，都是传递副本的方式。但是某些情况，我们是需要进行传递对象的引用的（特别是一些指针对象，可能会导致多个指针的副本的操作造成程序陷入恐慌），为了杜绝调用者的复制，只能指针传递全局唯一对象。那么就可以通过添加nocopy来实现对go vet参数支持的no copy 检查。
+实现 golang里面最常用的sync.WaitGroup就是通过nocopy实现的。参考定义
+// A WaitGroup must not be copied after first use. type WaitGroup struct { noCopy noCopy // 64-bit value: high 32 bits are counter, low 32 bits are waiter count. // 64-bit atomic operations require 64-bit alignment, but 32-bit // compilers do not ensure it. So we allocate 12 bytes and then use // the aligned 8 bytes in them as state, and the other 4 as storage // for the sema.</description>
+    </item>
+    
+  </channel>
+</rss>

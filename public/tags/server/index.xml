@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>server on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/server/</link>
+    <description>Recent content in server on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Wed, 23 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/server/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>golang webserver with genergic base64 /favicon.ico</title>
+      <link>https://czyt.tech/post/golang-web-server-add-base64-favicon/</link>
+      <pubDate>Wed, 23 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-web-server-add-base64-favicon/</guid>
+      <description>package main import ( &amp;#34;fmt&amp;#34; &amp;#34;net/http&amp;#34; ) func main() { http.HandleFunc(&amp;#34;/favicon.ico&amp;#34;, favicon) http.HandleFunc(&amp;#34;/&amp;#34;, hello) fmt.Printf(&amp;#34;listening on http://localhost:8000/\n&amp;#34;) http.ListenAndServe(&amp;#34;localhost:8000&amp;#34;, nil) } func favicon(w http.ResponseWriter, r *http.Request) { fmt.Printf(&amp;#34;%s\n&amp;#34;, r.RequestURI) w.Header().Set(&amp;#34;Content-Type&amp;#34;, &amp;#34;image/x-icon&amp;#34;) w.Header().Set(&amp;#34;Cache-Control&amp;#34;, &amp;#34;public, max-age=7776000&amp;#34;) fmt.Fprintln(w, &amp;#34;data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQEAYAAABPYyMiAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAAF0lEQVRIx2NgGAWjYBSMglEwCkbBSAcACBAAAeaR9cIAAAAASUVORK5CYII=\n&amp;#34;) } func hello(w http.ResponseWriter, r *http.Request) { fmt.Printf(&amp;#34;%s\n&amp;#34;, r.RequestURI) fmt.Fprintln(w, &amp;#34;Hello, World!&amp;#34;) } </description>
+    </item>
+    
+  </channel>
+</rss>

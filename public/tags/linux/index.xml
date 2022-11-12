@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>linux on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/linux/</link>
+    <description>Recent content in linux on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Tue, 30 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在Alibaba Cloud Linux上安装MongoDB</title>
+      <link>https://czyt.tech/post/install-mongodb-on-alibaba-cloud-linux/</link>
+      <pubDate>Tue, 30 Aug 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/install-mongodb-on-alibaba-cloud-linux/</guid>
+      <description>安装步骤 查询系统版本 执行命令lsb_release -a返回下面的内容
+LSB Version:	:core-4.1-amd64:core-4.1-noarchDistributor ID:	AlibabaCloudDescription:	Alibaba Cloud Linux release 3 (Soaring Falcon) Release:	3Codename:	SoaringFalcon 添加yum源 创建repo文件etc/yum.repos.d/mongodb.repo并输入下面的内容，这里安装的mongodb版本为6.0,其他版本请参考官网（配置偶数版本，奇数版不适合生产使用）。
+官网的配置文件如下：
+[mongodb-org-6.0] name=MongoDB Repository baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/6.0/x86_64/ gpgcheck=1 enabled=1 gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc 使用这个配置文件是安装不了的，需要修改$releasever为相应的版本，Alibaba Cloud Linux 3修改为8 （设置一个releasever的环境变量也许也可以，没有验证。）即可。即下面的样子
+[mongodb-org-6.0] name=MongoDB Repository baseurl=https://repo.mongodb.org/yum/redhat/8/mongodb-org/6.0/x86_64/ gpgcheck=1 enabled=1 gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc 使用命令 yum -y install mongodb-org 安装即可。另外阿里云也提供了国内的镜像源，上面的配置文件可以修改为下面的内容，也是等效的。
+[mongodb-org-6.0] name=MongoDB Repository baseurl=http://mirrors.aliyun.com/mongodb/yum/redhat/8/mongodb-org/6.0/x86_64/ gpgcheck=1 enabled=1 gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc 参考链接 如何在Alibaba Cloud Linux 3上安装MongoDB 5.0 </description>
+    </item>
+    
+    <item>
+      <title>ETCD一键安装脚本</title>
+      <link>https://czyt.tech/post/etcd-install-script/</link>
+      <pubDate>Thu, 21 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/etcd-install-script/</guid>
+      <description>最近要使用ETCD，脚本根据官方GitHub脚本修改而来
+#!/usr/bin/bash ETCD_VER=v3.5.4 # choose either URL GOOGLE_URL=https://storage.googleapis.com/etcd GITHUB_URL=https://fastgit.czyt.tech/https://github.com/etcd-io/etcd/releases/download ARCH=linux-arm64 DOWNLOAD_URL=${GITHUB_URL} INSTALL_DIR=/opt/etcd rm -f /tmp/etcd-${ETCD_VER}-${ARCH}.tar.gz rm -rf ${INSTALL_DIR} &amp;amp;&amp;amp; mkdir -p ${INSTALL_DIR} curl -L ${DOWNLOAD_URL}/${ETCD_VER}/etcd-${ETCD_VER}-${ARCH}.tar.gz -o /tmp/etcd-${ETCD_VER}-${ARCH}.tar.gz tar xzvf /tmp/etcd-${ETCD_VER}-${ARCH}.tar.gz -C ${INSTALL_DIR} --strip-components=1 rm -f /tmp/etcd-${ETCD_VER}-${ARCH}.tar.gz ${INSTALL_DIR}/etcd --version ${INSTALL_DIR}/etcdctl version ${INSTALL_DIR}/etcdutl version 其中的ARCH请根据实际情况修改。
+参考 https://etcd.io/docs/v3.5/demo/ </description>
+    </item>
+    
+    <item>
+      <title>Linux环境下Perl提权</title>
+      <link>https://czyt.tech/post/perl-privilege-escalation-in-linux/</link>
+      <pubDate>Fri, 17 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/perl-privilege-escalation-in-linux/</guid>
+      <description>事故起因 我们公司的应用程序部署目录有个bin目录，手误，删除的时候输入的是/bin
+事故现象 ● SSH 不能登陆进来了 ● ls、chmod等常用命令都不能使用了 ● wget 还能用
+事故解决 通过查找谷歌，发现有个perl带有提权的功能,简单来说就是
+perl -e &amp;#34;chmod 0777, &amp;#39;/bin/ls&amp;#39;&amp;#34; 通过这个方式可以对指定的文件进行权限的修改。于是从另外的机器上打包了一个/bin目录，放到网上，wget 下载到本地wget bin.tar.gz
+​ 本机开外网ssh转发，scp 拷贝tar文件到目录，执行
+perl -e &amp;#34;chmod 0777, &amp;#39;./tar&amp;#39;&amp;#34; ,再使用tar进行文件解压./tar xvzf bin.tar.gz -C /,然后再给chmod执行文件赋予执行权限
+perl -e &amp;#34;chmod 0777, &amp;#39;/bin/chmod&amp;#39;&amp;#34; 然后再通过chmod 执行 chmod -R +x /bin/给/bin目录下的可执行程序文件授予执行权限。至此，完成事故修复。
+参考连接 ● https://perldoc.perl.org/functions/chmod.html</description>
+    </item>
+    
+    <item>
+      <title>Golang监测Linux网络事件</title>
+      <link>https://czyt.tech/post/golang-monitor-linux-network-events/</link>
+      <pubDate>Tue, 17 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-monitor-linux-network-events/</guid>
+      <description>代码 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;syscall&amp;#34; ) func main() { l, _ := ListenNetlink() for { msgs, err := l.ReadMsgs() if err != nil { fmt.Println(&amp;#34;Could not read netlink: %s&amp;#34;, err) } for _, m := range msgs { if IsNewAddr(&amp;amp;m) { fmt.Println(&amp;#34;New Addr&amp;#34;) } if IsDelAddr(&amp;amp;m) { fmt.Println(&amp;#34;Del Addr&amp;#34;) } } } } type NetlinkListener struct { fd int sa *syscall.SockaddrNetlink } func ListenNetlink() (*NetlinkListener, error) { groups := (1 &amp;lt;&amp;lt; (syscall.</description>
+    </item>
+    
+    <item>
+      <title>Arch Linux 常用软件</title>
+      <link>https://czyt.tech/post/arch-awesome-software/</link>
+      <pubDate>Wed, 23 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/arch-awesome-software/</guid>
+      <description>更换软件源 使用中国的镜像排名
+sudo pacman-mirrors -i -c China -m rank //更新镜像排名 sudo pacman -Syy //更新数据源 sudo pacman-mirrors -g //排列数据源 添加archlinuxcn源编辑命令 sudo nano /etc/pacman.conf 添加下面的内容
+[archlinuxcn] SigLevel = Optional TrustedOnly #中科大源 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch #清华源 # Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch # 163源 # Server = http://mirrors.163.com/archlinux-cn/$arch 然后再更新软件数据源
+sudo pacman -Syy sudo pacman -S archlinux-keyring archlinuxcn-keyring 因为本文的软件使用yay进行安装，故需要使用命令进行安装，命令为 sudo pacman -S yay 设置yay的mirror
+yay --aururl &amp;#34;https://aur.tuna.tsinghua.edu.cn&amp;#34; --save 可选安装 编译包 yay -S base-devel 注：类似的包管理器还可以用 paru
+SSH管理工具 Remmina 安装 yay -S remmina 可以选装这些插件</description>
+    </item>
+    
+    <item>
+      <title>Golang嵌入可执行程序</title>
+      <link>https://czyt.tech/post/golang-embed-executable-file/</link>
+      <pubDate>Wed, 23 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-embed-executable-file/</guid>
+      <description>reddit链接 On Linux it might be possible to use the memfd_create system call, but that&amp;rsquo;s not portable to other operating systems.
+need go 1.16 +
+package main import ( _ &amp;#34;embed&amp;#34; &amp;#34;log&amp;#34; &amp;#34;os&amp;#34; &amp;#34;os/exec&amp;#34; &amp;#34;strconv&amp;#34; &amp;#34;golang.org/x/sys/unix&amp;#34; ) //go:embed binary var embeddedBinary []byte func main() { fd, err := unix.MemfdCreate(&amp;#34;embedded_binary&amp;#34;, 0) if err != nil { log.Fatal(err) } path := &amp;#34;/proc/&amp;#34; + strconv.Itoa(os.Getpid()) + &amp;#34;/fd/&amp;#34; + strconv.Itoa(int(fd)) err = os.WriteFile(path, embeddedBinary, 0755) if err !</description>
+    </item>
+    
+  </channel>
+</rss>

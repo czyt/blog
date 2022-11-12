@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>c# on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/c#/</link>
+    <description>Recent content in c# on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Tue, 01 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/c#/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C#扫码枪输入Hook</title>
+      <link>https://czyt.tech/post/scanner-input-hook-via-csharp/</link>
+      <pubDate>Tue, 01 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/scanner-input-hook-via-csharp/</guid>
+      <description>摘自网络，测试可用
+public class ScanerHook { public delegate void ScanerDelegate(ScanerCodes codes); public event ScanerDelegate ScanerEvent; //private const int WM_KEYDOWN = 0x100;//KEYDOWN //private const int WM_KEYUP = 0x101;//KEYUP //private const int WM_SYSKEYDOWN = 0x104;//SYSKEYDOWN //private const int WM_SYSKEYUP = 0x105;//SYSKEYUP //private static int HookProc(int nCode, Int32 wParam, IntPtr lParam); private int hKeyboardHook = 0;//声明键盘钩子处理的初始值 private ScanerCodes codes = new ScanerCodes();//13为键盘钩子 //定义成静态，这样不会抛出回收异常 private static HookProc hookproc; delegate int HookProc(int nCode, Int32 wParam, IntPtr lParam); [DllImport(&amp;#34;user32.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>i18n on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/i18n/</link>
+    <description>Recent content in i18n on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Wed, 10 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/i18n/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>golang使用官方库实现i18n</title>
+      <link>https://czyt.tech/post/golang-impl-i18n-with-standard-lib/</link>
+      <pubDate>Wed, 10 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-impl-i18n-with-standard-lib/</guid>
+      <description>示例 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;golang.org/x/text/language&amp;#34; &amp;#34;golang.org/x/text/message&amp;#34; &amp;#34;golang.org/x/text/message/catalog&amp;#34; ) func main() { builder := catalog.NewBuilder() chTag:=language.Make(&amp;#34;zh_Hans&amp;#34;) engTag:=language.Make(&amp;#34;en&amp;#34;) builder.SetString(chTag,&amp;#34;hello&amp;#34;,&amp;#34;您好&amp;#34;) builder.SetString(engTag,&amp;#34;hello&amp;#34;,&amp;#34;Hello&amp;#34;) fmt.Println(builder.Languages()) option := message.Catalog(builder) p := message.NewPrinter(chTag,option) p.Printf(&amp;#34;hello&amp;#34;) p2 := message.NewPrinter(engTag,option) p2.Printf(&amp;#34;hello&amp;#34;) } 参考 https://zyfdegh.github.io/post/201805-translation-go-i18n https://www.alexedwards.net/blog/i18n-managing-translations https://phrase.com/blog/posts/internationalisation-in-go-with-go-i18n/ https://lokalise.com/blog/go-internationalization-using-go-i18n/ https://go.googlesource.com/proposal/+/master/design/12750-localization.md </description>
+    </item>
+    
+  </channel>
+</rss>

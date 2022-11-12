@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>tools on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/tools/</link>
+    <description>Recent content in tools on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Fri, 22 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/tools/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用gotests生成表驱动测试</title>
+      <link>https://czyt.tech/post/use-gotests-to-generate-table-driven-tests/</link>
+      <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/use-gotests-to-generate-table-driven-tests/</guid>
+      <description>使用gotests可以很方便的生成表驱动测试代码，表驱动测试的具体内容，请参考go官方的wiki。下面是具体的使用方法。
+安装 使用下面命令进行安装
+go install github.com/cweill/gotests/gotests@latest 如果是go1.16之前的版本，可以使用命令 go get -u github.com/cweill/gotests/...来进行安装。
+使用 gotests支持的参数如下：
+Usage of C:\Users\czyt\go\bin\gotests.exe:-allgenerate tests for all functions and methods-excl stringregexp. generate tests for functions and methods that don&amp;#39;t match. Takes precedence over -only, -exported, and -all-exportedgenerate tests for exported functions and methods. Takes precedence over -only and -all-i print test inputs in error messages-nosubtestsdisable generating tests using the Go 1.</description>
+    </item>
+    
+    <item>
+      <title>Arch Linux 常用软件</title>
+      <link>https://czyt.tech/post/arch-awesome-software/</link>
+      <pubDate>Wed, 23 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/arch-awesome-software/</guid>
+      <description>更换软件源 使用中国的镜像排名
+sudo pacman-mirrors -i -c China -m rank //更新镜像排名 sudo pacman -Syy //更新数据源 sudo pacman-mirrors -g //排列数据源 添加archlinuxcn源编辑命令 sudo nano /etc/pacman.conf 添加下面的内容
+[archlinuxcn] SigLevel = Optional TrustedOnly #中科大源 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch #清华源 # Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch # 163源 # Server = http://mirrors.163.com/archlinux-cn/$arch 然后再更新软件数据源
+sudo pacman -Syy sudo pacman -S archlinux-keyring archlinuxcn-keyring 因为本文的软件使用yay进行安装，故需要使用命令进行安装，命令为 sudo pacman -S yay 设置yay的mirror
+yay --aururl &amp;#34;https://aur.tuna.tsinghua.edu.cn&amp;#34; --save 可选安装 编译包 yay -S base-devel 注：类似的包管理器还可以用 paru
+SSH管理工具 Remmina 安装 yay -S remmina 可以选装这些插件</description>
+    </item>
+    
+  </channel>
+</rss>

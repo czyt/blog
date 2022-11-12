@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>io on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/io/</link>
+    <description>Recent content in io on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Fri, 24 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang io.Pipe 使用</title>
+      <link>https://czyt.tech/post/golang-io-pipe-usage/</link>
+      <pubDate>Fri, 24 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-io-pipe-usage/</guid>
+      <description>介绍 // Pipe creates a synchronous in-memory pipe. // It can be used to connect code expecting an io.Reader // with code expecting an io.Writer. // // Reads and Writes on the pipe are matched one to one // except when multiple Reads are needed to consume a single Write. // That is, each Write to the PipeWriter blocks until it has satisfied // one or more Reads from the PipeReader that fully consume // the written data.</description>
+    </item>
+    
+  </channel>
+</rss>

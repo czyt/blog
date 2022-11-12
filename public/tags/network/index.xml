@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>network on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/network/</link>
+    <description>Recent content in network on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Tue, 17 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/network/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang监测Linux网络事件</title>
+      <link>https://czyt.tech/post/golang-monitor-linux-network-events/</link>
+      <pubDate>Tue, 17 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-monitor-linux-network-events/</guid>
+      <description>代码 package main import ( &amp;#34;fmt&amp;#34; &amp;#34;syscall&amp;#34; ) func main() { l, _ := ListenNetlink() for { msgs, err := l.ReadMsgs() if err != nil { fmt.Println(&amp;#34;Could not read netlink: %s&amp;#34;, err) } for _, m := range msgs { if IsNewAddr(&amp;amp;m) { fmt.Println(&amp;#34;New Addr&amp;#34;) } if IsDelAddr(&amp;amp;m) { fmt.Println(&amp;#34;Del Addr&amp;#34;) } } } } type NetlinkListener struct { fd int sa *syscall.SockaddrNetlink } func ListenNetlink() (*NetlinkListener, error) { groups := (1 &amp;lt;&amp;lt; (syscall.</description>
+    </item>
+    
+    <item>
+      <title>golang检测网络连接是否关闭</title>
+      <link>https://czyt.tech/post/golang-check-netconnection/</link>
+      <pubDate>Thu, 11 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-check-netconnection/</guid>
+      <description>_, err := conn.Read(make([]byte, 0)) if err!=io.EOF{ // this connection is invalid logger.W(&amp;#34;conn closed....&amp;#34;,err) }else{ byt, _:= ioutil.ReadAll(conn); } 注意：net: don&amp;rsquo;t return io.EOF from zero byte reads issue
+参考
+https://stackoverflow.com/questions/12741386/how-to-know-tcp-connection-is-closed-in-net-package</description>
+    </item>
+    
+  </channel>
+</rss>

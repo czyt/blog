@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>keep on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/keep/</link>
+    <description>Recent content in keep on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Thu, 21 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/keep/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Keep运动接口</title>
+      <link>https://czyt.tech/post/keep-api-collect/</link>
+      <pubDate>Thu, 21 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/keep-api-collect/</guid>
+      <description>基础接口 授权 curl --location --request POST &amp;#39;https://api.gotokeep.com/v1.1/users/login&amp;#39; \ --header &amp;#39;Content-Type: application/json&amp;#39; \ --data-raw &amp;#39;{&amp;#34;mobile&amp;#34;: 18888888888, &amp;#34;password&amp;#34;: &amp;#34;aa&amp;#34;}&amp;#39; 返回token内容需要作为后续请求的header传递，返回示例：
+{ &amp;#34;ok&amp;#34;: true, &amp;#34;data&amp;#34;: { &amp;#34;userId&amp;#34;: &amp;#34;011981111e131&amp;#34;, &amp;#34;level&amp;#34;: 0, &amp;#34;goal&amp;#34;: 0, &amp;#34;gender&amp;#34;: &amp;#34;M&amp;#34;, &amp;#34;token&amp;#34;: &amp;#34;xxxxxxxxxxxx&amp;#34;, &amp;#34;userRegisterInfo&amp;#34;: null }, &amp;#34;errorCode&amp;#34;: &amp;#34;0&amp;#34;, &amp;#34;now&amp;#34;: &amp;#34;2022-04-21T05:02:57Z&amp;#34;, &amp;#34;version&amp;#34;: &amp;#34;1.0.0&amp;#34;, &amp;#34;text&amp;#34;: null, &amp;#34;more&amp;#34;: {} } 动作库 获取动作分类
+curl --location --request GET &amp;#39;https://api.gotokeep.com/training/v2/trainingpoints/exerciselib&amp;#39; \ --header &amp;#39;Authorization: Bearer xxxxxxxxx&amp;#39; 返回
+{ &amp;#34;ok&amp;#34;: true, &amp;#34;data&amp;#34;: [ { &amp;#34;name&amp;#34;: &amp;#34;胸部&amp;#34;, &amp;#34;_id&amp;#34;: &amp;#34;54826e417fb786000069ad82&amp;#34;, &amp;#34;url&amp;#34;: &amp;#34;http://static1.</description>
+    </item>
+    
+  </channel>
+</rss>

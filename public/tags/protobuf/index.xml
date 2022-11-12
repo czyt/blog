@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>protobuf on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/protobuf/</link>
+    <description>Recent content in protobuf on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sat, 29 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/protobuf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用protoc-gen-star编写protoc插件</title>
+      <link>https://czyt.tech/post/writing-a-protoc-plugin-using-protoc-gen-star/</link>
+      <pubDate>Sat, 29 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/writing-a-protoc-plugin-using-protoc-gen-star/</guid>
+      <description>预备知识 需要安装的软件 protoc golang go 软件包 github.com/lyft/protoc-gen-star 插件调用步骤 protoc，PB编译器，使用一组标志（记录在protoc -h下）进行配置，并将一组文件作为参数交给它。在这种情况下，I标志可以被多次指定，是它在proto文件中用于导入依赖关系的查找路径。默认情况下，官方描述符protos已经被包含在内。
+myplugin_out 告诉 protoc 使用 protoc-gen-myplugin protoc-plugin。这些插件会从系统的 PATH 环境变量中自动解析，或者可以用另一个标志明确指定。官方的protoc-plugins (例如，protoc-gen-python) 已经在protoc注册了。该标志的值是特定于特定插件的，但 :&amp;hellip;/generated 后缀除外。这个后缀表示protoc将把该包生成的文件放在哪个根目录下（相对于当前工作目录）。然而，这个生成的输出目录不会传播给 protoc-gen-myplugin，所以它需要在标志的左边重复。PG* 通过一个 output_path 参数支持这一点。
+protoc 解析传入的 proto 文件，确保它们在语法上是正确的，并加载任何导入的依赖项。它将这些文件和依赖关系转换成描述符 (它们本身就是 PB 消息)，并创建一个 CodeGeneratorRequest (又是一个 PB)。protoc 将这个请求序列化，然后执行每个配置的 protoc-plugin，通过 stdin 发送有效载荷。
+protoc-gen-myplugin 启动，接收请求的有效载荷，并将其解密。一个基于 PG* 的 protoc-plugin 有两个阶段。首先，PG* 对从 protoc 收到的 CodeGeneratorRequest 进行解密，并为每个文件和其包含的所有实体创建一个完全连接的抽象语法树 (AST)。为这个插件指定的任何参数也会被解析，以便以后使用。
+当这一步完成后，PG*就会执行任何注册的模块，把构建的AST交给它。模块可以被写成生成人工制品（例如，文件），或者只是对所提供的图进行某种形式的验证而没有任何其他副作用。模块在针对PB的操作方面提供了极大的灵活性。
+一旦所有的模块都被运行，PG*会将任何自定义的工件写入文件系统，或者将生成器特定的工件序列化为CodeGeneratorResponse并将数据发送到其stdout。这整个流程看起来像这样。
+foo.proto → protoc → CodeGeneratorRequest → protoc-gen-myplugin → CodeGeneratorResponse → protoc → foo.pb.go 假设插件名称为diy,则需要编译程序为protoc-gen-diy，并将程序加入系统Path变量，通过下面的命令调用插件。
+protoc -I .</description>
+    </item>
+    
+    <item>
+      <title>Protobuf golang小札</title>
+      <link>https://czyt.tech/post/protobuf-golang-litle-notes/</link>
+      <pubDate>Mon, 25 Jul 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/protobuf-golang-litle-notes/</guid>
+      <description>Oneof 如果您有许多字段的消息，并且最多可以同时设置一个字段，则可以使用Oneof功能来执行此行为并保存内存。一个字段就像常规字段一样，除了单一共享内存中的所有字段，最多可以同时设置一个字段。设置Oneof的任何成员都会自动清除所有其他成员。
+​	Google protobuf 文档#Oneof
+示例proto 创建protoOneof.proto 的proto文件
+syntax = &amp;#34;proto3&amp;#34;; package oneof_test; option go_package =&amp;#39;.;oneof&amp;#39;; message WeiboUser{ string user_id = 1; string user_nick = 2; } message DouyinUser{ string auth_token = 1; string nick_name = 2; } message User{ oneof user_source{ string weibo_url = 1; string douyin_url = 2; } oneof user_info{ WeiboUser weibo_user_info = 3; DouyinUser douyin_user_info = 4; } } 使用命令生成go代码
+protoc --proto_path=. --go_out=paths=source_relative:./oneof ./protoOneof.proto 生成的protoOneof.pb.go代码如下：</description>
+    </item>
+    
+  </channel>
+</rss>

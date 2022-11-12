@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Log on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/log/</link>
+    <description>Recent content in Log on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Tue, 08 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/log/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WPF Prism 8如何注册Logging</title>
+      <link>https://czyt.tech/post/how-to-register-logging-in-prism8/</link>
+      <pubDate>Tue, 08 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/how-to-register-logging-in-prism8/</guid>
+      <description>Nuget包 基础包 Microsoft Logging Abstractions Microsoft Extensions DependencyInjection 可选日志包 可以按实际需求进行选择，如NLog等,我们这里采用的是 Serilog 这个Nuget包Serilog Extensions Logging
+根据日志输出的目标不同，可以选择不同的扩展方法包
+目标 包名 说明 文件 Serilog.Sinks.File WiteTo可以使用File方法详细说明 命令行 Serilog.Sinks.Console 调试输出 Serilog.Sinks.Debug WiteTo可以使用Debug方法 其他扩展，请搜索 点击
+日志容器注册 我们使用的是 DryIoc 进行注册，需要安装Nuget包 DryIoc.Microsoft.DependencyInjection 具体代码如下：
+protected override IContainerExtension CreateContainerExtension() { var serviceCollection = new ServiceCollection(); serviceCollection.AddLogging(loggingBuilder =&amp;gt; loggingBuilder.AddSerilog(dispose: true)); return new DryIocContainerExtension(new Container(CreateContainerRules()) .WithDependencyInjectionAdapter(serviceCollection)); } 如果是Unity 则需要安装包 Unity.Microsoft.DependencyInjection 具体代码如下：
+protected override IContainerExtension CreateContainerExtension() { var serviceCollection = new ServiceCollection(); serviceCollection.AddLogging(loggingBuilder =&amp;gt; loggingBuilder.</description>
+    </item>
+    
+  </channel>
+</rss>

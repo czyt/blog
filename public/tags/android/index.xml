@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>android on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/android/</link>
+    <description>Recent content in android on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Fri, 27 May 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Flutter开发Maven配置</title>
+      <link>https://czyt.tech/post/maven-setting-for-flutter-dev/</link>
+      <pubDate>Fri, 27 May 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/maven-setting-for-flutter-dev/</guid>
+      <description>在Flutter开发时，可能因为网络等原因导致maven不能正常工作，造成Flutter项目卡住的情况。下面是解决办法。原文链接 https://flutter.cn/community/china
+如果你在国内使用 Flutter，那么你可能需要找一个与官方同步的可信的镜像站点，帮助你的 Flutter 命令行工具到该镜像站点下载其所需的资源。你需要为此设置两个环境变量：PUB_HOSTED_URL 和 FLUTTER_STORAGE_BASE_URL，然后再运行 Flutter 命令行工具。
+以 macOS 或者与 Linux 相近的系统为例，这里有以下步骤帮助你设定镜像。在系统终端里执行如下命令设定环境变量，并通过 GitHub 检出 Flutter SDK：
+content_copy
+$ export PUB_HOSTED_URL=https://pub.flutter-io.cn$ export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn$ git clone -b dev https://github.com/flutter/flutter.git$ export PATH=&amp;#34;$PWD/flutter/bin:$PATH&amp;#34;$ cd ./flutter$ flutter doctor Flutter SDK配置修改 flutter的maven设置在&amp;lt;安装目录&amp;gt;\packages\flutter_tools\gradle\flutter.gradle
+打包配置 buildscript {repositories {maven { url &amp;#39;https://maven.aliyun.com/repository/google&amp;#39; }maven { url &amp;#39;https://maven.aliyun.com/repository/public&amp;#39; }maven { url &amp;#39;https://maven.aliyun.com/repository/central&amp;#39; }maven { url &amp;#39;https://maven.aliyun.com/repository/jcenter&amp;#39; }// google()// jcenter()}dependencies {/* When bumping, also update ndkVersion above.</description>
+    </item>
+    
+  </channel>
+</rss>

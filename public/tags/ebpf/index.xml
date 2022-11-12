@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>ebpf on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/ebpf/</link>
+    <description>Recent content in ebpf on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Sat, 11 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/ebpf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ebpf Golang参考</title>
+      <link>https://czyt.tech/post/ebpf-golang-reference/</link>
+      <pubDate>Sat, 11 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/ebpf-golang-reference/</guid>
+      <description>整理一个列表，持续更新。
+理论 ebf官网 B站视频 eBPF 和 Go，超能力组合 实践 Tracing Go Functions with eBPF part1 part2 Getting Started with eBPF and Go Linux中基于eBPF的恶意利用与检测机制 如何用eBPF分析Golang应用 使用BPF, 将Go网络程序的吞吐提升8倍 使用ebpf跟踪rpcx微服务 BPF MAP机制 一种通用数据结构，可以存储不同类型数据的通用数据结构 Andrii Nakryiko 抽象数据容器(abstract data container) bpf系统调用的说明 《使用C语言从头开发一个Hello World级别的eBPF程序》 《Linux Observability with BPF》 《揭秘BPF map前生今世》 bpf系统调用说明 官方bpf map参考手册 bpftool参考手册 《Building BPF applications with libbpf-bootstrap》 https://github.com/DavadDi/bpf_study golang 包 https://github.com/cilium/ebpf </description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>perl on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/perl/</link>
+    <description>Recent content in perl on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Fri, 17 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/perl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux环境下Perl提权</title>
+      <link>https://czyt.tech/post/perl-privilege-escalation-in-linux/</link>
+      <pubDate>Fri, 17 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/perl-privilege-escalation-in-linux/</guid>
+      <description>事故起因 我们公司的应用程序部署目录有个bin目录，手误，删除的时候输入的是/bin
+事故现象 ● SSH 不能登陆进来了 ● ls、chmod等常用命令都不能使用了 ● wget 还能用
+事故解决 通过查找谷歌，发现有个perl带有提权的功能,简单来说就是
+perl -e &amp;#34;chmod 0777, &amp;#39;/bin/ls&amp;#39;&amp;#34; 通过这个方式可以对指定的文件进行权限的修改。于是从另外的机器上打包了一个/bin目录，放到网上，wget 下载到本地wget bin.tar.gz
+​ 本机开外网ssh转发，scp 拷贝tar文件到目录，执行
+perl -e &amp;#34;chmod 0777, &amp;#39;./tar&amp;#39;&amp;#34; ,再使用tar进行文件解压./tar xvzf bin.tar.gz -C /,然后再给chmod执行文件赋予执行权限
+perl -e &amp;#34;chmod 0777, &amp;#39;/bin/chmod&amp;#39;&amp;#34; 然后再通过chmod 执行 chmod -R +x /bin/给/bin目录下的可执行程序文件授予执行权限。至此，完成事故修复。
+参考连接 ● https://perldoc.perl.org/functions/chmod.html</description>
+    </item>
+    
+  </channel>
+</rss>

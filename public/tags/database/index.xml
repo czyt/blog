@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>database on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/database/</link>
+    <description>Recent content in database on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Wed, 23 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/database/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang通过ssh连接数据库</title>
+      <link>https://czyt.tech/post/go-connect-db-via-ssh/</link>
+      <pubDate>Wed, 23 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/go-connect-db-via-ssh/</guid>
+      <description>Mysql Postgresql </description>
+    </item>
+    
+    <item>
+      <title>golang不创建临时文件上传网络文件</title>
+      <link>https://czyt.tech/post/golang-upload-network-file-with-no-tmp-file/</link>
+      <pubDate>Fri, 21 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/golang-upload-network-file-with-no-tmp-file/</guid>
+      <description>func UploadFromUrl(uploadUrl string, resUrl string,postFileName string, submitField string) error { method := &amp;#34;POST&amp;#34; payload := &amp;amp;bytes.Buffer{} writer := multipart.NewWriter(payload) if res, err := http.Get(resUrl); err != nil { return err } else { defer func() { if res != nil { _ = res.Body.Close() } }() part, _ := writer.CreateFormFile(submitField, postFileName) if _, copyErr := io.Copy(part, res.Body); copyErr != nil { return copyErr } if err := writer.Close(); err != nil { return err } } client := &amp;amp;http.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>cap&#39;n on 虫子樱桃</title>
+    <link>https://czyt.tech/tags/capn/</link>
+    <description>Recent content in cap&#39;n on 虫子樱桃</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Fri, 10 Jun 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/capn/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cap&#39;n Proto Windows环境设置</title>
+      <link>https://czyt.tech/post/capn-proto-setup-in-windows/</link>
+      <pubDate>Fri, 10 Jun 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://czyt.tech/post/capn-proto-setup-in-windows/</guid>
+      <description>Cap&amp;rsquo;n proto 号称是比protobuff更快的proto语言。官网截图
+Cap’n Proto is an insanely fast data interchange format and capability-based RPC system. Think JSON, except binary. Or think Protocol Buffers, except faster. In fact, in benchmarks, Cap’n Proto is INFINITY TIMES faster than Protocol Buffers.
+协议特性
+Cap’n Proto’s RPC protocol has the following notable features. Since the protocol is complicated, the feature set has been divided into numbered “levels”, so that implementations may declare which features they have covered by advertising a level number.</description>
+    </item>
+    
+  </channel>
+</rss>

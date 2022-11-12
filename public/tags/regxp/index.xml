@@ -1,24 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>regxp on 虫子樱桃</title>
-    <link>https://czyt.tech/tags/regxp/</link>
-    <description>Recent content in regxp on 虫子樱桃</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <lastBuildDate>Tue, 27 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/regxp/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>golang正则表达式小札</title>
-      <link>https://czyt.tech/post/golang-regxp-notes/</link>
-      <pubDate>Tue, 27 Jul 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://czyt.tech/post/golang-regxp-notes/</guid>
-      <description>准备工作 golang正则需要引入包中的regexp包。
-import ( &amp;#34;regexp&amp;#34; ) 如果需要复用正则表达式对象来提高性能，可以通过Compile() 或者 MustCompile()创建一个编译好的正则表达式对象。
-支持的表达式 单个匹配:
-. any character, possibly including newline (flag s=true)[xyz] character class[^xyz] negated character class\d Perl character class\D negated Perl character class[[:alpha:]] ASCII character class[[:^alpha:]] negated ASCII character class\pN Unicode character class (one-letter name)\p{Greek} Unicode character class\PN negated Unicode character class (one-letter name)\P{Greek} negated Unicode character class 组合匹配:
-xy x followed by yx|y x or y (prefer x) 多次匹配:</description>
-    </item>
-    
-  </channel>
-</rss>

@@ -1,24 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>test on 虫子樱桃</title>
-    <link>https://czyt.tech/tags/test/</link>
-    <description>Recent content in test on 虫子樱桃</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
-    <lastBuildDate>Fri, 22 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://czyt.tech/tags/test/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>使用gotests生成表驱动测试</title>
-      <link>https://czyt.tech/post/use-gotests-to-generate-table-driven-tests/</link>
-      <pubDate>Fri, 22 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://czyt.tech/post/use-gotests-to-generate-table-driven-tests/</guid>
-      <description>使用gotests可以很方便的生成表驱动测试代码，表驱动测试的具体内容，请参考go官方的wiki。下面是具体的使用方法。
-安装 使用下面命令进行安装
-go install github.com/cweill/gotests/gotests@latest 如果是go1.16之前的版本，可以使用命令 go get -u github.com/cweill/gotests/...来进行安装。
-使用 gotests支持的参数如下：
-Usage of C:\Users\czyt\go\bin\gotests.exe:-allgenerate tests for all functions and methods-excl stringregexp. generate tests for functions and methods that don&amp;#39;t match. Takes precedence over -only, -exported, and -all-exportedgenerate tests for exported functions and methods. Takes precedence over -only and -all-i print test inputs in error messages-nosubtestsdisable generating tests using the Go 1.</description>
-    </item>
-    
-  </channel>
-</rss>

@@ -592,18 +592,10 @@ hs := http.NewServer()
 		t.Fatal(err)
 	}
 ```
+## 插件化路由和Handler
 
+Todo
 
-
-## buf connect-go
-安装相关工具
-
-```bash
-$ go install github.com/bufbuild/buf/cmd/buf@latest
-$ go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
-$ go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-$ go install github.com/bufbuild/connect-go/cmd/protoc-gen-connect-go@latest
-```
 
 ## 参考
 

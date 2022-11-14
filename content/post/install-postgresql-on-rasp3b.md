@@ -72,3 +72,7 @@ postgres=# \q
 或者使用sql语句 `ALTER USER postgres PASSWORD '<new-password>';`
 
 浓缩为一行 `sudo -u postgres psql -c "ALTER USER postgres PASSWORD '<new-password>';"`
+
+## 参考文档
+
++[MongoDB报错“not authorized on admin to execute command“](https://xiaoligege.blog.csdn.net/article/details/108749801)

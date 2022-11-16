@@ -592,6 +592,29 @@ hs := http.NewServer()
 		t.Fatal(err)
 	}
 ```
+## Validate配置说明
+需要安装的包
+
+![image-20221116150025730](https://assets.czyt.tech/img/proto-genvalidate-plugin.png)
+
+```bash
+https://github.com/bufbuild/protoc-gen-validate/releases
+```
+然后修改makefile中的api任务
+```bash
+.PHONY: api
+# generate api proto
+api:
+	protoc --proto_path=./api \
+	       --proto_path=./third_party \
+ 	       --go_out=paths=source_relative:./api \
+ 	       --go-http_out=paths=source_relative:./api \
+ 	       --go-grpc_out=paths=source_relative:./api \
+ 	       --validate_out=paths=source_relative,lang=go:./api \
+	       --openapi_out=fq_schema_naming=true,default_response=false:. \
+	       $(API_PROTO_FILES)
+```
+生成以后，就可以通过调用类型的`ValidateAll`和`Validate`方法进行校验，或者使用kratos的validate中间件,参考[官方文档](https://go-kratos.dev/docs/component/middleware/validate/).
 ## 插件化路由和Handler
 
 Todo

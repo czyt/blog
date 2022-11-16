@@ -557,6 +557,41 @@ for _, v := range req.UpdateMask.GetPaths() {
 ```
 
 更多API，参考 https://pkg.go.dev/google.golang.org/protobuf/types/known/fieldmaskpb
+除开标准的库之外，还可以使用[fieldmask-utils](https://github.com/mennanov/fieldmask-utils),这个库提供了一系列的方法。
+```go
+package main
+
+import fieldmask_utils "github.com/mennanov/fieldmask-utils"
+
+// A function that maps field mask field names to the names used in Go structs.
+// It has to be implemented according to your needs.
+func naming(s string) string {
+	if s == "foo" {
+		return "Foo"
+	}
+	return s
+}
+
+func main () {
+	var request UpdateUserRequest
+	userDst := &testproto.User{} // a struct to copy to
+	mask, _ := fieldmask_utils.MaskFromPaths(request.FieldMask.Paths, naming)
+	fieldmask_utils.StructToStruct(mask, request.User, userDst)
+	// Only the fields mentioned in the field mask will be copied to userDst, other fields are left intact
+}
+```
+需要注意是这里的naming方法，该库底层还是依赖于go的反射实现，所以对于用户传入的field字段，需要编写方法使得field字段名称和Struct中的名称一致，可以参考下面的方法，该方法使用了第三方库[strcase](https://github.com/iancoleman/strcase)
+
+```go
+func Naming(fieldName string) string {
+	named := strcase.ToCamel(fieldName)
+	// 跳过指定字段
+	if named == "Amount" {
+		return ""
+	}
+	return named
+}
+```
 
 ### Http中使用的注意事项
 
@@ -564,7 +599,7 @@ for _, v := range req.UpdateMask.GetPaths() {
 
 > Field masks have special syntax in the JSON encoding:
      https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#json-encoding-of-field-masks
-     
+
      Thanks, it looks grammar has changed. In gateway(v1) can be used as flow:
      
      ```json

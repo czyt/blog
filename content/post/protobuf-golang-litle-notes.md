@@ -563,24 +563,25 @@ for _, v := range req.UpdateMask.GetPaths() {
 参考 issue：https://github.com/golang/protobuf/issues/1273
 
 > Field masks have special syntax in the JSON encoding:
-> https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#json-encoding-of-field-masks
+     https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#json-encoding-of-field-masks
+     
+     Thanks, it looks grammar has changed. In gateway(v1) can be used as flow:
+     
+     ```json
+     "update_mask": {
+            "paths": [
+                "hello",
+                "world"
+            ]
+        }
+     ```
+     
+     but in gateway(v2) need to update the field format
+     
+     ```json
+      "update_mask":  "hello,world"
+     ```
 
-Thanks, it looks grammar has changed. In gateway(v1) can be used as flow:
-bug fix
-```json
-  "update_mask": {
-      "paths": [
-          "hello",
-          "world"
-      ]
-  }
-```bug fix
-
-but in gateway(v2) need to update the field format
-
-```json
-"update_mask":  "hello,world"
-```
 ### Json Mapping
 protobuf 3 的`int64``fixed64` `uint64`类型在json序列化时会被转换为string。
 Proto3支持JSON中的规范编码，从而更容易在系统之间共享数据。在下表中以类型为基础描述编码。如果在JSON编码的数据中缺少一个值，或者其值为null，则将其解释为解析为协议缓冲区的适当默认值。如果一个字段在协议缓冲区中具有默认值，则默认情况下将在JSON编码的数据中省略它以节省空间。实现可以提供在JSON编码输出中发射具有默认值的字段的选项。

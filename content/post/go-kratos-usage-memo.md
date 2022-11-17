@@ -554,6 +554,8 @@ type processor interface {
 	IsInit() bool
 	// Apply 初始化数据
 	Apply(seeds []interface{}) error
+    // LoadSeeds 获取seeds
+    LoadSeeds()(seeds []interface{}, err error)
 }
 ```
 ### 参数注入
@@ -592,6 +594,27 @@ hs := http.NewServer()
 		t.Fatal(err)
 	}
 ```
+### 任务间的依赖处理
+
+如果多个任务之间存在依赖关系，那么能否简单实现任务的自动重排么。答案是肯定的，首先，我们要实现任务的编号，编号必须是可以比较的。然后我们还要显式得提供一个接口，可以获取任务依赖的id列表。我们需要调整我们之前的接口，添加下面两个方法：
+
+```go
+type processor interface {
+	// IsInit 是否需要初始化
+	IsInit() bool
+	// Apply 初始化数据
+	Apply(seeds []interface{}) error
+    // LoadSeeds 获取seeds
+    LoadSeeds()(seeds []interface{}, err error)
+    // GetJobId 获取任务序号
+    GetJobId() int
+    // GetDepends 获取依赖的序列号
+    GetDepends()[]int
+}
+```
+
+然后添加了多个`processor`后，就可以通过`slice.sort`进行任务重排。
+
 ## Validate配置说明
 ### 工具安装配置
 

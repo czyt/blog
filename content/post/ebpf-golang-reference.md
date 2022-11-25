@@ -34,6 +34,7 @@ draft: false
 - [bpftool参考手册](https://www.mankier.com/8/bpftool)
 - [《Building BPF applications with libbpf-bootstrap》](https://nakryiko.com/posts/libbpf-bootstrap/#bpf-maps)
 - https://github.com/DavadDi/bpf_study
+- https://github.com/mikeroyal/eBPF-Guide#go-development
 
 ## golang 包
 + https://github.com/cilium/ebpf

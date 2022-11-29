@@ -1263,7 +1263,20 @@ Todo
 
 ## pb类型到struct的快速复制
 
-借助[copier](https://github.com/jinzhu/copier)，可以实现pb消息到golang struct的复制。对于一般的pb消息没有问题，但是对于wrapper的pb消息，则需要进行一定的方法扩展。copier提供了用户添加自定义转换规则的选项。我将常见的wrappervalue进行了封装 https://github.com/czyt/copieroptpb 包只有一个方法，这里就不作演示了。
+借助[copier](https://github.com/jinzhu/copier)，可以实现pb消息到golang struct的复制。对于一般的pb消息没有问题，但是对于wrapper的pb消息，则需要进行一定的方法扩展。copier提供了用户添加自定义转换规则的选项。我将常见的wrappervalue进行了封装 https://github.com/czyt/copieroptpb 包只有一个方法。简单示例：
+
+```go
+import "github.com/czyt/copieroptpb"
+....
+// biz层结构体
+user:=&User{}
+// req.User 为protobuf中定义的结构体
+if err := copier.CopyWithOption(req.User, user, copieroptpb.Option()); err != nil {
+    return nil, err
+}
+```
+
+
 
 
 ## 参考

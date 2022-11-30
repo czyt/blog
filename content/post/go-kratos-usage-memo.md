@@ -187,6 +187,68 @@ message HelloReply {
   string message = 1;
 }
 ```
+## 支持QueryString的Post接口
+Protobuf定义
+
+```protobuf
+rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post: "/users",
+      body: "user"
+    };
+  }
+  
+message CreateUserRequest {
+  string password = 1;
+  User user = 2;
+}
+message CreateUserResponse {
+  string response = 1;
+}
+
+message User {
+  string first_name = 1;
+  string last_name = 2;
+}
+  
+```
+
+在service层代码可以直接取到对应参数
+
+```go
+func (s *GreeterService) CreateUser(ctx context.Context, req *v1.CreateUserRequest) (*v1.CreateUserResponse, error) {
+	info := fmt.Sprintf("password:%s,userName:%s %s", req.Password, req.User.FirstName, req.User.LastName)
+	return &v1.CreateUserResponse{Response: info}, nil
+}
+```
+
+
+
+调用
+
+```bash
+curl --location -g --request POST 'http://127.0.0.1:8000/users?password=e77eEDab-BdAe-78BE-0979-2F798d9bBe4b \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "first_name":"czyt",
+    "last_name":"cn"
+}'
+```
+
+返回
+
+```json
+{
+    "response": "password:e77eEDab-BdAe-78BE-0979-2F798d9bBe4b,userName:czyt cn"
+}
+```
+
+
+
+参考：
+
++ https://github.com/grpc-ecosystem/grpc-gateway/issues/234
++ https://stackoverflow.com/questions/59171594/grpc-define-proto-post-endpoint-accepts-both-body-and-request-params
 
 ## 支持文件上传
 

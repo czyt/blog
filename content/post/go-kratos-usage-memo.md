@@ -527,6 +527,13 @@ func LoadTLSConfig(certFilePath string, certKeyFilePath string) (*tls.Config, er
 	}, nil
 }
 ```
+## OPA（Open Policy Agent）
+
+### 参考
+
++ [OPA Guidebook](https://sangkeon.github.io/opaguide/)
++ https://www.fugue.co/blog/5-tips-for-using-the-rego-language-for-open-policy-agent-opa
++ https://github.com/anderseknert/awesome-opa
 
 ## 集成Casbin
 

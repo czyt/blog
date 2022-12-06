@@ -421,7 +421,43 @@ err := mgm.Transaction(func(session mongo.Session, sc mongo.SessionContext) erro
 ```
 
 + 要使用您的上下文运行事务，请使用 `mgm.TransactionWithCtx()` 方法。
-+  要在另一个连接上运行事务，请使用 `mgm.TransactionWithClient() `方法。
+
++ 要在另一个连接上运行事务，请使用 `mgm.TransactionWithClient() `方法。
+
+## migrate
+需要使用库 https://github.com/golang-migrate/migrate
+## Validate
+参考[issue](https://github.com/Kamva/mgm/issues/47)
+```go
+import (
+	validation "github.com/go-ozzo/ozzo-validation/v4"
+	"github.com/go-ozzo/ozzo-validation/v4/is"
+	"github.com/kamva/mgm/v3"
+)
+
+// User contains user information
+type User struct {
+	mgm.DefaultModel `bson:",inline"`
+	FirstName        string `bson:"first_name"`
+	LastName         string `bson:"last_name"`
+	Age              uint8  `bson:"age"`
+	Email            string `bson:"email"`
+	FavouriteColor   string `bson:"favourite_color"`
+}
+
+// This hook will be called on every update or create operation.
+func (user *User) Saving() error {
+	if err := user.DateFields.Saving(); err != nil {
+		return err
+	}
+	return validation.ValidateStruct(&user,
+		validation.Field(&user.FirstName, validation.Required),
+		validation.Field(&user.LastName, validation.Required),
+		validation.Field(&user.Age, validation.Required, validation.Min(15)),
+		validation.Field(&user.Email, validation.Required, is.EmailFormat),
+	)
+}
+```
 
 ## 参考资料
 

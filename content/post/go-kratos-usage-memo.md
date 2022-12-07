@@ -305,6 +305,57 @@ func main() {
 }
 ```
 参考 https://freshman.tech/file-upload-golang/
+
+## 文件下载、导出服务
+
+文件下载服务既可以是本地静态文件也可能是动态生成的，本质上就是将字节返回到客户端。在Kratos中我们可以将这部分逻辑由ResponseEncoder控制，也就是说我们可以先按proto定义服务，但是返回返回文件下载。
+
+proto 定义
+
+```protobuf
+import "google/api/field_behavior.proto";
+option go_package = "attachment;attachment";
+
+message Attachment {
+  string file_name = 1 [json_name = "file_name"];
+  int64  content_length = 2 [json_name = "content_length"];
+  bytes payload = 3 [(google.api.field_behavior)=REQUIRED];
+}
+```
+
+自定义的ResponseEncoder
+
+```go
+func CustomResponseEncoder() http.ServerOption {
+	return http.ResponseEncoder(func(w http.ResponseWriter, r *http.Request, i any) error {
+		if asset, ok := i.(*attachment.Attachment); ok {
+			err := handleAttachment(w, asset)
+			if err != nil {
+				return err
+			}
+			return nil
+		}
+		if m, ok := i.(proto.Message); ok {
+			 // do other logics here
+		}
+           .......
+	})
+}
+
+func handleAttachment(w http.ResponseWriter, attach *attachment.Attachment) error {
+	w.Header().Set("Content-Disposition", attach.FileName)
+	w.Header().Set("Content-Length", strconv.FormatInt(attach.ContentLength, 10))
+	w.Header().Set("Content-Type", "application/octet-stream")
+	_, err := w.Write(attach.Payload)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+```
+
+参考 [issue](https://github.com/go-kratos/kratos/issues/2073)
+
 ## 静态文件托管
 
 官方例子

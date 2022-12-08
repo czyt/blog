@@ -1377,6 +1377,11 @@ message X {google.protobuf.Int32Value age = 1 [(validate.rules).int32.gt = -1, (
     Person z = 3;
   }
   ```
+### validate在使用中的问题
+
+#### 在部分更新场景下对全部字段校验的问题
+
+对于常规的场景，validate是没有问题的，但是对于部分更新的场景，validate可能会导致问题，我们在做部分更新的时候，可能配合fieldmask进行部分字段更新，但是validate会校验所有字段，导致更新失败。官方repo有人提了一个[PR](https://github.com/bufbuild/protoc-gen-validate/pull/366)，但尚未合并，在官方未支持这个feature前，只能通过白名单方式来跳过vilidate中间件。
 
 ## 插件化路由和Handler
 

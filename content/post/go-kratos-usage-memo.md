@@ -646,6 +646,7 @@ Casbin官网 https://casbin.io
 ### 参考
 + https://github.com/Permify/permify
 + https://github.com/open-policy-agent/opa
++ https://github.com/go-cinch/auth
 ## 复用proto
 
 在业务中可能需要根据职责划分多个服务，这些服务可能部分proto结构是需要复用的。

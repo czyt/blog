@@ -1383,6 +1383,104 @@ message X {google.protobuf.Int32Value age = 1 [(validate.rules).int32.gt = -1, (
 
 对于常规的场景，validate是没有问题的，但是对于部分更新的场景，validate可能会导致问题，我们在做部分更新的时候，可能配合fieldmask进行部分字段更新，但是validate会校验所有字段，导致更新失败。官方repo有人提了一个[PR](https://github.com/bufbuild/protoc-gen-validate/pull/366)，但尚未合并，在官方未支持这个feature前，只能通过白名单方式来跳过vilidate中间件。
 
+### 非protoc方式的validate
+
+可以考虑使用非proto方式的validate，这部分代码是摘自项目[kratos-base-project]()
+
+biz/administrator.go
+
+```go
+type Administrator struct {
+	Id            int64
+	Username      string `validate:"required,max=50" label:"用户名"`
+	Password      string `validate:"required,max=50" label:"密码"`
+	Salt          string
+	Mobile        string `validate:"required,max=20" label:"手机号码"`
+	Nickname      string `validate:"required,max=50" label:"昵称"`
+	Avatar        string `validate:"required,max=150" label:"头像地址"`
+	Status        int64  `validate:"required,oneof=1 2" label:"状态"`
+	Role          string
+	LastLoginTime string
+	LastLoginIp   string
+	CreatedAt     string
+	UpdatedAt     string
+	DeletedAt     string
+}
+
+func (uc *AdministratorUseCase) Create(ctx context.Context, data *Administrator) (*Administrator, error) {
+	err := validate.ValidateStructCN(data)
+	if err != nil {
+		return &Administrator{}, errors.New(http.StatusBadRequest, errResponse.ReasonParamsError, err.Error())
+	}
+	return uc.repo.CreateAdministrator(ctx, data)
+}
+```
+
+对应的helper方法
+
+vilidate.go
+
+```go
+package validate
+
+import (
+	"errors"
+	"github.com/go-playground/validator/v10"
+	"reflect"
+
+	"github.com/go-playground/locales/zh"
+	ut "github.com/go-playground/universal-translator"
+	zh_translations "github.com/go-playground/validator/v10/translations/zh"
+)
+
+// ValidateStruct Struct label数据验证器
+func ValidateStruct(model interface{}) error {
+	//验证
+	validate := validator.New()
+
+	//注册一个函数，获取struct tag里自定义的label作为字段名
+	validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := fld.Tag.Get("label")
+		return name
+	})
+
+	err := validate.Struct(model)
+	if err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			return errors.New(err.Error())
+		}
+	}
+	return nil
+}
+
+// ValidateData 全局model数据验证器
+func ValidateStructCN(data interface{}) error {
+	//验证
+	zh_ch := zh.New()
+	validate := validator.New()
+	//注册一个函数，获取struct tag里自定义的label作为字段名
+	validate.RegisterTagNameFunc(func(fld reflect.StructField) string {
+		name := fld.Tag.Get("label")
+		return name
+	})
+
+	uni := ut.New(zh_ch)
+	trans, _ := uni.GetTranslator("zh")
+	//验证器注册翻译器
+	zh_translations.RegisterDefaultTranslations(validate, trans)
+	err := validate.Struct(data)
+	if err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			return errors.New(err.Translate(trans))
+		}
+	}
+	return nil
+}
+
+```
+
+
+
 ## 插件化路由和Handler
 
 Todo

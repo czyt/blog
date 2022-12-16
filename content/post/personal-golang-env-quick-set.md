@@ -37,6 +37,18 @@ draft: false
 ### 代码Lint
 - golangci-lint `go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest`
 
+- [golines](https://github.com/segmentio/golines) `go install github.com/segmentio/golines@latest`
+
+  > 1. Go into the Goland settings and click "Tools" -> "File Watchers" then click the plus to create a new file watcher
+  > 2. Set the following properties and confirm by clicking OK:
+  >
+  > - **Name:** `golines`
+  > - **File type:** `Go files`
+  > - **Scope:** `Project Files`
+  > - **Program:** `golines`
+  > - **Arguments:** `$FilePath$ -w`
+  > - **Output paths to refresh:** `$FilePath$`
+
 - [gofumpt](https://github.com/mvdan/gofumpt) `go install mvdan.cc/gofumpt@latest` goland设置
 
   >GoLand doesn't use `gopls` so it should be configured to use `gofumpt` directly. Once `gofumpt` is installed, follow the steps below:

@@ -73,6 +73,20 @@ postgres=# \q
 
 浓缩为一行 `sudo -u postgres psql -c "ALTER USER postgres PASSWORD '<new-password>';"`
 
+## 常见问题
+
+### 连接字符串
+
+#### 报错 "auth error: sasl conversation error: unable to authenticateusing mechanism "SCRAM-SHA-1".(AuthenticationFailed)"
+
+需要在连接字符串中指定authSource 
+
+```
+mongodb://root:root@127.0.0.1:27017/auth_microservice_db?authSource=admin
+```
+
+
+
 ## 参考文档
 
 +[MongoDB报错“not authorized on admin to execute command“](https://xiaoligege.blog.csdn.net/article/details/108749801)

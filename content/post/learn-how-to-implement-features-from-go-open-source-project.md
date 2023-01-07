@@ -1,7 +1,7 @@
 ---
 title: "从Golang的开源项目中学习不同的功能实现"
 date: 2022-11-25
-tags: ["golang", "open source"]
+tags: ["golang", "open source","MongoDB"]
 draft: false
 ---
 
@@ -107,3 +107,51 @@ func (s *SMTPServer) ValidateVerificationCode(codeToken, vCode, email, usage str
 }
 ```
 
+## 数据库
+
+## MongoDB
+
+代码来自于[illacloud](https://github.com/illacloud)
+
+连接时使用SSL选项
+
+```go
+// TLS: self-signed certificate
+	var credential options.Credential
+	var tlsConfig tls.Config
+    // config checks
+	if m.Resource.SSL.Open == true && m.Resource.SSL.CA != "" {
+		credential = options.Credential{AuthMechanism: "MONGODB-X509"}
+		pool := x509.NewCertPool()
+		if ok := pool.AppendCertsFromPEM([]byte(m.Resource.SSL.CA)); !ok {
+			return nil, errors.New("format MongoDB TLS CA Cert failed")
+		}
+		tlsConfig = tls.Config{RootCAs: pool}
+		if m.Resource.SSL.Client != "" {
+			splitIndex := bytes.Index([]byte(m.Resource.SSL.Client), []byte("-----\n-----"))
+			if splitIndex <= 0 {
+				return nil, errors.New("format MongoDB TLS Client Key Pair failed")
+			}
+			clientKeyPairSlice := []string{m.Resource.SSL.Client[:splitIndex+6], m.Resource.SSL.Client[splitIndex+6:]}
+			clientCert := ""
+			clientKey := ""
+			if strings.Contains(clientKeyPairSlice[0], "CERTIFICATE") {
+				clientCert = clientKeyPairSlice[0]
+				clientKey = clientKeyPairSlice[1]
+			} else {
+				clientCert = clientKeyPairSlice[1]
+				clientKey = clientKeyPairSlice[0]
+			}
+			ccBlock, _ := pem.Decode([]byte(clientCert))
+			ckBlock, _ := pem.Decode([]byte(clientKey))
+			if (ccBlock != nil && ccBlock.Type == "CERTIFICATE") && (ckBlock != nil || strings.Contains(ckBlock.Type, "PRIVATE KEY")) {
+				cert, err := tls.X509KeyPair([]byte(clientCert), []byte(clientKey))
+				if err != nil {
+					return nil, err
+				}
+				tlsConfig.Certificates = []tls.Certificate{cert}
+			}
+		}
+```
+
+其他类型的数据库均有实现。

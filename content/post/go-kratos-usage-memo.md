@@ -534,6 +534,31 @@ http.Filter(handlers.CORS(
 
 需要引用包`"github.com/gorilla/handlers"`
 
+或者使用rs的包
+
+```go
+import "github.com/rs/cors"
+
+http.Filter(CorsHandler()),
+........
+func CorsHandler() func(handler http.Handler) http.Handler {
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+		AllowedHeaders:   allowedHeaders,
+		ExposedHeaders:   exposedHeaders,
+		AllowedMethods:   allowedMethods,
+		// Enable Debugging for testing, consider disabling in production
+		Debug: false,
+	})
+	return func(handler http.Handler) http.Handler {
+		return c.Handler(handler)
+	}
+}
+```
+
+
+
 ## 服务https监听开关
 在conf.proto 上的Http配置添加下面的内容
 

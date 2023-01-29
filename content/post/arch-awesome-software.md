@@ -98,6 +98,8 @@ goldendict 安装 `yay -S goldendict` [词库](https://github.com/czytcn/goldend
 
 QQ 安装 `yay -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`
 
+新版LinuxQQ `yay -S linuxqq`
+
 tim `yay -S com.qq.tim.spark` 
 
 ipmsg 安装`yay -S iptux`
@@ -608,7 +610,7 @@ Android Studio 安装 `yay -S android-studio` (安卓SDK `yay -S android-sdk`)
 
 clion 安装 `yay -S clion clion-jre` 
 
-pycharm 安装 `yay -S pycharm pycharm-jre` 
+pycharm 安装 `yay -S pycharm-professional` 
 
 rider安装 `yay -S rider` 
 

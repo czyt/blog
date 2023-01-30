@@ -67,6 +67,33 @@ freerdp remmina-plugin-teamviewer remmina-plugin-webkit remmina-plugin-rdesktop 
 alacritty 安装 `yay -S alacritty ` 
 终端渐变色工具lolcat `yay -S lolcat` 
 
+ssh设置如果只是修改客户端选项,创建`~/.ssh/config`或者修改`/etc/ssh/ssh_config`(需要root权限),文件输入下面内容：
+
+```bash
+Host *
+    ServerAliveInterval 300
+    ServerAliveCountMax 2
+```
+
+如果是作为服务端，那么需要修改sshd的配置文件`/etc/ssh/sshd_config`,添加下面内容：
+
+```bash
+ClientAliveInterval 300
+ClientAliveCountMax 2
+```
+
+
+
+参考 `ssh_config`的帮助文档
+
+> **ServerAliveCountMax**
+> Sets the number of server alive messages (see below) which may be sent without ssh(1) receiving any messages back from the server. If this threshold is reached while server alive messages are being sent, ssh will disconnect from the server, terminating the session. It is important to note that the use of server alive messages is very different from TCPKeepAlive (below). The server alive messages are sent through the encrypted channel and therefore will not be spoofable. The TCP keepalive option enabled by TCPKeepAlive is spoofable. The server alive mechanism is valuable when the client or server depend on knowing when a connection has become inactive.
+>
+> The default value is 3. If, for example, ServerAliveInterval (see below) is set to 15 and ServerAliveCountMax is left at the default, if the server becomes unresponsive, ssh will disconnect after approximately 45 seconds. This option applies to protocol version 2 only; in protocol version 1 there is no mechanism to request a response from the server to the server alive messages, so disconnection is the responsibility of the TCP stack.
+>
+> **ServerAliveInterval**
+> Sets a timeout interval in seconds after which if no data has been received from the server, ssh(1) will send a message through the encrypted channel to request a response from the server. The default is 0, indicating that these messages will not be sent to the server, or 300 if the BatchMode option is set. This option applies to protocol version 2 only. ProtocolKeepAlives and SetupTimeOut are Debian-specific compatibility aliases for this option.
+
 
 ## 浏览器
 

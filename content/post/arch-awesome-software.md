@@ -187,6 +187,8 @@ rclone 同步工具 `yay -S rclone` ([同步onedrive配置](https://rclone.org/o
 
 axel 安装 `yay -S axel`
 
+localsend 安装 `yay -S localsend-bin`
+
 zssh 安装 `yay -S zssh` 配合lrzsz(安装命令 `yay -S lrzsz`)食用效果最佳。
 
 [trzsz](https://github.com/trzsz/trzsz) 安装 `yay -S trzsz ` 

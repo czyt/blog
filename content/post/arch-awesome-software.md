@@ -82,7 +82,7 @@ ClientAliveInterval 300
 ClientAliveCountMax 2
 ```
 
-
+这些设置将使 SSH 客户端或服务器每300秒(5分钟)向另一端发送一个空包，如果在2次尝试后没有收到任何响应，则放弃，此时连接很可能已被丢弃。
 
 参考 `ssh_config`的帮助文档
 

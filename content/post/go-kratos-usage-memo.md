@@ -772,7 +772,10 @@ type processor interface {
 ```bash
 https://github.com/bufbuild/protoc-gen-validate/releases
 ```
+> 字节跳动也开源了一个版本 Github仓库为 https://github.com/cloudwego/protoc-gen-validator
+
 然后修改makefile中的api任务
+
 ```bash
 .PHONY: api
 # generate api proto

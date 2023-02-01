@@ -26,6 +26,7 @@ draft: false
 + https://sumercip.com/posts/inside-the-go-cpu-profiler/
 
 + How to Write Benchmarks in Go : https://dave.cheney.net/2013/06/30/how-to-write-benchmarks-in-go
++ [Improving Observability of GoLang Services](https://flow.com/engineering-blogs/golang-services-improving-observability)
 + Debugging performance issues in Go programs : https://github.com/golang/go/wiki/Performance
 + Go execution tracer : https://blog.gopheracademy.com/advent-2017/go-execution-tracer/ (see also the The tracer design doc link)
 + A whirlwind tour of Go’s runtime environment variables (see godebug) : https://dave.cheney.net/2015/11/29/a-whirlwind-tour-of-gos-runtime-environment-variables

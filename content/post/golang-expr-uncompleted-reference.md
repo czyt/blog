@@ -245,6 +245,20 @@ func main() {
 }
 ```
 
+>[v1.11.0 ](https://github.com/antonmedv/expr/releases/tag/v1.11.0)引入了[expr.Function](https://pkg.go.dev/github.com/antonmedv/expr#Function)来弥补Fast function函数缺乏类型信息的缺点。下面是一个官方的例子
+>
+>```go
+>atoi := expr.Function(
+>	"atoi",
+>	func(params ...any) (any, error) {
+>		return strconv.Atoi(params[0].(string))
+>	},
+>	new(func(string) int),
+>)
+>
+>program, err := expr.Compile(`atoi("42")`, atoi)
+>```
+
 ### 错误返回
 
 如果函数或方法返回非nil的error，那么这个错误将返回给其对应的调用者。

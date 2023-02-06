@@ -1,7 +1,7 @@
 ---
 title: "Golang 默认的CGO参数编译导致的GLIBC错误"
 date: 2022-08-30
-tags: ["dsl", "golang"]
+tags: ["build", "golang"]
 draft: false
 ---
 ## 问题描述

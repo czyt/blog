@@ -13,7 +13,7 @@ draft: false
 安装
 
 ```bash
-go get -u /github.com/antonmedv/expr
+go get -u github.com/antonmedv/expr
 ```
 
 如果是gomod模式，则需要定义为

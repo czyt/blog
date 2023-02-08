@@ -8,6 +8,7 @@ draft: false
 ## 开源项目
 
 - https://github.com/dolthub/go-library-sample
+- https://github.com/draffensperger/go-interlang
 
 ## 文档
 - [Embedding Go in C](https://www.dolthub.com/blog/2023-02-01-embedding-go-in-c/)

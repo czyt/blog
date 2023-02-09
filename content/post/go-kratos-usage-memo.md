@@ -1547,4 +1547,5 @@ if err := copier.CopyWithOption(req.User, user, copieroptpb.Option()); err != ni
 + [三分钟小课堂 - 如何控制接口返回值](https://mp.weixin.qq.com/s/4ocdoAVXXKTvJ3U65YXltw)
 + [通过 Kratos 高扩展性整合任何框架](https://mp.weixin.qq.com/s/zHHPESkcGG82Zc0U5Meelg)
 + https://github.com/ZQCard/kratos-base-project
++ [微服务权鉴 - Zanzibar](https://mp.weixin.qq.com/s/0sjS6NZ1dImJaU-8sTiDRA)
 

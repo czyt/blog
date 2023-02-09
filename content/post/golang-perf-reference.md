@@ -38,6 +38,8 @@ draft: false
 + [GO高性能编程精华](https://zhuanlan.zhihu.com/p/482107438)
 + [Go 语言中各式各样的优化手段](https://zhuanlan.zhihu.com/p/403417640)
 + [Go 中简单的内存节省技巧](https://mp.weixin.qq.com/s/iaYpz51xe45RJfNWPyIqHw)
++ [Five Steps to Make Your Go Code Faster & More Efficient](https://docs.google.com/presentation/d/1MD_Vlb9d32aMDPu9MOlyVO796mK1Y6GrRcXOl63C7g4/edit?usp=sharing)
++ [Making a Go program run 1.7x faster with a one character change](https://hmarr.com/blog/go-allocation-hunting/)
 
 ## 性能监控系统
 

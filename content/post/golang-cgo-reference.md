@@ -12,6 +12,7 @@ draft: false
 
 ## 文档
 - [Embedding Go in C](https://www.dolthub.com/blog/2023-02-01-embedding-go-in-c/)
+- [Calling C code from go](https://karthikkaranth.me/blog/calling-c-code-from-go/)
 - [C? Go? Cgo!](https://go.dev/blog/cgo)
 - [CGO编程（Go语言高级编程）](https://chai2010.cn/advanced-go-programming-book/ch2-cgo/index.html)
 ## 代码片段

@@ -1529,7 +1529,16 @@ if err := copier.CopyWithOption(req.User, user, copieroptpb.Option()); err != ni
 }
 ```
 
+## 数据脱敏及安全
 
+### 参考
+
+- https://github.blog/2022-10-26-why-and-how-gith
+- https://securecode.wiki/docs/lang/golang/ub-encrypts-sensitive-database-columns-using-activerecordencryption/
+- https://github.com/bytedance/godlp
+- https://github.com/sachaservan/pir
+- https://github.com/ggwhite/go-masker
+- https://github.com/anu1097/golang-masking-tool
 
 
 ## 参考

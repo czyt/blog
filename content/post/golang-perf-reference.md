@@ -40,6 +40,9 @@ draft: false
 + [Go 中简单的内存节省技巧](https://mp.weixin.qq.com/s/iaYpz51xe45RJfNWPyIqHw)
 + [Five Steps to Make Your Go Code Faster & More Efficient](https://docs.google.com/presentation/d/1MD_Vlb9d32aMDPu9MOlyVO796mK1Y6GrRcXOl63C7g4/edit?usp=sharing)
 + [Making a Go program run 1.7x faster with a one character change](https://hmarr.com/blog/go-allocation-hunting/)
++ [Simple Byte Hacking](https://eblog.fly.dev/bytehacking.html)
++ [a tale of two stacks: optimizing gin’s panic recovery handler](https://eblog.fly.dev/faststack.html)
++ [Golang Quirks & Intermediate Tricks, Pt 1: Declarations, Control Flow, & Typesystem](https://eblog.fly.dev/quirks.html)
 
 ## 性能监控系统
 

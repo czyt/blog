@@ -248,7 +248,10 @@ curl --location -g --request POST 'http://127.0.0.1:8000/users?password=e77eEDab
 参考：
 
 + https://github.com/grpc-ecosystem/grpc-gateway/issues/234
+
 + https://stackoverflow.com/questions/59171594/grpc-define-proto-post-endpoint-accepts-both-body-and-request-params
+
+  > 注意：接口url的定义要注意url覆盖的问题。调整proto中的定义顺序即可。
 
 ## 支持文件上传
 

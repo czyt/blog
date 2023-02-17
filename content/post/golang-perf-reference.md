@@ -43,6 +43,7 @@ draft: false
 + [Simple Byte Hacking](https://eblog.fly.dev/bytehacking.html)
 + [a tale of two stacks: optimizing gin’s panic recovery handler](https://eblog.fly.dev/faststack.html)
 + [Golang Quirks & Intermediate Tricks, Pt 1: Declarations, Control Flow, & Typesystem](https://eblog.fly.dev/quirks.html)
++ [How debugging Go programs with Delve and eBPF is faster](https://developers.redhat.com/articles/2023/02/13/how-debugging-go-programs-delve-and-ebpf-faster)
 
 ## 性能监控系统
 

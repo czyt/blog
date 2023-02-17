@@ -9,6 +9,7 @@ draft: false
 
 - https://github.com/dolthub/go-library-sample
 - https://github.com/draffensperger/go-interlang
+- https://github.com/kbehouse/go_call_cxx_so
 
 ## 文档
 - [Embedding Go in C](https://www.dolthub.com/blog/2023-02-01-embedding-go-in-c/)

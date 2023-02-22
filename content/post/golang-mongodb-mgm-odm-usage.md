@@ -128,7 +128,15 @@ coll:=mgm.Coll(&Book{})
   }
   ```
 
-  
+  > 注意：只有下面的几个方法可以调用hook，其他的类似xxxOne或者xxxMany不会调用hook
+  >
+  > - `Create` & `CreateWithCtx`
+  >
+  > - `Update` & `UpdateWithCtx`
+  >
+  > - `Delete` & `DeleteWithCtx`
+  >
+  >   参考[issue](https://github.com/Kamva/mgm/issues/12)
 
 ## 使用
 

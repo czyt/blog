@@ -672,7 +672,77 @@ Casbin官网 https://casbin.io
    		}
    }
    ```
+
+   
+
+4. 另外一个就是casbin policy的即时刷新问题，可以通过实现watcher接口来实现，下面是一个基于channel的实现。
+
+   ```go
+   /*
+    * Copyright (c) 2023.czyt  All rights reserved.
+    * Author:czyt
+    */
+   
+   package watcher
+   
+   import (
+   	"github.com/casbin/casbin/persist"
+   	"time"
+   )
+   
+   var _ persist.Watcher = (*Watcher)(nil)
+   
+   type Watcher struct {
+   	callback func(string)
+   	notify   chan struct{}
+   	closed   chan struct{}
+   }
+   
+   func NewWatcher() *Watcher {
+   	notify := make(chan struct{}, 1)
+   	closed := make(chan struct{})
+   	return &Watcher{
+   		notify: notify,
+   		closed: closed,
+   	}
+   }
+   
+   func (w Watcher) SetUpdateCallback(fn func(string)) error {
+   	w.callback = fn
+   	go processNotify(w.notify, w.closed, fn)
+   	return nil
+   }
+   
+   func (w Watcher) Update() error {
+   	w.notify <- struct{}{}
+   	return nil
+   }
+   
+   func (w Watcher) Close() {
+   	w.closed <- struct{}{}
+   }
+   
+   func processNotify(notify, closed chan struct{}, callback func(s string)) {
+   	for {
+   		select {
+   		case _, ok := <-notify:
+   			if !ok {
+   				break
+   			}
+   			callback("callback called ")
+   			time.Sleep(2 * time.Second)
+   
+   		case <-closed:
+   			close(notify)
+   			break
+   		}
+   	}
+   }
+   
+   ```
+
 ### 参考
+
 + https://github.com/Permify/permify
 + https://github.com/open-policy-agent/opa
 + https://github.com/go-cinch/auth

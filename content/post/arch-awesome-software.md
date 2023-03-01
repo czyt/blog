@@ -909,3 +909,4 @@ sudo pacman-key --populate archlinuxcn
 - [swappinessarchlinux 简明指南](https://arch.icekylin.online)
 - [How to Flush DNS Cache on Linux](https://www.bitslovers.com/linux-how-to-flush-dns/)
 - [Manjaro 字体调优](https://wiki.manjaro.org/index.php/Improve_Font_Rendering)
+- [Jetbrains License Server](https://github.com/Nasller/LicenseServer)

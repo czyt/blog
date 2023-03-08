@@ -19,6 +19,19 @@ draft: false
 + go-zero [link](https://github.com/zeromicro/go-zero/tree/master/tools/goctl/api/parser)
 + [grule-rule-engine](https://github.com/hyperjumptech/grule-rule-engine)
 + https://github.com/kulics-works/feel-go
+## windows 环境配置
+
+配置好Java环境，然后将下面的批处理加入系统环境变量：
+
+antlr.cmd
+
+```bash
+@echo off
+java -jar %~dp0antlr-4.12.0-complete.jar %*
+```
+
+
+
 
 # Others
 

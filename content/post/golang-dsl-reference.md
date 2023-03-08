@@ -18,6 +18,7 @@ draft: false
 + bilibili gengine [link](https://github.com/bilibili/gengine/blob/main/internal/iantlr)
 + go-zero [link](https://github.com/zeromicro/go-zero/tree/master/tools/goctl/api/parser)
 + [grule-rule-engine](https://github.com/hyperjumptech/grule-rule-engine)
++ https://github.com/kulics-works/feel-go
 
 # Others
 

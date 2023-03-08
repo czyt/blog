@@ -27,7 +27,14 @@ antlr.cmd
 
 ```bash
 @echo off
-java -jar %~dp0antlr-4.12.0-complete.jar %*
+java -classpath %~dp0antlr-4.12.0-complete.jar org.antlr.v4.Tool %*
+```
+
+grun.cmd
+
+```bash
+@echo off
+java -classpath %~dp0antlr-4.12.0-complete.jar org.antlr.v4.gui.TestRig %*
 ```
 
 

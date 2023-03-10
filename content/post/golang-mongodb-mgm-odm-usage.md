@@ -5,8 +5,6 @@ tags: ["golang","mongoDB"]
 draft: false
 ---
 
-
-
 (本文大部分内容根据官方文档翻译而来)
 
 ## 环境准备
@@ -317,6 +315,25 @@ err := mgm.Coll(&Book{}).FindOne(nil, bson.M{}, opts)
 + https://www.codementor.io/@arpitbhayani/fast-and-efficient-pagination-in-mongodb-9095flbqr
 + https://www.mongodb.com/blog/post/paging-with-the-bucket-pattern--part-1
 + https://www.mongodb.com/blog/post/paging-with-the-bucket-pattern--part-2
+
+#### 索引
+下面是一个改自casbin MongoDB adapter的例子
+```go
+indexes := []string{"ptype", "v0", "v1", "v2", "v3", "v4", "v5"}
+	keysDoc := bsonx.Doc{}
+	for _, k := range indexes {
+		keysDoc = keysDoc.Append(k, bsonx.Int32(1))
+	}
+
+	if _, err := mgm.Coll(&CasbinRule{}).Indexes().CreateOne(context.Background(),
+		mongo.IndexModel{
+			Keys:    keysDoc,
+			Options: options.Index().SetUnique(true),
+		},
+	); err != nil {
+		return err
+	}
+```
 
 ### 聚合
 

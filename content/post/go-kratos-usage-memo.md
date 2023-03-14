@@ -686,7 +686,7 @@ Casbin官网 https://casbin.io
    package watcher
    
    import (
-   	"github.com/casbin/casbin/persist"
+   	"github.com/casbin/casbin/v2/persist"
    	"time"
    )
    
@@ -740,6 +740,29 @@ Casbin官网 https://casbin.io
    }
    
    ```
+   在初始化casbin中间件选项时注入，同时在data层也注入，这样就可以实现更新规则后，中间件规则刷新。
+```go
+import "github.com/czyt/kasbin"
+
+casbinM.Server(
+	casbinM.WithModel(m),
+	casbinM.WithPolicy(a),
+	casbinM.WithWatcher(watcher),
+	casbinM.WithEnforcerContextCreator(authz.NewSecurityUser()),
+),
+```
+用户UseCase
+```go
+func (i InitializationUseCase) createCasbinPolicies(roles []*Role) error {
+		defer func(watcher *watcher.Watcher) {
+			err := watcher.Update()
+			if err != nil {
+				i.log.Error("watcher update casbin policy", err)
+			}
+		}(i.watcher)
+        ......
+    }
+```
 
 ### 参考
 

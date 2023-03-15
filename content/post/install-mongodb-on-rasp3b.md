@@ -114,6 +114,13 @@ draft: false
       
       重启mongodb服务 `systemctl restart mongodb` 使配置生效。
       
+      修改用户密码
+      
+      ```shell
+      use admin;
+      db.changeUserPassword("czyt", "dbpassword");
+      ```
+      
       ##  参考连接
       
       - https://dba.stackexchange.com/questions/283843/create-user-for-all-databases-in-mongodb

@@ -1608,6 +1608,7 @@ func ValidateStructCN(data interface{}) error {
 其他类似的还有
 
 + https://github.com/ymz-ncnk/musgo
++ https://github.com/cohesivestack/valgo
 
 ## 插件化路由和Handler
 

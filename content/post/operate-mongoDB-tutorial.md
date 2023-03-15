@@ -61,7 +61,33 @@ MongoDB的连接字符串为如下格式
 > | **w**                        | string or integer | `null`        | Specifies the write concern. To learn more about values, see the server documentation on [Write Concern options](https://www.mongodb.com/docs/manual/reference/write-concern/). |
 > | **directConnection**         | boolean           | `false`       | Specifies whether to force dispatch **all** operations to the host specified in the connection URI. |
 
+MongoDB连接字符串中，auth参数和dbsource参数用于实现数据库认证和授权功能。
 
+auth参数指定进行认证的用户和密码，格式为：
+
+```shell
+authSource=admin&authMechanism=SCRAM-SHA-1&authMechanismProperties=SERVICE_NAME:service_name
+```
+
+其中，authSource为存储用户凭证的数据库，默认为admin；
+authMechanism为认证机制，默认为SCRAM-SHA-1；
+authMechanismProperties指定了认证使用的服务名称，可以为空。
+
+dbsource参数指定要使用的数据库，格式为：dbsource=database_name
+其中，database_name为要连接的数据库名称。如果不指定该参数，则默认使用连接字符串中指定的authSource数据库。
+
+示例：
+```shell
+mongodb://user:password@localhost:27017/?authSource=admin&authMechanism=SCRAM-SHA-1&authMechanismProperties=SERVICE_NAME:mongo-service&dbsource=mydatabase
+```
+
+解释：
+- user和password为认证所需的用户名和密码；
+- localhost:27017为MongoDB的地址和端口号；
+- authSource=admin表示使用admin数据库进行认证；
+- authMechanism=SCRAM-SHA-1指定使用SCRAM-SHA-1算法进行认证；
+- authMechanismProperties=SERVICE_NAME:mongo-service指定使用名为mongo-service的服务；
+- dbsource=mydatabase指定要使用的数据库名称为mydatabase。
 
 #### 数据库驱动
 

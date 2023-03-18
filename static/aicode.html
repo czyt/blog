@@ -52,10 +52,10 @@
 		<div id="messages"></div>
 		<form id="form">
 			<div class="input-field col s12">
-				<textarea id="message" class="materialize-textarea" placeholder="Type your message here..."></textarea>
+				<textarea id="message" class="materialize-textarea" placeholder="Type your message here..." onkeydown="if(event.keyCode==13){document.getElementById('send').click();return false;}"></textarea>
 				<label for="message">Message</label>
 			</div>
-			<button class="btn waves-effect waves-light" type="submit" name="action">Send
+			<button class="btn waves-effect waves-light" type="submit" name="action" id="send">Send
 				<i class="material-icons right">send</i>
 			</button>
 		</form>

@@ -2,73 +2,47 @@
 <html>
 <head>
 	<title>AI Bot Code</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<style>
-		body {
-			margin: 0;
-			padding: 0;
-			background-color: #1c1c1c;
-			font-family: Arial, sans-serif;
+		.code-avatar {
+			background-size: cover;
+			border-radius: 50%;
+			height: 50px;
+			width: 50px;
+			display: inline-block;
+			margin-right: 10px;
+			background-color: #ccc;
 		}
-		.container {
-			max-width: 800px;
-			margin: 0 auto;
-			padding: 20px;
-			background-color: #2d2d2d;
-			box-shadow: 0 0 10px rgba(0,0,0,0.2);
+		.sender-avatar {
+			background-size: cover;
+			border-radius: 50%;
+			height: 50px;
+			width: 50px;
+			display: inline-block;
+			margin-right: 10px;
+			background-color: #ccc;
 		}
-		.message {
-			margin-bottom: 10px;
-			padding: 10px;
-			background-color: #1c1c1c;
-			border-radius: 5px;
-			white-space: pre-wrap;
-			word-wrap: break-word;
-			color: #fff;
-		}
-		.message .sender {
+		.sender {
+			color: #4CAF50;
 			font-weight: bold;
-			margin-right: 10px;
-		}
-		.message .time {
-			font-size: 12px;
-			color: #999;
-		}
-		.form {
-			display: flex;
-			margin-top: 20px;
-		}
-		.form input[type="text"] {
-			flex: 1;
-			padding: 10px;
-			border: none;
-			border-radius: 5px;
-			margin-right: 10px;
-			font-size: 16px;
-			background-color: #2d2d2d;
-			color: #fff;
-		}
-		.form input[type="submit"] {
-			padding: 10px 20px;
-			background-color: #4CAF50;
-			color: #fff;
-			border: none;
-			border-radius: 5px;
-			font-size: 16px;
-			cursor: pointer;
-			background-color: #2d2d2d;
 		}
 		.code {
-			background-color: #1c1c1c;
-			padding: 10px;
-			border-radius: 5px;
-			white-space: pre-wrap;
-			word-wrap: break-word;
+			background-color: #f4f4f4;
+			padding: 5px;
+			margin: 0;
+			font-size: 1.1em;
+			line-height: 1.5em;
+			border-left: 3px solid #4CAF50;
 			font-family: monospace;
-			font-size: 14px;
-			color: #fff;
-			border: 1px solid #ddd;
-			margin-top: 10px;
-			margin-bottom: 10px;
+			overflow-x: auto;
+		}
+		.sender-avatar + .sender {
+			margin-left: 10px;
+		}
+		.sender-avatar + .content {
+			margin-left: 60px;
 		}
 	</style>
 </head>
@@ -77,10 +51,16 @@
 		<h1 style="text-align:center; color:#4CAF50;">AI Code Bot</h1>
 		<div id="messages"></div>
 		<form id="form">
-			<textarea id="message" placeholder="Type your message here..." style="width:100%; height:100px;"></textarea>
-			<input type="submit" value="Send" style="background-color: #4CAF50; color: #fff; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top:10px;">
+			<div class="input-field col s12">
+				<textarea id="message" class="materialize-textarea" placeholder="Type your message here..."></textarea>
+				<label for="message">Message</label>
+			</div>
+			<button class="btn waves-effect waves-light" type="submit" name="action">Send
+				<i class="material-icons right">send</i>
+			</button>
 		</form>
 	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<script>
 		const messages = document.getElementById('messages');
 		const form = document.getElementById('form');
@@ -92,15 +72,19 @@
 			div.classList.add('message');
 			if (isCode) {
 				div.innerHTML = `
+					<span class="code-avatar"></span>
 					<span class="sender">${sender}</span>
 					<span class="time">${new Date().toLocaleTimeString()}</span>
 					<pre class="code">${message}</pre>
 				`;
 			} else {
 				div.innerHTML = `
+					<span class="sender-avatar"></span>
 					<span class="sender">${sender}</span>
+					<div class="content">
+						<p>${message}</p>
+					</div>
 					<span class="time">${new Date().toLocaleTimeString()}</span>
-					<p>${message}</p>
 				`;
 			}
 			messages.appendChild(div);
@@ -124,7 +108,7 @@
 			})
 			.then(response => response.json())
 			.then(data => {
-				const sender = 'API';
+				const sender = 'AI';
 				const message = data.code;
 				const isCode = data.isCode;
 				addMessage(sender, message, true);

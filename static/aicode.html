@@ -37,6 +37,10 @@
 			border-left: 3px solid #4CAF50;
 			font-family: monospace;
 			overflow-x: auto;
+			color: #333;
+			background-color: #f8f8f8;
+			border: 1px solid #ccc;
+			border-radius: 4px;
 		}
 		.sender-avatar + .sender {
 			margin-left: 10px;
@@ -44,10 +48,88 @@
 		.sender-avatar + .content {
 			margin-left: 60px;
 		}
+		.message {
+			display: flex;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+		.message .sender-avatar {
+			margin-right: 10px;
+		}
+		.message .sender {
+			font-weight: bold;
+			margin-right: 10px;
+		}
+		.message .time {
+			margin-left: auto;
+			color: #999;
+			font-size: 0.8em;
+		}
+		.message .content {
+			background-color: #f8f8f8;
+			padding: 10px;
+			border-radius: 10px;
+			margin-right: 10px;
+			flex: 1;
+			border: 1px solid #ccc;
+		}
+		.message .code {
+			background-color: #f4f4f4;
+			padding: 10px;
+			border-radius: 10px;
+			margin-right: 10px;
+			flex: 1;
+			font-family: monospace;
+			overflow-x: auto;
+			color: #333;
+			border: 1px solid #ccc;
+		}
+		.message .content:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: -20px;
+			border-top: 20px solid transparent;
+			border-right: 20px solid #f8f8f8;
+			border-bottom: 20px solid transparent;
+			border-left: none;
+		}
+		.message .content:after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: -18px;
+			border-top: 20px solid transparent;
+			border-right: 20px solid #ccc;
+			border-bottom: 20px solid transparent;
+			border-left: none;
+			margin-left: -1px;
+		}
+		.message .code:before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: -20px;
+			border-top: 20px solid transparent;
+			border-right: 20px solid #f4f4f4;
+			border-bottom: 20px solid transparent;
+			border-left: none;
+		}
+		.message .code:after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: -18px;
+			border-top: 20px solid transparent;
+			border-right: 20px solid #ccc;
+			border-bottom: 20px solid transparent;
+			border-left: none;
+			margin-left: -1px;
+		}
 	</style>
 </head>
-<body>
-	<div class="container">
+<body style="background-color: #f2f2f2;">
+	<div class="container-fluid">
 		<h1 style="text-align:center; color:#4CAF50;">AI Code Bot</h1>
 		<div id="messages"></div>
 		<form id="form">
@@ -61,6 +143,7 @@
 		</form>
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
 	<script>
 		const messages = document.getElementById('messages');
 		const form = document.getElementById('form');
@@ -75,7 +158,7 @@
 					<span class="code-avatar"></span>
 					<span class="sender">${sender}</span>
 					<span class="time">${new Date().toLocaleTimeString()}</span>
-					<pre class="code">${message}</pre>
+					<pre class="code"><code class="hljs">${message}</code></pre>
 				`;
 			} else {
 				div.innerHTML = `
@@ -90,6 +173,7 @@
 			messages.appendChild(div);
 			messageInput.value = '';
 			messageInput.focus();
+			hljs.highlightAll();
 		}
 
 		// Event listener for form submission

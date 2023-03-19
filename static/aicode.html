@@ -4,6 +4,7 @@
 	<title>AI Bot Code</title>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<style>
 		.code-avatar {
@@ -143,7 +144,7 @@
 		</form>
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
 	<script>
 		const messages = document.getElementById('messages');
 		const form = document.getElementById('form');
@@ -173,7 +174,11 @@
 			messages.appendChild(div);
 			messageInput.value = '';
 			messageInput.focus();
-			hljs.highlightAll();
+			document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelectorAll('	.message .code').forEach((el) => {
+    hljs.highlightElement(el);
+  });
+});
 		}
 
 		// Event listener for form submission

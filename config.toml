@@ -22,7 +22,7 @@ googleAnalytics = ""
 	ShowShareButtons = true
 	ShowToc = true
 	TocSide = "right"
-              EnableImageZoom = true
+  EnableImageZoom = true
 	ShowPostNavLinks = true
 	ShowBreadCrumbs = true
 [params.fuseOpts]
@@ -66,19 +66,14 @@ googleAnalytics = ""
     weight = 5
 
 [[menu.main]]
-    url = "/links/"
-    name = "🔑Links"
-    weight = 6
-    
-[[menu.main]]
     url = "https://github.com/czyt"
     name = "🧮Github"
-    weight = 7
+    weight = 6
     
 [[menu.main]]
     url = "https://czyt.tech/aicode.html"
     name = "🤖AICode"
-    weight = 8
+    weight = 7
     
 # Social icons to be shown on the right-hand side of the navigation bar.
 # The "name" field should match the name of the icon in Font Awesome.

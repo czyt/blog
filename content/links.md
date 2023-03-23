@@ -1,12 +1,13 @@
 ---
-title: Ò»Ğ©Á´½Ó
-# url: "/links"
-description: Ò»Ğ©ÓĞÓÃµÄÁ´½Ó
+title: "ä¸€äº›é“¾æ¥" 
+description: "ä¸€äº›æœ‰ç”¨çš„é“¾æ¥"
+summary: "ä¸€äº›é“¾æ¥"
 ---
 
-## GoÓïÑÔÏà¹Ø
+## Goè¯­è¨€ç›¸å…³
 
 ### Blog
+
 + [Dave Cheney](https://dave.cheney.net/)
 
 + [Preslav Rachev](https://preslav.me/)

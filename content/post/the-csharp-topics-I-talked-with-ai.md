@@ -1,7 +1,7 @@
 ---
 title: "我和AI讨论的一些C#话题"
-date: 2022-03-24
-tags: ["c#", "ai"]
+date: 2023-03-24
+tags: ["csharp", "ai"]
 draft: false
 ---
  很久没有用C#，最近需要使用。下面是跟AI问的一些C#的问题，未作整理。

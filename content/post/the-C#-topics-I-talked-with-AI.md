@@ -5,8 +5,8 @@ tags: ["c#", "ai"]
 draft: false
 ---
  很久没有用C#，最近需要使用。下面是跟AI问的一些C#的问题，未作整理。
-## 数据类型
-### Span
+## 基础
+### Span类型
 > c# Span的应用场景及具体例子
 
 Span是一种新的引用类型，它允许存储和操作连续的内存块。它特别适用于那些需要高效处理内存块的应用场景，例如字符串处理、IO操作和序列化/反序列化。
@@ -58,6 +58,118 @@ public static T Deserialize<T>(Span<byte> buffer) where T : struct
         }
     }
 }
+```
+### 异步
+> c#  SynchronizationContext的使用场景及例子
+
+SynchronizationContext是一个抽象类，定义了一种同步上下文的机制，允许代码在指定的线程中执行。通常情况下，SynchronizationContext的实现会将执行代码的操作封装成一个任务，并将该任务分配到与指定的上下文相关的线程中执行。
+
+SynchronizationContext通常用于以下情况：
+
+1. Windows Forms应用程序中的UI线程处理
+在Windows Forms应用程序中，UI线程负责处理用户界面操作。如果其他线程尝试在UI线程之外更新用户界面，则可能会引发异常。这时
+，可以使用WindowsFormsSynchronizationContext类，该类可以将执行代码封装到UI线程上下文中，并在其相关的线程上执行。
+
+例如：
+
+```
+textBox1.Invoke(new Action(() => {
+    textBox1.Text = "Hello World";
+}));
+```
+
+2. ASP.NET Web应用程序中的请求处理
+在ASP.NET Web应用程序中，每个请求都在单独的线程上执行，处理请求时可以使用AspNetSynchronizationContext类将代码封装到请求
+线程上下文中，并在其相关的线程上执行。
+
+例如：
+
+```
+var syncContext = HttpContext.Current != null ?
+    HttpContext.Current.SyncronizationContext : null;
+syncContext?.Post(() => {
+    Label1.Text = "Hello World";
+});
+```
+
+3. 多线程编程中的线程同步
+在多线程编程中，不同线程间的通信和同步常常是一个复杂的问题。SynchronizationContext可以帮助实现线程间的同步。
+
+例如：
+
+```
+var uiContext = SynchronizationContext.Current;
+var t = new Thread(() => {
+    // Do some work...
+    uiContext?.Post(() => {
+        // Update the UI on the main thread
+        Label1.Text = "Hello World";
+    });
+});
+t.Start();
+```
+
+在以上例子中，新的线程将执行一些工作，然后使用当前同步上下文将更新UI线程中的标签。由SynchronizationContext处理线程间的同步。
+
+> c# CancellationToken的应用场景及具体的例子
+
+CancellationToken是在多线程编程中非常有用的一个类，它能够实现线程的取消操作，当程序需要取消某个任务时，只需要让该任务检
+查CancellationToken的状态即可。
+
+应用场景：
+1. 取消一个长时间运行的线程或任务：例如下载一个大文件，在下载过程中用户可能取消下载操作，这时就可以使用CancellationToken进行取消操作，以便程序能够正确地退出或继续执行其他任务。
+2. 取消一个正在等待的线程或任务：例如等待某个事件的发生，在某些情况下可能需要取消正在等待的操作，这时就可以使用CancellationToken进行取消操作，以便程序继续执行其他任务。
+3. 取消多个并行运行的任务：例如同时运行多个任务，某些任务完成后可能需要取消其他任务的执行，这时就可以使用CancellationToken进行取消操作。
+
+具体例子：
+1. 在使用Task.Run方法时，可以传入CancellationToken，如下所示：
+
+```
+CancellationTokenSource cts = new CancellationTokenSource();
+CancellationToken token = cts.Token;
+
+Task.Run(() =>
+{
+    while (true)
+    {
+        if (token.IsCancellationRequested)
+        {
+            break;
+        }
+        // do something
+    }
+}, token);
+```
+
+2. 在使用async/await时，可以使用CancellationToken来取消异步操作，如下所示：
+
+```
+CancellationTokenSource cts = new CancellationTokenSource();
+CancellationToken token = cts.Token;
+
+async Task DownloadFileAsync(string url, CancellationToken token)
+{
+    using (var client = new HttpClient())
+    using (var response = await client.GetAsync(url, token))
+    {
+        var content = await response.Content.ReadAsStringAsync();
+        // do something
+    }
+}
+
+await DownloadFileAsync(url, token);
+```
+
+3. 在使用Parallel.ForEach方法时，可以使用CancellationToken来取消并行操作，如下所示：
+
+```
+CancellationTokenSource cts = new CancellationTokenSource();
+CancellationToken token = cts.Token;
+
+Parallel.ForEach(list, new ParallelOptions { CancellationToken = token }, item =>
+{
+    // do something
+});
 ```
 
 ## WPF

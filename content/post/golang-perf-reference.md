@@ -13,6 +13,7 @@ draft: false
 + https://github.com/dgryski/go-perfbook
 + https://github.com/DataDog/go-profiler-notes
 + https://github.com/bobstrecansky/HighPerformanceWithGo/
++ https://github.com/caibirdme/hand-to-hand-optimize-go
 
 ## Go package
 

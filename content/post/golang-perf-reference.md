@@ -24,6 +24,8 @@ draft: false
 
 + [官方博客 Profiling Go Programs](https://go.dev/blog/pprof)
 
++ https://github.com/golang/go/wiki/Performance
+
 + https://sumercip.com/posts/inside-the-go-cpu-profiler/
 
 + How to Write Benchmarks in Go : https://dave.cheney.net/2013/06/30/how-to-write-benchmarks-in-go

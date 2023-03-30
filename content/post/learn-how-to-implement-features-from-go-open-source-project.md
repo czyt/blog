@@ -175,7 +175,242 @@ func (set *HashSet) ToList() []string {
 
 ```
 
+### *Queue*
 
+摘自 Google https://github.com/ServiceWeaver/weaver
+
+```go
+package queue
+
+import (
+	"context"
+	"sync"
+
+	"github.com/ServiceWeaver/weaver/internal/cond"
+)
+
+// Queue is a thread-safe queue.
+//
+// Unlike a Go channel, Queue doesn't have any constraints on how many
+// elements can be in the queue.
+type Queue[T any] struct {
+	mu    sync.Mutex
+	elems []T
+	wait  *cond.Cond
+}
+
+// Push places elem at the back of the queue.
+func (q *Queue[T]) Push(elem T) {
+	q.mu.Lock()
+	defer q.mu.Unlock()
+	q.init()
+	q.elems = append(q.elems, elem)
+	q.wait.Signal()
+}
+
+// Pop removes the element from the front of the queue and returns it.
+// It blocks if the queue is empty.
+// It returns an error if the passed-in context is canceled.
+func (q *Queue[T]) Pop(ctx context.Context) (elem T, err error) {
+	if err = ctx.Err(); err != nil {
+		return
+	}
+	q.mu.Lock()
+	defer q.mu.Unlock()
+	q.init()
+	for len(q.elems) == 0 {
+		if err = q.wait.Wait(ctx); err != nil {
+			return
+		}
+	}
+	elem = q.elems[0]
+	q.elems = q.elems[1:]
+	return
+}
+
+// init initializes the queue.
+//
+// REQUIRES: q.mu is held
+func (q *Queue[T]) init() {
+	if q.wait == nil {
+		q.wait = cond.NewCond(&q.mu)
+	}
+}
+```
+
+### Cond
+
+> // *# Implementation Overview*
+>
+> // *When a goroutine calls cond.Wait(ctx), Wait creates a channel and appends it*
+>
+> // *to a queue of waiting channels inside of cond. It then performs a select on*
+>
+> // *ctx.Done and the newly minted channel. Signal pops the first waiting channel*
+>
+> // *and closes it. Broadcast pops and closes every waiting channel.*
+>
+> 
+>
+> // *Cond is a context-aware version of a sync.Cond. Like a sync.Cond, a Cond*
+>
+> // *must not be copied after first use.*
+来源同上
+```go
+type Cond struct {
+	L sync.Locker
+
+	// Note that we need our own mutex instead of using L because Signal and
+	// Broadcast can be called without holding L.
+	m       sync.Mutex
+	waiters []chan struct{}
+}
+
+// NewCond returns a new Cond with Locker l.
+func NewCond(l sync.Locker) *Cond {
+	return &Cond{L: l}
+}
+
+// Broadcast is identical to sync.Cond.Broadcast.
+func (c *Cond) Broadcast() {
+	c.m.Lock()
+	defer c.m.Unlock()
+	for _, wait := range c.waiters {
+		close(wait)
+	}
+	c.waiters = nil
+}
+
+// Signal is identical to sync.Cond.Signal.
+func (c *Cond) Signal() {
+	c.m.Lock()
+	defer c.m.Unlock()
+	if len(c.waiters) == 0 {
+		return
+	}
+	wait := c.waiters[0]
+	c.waiters = c.waiters[1:]
+	close(wait)
+}
+
+// Wait behaves identically to sync.Cond.Wait, except that it respects the
+// provided context. Specifically, if the context is cancelled, c.L is
+// reacquired and ctx.Err() is returned. Example usage:
+//
+//	for !condition() {
+//	    if err := cond.Wait(ctx); err != nil {
+//	        // The context was cancelled. cond.L is locked at this point.
+//	        return err
+//	    }
+//	    // Wait returned normally. cond.L is still locked at this point.
+//	}
+func (c *Cond) Wait(ctx context.Context) error {
+	wait := make(chan struct{})
+	c.m.Lock()
+	c.waiters = append(c.waiters, wait)
+	c.m.Unlock()
+
+	c.L.Unlock()
+	var err error
+	select {
+	case <-ctx.Done():
+		err = ctx.Err()
+	case <-wait:
+	}
+	c.L.Lock()
+	return err
+}
+
+```
+### Heap
+来源同上
+```go
+package heap
+
+import "container/heap"
+
+// Heap is a generic min-heap. Modifying an element while it is on the heap
+// invalidates the heap.
+type Heap[T any] struct {
+	// Heap wraps the heap package in the standard library, making it more
+	// ergonomic. For example, heap.Pop can panic when called on an empty heap,
+	// whereas Heap.Pop returns a false ok value when called on an empty heap.
+	// Conversely, Heap is slower than the heap package in the standard
+	// library, so prefer the standard library package if you need good
+	// performance.
+	h *sliceheap[T]
+}
+
+// New returns a new empty heap, with elements sorted using the provided
+// comparator function.
+func New[T any](less func(x, y T) bool) *Heap[T] {
+	h := &sliceheap[T]{less: less}
+	heap.Init(h)
+	return &Heap[T]{h: h}
+}
+
+// Len returns the length of the heap.
+func (h *Heap[T]) Len() int {
+	return h.h.Len()
+}
+
+// Push pushes an element onto the heap.
+func (h *Heap[T]) Push(val T) {
+	heap.Push(h.h, val)
+}
+
+// Peek returns the least element from the heap, if the heap is non-empty.
+// Unlike Pop, Peek does not modify the heap.
+func (h *Heap[T]) Peek() (val T, ok bool) {
+	if h.h.Len() == 0 {
+		return val, false
+	}
+	return h.h.xs[0], true
+}
+
+// Pop pops the least element from the heap, if the heap is non-empty.
+func (h *Heap[T]) Pop() (val T, ok bool) {
+	if h.h.Len() == 0 {
+		return val, false
+	}
+	return heap.Pop(h.h).(T), true
+}
+
+// sliceheap is an array-backed heap that implements the heap.Interface
+// interface, allowing us to call heap operations on it.
+type sliceheap[T any] struct {
+	less func(x, y T) bool // orders xs
+	xs   []T               // the heap
+}
+
+// Len implements the heap.Interface interface.
+func (h *sliceheap[T]) Len() int {
+	return len(h.xs)
+}
+
+// Less implements the heap.Interface interface.
+func (h *sliceheap[T]) Less(i, j int) bool {
+	return h.less(h.xs[i], h.xs[j])
+}
+
+// Swap implements the heap.Interface interface.
+func (h *sliceheap[T]) Swap(i, j int) {
+	h.xs[i], h.xs[j] = h.xs[j], h.xs[i]
+}
+
+// Push implements the heap.Interface interface.
+func (h *sliceheap[T]) Push(x interface{}) {
+	h.xs = append(h.xs, x.(T))
+}
+
+// Pop implements the heap.Interface interface.
+func (h *sliceheap[T]) Pop() interface{} {
+	x := h.xs[len(h.xs)-1]
+	h.xs = h.xs[:len(h.xs)-1]
+	return x
+}
+
+```
 
 ## 日志
 

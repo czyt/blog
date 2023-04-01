@@ -21,6 +21,7 @@ draft: false
 - [CGO编程（Go语言高级编程）](https://chai2010.cn/advanced-go-programming-book/ch2-cgo/index.html)
 - https://stackoverflow.com/questions/14581063/golang-cgo-converting-union-field-to-go-type
 - https://sunzenshen.github.io/tutorials/2015/05/09/cgotchas-intro.html
+- https://totallygamerjet.hashnode.dev/the-smallest-go-binary-5kb
 ## 代码片段
 [Convert 'C' array to golang slice](https://gist.github.com/nasitra/98bb59421be49a518c4a)
 ```go

@@ -6,7 +6,7 @@ draft: false
 ---
 ## 在线文档
 + https://blog.fudenglong.site/Programming-Rust/
-+ https://github.com/jetbrains-academy/rustlings-course
-+ https://microsoft.github.io/rust-for-dotnet-devs
++ [jetbrains出品的rust教程](https://github.com/jetbrains-academy/rustlings-course)
++ [微软出品：写给.net开发人员的Rust教程](https://microsoft.github.io/rust-for-dotnet-devs/latest/)
 + https://github.com/google/comprehensive-rust
 + https://cheats.rs/

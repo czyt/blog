@@ -383,6 +383,8 @@ ibus-daemon -d -x
 [四叶草输入法](https://github.com/fkxxyz/rime-cloverpinyin) `yay -S rime-cloverpinyin` 
 参考 https://wiki.archlinux.org/index.php/Fcitx
 
+雾凇拼音 https://github.com/iDvel/rime-ice
+
 ## 媒体软件
 
 网易云音乐 安装 `yay -S netease-cloud-music` 

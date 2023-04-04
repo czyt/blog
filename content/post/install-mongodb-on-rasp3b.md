@@ -120,10 +120,12 @@ draft: false
       use admin;
       db.changeUserPassword("czyt", "dbpassword");
       ```
-      
+     > 最新的MongoDB4.4版本已经不能在树莓派3b上安装，最后可安装的版本为4.4.18。可以下载版本的[存档](https://aur.archlinux.org/cgit/aur.git/snapshot/aur-754d0709ee78271915f24163cb914aca2f27d758.tar.gz)，解压后`makepkg -si`安装即可。
+   
+   
       ##  参考连接
-      
+   
       - https://dba.stackexchange.com/questions/283843/create-user-for-all-databases-in-mongodb
       - https://www.guru99.com/mongodb-create-user.html
-      
+   
       

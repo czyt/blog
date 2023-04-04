@@ -1,7 +1,7 @@
 ---
 title: "Rasp3b 安装MongoDB"
 date: 2022-03-23
-tags: ["mongo", "Arch", "manjaro"]
+tags: ["mongoDB", "Arch", "manjaro"]
 draft: false
 ---
 

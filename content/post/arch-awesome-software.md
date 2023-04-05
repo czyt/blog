@@ -135,6 +135,25 @@ mattermost 安装 `yay -S mattermost-desktop`
 
 slack 安装 `yay -S slack-desktop` 
 
+Discord  安装 `yay -S discord`
+
+>### Discord强制要求更新
+>
+>虽然discord在linux下表现很棒，但是强制更新这个确实有点恶心。有时候Manjaro的仓库里头还没有更新discord版本，但是discord客户端不更新就不让用了。好在客户端本身并不是真的不让登录，只是简单的检测了下版本号，所以应该知道怎么解决了吧。
+>
+>首先找到discord的路径，如下所示
+>
+>```
+>$ ls -al `which discord`
+>lrwxrwxrwx 1 root root 20 Apr 21 09:58 /usr/bin/discord -> /opt/discord/Discord
+>```
+>
+>然后在discord文件夹找到`./resources/build_info.json`，修改里头的版本号即可。
+>
+>参考文章：[Discord won’t open on Linux when an update is available](https://support.discord.com/hc/en-us/community/posts/360057789311-Discord-won-t-open-on-Linux-when-an-update-is-available)
+
+Telegram `yay -S telegram-desktop`
+
 ### 可自建的聊天软件
 
 mattermost 安装 `yay -S mattermost` [参阅](https://wiki.archlinux.org/title/Mattermost)
@@ -397,6 +416,8 @@ OBS推流工具 `yay -S obs-studio`
 
 bilibili `yay -S bilibili-bin`
 
+smPlayer `yay -S smplayer`
+
 ## 美化
 
 ### docky 安装
@@ -613,6 +634,8 @@ flutter 安装 `yay -S flutter`
 
 [gitui](https://github.com/extrawurst/gitui) `yay -S gitui`
 
+github Desktop `yay -S github-desktop-bin`
+
 代码生成图片[silicon](https://github.com/Aloxaf/silicon) `yay -S --needed pkgconf freetype2 fontconfig libxcb xclip silicon `
 
 redis管理工具 `yay -S redis-desktop-manager` 
@@ -634,6 +657,8 @@ c/c++开发  安装 `yay -S make cmake gdb gcc`
 goland 安装 `yay -S goland goland-jre`
 
 uinityHub 安装 `yay -S unityhub`
+
+Android Studio 安装 `yay -S android-studio`
 
 [commitizen-go](https://github.com/lintingzhen/commitizen-go) 安装 `yay -S commitizen-go `  相似的程序[gitcz](https://github.com/xiaoqidun/gitcz)
 

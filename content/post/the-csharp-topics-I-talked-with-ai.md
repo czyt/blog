@@ -172,5 +172,28 @@ Parallel.ForEach(list, new ParallelOptions { CancellationToken = token }, item =
 });
 ```
 
-## WPF
+## 其他
+
+### 网络
+
+#### 在多网卡情况下，如何获取上网卡IP
+```csharp
+var networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+// 获取当前活动网卡
+var activeInterface = networkInterfaces.FirstOrDefault(n =>
+n.OperationalStatus == OperationalStatus.Up &&
+(
+    n.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 ||
+    n.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+);
+
+// 获取活动网卡属性
+var ipProperties = activeInterface.GetIPProperties();
+
+// 获取活动网卡的Ip
+Console.WriteLine(ipProperties.UnicastAddresses.FirstOrDefault(x => x.Address.AddressFamily == AddressFamily.InterNetwork)?.Address);
+```
+
+
 

@@ -13,3 +13,6 @@ draft: false
 ## 一些文档
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
+
+### MongoDB
++ https://www.freecodecamp.org/news/mongodb-in-rust/

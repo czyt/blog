@@ -18,3 +18,4 @@ draft: false
 + https://www.freecodecamp.org/news/mongodb-in-rust/
 + https://medium.com/geekculture/async-rust-with-tokio-and-mongodb-ae75594c65b8
 + https://betterprogramming.pub/build-an-api-to-count-github-profile-views-with-rust-actix-and-mongodb-5a6532b6d2eb
++ https://auth0.com/blog/build-an-api-in-rust-with-jwt-authentication-using-nickelrs/

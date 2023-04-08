@@ -330,7 +330,7 @@ export @=fcitx
 
 如果你使用的是较新版本的GNOME，使用 Wayland 显示管理器，则请在/etc/environment中加入
 
-```
+```bash
 GTK_IM_MODULE=fcitx 
 QT_IM_MODULE=fcitx 
 @=fcitx
@@ -338,9 +338,9 @@ QT_IM_MODULE=fcitx
 
 安装相关字体fcitx5
 
-```
+```bash
 yay -S wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-code-pro-fonts  adobe-source-han-sans-cn-fonts ttf-monaco noto-fonts-emoji ttf-fira-code 
-ttf-ms-fonts ttf-sarasa-gothic nerd-fonts-complete
+ttf-ms-fonts ttf-sarasa-gothic nerd-fonts-complete noto-fonts-cjk  noto-fonts-sc
 ```
 
 输入法有问题，需要重置，使用命令 `rm -r ~/.config/fcitx` 然后注销即可。

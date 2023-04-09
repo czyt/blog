@@ -245,6 +245,8 @@ libreoffice 安装  `yay -S libreoffice`
 
 flameshot 截图工具 安装 `yay -S flameshot` 
 
+kazam录屏软件 安装 `yay -S kazam `
+
 geogebra 几何绘图软件 `yay -S geogebra  `
 
 福昕pdf阅读器 `yay -S foxitreader` 

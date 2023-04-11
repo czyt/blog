@@ -186,7 +186,7 @@ sudo sed -i "s/PKGEXT='.pkg.tar.xz'/PKGEXT='.pkg.tar'/g" /etc/makepkg.conf
 
 ## 下载上传
 
-OneDive 安装 `yay -S onedrive` 或者 `yay -S onedrive-abraunegg`
+OneDive 安装 `yay -S onedrive` 或者 `yay -S onedrive-abraunegg` (GUI `yay -S onedrivegui-git `)
 
 百度云 安装 `yay -S baidunetdisk-bin` 或者 安装深度的版本 `yay -S deepin-baidu-pan`
 

@@ -71,8 +71,8 @@ googleAnalytics = ""
     weight = 6
     
 [[menu.main]]
-    url = "https://czyt.tech/aicode.html"
-    name = "🤖AICode"
+    url = "https://chatgpt.czyt.tech"
+    name = "🤖Chatgpt"
     weight = 7
 [[menu.main]]
     url = "/links/"

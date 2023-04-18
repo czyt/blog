@@ -9,9 +9,9 @@ summary: "一些链接"
 ### Blog
 
 + [Dave Cheney](https://dave.cheney.net/)
-
 + [Preslav Rachev](https://preslav.me/)
 + [Adam Toth](https://medium.com/@adykaaa)
++ [Neenad Ingole](https://www.iamninad.com)
 
 ### Web
 

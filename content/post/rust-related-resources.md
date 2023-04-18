@@ -20,3 +20,8 @@ draft: false
 + https://medium.com/geekculture/async-rust-with-tokio-and-mongodb-ae75594c65b8
 + https://betterprogramming.pub/build-an-api-to-count-github-profile-views-with-rust-actix-and-mongodb-5a6532b6d2eb
 + https://auth0.com/blog/build-an-api-in-rust-with-jwt-authentication-using-nickelrs/
+
+### 跨语言调用
++ [Calling Rust code from Go - the Gambiarra way](https://dev.to/grubba/calling-rust-code-from-golang-the-gambiarra-way-13h6)
++ https://words.filippo.io/rustgo/
++ https://belski.me/blog/foreign-function-interface-in-rust-and-go/

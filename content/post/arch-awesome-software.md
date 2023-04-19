@@ -563,7 +563,7 @@ disabled = true
 
 ```
 
-
+还有一个[zinit](https://github.com/zdharma-continuum/zinit)也很不错。
 
 ### fish
 

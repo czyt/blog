@@ -11,6 +11,7 @@ draft: false
 + https://github.com/google/comprehensive-rust
 + [通过例子学rust](https://rustwiki.org/zh-CN/rust-by-example/)
 + https://cheats.rs/
++ [learn how to write macros in Rust](https://tfpk.github.io/macrokata/)
 ## 一些文档
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/

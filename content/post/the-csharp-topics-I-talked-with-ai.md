@@ -195,5 +195,68 @@ var ipProperties = activeInterface.GetIPProperties();
 Console.WriteLine(ipProperties.UnicastAddresses.FirstOrDefault(x => x.Address.AddressFamily == AddressFamily.InterNetwork)?.Address);
 ```
 
+### 系统
 
+#### c#检测系统是否空闲
+
+在 C# 中，可以使用 `System.Windows.Forms.Application.Idle` 事件来检测系统空闲状态。该事件将在消息队列中没有其它的消息时触发，例如鼠标和键盘输入等。可以在 `Application.Idle` 事件处理程序中记录最近一次用户输入的时间，并通过比较当前时间与最近一次输入时间的差值来判断当前系统是否空闲。以下是一个示例代码：
+
+```csharp
+using System;
+using System.Windows.Forms;
+using System.Diagnostics;
+
+public static void CheckIfSystemIsIdle()
+{
+    TimeSpan idleThreshold = new TimeSpan(0, 0, 5);  // 系统空闲阈值为 5 秒钟
+    DateTime lastInputTime = DateTime.Now;
+
+    Application.Idle += (sender, e) =>
+    {
+        // 计算距离上次用户输入的时间
+        TimeSpan idleTime = DateTime.Now - lastInputTime;
+
+        // 如果系统空闲时间超过指定的阈值，则做相应的处理
+        if (idleTime >= idleThreshold)
+        {
+            Console.WriteLine("System is idle.");
+            // 这里可以编写相应的处理逻辑
+        }
+    };
+
+    // 在初始化时记录当前时间作为最近一次用户输入的时间
+    lastInputTime = DateTime.Now - TimeSpan.FromMilliseconds(GetLastInputTime());
+}
+
+// 获取最近一次输入的时间（单位：毫秒）
+public static uint GetLastInputTime()
+{
+    uint idleTime = 0;
+    NativeMethods.LASTINPUTINFO lastInputInfo = new NativeMethods.LASTINPUTINFO();
+    lastInputInfo.cbSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf(lastInputInfo);
+    lastInputInfo.dwTime = 0;
+
+    if (NativeMethods.GetLastInputInfo(ref lastInputInfo))
+    {
+        uint lastInputTime = lastInputInfo.dwTime;
+        idleTime = (uint)Environment.TickCount - lastInputTime;
+    }
+
+    return idleTime;
+}
+
+internal class NativeMethods
+{
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    public static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+
+    public struct LASTINPUTINFO
+    {
+        public uint cbSize;
+        public uint dwTime;
+    }
+}
+```
+
+该示例代码定义了一个系统空闲阈值变量 `idleThreshold`，然后在 `Application.Idle` 事件处理程序中计算距离上次用户输入的时间。如果系统空闲时间超过指定的阈值，则触发相应的处理逻辑，例如在控制台打印一条消息。同时，为了获取最近一次用户输入的时间，示例代码中使用了 `GetLastInputTime()` 函数来获取最近一次输入时间，该函数使用了 Win32 API `GetLastInputInfo()`。
 

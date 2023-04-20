@@ -42,6 +42,12 @@ sudo pacman -Syy
 sudo pacman -S archlinux-keyring archlinuxcn-keyring
 ```
 
+如何证书有问题，可以使用下面的命令进行修复,参考[官方wiki](https://wiki.archlinux.org/title/Pacman/Package_signing)
+
+```bash
+sudo pacman-key --init && sudo pacman-key --populate
+```
+
 因为本文的软件使用yay进行安装，故需要使用命令进行安装，命令为  ` sudo pacman -S yay`
 设置yay的mirror
 

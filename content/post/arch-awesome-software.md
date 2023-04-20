@@ -235,6 +235,8 @@ moose 支持边下边播的BT工具 `yay -S moose `
 
 [看雪安全接入](https://ksa.kanxue.com)ksa 安装 `yay -S ksa` 
 
+Android屏幕共享[Scrcpy](https://github.com/Genymobile/scrcpy) 安装 `yay -S scrcpy`
+
 [tailscale](https://tailscale.com) 安装 `yay -S tailscale` 
 
 [达芬奇视频剪辑](http://www.blackmagicdesign.com/products/davinciresolve/) 安装 `yay -S davinci-resolve` 

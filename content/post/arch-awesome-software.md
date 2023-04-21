@@ -889,10 +889,12 @@ thinkpad 充电阀值软件 `yay -S tlp tp_smapi acpi_call  threshy threshy-gui`
 - GDM [https://wiki.archlinux.org/index.php/GDM](https://wiki.archlinux.org/index.php/GDM)
 - 强制登陆界面在主显示器上显示 [https://askubuntu.com/questions/11738/force-gdm-login-screen-to-the-primary-monitor](https://askubuntu.com/questions/11738/force-gdm-login-screen-to-the-primary-monitor)
 - 指纹识别 [https://wiki.archlinux.org/index.php/Fprint](https://wiki.archlinux.org/index.php/Fprint)
+- [Fix Intel CPU Throttling on Linux](https://github.com/erpalma/throttled)
 
 ## 网卡
 
 8811cu `yay -S rtl8821cu-dkms-git `
+
 
  参考[链接](https://wiki.archlinux.org/index.php/Network_configuration/Wireless#rtl8811cu/rtl8821cu)
 

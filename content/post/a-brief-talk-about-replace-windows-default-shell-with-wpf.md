@@ -77,4 +77,5 @@ Xp时代提供的是通过注册表来自定义shell
 + [如何替换Windows的Shell](https://blog.csdn.net/a379039233/article/details/47443555?spm=a2c6h.12873639.article-detail.6.a60e2fe43iNVEM)
 + [How to run an application as shell replacement on Windows 10 Enterprise](https://stackoverflow.com/questions/33364908/how-to-run-an-application-as-shell-replacement-on-windows-10-enterprise)
 + https://github.com/xoblite/xoblite-shell
++ https://serverfault.com/questions/762717/windows-10-kiosk-modus-with-custom-shell
 

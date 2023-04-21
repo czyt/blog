@@ -453,7 +453,10 @@ KDE
 
 KDE whitesur主题 安装 `yay -S whitesur-kde-theme-git`
 
-XFCE whitesur主题  https://github.com/vinceliuice/WhiteSur-gtk-theme
+XFCE whitesur主题 
+
++ https://github.com/vinceliuice/WhiteSur-gtk-theme
++ https://github.com/paullinuxthemer/McOS-XFCE-Edition
 
 mcmojave-circle-icon-theme-git 图标主题 `yay -S mcmojave-circle-icon-theme-git`
 

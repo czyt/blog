@@ -955,3 +955,4 @@ sudo pacman-key --populate archlinuxcn
 - [How to Flush DNS Cache on Linux](https://www.bitslovers.com/linux-how-to-flush-dns/)
 - [Manjaro 字体调优](https://wiki.manjaro.org/index.php/Improve_Font_Rendering)
 - [Jetbrains License Server](https://github.com/Nasller/LicenseServer)
+- [xps13(9370) Linux之路](https://github.com/kevinhwang91/xps-13-conf)

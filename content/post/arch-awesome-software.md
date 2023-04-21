@@ -192,6 +192,8 @@ sudo sed -i "s/PKGEXT='.pkg.tar.xz'/PKGEXT='.pkg.tar'/g" /etc/makepkg.conf
 
 ## 下载上传
 
+MegaSync 安装 `yay -S megasync-bin`
+
 115网盘 安装 `yay -S 115pc`
 
 天翼云盘 安装 `yay -S cloudpan189-go`

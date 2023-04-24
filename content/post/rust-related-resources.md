@@ -26,3 +26,4 @@ draft: false
 + [Calling Rust code from Go - the Gambiarra way](https://dev.to/grubba/calling-rust-code-from-golang-the-gambiarra-way-13h6)
 + https://words.filippo.io/rustgo/
 + https://belski.me/blog/foreign-function-interface-in-rust-and-go/
++ [Calling Rust from C#](https://dev.to/living_syn/calling-rust-from-c-6hk)

@@ -13,6 +13,8 @@ draft: false
 + https://cheats.rs/
 + [learn how to write macros in Rust](https://tfpk.github.io/macrokata/)
 + [Operating System development tutorials in Rust on the Raspberry Pi](https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials)
++ [Rust语言实战](https://zh.practice.rs)
++ [inside rust std library](https://github.com/Warrenren/inside-rust-std-library)
 ## 一些文档
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/

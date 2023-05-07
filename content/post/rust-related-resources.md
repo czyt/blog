@@ -27,6 +27,21 @@ draft: false
 
 ### 跨语言调用
 + [Calling Rust code from Go - the Gambiarra way](https://dev.to/grubba/calling-rust-code-from-golang-the-gambiarra-way-13h6)
+
 + https://words.filippo.io/rustgo/
+
 + https://belski.me/blog/foreign-function-interface-in-rust-and-go/
+
 + [Calling Rust from C#](https://dev.to/living_syn/calling-rust-from-c-6hk)
+
+### 视频
++ 杨旭 Rust编程语言入门教程
+
+{{< bilibili BV1hp4y1k7SV >}}  
+
++ 杨旭 Rust 编程语言中级教程
+
+ {{< bilibili BV1TF411P74m >}}  
+
+ + 杨旭Rust Web 全栈开发教程
+{{< bilibili BV1RP4y1G7KF >}}  

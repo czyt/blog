@@ -15,6 +15,8 @@ draft: false
 + [Operating System development tutorials in Rust on the Raspberry Pi](https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials)
 + [Rust语言实战](https://zh.practice.rs)
 + [inside rust std library](https://github.com/Warrenren/inside-rust-std-library)
++ https://learning-rust.github.io
++ https://github.com/CleanCut/ultimate_rust_crash_course
 ## 一些文档
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/

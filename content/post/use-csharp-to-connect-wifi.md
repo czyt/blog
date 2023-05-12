@@ -30,40 +30,66 @@ private List<AvailableNetworkPack> GetAvaliableNetworks()
 >应该支持这些类型**open**, **WEP** and **WPA-PSK**的网络
 
 ```csharp
-private string CreateProfile(string ssid, string password)
-{
-    string hex = CreateHexSSIDName(ssid);
+private static string CreateSecurityWifiProfile(string ssid, string password)
+        {
+            string hex = CreateHexSSIDName(ssid);
 
-    return string.Format(@"<?xml version=""1.0""?>
-    <WLANProfile xmlns=""http://www.microsoft.com/networking/WLAN/profile/v1"">
-        <name>{0}</name>
-        <SSIDConfig>
-            <SSID>
-                <hex>{2}</hex>
+            return string.Format(@"<?xml version=""1.0""?>
+            <WLANProfile xmlns=""http://www.microsoft.com/networking/WLAN/profile/v1"">
                 <name>{0}</name>
-            </SSID>
-        </SSIDConfig>
-        <connectionType>ESS</connectionType>
-        <connectionMode>auto</connectionMode>
-        <MSM>
-            <security>
+                <SSIDConfig>
+                    <SSID>
+                        <hex>{2}</hex>
+                        <name>{0}</name>
+                    </SSID>
+                </SSIDConfig>
+                <connectionType>ESS</connectionType>
+                <connectionMode>auto</connectionMode>
+                <MSM>
+                    <security>
+                        <authEncryption>
+                            <authentication>WPA2PSK</authentication>
+                            <encryption>AES</encryption>
+                            <useOneX>false</useOneX>
+                        </authEncryption>
+                        <sharedKey>
+                            <keyType>passPhrase</keyType>
+                            <protected>false</protected>
+                            <keyMaterial>{1}</keyMaterial>
+                        </sharedKey>
+                    </security>
+                </MSM>
+                <MacRandomization xmlns=""http://www.microsoft.com/networking/WLAN/profile/v3"">
+                    <enableRandomization>false</enableRandomization>
+                </MacRandomization>
+            </WLANProfile>", ssid, password, hex);
+        }
+
+        private static string CreateOpenWifiProfile(string ssid)
+        {
+            string hex = CreateHexSSIDName(ssid);
+            return string.Format(@"<?xml version=""1.0""?>
+            <WLANProfile xmlns=""http://www.microsoft.com/networking/WLAN/profile/v1"">
+            <name>{0}</name>
+            <SSIDConfig>
+              <SSID>
+                <hex>{1}</hex>
+                <name>{0}</name>
+              </SSID>
+            </SSIDConfig>
+            <connectionType>ESS</connectionType>
+            <connectionMode>auto</connectionMode>
+            <MSM>
+              <security>
                 <authEncryption>
-                    <authentication>WPA2PSK</authentication>
-                    <encryption>AES</encryption>
-                    <useOneX>false</useOneX>
+                  <authentication>open</authentication>
+                  <encryption>none</encryption>
+                  <useOneX>false</useOneX>
                 </authEncryption>
-                <sharedKey>
-                    <keyType>passPhrase</keyType>
-                    <protected>false</protected>
-                    <keyMaterial>{1}</keyMaterial>
-                </sharedKey>
-            </security>
-        </MSM>
-        <MacRandomization xmlns=""http://www.microsoft.com/networking/WLAN/profile/v3"">
-            <enableRandomization>false</enableRandomization>
-        </MacRandomization>
-    </WLANProfile>", ssid, password, hex);
-}
+              </security>
+            </MSM>
+            </WLANProfile>", ssid, hex);
+        }
 private static string CreateHexSSIDName(string ssid)
 {
     byte[] bytes = System.Text.Encoding.UTF8.GetBytes(ssid);

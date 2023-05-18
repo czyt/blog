@@ -648,6 +648,8 @@ flutter 安装 `yay -S flutter`
 
 [github520](https://github.com/521xueweihan/GitHub520) `sed -i "/# GitHub520 Host Start/Q" /etc/hosts && curl https://raw.hellogithub.com/hosts >> /etc/hosts` (刷新缓存 `systemctl restart nscd`)
 
+docker-image-extract  https://github.com/jjlin/docker-image-extract
+
 [lapce](https://github.com/lapce/lapce) `yay -S lapce`
 
 [lazygit](https://github.com/jesseduffield/lazygit) `yay -S lazygit`

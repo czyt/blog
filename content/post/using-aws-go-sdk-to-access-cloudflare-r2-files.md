@@ -1,13 +1,13 @@
 ---
 title: "使用aws go-sdk访问cloudflare R2文件"
-date: 2022-05-21
+date: 2023-05-21
 tags: ["golang", "cloudflare", "aws"]
 draft: false
 ---
 
 ## 准备
 
-需要相应的R2 `ak` `sk` 等信息
+需要准备Cloudflare的`accountId`,相应的R2 `ak` `sk` 和`bucketName`等信息.
 
 ```go
 var (

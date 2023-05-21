@@ -71,13 +71,9 @@ googleAnalytics = ""
     weight = 6
     
 [[menu.main]]
-    url = "https://chatgpt.czyt.tech"
-    name = "🤖Chatgpt"
-    weight = 7
-[[menu.main]]
     url = "/links/"
     name = "🔑Links"
-    weight = 8
+    weight = 7
     
 # Social icons to be shown on the right-hand side of the navigation bar.
 # The "name" field should match the name of the icon in Font Awesome.

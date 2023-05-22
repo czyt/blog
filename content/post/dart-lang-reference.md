@@ -213,8 +213,77 @@ set plainText(String text) {
 
 #### 构造函数
 
-TODO
+##### 默认构造函数
 
+```dart
+class User {
+  User();
+  User.Simple(int id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+ // User.Simple:this(0,"czyt");
+ // User({this.id=0,this.name="czyt"});
+  int id = 0;
+  String name = "";
+}
+```
+等价于下面的写法
+```dart
+class User {
+  User(this.id,this.name);
+  int id = 0;
+  String name = "";
+}
+```
+##### 可选和命名构造函数
+可选参数
+```dart
+User([this.name]);
+```
+可选命名参数
+```dart
+User({this.name});
+```
+必选参数
+```dart
+User({required this.name});
+```
+##### 常量构造函数
+常量构造函数可以使得构造出来的结果不可变。
+```dart
+class User {
+  final int _id ;
+  final String _name ;
+
+   const User({int id = 0, String name = "czyt"})
+      : _id = id,
+        _name = name;
+  const User.Simple():this();
+}
+
+void main() {
+  const u = User(id: 8888, name: "czyt");
+}
+```
+使用const的好处不仅仅在于不可变性，另外还体现在性能上。无论你调用多少次实例，只要参数是一样的，Dart只会创建一个实例，而不是创建很多的实例，这一模式在Flutter的Widget中广泛使用。
+##### 工厂构造函数
+```dart
+class User {
+  final int _id;
+  final String _name;
+
+  const User({int id = 0, String name = "czyt"})
+      : _id = id,
+        _name = name;
+  const User.Simple() : this();
+
+  factory User.Gopher(int id) {
+    return User(id:id,name: "gopher");
+  }
+}
+```
+在命名构造函数上使用工厂构造函数，可以避免对相应类的子类进行破坏性更改。参考 https://stackoverflow.com/a/66117859
 #### 静态成员
 
 TODO

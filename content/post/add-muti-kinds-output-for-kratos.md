@@ -17,9 +17,6 @@ Linux 需要创建一个符号链接
 ```bash
 ln -s `which grpc_csharp_plugin` /usr/bin/protoc-gen-grpc-csharp
 ```
-
-
-
 1. 修改Kratos项目的Make文件
 
 在api这个make任务中添加下面内容
@@ -28,7 +25,6 @@ ln -s `which grpc_csharp_plugin` /usr/bin/protoc-gen-grpc-csharp
          --csharp_out=./api/pipe/v1 \
          --grpc-csharp_out=./api/pipe/v1 \
 ```
-
 完整内容为
 
 ```makefile
@@ -73,7 +69,19 @@ ln -s /usr/sbin/protoc-gen-grpclib_python /usr/sbin/protoc-gen-grpc_python
 --python_out=./api \
 --grpc_python_out=./api \
 ```
-
+##  Dart
+1. 安装插件
+```bash
+dart pub global activate protoc_plugin
+```
+2. 将插件工具加入环境变量
+```bash
+export PATH="$PATH:$HOME/.pub-cache/bin"
+```
+3. 脚本添加`--dart_out=`选项
+```bash
+--dart_out=./api \
+```
 ## TypeScript 
 
 ### 纯typescript类

@@ -286,7 +286,34 @@ class User {
 在命名构造函数上使用工厂构造函数，可以避免对相应类的子类进行破坏性更改。参考 https://stackoverflow.com/a/66117859
 #### 静态成员
 
-TODO
+在字段或者方法前添加`static`关键字，将使字段或者方法属于类，而不是类的实例。
+
+```dart
+void main() {
+  gitter.clone("github.com/czyt/czyt");
+}
+
+class gitter {
+  static String repo = "";
+  static clone(String repoUrl) {
+    print("cloning $repoUrl to local dir");
+  }
+}
+```
+
+静态成员的特性可以很方便地实现`Singleton`模式。以创建一个数据库连接对象为例：
+
+```dart
+class DB {
+  String connectStr = "";
+  String user = "";
+  String password = "";
+  DB._();
+  static final DB instance = DB._();
+
+  factory DB()=>instance;
+}
+```
 
 ## 高级话题
 

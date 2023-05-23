@@ -345,7 +345,7 @@ void main() {
   // anonymous
 }
 ```
-?. : Null-aware access operator.如果左侧值不为空就调用
+`?. ` Null-aware access operator.如果左侧值不为空就调用
 
 ```dart
 void main() {
@@ -353,7 +353,7 @@ void main() {
   print(number?.isEven);
 }
 ```
-! : Null assertion operator.在Dart不能确定值是否为null但是使用者可以确信不为null的情况下，使用该操作符。
+`! ` Null assertion operator.在Dart不能确定值是否为null但是使用者可以确信不为null的情况下，使用该操作符。
 
 ```dart
 bool? isBeautiful(String? item) {
@@ -367,7 +367,7 @@ bool? isBeautiful(String? item) {
 bool flowerIsBeautiful = isBeautiful('flower')!;
 ```
 
-?.. : Null-aware cascade operator.
+`?.. ` Null-aware cascade operator.
 
 ```dart
 void main() {
@@ -383,7 +383,22 @@ class User {
 }
 ```
 
-?[] : Null-aware index operator.
+`?[]`  Null-aware index operator.控制索引操作符
+
+```dart
+List<String>? myDesserts = ['cake', 'pie'];
+myDesserts = null;
+String? dessertToday = myDesserts?[1];
+```
+
+`…?` Null‐Aware Spread Operator 如果列表本身是空的，它将省略列表。
+
+```dart
+List<String>? coffees;
+final hotDrinks = ['milk tea', ...?coffees];
+print(hotDrinks);
+// milk tea
+```
 
 除此之外，还有一个`late` 关键字，可以实现`lazy` 初始化的功能。使用`late`意味着Dart不会立即初始化这个变量。只有在你第一次使用它时，它才进行初始化，这就像变量的拖延症。
 
@@ -401,9 +416,125 @@ class User {
 
 ![image-20230523113555851](https://assets.czyt.tech/img/dart-list.png)
 
+下面的例子包含了常见的List操作
+
+```dart
+void main() {
+  var gophers = ["czyt", "chan", "rs"];
+  // 添加元素
+  gophers.add("rob");
+  // 遍历元素
+  gophers.forEach((element) {
+    print(element);
+  });
+  // 判断元素是否存在
+  print(gophers.contains("czyt"));
+  // 清空
+  gophers.clear();
+
+  List<int> scores = [1, 2, 3, 4];
+  // 插入9 作为列表的索引2元素
+  scores.insert(2, 9);
+  // 反转列表元素
+  scores.reversed.forEach((element) {
+    print(element);
+  });
+  print("before sort $scores");
+  scores.sort();
+  print("after sort $scores");
+}
+
+```
+
+在Dart中，可以使用`...`操作符来进行List的复制。在go语言中也有类似的用法。看下面的这个例子：
+
+```dart
+const pastries = ['cookies', 'croissants'];
+const candy = ['Junior Mints', 'Twizzlers', 'M&Ms'];
+ // 方式1
+final desserts = ['donuts'];
+desserts.addAll(pastries);
+desserts.addAll(candy);
+// 方式2
+const desserts1 = ['donuts', ...pastries, ...candy];
+```
+
+使用collection `if` 语句可以用来判断是否将某个值放入到数组中。比如，如果你有花生过敏症，你会想避免在糖果清单中加入某些含有花生酱添加到糖果列表中。可以用下面的代码来表达：
+
+```dart
+const peanutAllergy = true;
+const sensitiveCandy = [
+ 'Junior Mints',
+ 'Twizzlers',
+ if (!peanutAllergy) 'Reeses',
+];
+print(sensitiveCandy);
+```
+
+另外还有 collection`for `语句，它可以基于另外一个列表生成当前列表的元素：
+
+```dart
+const deserts = ['gobi', 'sahara', 'arctic'];
+var bigDeserts = [
+ 'ARABIAN',
+ for (var desert in deserts) desert.toUpperCase(),
+];
+print(bigDeserts);
+```
+空列表和可空值列表
+
+```dart
+List<String?>? drinks = ['milk', 'water', null, 'soda'];
+// 1
+for (String? drink in drinks) {
+ // 2
+ int letters = drink?.length ?? 0;
+ print(letters);
+}
+
+List<int?> nullableElements = [2, 4, null, 3, 7];
+```
+
+
+
 #### Set
 
 ![image-20230523114251830](https://assets.czyt.tech/img/dart-Set.png)
+
+下面是一些Set的常见操作：
+
+```dart
+void main() {
+  final Set<String> users = {"czyt", "rob"};
+  print(users);
+  // {czyt, rob}
+  // 添加元素，已经存在的会被忽略
+  users.add("czyt");
+  print(users);
+  // {czyt, rob}
+  // 移除指定对象
+  users.remove("czyt");
+  print(users);
+  // { rob}
+  // 检查Set是否存在对象
+  print(users.contains("rob"));
+  // true
+  // 添加多个元素
+  users.addAll(["lane", "bruce", "wayne"]);
+  print(users);
+
+// Set对象遍历 方式1
+  users.forEach((element) {
+    print("loop with method 1:current element is $element");
+  });
+// Set对象遍历 方式2
+  for (var element in users) {
+    print("loop with method 2:current element is $element");
+  }
+}
+```
+
+
 
 #### Map
 

@@ -1148,6 +1148,26 @@ void main(){
 }
 ```
 
+如果处理过程中出现异常，那么上面的代码，我们应该这样写：
+
+```dart
+import 'dart:async';
+void main(){
+  Future<int>.delayed(
+      Duration(seconds: 6),
+      () { return 100; },
+  ).then((value) {
+    print(value);
+  }).catchError(
+      (err) {
+        print('Caught $err');
+      },
+          test: (err) => err.runtimeType == String,
+  ).whenComplete(() { print("Process completed."); });
+  print('The main UI thread is waiting');
+}
+```
+
 
 
 

@@ -534,7 +534,20 @@ void main() {
 }
 ```
 
+对Set进行修改操作时，需要注意，一个Set的元素是可变的，如果将Set赋值给一个变量，这变量持有的并不是这个Set的Copy而是这个Set的引用，需要手动调用`toSet()`方法创建Set的副本：
 
+```dart
+void main() {
+  final Set<String> users = {"czyt", "rob"};
+  // correct way
+  var forkUser = users.toSet();
+  // wrong way
+  // var forkUser = users;
+  forkUser.clear();
+  print(forkUser);
+  print(users);
+}
+```
 
 #### Map
 

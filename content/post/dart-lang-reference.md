@@ -1110,9 +1110,43 @@ class Rectangle implements Shape {
 
 ### 异步编程
 
-TODO
+Dart是一种单线程编程语言，它使用`Future`这一特性来管理异步。每当我们打开任何Android设备，默认的进程开始。它在主UI线程上运行。这个主UI线程处理所有的核心活动，如点击按钮、所有类型的触摸屏活动等。尽管如此，这些并不是我们在安卓设备上做的唯一事情。我们可能还会进行一些其他操作，如检查邮件、下载文件、观看电影、玩耍等、下载文件，看电影，玩游戏等。
 
+   为了完成这些操作，Android允许并行处理、也就是多线程编程。它打开了一个application线程，并且在这里进行管理各种各样程序的操作。当这些操作在后台进行时，我们仍然需要我们的用户界面要有反应；为此，Android允许并行处理。这就是异步编程的出现的原因。
 
+![image-20230523222457311](https://assets.czyt.tech/img/dart-thread-model.png)
+
+一个例子
+
+```dart
+import 'dart:async';
+void main(){
+  Future checkVersion() async {
+    var version = await checkVersion();
+    // Do something with version
+    try {
+      return version;
+    } catch (e) {
+      // React to inability to look up the version
+      return e;
+    }
+  }
+  print(checkVersion());
+}
+```
+
+再看一个使用`Future delayed() `然后使用`then() `方法的例子：
+
+```dart
+import 'dart:async';
+void main(){
+  Future<int>.delayed(
+      Duration(seconds: 6),
+      () { return 200; },
+  ).then((value) { print(value); });
+  print('Waiting for a value for 6 seconds...');
+}
+```
 
 
 

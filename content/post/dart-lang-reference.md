@@ -553,9 +553,148 @@ void main() {
 
 ![image-20230523114343214](https://assets.czyt.tech/img/Dart-Map.png)
 
+下面是一些Map操作的例子：
+
+```dart
+void main() {
+  final Map<String, int> UserAges = {};
+  UserAges["czyt"] = 20;
+  print(UserAges);
+  // {czyt: 20}
+  UserAges["czyt"] = 18;
+  UserAges["john"] = 12;
+  print(UserAges);
+  // {czyt: 18, john: 12}
+  print(
+      "property: isEmpty=> ${UserAges.isEmpty} Length: ${UserAges.length} CheckKey: ${UserAges.containsKey("czyt")}");
+  // property: isEmpty=> false Length: 2
+  UserAges.remove("czyt");
+  print(UserAges);
+  // {john: 12}
+
+  UserAges["bill"] = 22;
+  UserAges["lancy"] = 42;
+  UserAges["bruce"] = 32;
+  // 遍历
+  for (var key in UserAges.keys) {
+    print(UserAges[key]);
+  }
+
+  for (var entry in UserAges.entries) {
+    print("entry: ${entry.key}: ${entry.value}");
+  }
+}
+
+```
+
+转换map为Json
+
+```dart
+import 'dart:convert';
+void main() {
+  final userMap = {
+    'id': 1234,
+    'name': 'John',
+    'emails': [
+      'john@example.com',
+      'jhagemann@example.com',
+    ],
+  };
+  var payload = jsonEncode(userMap);
+  print(payload);
+}
+```
+转换Json为Map
+```dart
+import 'dart:convert';
+
+void main() {
+  var payload =
+      '{"id":1234,"name":"John","emails":["john@example.com","jhagemann@example.com"]}';
+
+  dynamic user = jsonDecode(payload);
+  if (user is Map<String, dynamic>) {
+    print("you got a map:$user");
+  } else {
+    print("you did not get a map");
+  }
+}
+```
+
 #### Iterable
 
-Todo
+Dart中的迭代器是任何可以让你循环浏览其元素的集合。用编程术语来讲，它是一个实现了Iterable接口的类。 
+
+##### 迭代器转换为List
+
+```dart
+final myList = ['bread', 'cheese', 'milk'];
+print(myList);
+final reversedIterable = myList.reversed;
+print(reversedIterable);
+final reversedList = reversedIterable.toList();
+print(reversedList);
+```
+
+##### 创建简单的迭代器
+
+```dart
+final myIterable = Iterable();
+// Iterable<String> myIterable = ['red', 'blue', 'green'];
+```
+
+##### 访问元素
+
+```dart
+final thirdElement = myIterable.elementAt(2);
+print(thirdElement);
+    
+final firstElement = myIterable.first;
+final lastElement = myIterable.last;
+print(firstElement);
+print(lastElement);
+```
+
+##### 建立自己的迭代器
+
+```dart
+Iterable<int> hundredSquares() sync* {
+  for (int i = 1; i <= 100; i++) {
+    yield i * i;
+  }
+}
+```
+
+使用
+
+```dart
+final squares = hundredSquares();
+for (int square in squares) {
+  print(square);
+}
+```
+自定义自己的迭代器逻辑：
+```dart
+class SquaredIterator implements Iterator<int> {
+  int _index = 0;
+  // 1
+  @override
+  bool moveNext() {
+    _index++;
+    return _index <= 100;
+  }
+  // 2
+  @override
+  int get current => _index * _index;
+}
+```
+修改之前的代码：
+```dart
+class HundredSquares extends Iterable<int> {
+  @override
+  Iterator<int> get iterator => SquaredIterator();
+}
+```
 
 ## 高级话题
 

@@ -312,7 +312,7 @@ class DB {
 }
 ```
 静态变量在Dart中一直是懒惰的。即在使用时才会进行相关的初始化工作。
-#### 可空值
+### 可空值
 在dart中使用类型后加`?` 来表示一个可能为空的类型。实际上是类型和Null的并集。
 
 如`int?` `String?` `Float?` `Bool?`等.
@@ -412,7 +412,7 @@ class User {
   }
 }
 ```
-#### List
+### List
 
 ![image-20230523113555851](https://assets.czyt.tech/img/dart-list.png)
 
@@ -497,7 +497,7 @@ List<int?> nullableElements = [2, 4, null, 3, 7];
 
 
 
-#### Set
+### Set
 
 ![image-20230523114251830](https://assets.czyt.tech/img/dart-Set.png)
 
@@ -549,7 +549,7 @@ void main() {
 }
 ```
 
-#### Map
+### Map
 
 ![image-20230523114343214](https://assets.czyt.tech/img/Dart-Map.png)
 
@@ -621,11 +621,11 @@ void main() {
 }
 ```
 
-#### Iterable
+### Iterable
 
 Dart中的迭代器是任何可以让你循环浏览其元素的集合。用编程术语来讲，它是一个实现了Iterable接口的类。 
 
-##### 迭代器转换为List
+#### 迭代器转换为List
 
 ```dart
 final myList = ['bread', 'cheese', 'milk'];
@@ -636,14 +636,14 @@ final reversedList = reversedIterable.toList();
 print(reversedList);
 ```
 
-##### 创建简单的迭代器
+#### 创建简单的迭代器
 
 ```dart
 final myIterable = Iterable();
 // Iterable<String> myIterable = ['red', 'blue', 'green'];
 ```
 
-##### 访问元素
+#### 访问元素
 
 ```dart
 final thirdElement = myIterable.elementAt(2);
@@ -655,7 +655,7 @@ print(firstElement);
 print(lastElement);
 ```
 
-##### 建立自己的迭代器
+#### 建立自己的迭代器
 
 ```dart
 Iterable<int> hundredSquares() sync* {

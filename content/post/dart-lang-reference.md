@@ -285,9 +285,7 @@ class User {
 ```
 在命名构造函数上使用工厂构造函数，可以避免对相应类的子类进行破坏性更改。参考 https://stackoverflow.com/a/66117859
 #### 静态成员
-
 在字段或者方法前添加`static`关键字，将使字段或者方法属于类，而不是类的实例。
-
 ```dart
 void main() {
   gitter.clone("github.com/czyt/czyt");
@@ -300,7 +298,6 @@ class gitter {
   }
 }
 ```
-
 静态成员的特性可以很方便地实现`Singleton`模式。以创建一个数据库连接对象为例：
 
 ```dart
@@ -312,6 +309,92 @@ class DB {
   static final DB instance = DB._();
 
   factory DB()=>instance;
+}
+```
+静态变量在Dart中一直是懒惰的。即在使用时才会进行相关的初始化工作。
+#### 可空值
+在dart中使用类型后加`?` 来表示一个可能为空的类型。实际上是类型和Null的并集。
+
+如`int?` `String?` `Float?` `Bool?`等.
+```dart
+Float? height;
+Bool? married;
+```
+
+Dart还自带了一些空值操作符。
+
+`??` : If-null operator. 当左侧值为null时，使用右边值。跟c#里面的用法一样。
+
+```dart
+void main() {
+  String? username;
+  var displayUserName = username ?? "anonymous";
+  print(displayUserName);
+  // anonymous
+}
+```
+
+`??=` : Null-aware assignment operator.如果左侧值是null就赋值
+
+```dart
+void main() {
+  String? username;
+  username ??= "anonymous";
+  var displayUserName = username;
+  print(displayUserName);
+  // anonymous
+}
+```
+?. : Null-aware access operator.如果左侧值不为空就调用
+
+```dart
+void main() {
+  int? number;
+  print(number?.isEven);
+}
+```
+! : Null assertion operator.在Dart不能确定值是否为null但是使用者可以确信不为null的情况下，使用该操作符。
+
+```dart
+bool? isBeautiful(String? item) {
+  if (item == 'flower') {
+    return true;
+  } else if (item == 'garbage') {
+    return false;
+  }
+  return null;
+}
+bool flowerIsBeautiful = isBeautiful('flower')!;
+```
+
+?.. : Null-aware cascade operator.
+
+```dart
+void main() {
+  User? user;
+  user
+    ?..name = "czyt"
+    ..age = 18;
+}
+
+class User {
+  String? name;
+  int? age;
+}
+```
+
+?[] : Null-aware index operator.
+
+除此之外，还有一个`late` 关键字，可以实现`lazy` 初始化的功能。使用`late`意味着Dart不会立即初始化这个变量。只有在你第一次使用它时，它才进行初始化，这就像变量的拖延症。
+
+```dart
+class User {
+  User(this.name);
+  final String name;
+  late final int _secretNumber = _calculateSecret();
+  int _calculateSecret() {
+    return name.length + 42;
+  }
 }
 ```
 

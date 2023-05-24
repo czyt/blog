@@ -364,7 +364,7 @@ class DB {
 ### 可空值
 在dart中使用类型后加`?` 来表示一个可能为空的类型。实际上是类型和Null的并集。
 
-如`int?` `String?` `Float?` `Bool?`等.
+如`int?` `String?` `Float?` `Bool?` `double?`等.
 ```dart
 Float? height;
 Bool? married;

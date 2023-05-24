@@ -483,7 +483,93 @@ func (user *User) Saving() error {
 	)
 }
 ```
+## 语句监控
+在 Golang 中使用 MongoDB 驱动程序时，您可以使用 MongoDB 驱动程序提供的 `mongo.CommandMonitor `接口来输出查询执行的语句。通过实现这个接口，您可以接收 MongoDB 驱动程序发送的所有命令和查询，并输出它们的详细信息。
 
+以下是一个示例代码，演示如何在 MongoDB 驱动程序中使用 `mongo.CommandMonitor` 接口输出查询执行的语句：
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"time"
+
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"go.mongodb.org/mongo-driver/mongo/event"
+)
+
+type customCommandMonitor struct {}
+
+func (m *customCommandMonitor) Started(ctx context.Context, startedEvent *event.CommandStartedEvent) {
+    log.Printf("Started command: %v", startedEvent.Command)
+}
+
+func (m *customCommandMonitor) Succeeded(ctx context.Context, succeededEvent *event.CommandSucceededEvent) {
+    log.Printf("Succeeded command: %v", succeededEvent.Command)
+}
+
+func (m *customCommandMonitor) Failed(ctx context.Context, failedEvent *event.CommandFailedEvent) {
+    log.Printf("Failed command: %v, error: %v", failedEvent.Command, failedEvent.Failure)
+}
+
+func main() {
+	// 设置 MongoDB 连接参数
+	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
+
+	// 建立 MongoDB 连接
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	client, err := mongo.Connect(ctx, clientOptions)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// 设置 MongoDB 命令监视器
+	clientOptions.SetMonitor(&event.CommandMonitor{
+	    &customCommandMonitor{},
+	})
+
+	// 检查 MongoDB 连接是否正常
+	err = client.Ping(ctx, readpref.Primary())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// 建立 MongoDB 数据库和集合
+	collection := client.Database("testdb").Collection("testcollection")
+
+	// 执行查询操作
+	cursor, err := collection.Find(ctx, bson.M{})
+	if err != nil {
+	    log.Fatal(err)
+	}
+
+	// 遍历查询结果
+	defer cursor.Close(ctx)
+	for cursor.Next(ctx) {
+	    var result bson.M
+	    err := cursor.Decode(&result)
+	    if err != nil {
+	        log.Fatal(err)
+	    }
+	    fmt.Println(result)
+	}
+
+	// 关闭 MongoDB 连接
+	err = client.Disconnect(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+```
+在上面的示例代码中，我们定义了一个自定义的 customCommandMonitor 类型，并实现了 mongo.CommandMonitor 接口的三个方法。然后，我们将这个自定义的命令监视器设置为 MongoDB 驱动程序的监视器，以便接收并输出所有命令和查询的详细信息。
+
+在执行查询操作时，MongoDB 驱动程序将发送 find 命令到 MongoDB 服务器，并返回查询结果。通过这个自定义的命令监视器，我们可以输出 find 命令的详细信息，包括查询条件、返回字段等。
 ## 参考资料
 
 - 官方文档 [Quick Start: Golang & MongoDB - Data Aggregation Pipeline](https://www.mongodb.com/blog/post/quick-start-golang--mongodb--data-aggregation-pipeline)

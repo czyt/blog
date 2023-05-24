@@ -925,7 +925,7 @@ class Novice extends Musician { // Use Musician as a class
 
 ### 接口
 
-在Dart中，可以使用 `implements` 关键字来实现接口。接口本身是一个抽象类，不包含任何实现，只是定义了一组抽象方法和属性。实现接口的类必须实现接口中的所有方法和属性。
+在Dart中，可以使用 `implements` 关键字来实现接口。接口可以是一个抽象类，也可以是一个具体类，但是通常情况我们使用抽象类来进行接口定义。使用抽象类进行接口定义时，类中不包含任何实现，只是定义了一组抽象方法和属性。实现接口的类必须实现接口中的所有方法和属性。
 
 下面是一个简单的示例：
 
@@ -1022,7 +1022,27 @@ main(List<String> arguments){
 }
 ```
 
+需要注意的是，Dart 中的类可以实现多个接口，但只能继承一个类。因此，如果您需要定义多个接口，最好使用接口来定义它们，以便您可以在需要时实现多个接口。
 
+另外，Dart 2.12 之后，接口也可以包含默认实现方法，这使得接口的使用更加灵活。您可以使用 `extension` 关键字为接口添加默认实现方法。例如：
+
+```
+class MyInterface {
+  void doSomething();
+  int calculate(int a, int b);
+}
+extension MyInterfaceExtension on MyInterface {
+  void doSomething() {
+    print('Doing something');
+  }
+
+  int calculate(int a, int b) {
+    return a + b;
+  }
+}
+```
+
+这样，您就可以在需要时将 `MyInterface` 接口扩展到任何类中，并使用默认实现方法。
 
 在Dart中抽象类有如下特点：
 

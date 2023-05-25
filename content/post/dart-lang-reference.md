@@ -67,6 +67,8 @@ void main() {
 
 ### 函数
 
+Dart函数不支持重载，但是提供了可选命名参数和可选参数等方式。
+
 #### 可选参数
 
 ```dart
@@ -1130,6 +1132,8 @@ class Rectangle implements Shape {
 
 ### 异步编程
 
+#### Future async/await
+
 Dart是一种单线程编程语言，它使用`Future`这一特性来管理异步。每当我们打开任何Android设备，默认的进程开始。它在主UI线程上运行。这个主UI线程处理所有的核心活动，如点击按钮、所有类型的触摸屏活动等。尽管如此，这些并不是我们在安卓设备上做的唯一事情。我们可能还会进行一些其他操作，如检查邮件、下载文件、观看电影、玩耍等、下载文件，看电影，玩游戏等。
 
    为了完成这些操作，Android允许并行处理、也就是多线程编程。它打开了一个application线程，并且在这里进行管理各种各样程序的操作。当这些操作在后台进行时，我们仍然需要我们的用户界面要有反应；为此，Android允许并行处理。这就是异步编程的出现的原因。
@@ -1188,7 +1192,233 @@ void main(){
 }
 ```
 
+#### isolate
 
+Dart 中的 Isolates 是一种轻量级的并发机制，可以让你在单个 Dart 进程中同时执行多个任务，以避免阻塞主线程。每个 Isolate 都有自己的内存空间和消息队列，并且可以与其他 Isolate 通信。在 Dart 中，Isolates 之间的通信是通过消息传递来实现的，这样可以确保线程安全和数据共享。
 
+以下是一些常见的 Dart Isolates 的用法：
 
+##### 创建一个 Isolate
+你可以使用 Isolate.spawn() 方法来创建一个新的 Isolate，并指定要运行的函数。例如：
+
+```dart
+import 'dart:isolate';
+
+void main() async {
+  Isolate myIsolate = await Isolate.spawn(isolateFunction, 'Hello, Isolate!');
+}
+
+void isolateFunction(String message) {
+  print('Received message: $message');
+}
+```
+
+在上面的示例代码中，我们通过调用 Isolate.spawn() 方法来创建一个新的 Isolate，并将其绑定到 isolateFunction 函数上。我们还向 isolateFunction 函数传递了一个字符串参数 'Hello, Isolate!'。
+
+##### 与 Isolate 通信
+你可以使用 SendPort 和 ReceivePort 来实现 Isolate 之间的通信。在一个 Isolate 中，你可以使用 SendPort 来发送消息，而在另一个 Isolate 中，你可以使用 ReceivePort 来接收消息。例如：
+
+```dart
+import 'dart:isolate';
+
+void main() async {
+  ReceivePort receivePort = ReceivePort(); // 创建一个 ReceivePort 用于接收消息
+  Isolate myIsolate = await Isolate.spawn(isolateFunction, receivePort.sendPort); // 将 ReceivePort 的 sendPort 绑 定到新的 Isolate 上
+
+  receivePort.listen((message) { // 监听来自 Isolate 的消息
+    print('Received message: $message');
+  });
+
+  myIsolate.kill(priority: Isolate.immediate); // 结束 Isolate 的执行
+  await receivePort.close(); // 关闭 ReceivePort
+}
+
+void isolateFunction(SendPort sendPort) {
+  sendPort.send('Hello, main!'); // 发送消息到主线程
+}
+```
+
+在上面的示例代码中，我们首先创建了一个 ReceivePort，用于接收来自 Isolate 的消息。然后，我们通过调用 Isolate.spawn() 方法来创建一个新的 Isolate，并将 ReceivePort 的 sendPort 属性绑定到新的 Isolate 上。这样，新的 Isolate 就可以向主线程发送消息了。
+
+在主线程中，我们监听 ReceivePort 的消息，并在收到消息时输出它们。最后，我们使用 isolate.kill() 方法来结束 Isolate 的执行，并使用 receivePort.close() 方法来关闭 ReceivePort。
+
+##### 在 Isolate 中执行耗时任务
+你可以使用 Isolate 在后台执行耗时任务，以避免阻塞主线程。例如：
+
+```dart
+import 'dart:isolate';
+
+void main() async {
+  ReceivePort receivePort = ReceivePort();
+  Isolate myIsolate = await Isolate.spawn(isolateTask, receivePort.sendPort);
+
+  receivePort.listen((message) {
+    print('Received message: $message');
+  });
+
+  myIsolate.kill(priority: Isolate.immediate);
+  await receivePort.close();
+}
+
+void isolateTask(SendPort sendPort) {
+  String result = expensiveTask(); // 在 Isolate 中执行耗时任务
+  sendPort.send(result);
+}
+
+String expensiveTask() {
+  String result = '';
+  for (int i = 1; i <= 100000000; i++) {
+    result += i.toString();
+  }
+  return result;
+}在上面的示例代码中，我们在 Isolate 中执行了一个耗时的任务 expensiveTask()，该任务将在后台运行，并返回一个结果。然后，我们将结果通过 sendPort 发送回主线程。
+```
+
+##### 在 Isolate 中处理大量数据
+你可以使用 Isolate 处理大量数据，以避免阻塞主线程。例如：
+
+```dart
+import 'dart:isolate';
+
+void main() async {
+  ReceivePort receivePort = ReceivePort();
+  Isolate myIsolate = await Isolate.spawn(isolateTask, receivePort.sendPort);
+
+  receivePort.listen((message) {
+    if (message is List) {
+      print('Received ${message.length} numbers');
+    }
+  });
+
+  List<int> numbers = List.generate(10000000, (index) => index); // 生成一百万个数字
+  myIsolate.send(numbers); // 将数字发送到 Isolate 中
+
+  myIsolate.kill(priority: Isolate.immediate);
+  await receivePort.close();
+}
+
+void isolateTask(SendPort sendPort) {
+  ReceivePort receivePort = ReceivePort();
+  sendPort.send(receivePort.sendPort); // 将 ReceivePort 的 sendPort 发送回主线程
+
+  receivePort.listen((message) {
+    if (message is List) {
+      int sum = message.reduce((a, b) => a + b); // 计算数字的总和
+      sendPort.send(sum); // 将数字的总和发送回主线程
+    }
+  });
+}
+```
+
+在上面的示例代码中，我们生成了一百万个数字，并将它们发送到 Isolate 中。在 Isolate 中，我们使用 ReceivePort 来监听来自主线程的消息，并在收到数字时计算它们的总和。最后，我们将数字的总和通过 sendPort 发送回主线程。在主线程中，我们监听 ReceivePort 的消息，并在收到数字的总和时输出它们。
+
+### FFI
+
+Dart 的 FFI（Foreign Function Interface）是一项功能强大的特性，它允许 Dart 应用程序调用本机代码，以便与底层操作系统和硬件交互。通过使用 FFI，你可以在 Dart 中调用 C 语言和 C++ 代码，以及其他支持 C ABI 的本机库。
+
+以下是一些常见的 Dart FFI 的用法：
+
+#### 编写本机代码
+
+首先，你需要编写一些本机代码，例如 C 语言或 C++ 代码。这些代码需要遵循 C ABI，以便可以在 Dart 中调用它们。例如，以下是一个简单的 C 函数，它接受两个整数并返回它们的和：
+
+```c
+#include <stdio.h>
+
+int add(int a, int b) {
+  return a + b;
+}
+```
+
+#### 使用 Dart FFI 调用本机代码
+
+接下来，你需要使用 Dart FFI 调用本机代码。你需要定义一个 Dart 类来表示本机库，并使用 dart:ffi 库中的 DynamicLibrary 类加载本机库。例如，以下是一个示例代码，它使用 Dart FFI 调用上面的 C 函数：
+
+```dart
+import 'dart:ffi' as ffi;
+import 'dart:io' show Platform;
+
+typedef NativeAdd = ffi.Int32 Function(ffi.Int32, ffi.Int32);
+typedef DartAdd = int Function(int, int);
+
+void main() {
+  final dylib = ffi.DynamicLibrary.open(_getLibraryPath());
+  final nativeAdd = dylib.lookup<ffi.NativeFunction<NativeAdd>>('add').asFunction<DartAdd>();
+  final result = nativeAdd(2, 3);
+  print('Result: $result');
+}
+
+String _getLibraryPath() {
+  if (Platform.isMacOS) {
+    return 'path/to/libmylib.dylib';
+  } else if (Platform.isLinux) {
+    return 'path/to/libmylib.so';
+  } else if (Platform.isWindows) {
+    return 'path/to/mylib.dll';
+  } else {
+    throw UnsupportedError('Unsupported platform');
+  }
+}
+```
+
+在上面的示例代码中，我们首先使用 DynamicLibrary.open() 方法加载本机库。然后，我们使用 lookup() 方法查找 add 函数，并使用 asFunction() 方法将其转换为 Dart 函数。最后，我们调用 nativeAdd() 函数并打印结果。
+
+#### 传递复杂数据类型
+
+除了基本数据类型外，你还可以使用 Dart FFI 传递和返回复杂数据类型，例如结构体和指针。例如，以下是一个示例代码，它定义了一个结构体和一个 C 函数，该函数接受一个指向结构体的指针，并打印结构体的字段：
+
+```c++
+#include <stdio.h>
+
+typedef struct {
+  int x;
+  int y;
+} Point;
+
+void printPoint(Point *point) {
+  printf("Point(%d, %d)\n", point->x, point->y);
+}
+```
+
+然后，我们可以使用 Dart FFI 调用该函数，并传递一个指向结构体的指针。例如：
+
+```dart
+import 'dart:ffi' as ffi;
+import 'dart:io' show Platform;
+
+class Point extends ffi.Struct {
+  @ffi.Int32()
+  int x;
+
+  @ffi.Int32()
+  int y;
+}
+
+typedef NativePrintPoint = ffi.Void Function(ffi.Pointer<Point>);
+typedef DartPrintPoint = void Function(ffi.Pointer<Point>);
+
+void main() {
+  final dylib = ffi.DynamicLibrary.open(_getLibraryPath());
+  final nativePrintPoint = dylib.lookup<ffi.NativeFunction<NativePrintPoint>>('printPoint').asFunction<DartPrintPoint>();
+  final point = ffi.allocate<Point>();
+  point.ref.x = 10;
+  point.ref.y = 20;
+  nativePrintPoint(point);
+  ffi.free(point);
+}
+
+String _getLibraryPath() {
+  if (Platform.isMacOS) {
+    return 'path/to/libmylib.dylib';
+  } else if (Platform.isLinux) {
+    return 'path/to/libmylib.so';
+  } else if (Platform.isWindows) {
+    return 'path/to/mylib.dll';
+  } else {
+    throw UnsupportedError('Unsupported platform');
+  }
+}
+```
+
+在上面的示例代码中，我们首先定义了一个 Dart 类 Point，它表示 C 中的结构体。然后，我们定义了一个 Dart 函数 DartPrintPoint，它接受一个指向结构体的指针。我们使用 ffi.allocate() 方法分配一个结构体，并设置其字段的值。然后，我们使用 nativePrintPoint() 函数调用 C 函数，并传递结构体的指针。最后，我们使用 ffi.free() 方法释放结构体的内存。
 

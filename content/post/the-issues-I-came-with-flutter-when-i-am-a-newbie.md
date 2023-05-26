@@ -37,6 +37,52 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+### AndroidStudio可以显示设备但是Flutter的设备选择没有设备
+先检查Android SDK
+```
+PS C:\Windows\system32> flutter doctor --android-licenses
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Unable to locate Android SDK.
+```
+然后设置Android SDK路径
+```
+PS C:\Windows\system32> flutter config --android-sdk "D:\Android"
+Setting "android-sdk" value to "D:\Android".
+
+You may need to restart any open editors for them to read new settings.
+```
+再次验证并查看设备列表
+```
+PS C:\Windows\system32> flutter doctor
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+Doctor summary (to see all details, run flutter doctor -v):
+[√] Flutter (Channel stable, 3.10.2, on Microsoft Windows [版本 10.0.19045.3031], locale zh-CN)
+[√] Windows Version (Installed version of Windows is version 10 or higher)
+[!] Android toolchain - develop for Android devices (Android SDK version 33.0.2)
+    X No Java Development Kit (JDK) found; You must have the environment variable JAVA_HOME set and the java binary in
+      your PATH. You can download the JDK from https://www.oracle.com/technetwork/java/javase/downloads/.
+[X] Chrome - develop for the web (Cannot find Chrome executable at .\Google\Chrome\Application\chrome.exe)
+    ! Cannot find Chrome. Try setting CHROME_EXECUTABLE to a Chrome executable.
+[√] Visual Studio - develop for Windows (Visual Studio 生成工具 2022 17.5.5)
+[√] Android Studio (version 2022.2)
+[!] Android Studio
+    X android-studio-dir = D:\Android\Sdk
+    X Unable to find bundled Java version.
+[√] Connected device (3 available)
+[√] Network resources
+
+! Doctor found issues in 3 categories.
+```
+查看设备详细列表
+```
+PS C:\Windows\system32> flutter devices
+Flutter assets will be downloaded from https://storage.flutter-io.cn. Make sure you trust this source!
+3 connected devices:
+
+MI 12s (mobile)     • 308710d3 • android-arm64  • Android 13 (API 33)
+Windows (desktop) • windows  • windows-x64    • Microsoft Windows [版本 10.0.19045.3031]
+Edge (web)        • edge     • web-javascript • Microsoft Edge 92.0.902.67
+```
 ## 样式
 ### 主题复制修改
 在某些情况下，想要继承某个主题，并修改某些属性，可以使用下面的方式：

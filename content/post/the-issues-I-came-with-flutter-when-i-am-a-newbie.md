@@ -37,6 +37,19 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
+## 样式
+### 主题复制修改
+在某些情况下，想要继承某个主题，并修改某些属性，可以使用下面的方式：
+```dart
+Widget build(BuildContext context) {
+    return  MaterialApp(
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.orange,
+        scaffoldBackgroundColor: Colors.teal
+      ),
+     .....
+}
+```
 
 ## 相关资料
 

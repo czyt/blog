@@ -20,9 +20,15 @@ draft: false
 需要设置Java运行环境，设置好以后，就可以用了。
 
 ![image-20230527115127100](https://assets.czyt.tech/img/flutter-color-swatch.png)
-
+### Debug条件运行
+需要引入`flutter/foundation.dart`然后，使用`kDebugMode`进行判断即可。
+```dart
+import 'package:flutter/foundation.dart';
+ if (kDebugMode) {
+   print(" changed $v");
+ }
+```
 ### 隐藏Debug 条幅
-
 在代码的theme入口代码添加`debugShowCheckedModeBanner: false,`,完整代码如下：
 
 ```dart

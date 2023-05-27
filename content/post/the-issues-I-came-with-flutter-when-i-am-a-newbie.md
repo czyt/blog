@@ -15,6 +15,11 @@ draft: false
 ![image-20230525200813317](https://assets.czyt.tech/img/new-image-asset-dialog.png)
 
 ## 调试
+### Flutter编辑时，没有色板预览
+
+需要设置Java运行环境，设置好以后，就可以用了。
+
+![image-20230527115127100](https://assets.czyt.tech/img/flutter-color-swatch.png)
 
 ### 隐藏Debug 条幅
 

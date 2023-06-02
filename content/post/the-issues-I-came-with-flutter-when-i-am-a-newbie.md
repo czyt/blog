@@ -115,3 +115,4 @@ Widget build(BuildContext context) {
 + [Networking in Flutter using Dio](https://blog.logrocket.com/networking-flutter-using-dio/)
 ### 文档
 + [Flutter跨平台编译](https://github.com/flexi-creator/multiplat)
++ [Deploying Flutter Apps with Github Actions Part I](https://blog.auguron.com/deploying-flutter-apps-with-github-actions-c547c23c0e2f)

@@ -695,6 +695,8 @@ goland的实时模板如下,方便快速使用
 
 ## 参考
 + [protocol buffers官方文档](https://developers.google.com/protocol-buffers)
++ [Proto Best Practices](https://protobuf.dev/programming-guides/dos-donts/)
++ [Proto API Best Practices](https://protobuf.dev/programming-guides/api/)
 + https://github.com/mennanov/fieldmask-utils
 + Netflix实用API设计：Protobuf FieldMask实践 [part1](http://dockone.io/article/2434655) [part2](https://dockone.io/article/2434656)
 + [go-kratos HTTP方法支持以及FieldMask的使用简介](https://zhuanlan.zhihu.com/p/510438339)

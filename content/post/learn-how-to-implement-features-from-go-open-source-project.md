@@ -751,9 +751,373 @@ func (qs *QrSVG) StartQrSVG(s *svg.SVG) {
 
 ```
 
+## 操作系统
 
+### FIFO
+
+代码来自于HashCorp的nomad项目
+
+包说明
+
+> *Package fifo implements functions to create and open a fifo for inter-process*
+>
+> *communication in an OS agnostic way. A few assumptions should be made when*
+>
+> *using this package. First, New() must always be called before Open(). Second*
+>
+> *Open() returns an io.ReadWriteCloser that is only connected with the*
+>
+> *io.ReadWriteCloser returned from New().*
+> 
+
+fifo_windows.go
+```go
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
+package fifo
+
+import (
+	"fmt"
+	"io"
+	"net"
+	"os"
+	"sync"
+	"time"
+
+	winio "github.com/Microsoft/go-winio"
+)
+
+// PipeBufferSize is the size of the input and output buffers for the windows
+// named pipe
+const PipeBufferSize = int32(^uint16(0))
+
+type winFIFO struct {
+	listener net.Listener
+	conn     net.Conn
+	connLock sync.Mutex
+}
+
+func (f *winFIFO) ensureConn() (net.Conn, error) {
+	f.connLock.Lock()
+	defer f.connLock.Unlock()
+	if f.conn == nil {
+		c, err := f.listener.Accept()
+		if err != nil {
+			return nil, err
+		}
+		f.conn = c
+	}
+
+	return f.conn, nil
+}
+
+func (f *winFIFO) Read(p []byte) (n int, err error) {
+	conn, err := f.ensureConn()
+	if err != nil {
+		return 0, err
+	}
+
+	// If the connection is closed then we need to close the listener
+	// to emulate unix fifo behavior
+	n, err = conn.Read(p)
+	if err == io.EOF {
+		f.listener.Close()
+	}
+	return n, err
+}
+
+func (f *winFIFO) Write(p []byte) (n int, err error) {
+	conn, err := f.ensureConn()
+	if err != nil {
+		return 0, err
+	}
+
+	// If the connection is closed then we need to close the listener
+	// to emulate unix fifo behavior
+	n, err = conn.Write(p)
+	if err == io.EOF {
+		conn.Close()
+		f.listener.Close()
+	}
+	return n, err
+
+}
+
+func (f *winFIFO) Close() error {
+	f.connLock.Lock()
+	if f.conn != nil {
+		f.conn.Close()
+	}
+	f.connLock.Unlock()
+	return f.listener.Close()
+}
+
+// CreateAndRead creates a fifo at the given path and returns an io.ReadCloser open for it.
+// The fifo must not already exist
+func CreateAndRead(path string) (func() (io.ReadCloser, error), error) {
+	l, err := winio.ListenPipe(path, &winio.PipeConfig{
+		InputBufferSize:  PipeBufferSize,
+		OutputBufferSize: PipeBufferSize,
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to create fifo: %v", err)
+	}
+
+	return func() (io.ReadCloser, error) {
+		return &winFIFO{
+			listener: l,
+		}, nil
+	}, nil
+}
+
+func OpenReader(path string) (io.ReadCloser, error) {
+	l, err := winio.ListenOnlyPipe(path, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open fifo listener: %v", err)
+	}
+
+	return &winFIFO{listener: l}, nil
+}
+
+// OpenWriter opens a fifo that already exists and returns an io.WriteCloser for it
+func OpenWriter(path string) (io.WriteCloser, error) {
+	return winio.DialPipe(path, nil)
+}
+
+// Remove a fifo that already exists at a given path
+func Remove(path string) error {
+	dur := 500 * time.Millisecond
+	conn, err := winio.DialPipe(path, &dur)
+	if err == nil {
+		return conn.Close()
+	}
+
+	os.Remove(path)
+	return nil
+}
+
+func IsClosedErr(err error) bool {
+	return err == winio.ErrFileClosed
+}
+
+```
+fifo_unix.go
+```go
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
+//go:build !windows
+// +build !windows
+
+package fifo
+
+import (
+	"fmt"
+	"io"
+	"os"
+
+	"golang.org/x/sys/unix"
+)
+
+// CreateAndRead creates a fifo at the given path, and returns an open function for reading.
+// For compatibility with windows, the fifo must not exist already.
+//
+// It returns a reader open function that may block until a writer opens
+// so it's advised to run it in a goroutine different from reader goroutine
+func CreateAndRead(path string) (func() (io.ReadCloser, error), error) {
+	// create first
+	if err := mkfifo(path, 0600); err != nil {
+		return nil, fmt.Errorf("error creating fifo %v: %v", path, err)
+	}
+
+	return func() (io.ReadCloser, error) {
+		return OpenReader(path)
+	}, nil
+}
+
+func OpenReader(path string) (io.ReadCloser, error) {
+	return os.OpenFile(path, unix.O_RDONLY, os.ModeNamedPipe)
+}
+
+// OpenWriter opens a fifo file for writer, assuming it already exists, returns io.WriteCloser
+func OpenWriter(path string) (io.WriteCloser, error) {
+	return os.OpenFile(path, unix.O_WRONLY, os.ModeNamedPipe)
+}
+
+// Remove a fifo that already exists at a given path
+func Remove(path string) error {
+	return os.Remove(path)
+}
+
+func IsClosedErr(err error) bool {
+	err2, ok := err.(*os.PathError)
+	if ok {
+		return err2.Err == os.ErrClosed
+	}
+	return false
+}
+
+func mkfifo(path string, mode uint32) (err error) {
+	return unix.Mkfifo(path, mode)
+}
+
+```
+fifo_test.go
+```go
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
+package fifo
+
+import (
+	"bytes"
+	"io"
+	"path/filepath"
+	"runtime"
+	"sync"
+	"testing"
+	"time"
+
+	"github.com/hashicorp/nomad/helper/uuid"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+)
+
+// TestFIFO tests basic behavior, and that reader closes when writer closes
+func TestFIFO(t *testing.T) {
+	require := require.New(t)
+	var path string
+
+	if runtime.GOOS == "windows" {
+		path = "//./pipe/fifo"
+	} else {
+		path = filepath.Join(t.TempDir(), "fifo")
+	}
+
+	readerOpenFn, err := CreateAndRead(path)
+	require.NoError(err)
+
+	var reader io.ReadCloser
+
+	toWrite := [][]byte{
+		[]byte("abc\n"),
+		[]byte(""),
+		[]byte("def\n"),
+		[]byte("nomad"),
+		[]byte("\n"),
+	}
+
+	var readBuf bytes.Buffer
+	var wait sync.WaitGroup
+	wait.Add(1)
+	go func() {
+		defer wait.Done()
+
+		var err error
+		reader, err = readerOpenFn()
+		assert.NoError(t, err)
+		if err != nil {
+			return
+		}
+
+		_, err = io.Copy(&readBuf, reader)
+		assert.NoError(t, err)
+	}()
+
+	writer, err := OpenWriter(path)
+	require.NoError(err)
+	for _, b := range toWrite {
+		n, err := writer.Write(b)
+		require.NoError(err)
+		require.Equal(n, len(b))
+	}
+	require.NoError(writer.Close())
+	time.Sleep(500 * time.Millisecond)
+
+	wait.Wait()
+	require.NoError(reader.Close())
+
+	expected := "abc\ndef\nnomad\n"
+	require.Equal(expected, readBuf.String())
+
+	require.NoError(Remove(path))
+}
+
+// TestWriteClose asserts that when writer closes, subsequent Write() fails
+func TestWriteClose(t *testing.T) {
+	require := require.New(t)
+	var path string
+
+	if runtime.GOOS == "windows" {
+		path = "//./pipe/" + uuid.Generate()[:4]
+	} else {
+		path = filepath.Join(t.TempDir(), "fifo")
+	}
+
+	readerOpenFn, err := CreateAndRead(path)
+	require.NoError(err)
+	var reader io.ReadCloser
+
+	var readBuf bytes.Buffer
+	var wait sync.WaitGroup
+	wait.Add(1)
+	go func() {
+		defer wait.Done()
+
+		var err error
+		reader, err = readerOpenFn()
+		assert.NoError(t, err)
+		if err != nil {
+			return
+		}
+
+		_, err = io.Copy(&readBuf, reader)
+		assert.NoError(t, err)
+	}()
+
+	writer, err := OpenWriter(path)
+	require.NoError(err)
+
+	var count int
+	wait.Add(1)
+	go func() {
+		defer wait.Done()
+		for count = 0; count < int(^uint16(0)); count++ {
+			_, err := writer.Write([]byte(","))
+			if err != nil && IsClosedErr(err) {
+				break
+			}
+			require.NoError(err)
+			time.Sleep(5 * time.Millisecond)
+		}
+	}()
+
+	time.Sleep(500 * time.Millisecond)
+	require.NoError(writer.Close())
+	wait.Wait()
+
+	require.Equal(count, len(readBuf.String()))
+}
+
+```
 
 ## 账户
+### 检测当前账号是否是root
+代码来自于HashCorp的nomad项目
+```go
+// SkipTestWithoutRootAccess will skip test t if it's not running in CI environment
+// and test is not running with Root access.
+func SkipTestWithoutRootAccess(t *testing.T) {
+	ciVar := os.Getenv("CI")
+	isCI, err := strconv.ParseBool(ciVar)
+	isCI = isCI && err == nil
+
+	if !isCI && syscall.Getuid() != 0 {
+		t.Skipf("Skipping test %s. To run this test, you should run it as root user", t.Name())
+	}
+}
+```
 
 ### 邮箱验证码
 

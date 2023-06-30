@@ -1012,6 +1012,26 @@ Schema Versioning 模式非常适用于无法选择应用程序停机时间、�
 
 对于许多模式，在使用它们时通常需要在简单性和性能之间进行权衡。在树模式的情况下，您可以通过避免多个连接来获得更好的性能，但是，您需要管理对图形的更新。
 
+## 备份和还原
+
+### 使用官方工具
+
+假设我们有一台正在运行的远程 MongoDB 计算机，并且希望在本地计算机上创建该数据库的快照，则可以在主节点上使用 `mongodump` 命令来完成此操作。我们只需要指明远程服务器的主机和端口号（默认为端口 27017），并提供一些参数，例如数据库名称、用户名和密码。最后，我们指定要在其中创建快照的转储目录。
+
+```bash
+mongodump -h sample.mongodbhost.com:27017 -d DATABASE_NAME -u USER_NAME -p SAMPLE_PASSWORD -o ~/Desktop
+```
+
+备份大型数据库的最佳实践之一是将它们分开。您可以使用 `--query` 参数将查询传递到 mongodump，以便在发生故障时能够使用集合中的某种时间戳/排序字段来恢复备份过程。为了使用保存的快照恢复数据库，我们只需使用 mongorestore 命令。它通过直接连接到正在运行的 `mongod` 来恢复数据。您可以使用 `--quiet` 选项在安静模式下运行还原来限制数据库的输出。我们再次提供 MongoDB 主机和端口，以及用户名、数据库名称和密码。最后，我们提供输出目录。
+
+```bash
+mongorestore --host sample.mongohost.com --port 27017 --username USER_NAME --password SAMPLE_PASSWORD --db DATABASE_NAME .
+```
+
+### 使用 Percona Backup for MongoDB
+
+参考 https://docs.percona.com/percona-backup-mongodb/
+
 ## 参考
 
 + [Building with Patterns: A Summary](https://www.mongodb.com/blog/post/building-with-patterns-a-summary)

@@ -1039,6 +1039,7 @@ mongorestore --host sample.mongohost.com --port 27017 --username USER_NAME --pas
 + [MongoDB 进阶模式设计](https://mongoing.com/mongodb-advanced-pattern-design)
 + [MongoDB设计方法及技巧](https://www.cnblogs.com/zimug/p/13175156.html)
 + https://www.tutorialsteacher.com/mongodb
++ [How to Migrate Data In MongoDB](https://www.loginradius.com/blog/engineering/live-data-migration-mongodb/)
 
 
 

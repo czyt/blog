@@ -309,6 +309,56 @@ func main() {
 ```
 参考 https://freshman.tech/file-upload-golang/
 
+> 在grpc网关的这个[issue](https://github.com/grpc-ecosystem/grpc-gateway/issues/500)，[emcfarlane](https://github.com/emcfarlane ) 给出了一个方案，暂未测试。
+>
+> 👋 hello, I've solved this in my gRPC-transcoding project https://github.com/emcfarlane/larking by letting the handler access the underlying reader/writer stream. The API is:
+>
+> ```
+> func AsHTTPBodyReader(stream grpc.ServerStream, msg proto.Message) (io.Reader, error)
+> func AsHTTPBodyWriter(stream grpc.ServerStream, msg proto.Message) (io.Writer, error)
+> ```
+>
+> Which handles asserting the stream is a stream of google.api.HttpBody and correctly unmarshals the first payloads.
+>
+> So if you have an API like:
+>
+> ```
+> import "google/api/httpbody.proto";
+> 
+> service Files {
+>   rpc LargeUploadDownload(stream UploadFileRequest)
+>       returns (stream google.api.HttpBody) {
+>     option (google.api.http) = {
+>       post : "/files/large/{filename}"
+>       body : "file"
+>     };
+>   }
+> }
+> message UploadFileRequest {
+>   string filename = 1;
+>   google.api.HttpBody file = 2;
+> }
+> ```
+>
+> You can use the `AsHTTPBody` methods to access the reader and writer of the http request without chunking into streams of messages. Like:
+>
+> ```
+> // LargeUploadDownload echoes the request body as the response body with contentType.
+> func (s *asHTTPBodyServer) LargeUploadDownload(stream testpb.Files_LargeUploadDownloadServer) error {
+> 	var req testpb.UploadFileRequest
+> 	r, _ := larking.AsHTTPBodyReader(stream, &req)
+> 	log.Printf("got %s!", req.Filename)
+> 
+> 	rsp := httpbody.HttpBody{
+> 		ContentType: req.File.GetContentType(),
+> 	}
+> 	w, _ := larking.AsHTTPBodyWriter(stream, &rsp)
+> 
+> 	_, err := io.Copy(w, r)
+> 	return err
+> }
+> ```
+
 ## 文件下载、导出服务
 
 文件下载服务既可以是本地静态文件也可能是动态生成的，本质上就是将字节返回到客户端。在Kratos中我们可以将这部分逻辑由ResponseEncoder控制，也就是说我们可以先按proto定义服务，但是返回返回文件下载。

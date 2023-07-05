@@ -1027,7 +1027,96 @@ mongodump -h sample.mongodbhost.com:27017 -d DATABASE_NAME -u USER_NAME -p SAMPL
 ```bash
 mongorestore --host sample.mongohost.com --port 27017 --username USER_NAME --password SAMPLE_PASSWORD --db DATABASE_NAME .
 ```
+以上是基本的操作，同时还有其他的备份还原选项以适应不同的场景需求，参考本文后面的链接。
 
+### 脚本工具
+
+一个有用的脚本 [delta-sync.sh](https://gist.github.com/cnp96/7be1756f7eb76ea78c9b832966e84dbf#file-delta-sync-sh)，该脚本使用oplog来优化同步体验，在备份过程中的操作数据也会被备份并还原到对应的数据库。
+
+```bash
+#!/bin/bash
+
+# DB info
+old_db="source_database_name"
+
+# Connection info
+uri="source_db_connection_string"
+to_uri="target_db_connection_string"
+
+# Storage info
+now=$(date +"%Y-%m-%dT%TZ")
+root_dir="$(pwd)/cron"
+lock_file="${root_dir}/sync.lock"
+sync_log="${root_dir}/sync.log"
+out_dir="${root_dir}/dump"
+sync_dir="${out_dir}/${now}"
+
+# Create files and directories
+mkdir -p $sync_dir
+touch $sync_log
+
+# Log info -- pwd refers to the user home directory
+from=$1
+last_sync_time=$(tail -n 1 $sync_log)
+if [[ $from == "" ]]; then
+  if [[ $last_sync_time == "" ]]; then
+    echo "FATAL: From time is not specified. Updating the log registry with current timestamp and exiting!"
+    echo $(date +"%Y-%m-%dT%TZ") >>$sync_log
+    exit 1
+  else
+    from=$last_sync_time
+  fi
+fi
+
+to=$2
+if [[ $to == "" ]]; then to=$(date +"%Y-%m-%dT%TZ"); fi
+
+# Setup
+if [[ -f $lock_file ]]; then
+  echo "FATAL: A sync is already in progress for timestamp ${last_sync_time}. Exiting!"
+  exit 1
+fi
+
+# Create Mutex
+touch $lock_file
+echo $to >>$sync_log
+echo "INFO: Updated log registry to use new timestamp on next run."
+
+# Ops
+mkdir -p $sync_dir
+echo "INFO: Created sync directory: ${sync_dir}"
+
+echo "Fetching oplog in range [${from} - ${to}]"
+query="{\"wall\": {\"\$gte\": {\"\$date\": \"$from\"}, \"\$lte\": {\"\$date\": \"$to\"} }, \"ns\": {\"\$regex\": \"$old_db\"}}"
+echo $query >"${root_dir}/query.json"
+
+if $(mongodump --uri=$uri --collection \"oplog.rs\" --queryFile "${root_dir}/query.json" --gzip -v --out=$sync_dir); then
+  echo "INFO: Dump success!"
+  echo "INFO: Replaying oplogs..."
+  if $(mongorestore --uri=$to_uri --oplogReplay --noIndexRestore --gzip -vv $sync_dir); then
+    echo "INFO: Restore success!"
+  else
+    rm -rf $sync_dir
+    sed -i '$ d' $sync_log
+  fi
+else
+  rm -rf $sync_dir
+  sed -i '$ d' $sync_log
+  echo "ERROR: Dump failed!"
+fi
+
+# Clear Mutex
+rm $lock_file
+```
+使用方式 
+```bash
+./delta-sync.sh from_epoch_in_milliseconds
+```
+或者您可以设置一个 cron 作业每分钟运行一次。`* * * * * ~/delta-sync.sh`
+然后以下命令监视输出
+```bash
+tail -f /var/log/cron | grep CRON
+```
 ### 使用 Percona Backup for MongoDB
 
 参考 https://docs.percona.com/percona-backup-mongodb/

@@ -1027,7 +1027,11 @@ mongodump -h sample.mongodbhost.com:27017 -d DATABASE_NAME -u USER_NAME -p SAMPL
 ```bash
 mongorestore --host sample.mongohost.com --port 27017 --username USER_NAME --password SAMPLE_PASSWORD --db DATABASE_NAME .
 ```
-以上是基本的操作，同时还有其他的备份还原选项以适应不同的场景需求，参考本文后面的链接。
+以上是基本的操作，同时还有其他的备份还原选项以适应不同的场景需求，参考本文后面的链接。mongodump可以使用`--archive`参数来将备份数据输出到标准输出中，只有我们就可以通过下面一行的命令完成数据库的备份和还原操作了。
+```bash
+ssh eoin@proxy.server.com mongodump --host source.server.com \ 
+ --archive --gzip | ssh eoin@target.server.com mongorestore --archive --gzip
+```
 
 ### 脚本工具
 

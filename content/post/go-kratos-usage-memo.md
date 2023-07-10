@@ -309,7 +309,7 @@ func main() {
 ```
 参考 https://freshman.tech/file-upload-golang/
 
-> 在grpc网关的这个[issue](https://github.com/grpc-ecosystem/grpc-gateway/issues/500)，[emcfarlane](https://github.com/emcfarlane ) 给出了一个方案，暂未测试。
+> 在grpc网关的这个[issue](https://github.com/grpc-ecosystem/grpc-gateway/issues/500)，[emcfarlane](https://github.com/emcfarlane ) 给出了一个方案，也算提供了一种思路，但kratos不支持tream的rpc生成，暂未测试。
 >
 > 👋 hello, I've solved this in my gRPC-transcoding project https://github.com/emcfarlane/larking by letting the handler access the underlying reader/writer stream. The API is:
 >
@@ -408,6 +408,8 @@ func handleAttachment(w http.ResponseWriter, attach *attachment.Attachment) erro
 ```
 
 参考 [issue](https://github.com/go-kratos/kratos/issues/2073)
+
+我们可以用下面的方式来优化上面的代码。首先在Service层加入一个方法，它传入一个http.Server ，来添加相应的route信息。然后按原来的方式进行service的初始化，最后在http.Server注入的时候，调用我们刚才申明的方法，添加route信息，再返回http.Server即可。
 
 ## 静态文件托管
 

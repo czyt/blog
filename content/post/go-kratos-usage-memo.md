@@ -309,7 +309,7 @@ func main() {
 ```
 参考 https://freshman.tech/file-upload-golang/
 
-> 在grpc网关的这个[issue](https://github.com/grpc-ecosystem/grpc-gateway/issues/500)，[emcfarlane](https://github.com/emcfarlane ) 给出了一个方案，也算提供了一种思路，但kratos不支持tream的rpc生成，暂未测试。
+> 在grpc网关的这个[issue](https://github.com/grpc-ecosystem/grpc-gateway/issues/500)，[emcfarlane](https://github.com/emcfarlane ) 给出了一个方案，也算提供了一种思路，但kratos不支持stream的rpc生成，暂未测试。
 >
 > 👋 hello, I've solved this in my gRPC-transcoding project https://github.com/emcfarlane/larking by letting the handler access the underlying reader/writer stream. The API is:
 >

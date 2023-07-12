@@ -400,11 +400,7 @@ func UploadHandlerWithMiddleware[T comparable](ctx http.Context, fileFormKey str
 	if _, err := io.Copy(buf, file); err != nil {
 		return nil, request, nil, fileHeader.Filename, err
 	}
-	h := func(handler middleware.Handler) middleware.Handler {
-		return ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return handler(ctx, req)
-		})
-	}
+	h :=ctx.Middleware
 	return h, request, bytes.NewReader(buf.Bytes()), fileHeader.Filename, nil
 }
 ```

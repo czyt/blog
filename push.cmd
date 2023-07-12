@@ -1,7 +1,7 @@
 @echo off
 pushd %~dp0
-git pull origin  HEAD:main
+git pull origin  main
 git add .
 git commit -m "update"
-git push origin HEAD:main
+git push origin main
 timeout 3

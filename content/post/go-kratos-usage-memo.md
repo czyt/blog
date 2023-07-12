@@ -363,11 +363,11 @@ func main() {
 
 下面是一个相对规范的工程代码示例(去掉了相关业务代码)：
 
-> ⚠ 下面的代码还存在文件和表单值解析的问题，还需要解决和完善。
-
-自定义的延迟处理代码
+自定义的泛型处理代码
 
 ```go
+import "github.com/gorilla/schema"
+
 func UploadHandlerWithMiddleware[T comparable](ctx http.Context, fileFormKey string) (
 	chain middleware.Middleware,
 	request T,
@@ -375,16 +375,11 @@ func UploadHandlerWithMiddleware[T comparable](ctx http.Context, fileFormKey str
 	filename string,
 	err error,
 ) {
-	defer func() {
+		defer func() {
 		if err := recover(); err != nil {
 			log.Println("panic handled:", err)
 		}
 	}()
-	// 文件上传的参数
-	err = ctx.BindForm(&request)
-	if err != nil {
-		return chain, request, nil, "", err
-	}
 	if fileFormKey == "" {
 		fileFormKey = "file"
 	}
@@ -394,13 +389,28 @@ func UploadHandlerWithMiddleware[T comparable](ctx http.Context, fileFormKey str
 	if err != nil {
 		return nil, request, nil, "", err
 	}
-
 	buf := bufPool.Get()
 	defer bufPool.Put(buf)
 	if _, err := io.Copy(buf, file); err != nil {
 		return nil, request, nil, fileHeader.Filename, err
 	}
-	h :=ctx.Middleware
+   // 开始解析Form参数
+	if err := ctx.Request().ParseForm(); err != nil {
+		return nil, request, nil, "", err
+	}
+	if err := ctx.Request().ParseMultipartForm(32 << 20); err != nil {
+		return nil, request, nil, "", err
+	}
+    // 如果获取的Form参数不为nil，那么就进行参数到对应类型的解析
+	if form := ctx.Request().Form; form != nil {
+		var decoder = schema.NewDecoder()
+		t := new(T)
+		if err := decoder.Decode(t, form); err == nil {
+			request = *t
+		}
+	}
+    // 获取这个ctx的middleware执行权，当然也可以在上一步获取
+	h := ctx.Middleware
 	return h, request, bytes.NewReader(buf.Bytes()), fileHeader.Filename, nil
 }
 ```
@@ -416,8 +426,9 @@ func (u UploadService) RegisterUploadServiceHttpServer(svr *http.Server) {
 
 // 上传更新处理逻辑
 func (u UploadService) uploadDemo(ctx http.Context) error {
+    // 指定Operation 这样可以进行路由白名单设置等操作
 	http.SetOperation(ctx, "/upload.v1.UploadService/demo")
-	lazyCreator, uploadDemoOpt, reader, filename, err := udhandler.UploadHandlerWithMiddleware[*biz.UploadDemoOption](
+	lazyCreator, uploadDemoOpt, reader, filename, err := udhandler.UploadHandlerWithMiddleware[biz.UploadDemoOption](
 		ctx,
 		"file")
 	if err != nil {
@@ -433,12 +444,28 @@ func (u UploadService) uploadDemo(ctx http.Context) error {
 }
 ```
 
-useCase定义
+在useCase的Biz中定义
 
 ```go
-func (a UploadUseCase) UploadImage(fileName string, reader io.Reader, uploadDemoOption *UploadDemoOption) middleware.Handler {
+
+type UploadDemoOption struct {
+	// 文件最大尺寸
+	FileMaxSize int64 `schema:"file_max_size"`
+	// 无损上传
+	UploadWithNoLoss bool ` schema:"upload_with_no_loss"`
+}
+
+type UploadDemoResult struct {
+	// 文件是否上传成功
+	Success bool `json:"success"`
+	// 文件下载链接
+	FileDownloadUrl string `json:"file_download_url"`
+}
+
+func (a UploadUseCase) UploadImage(fileName string, reader io.Reader, uploadDemoOption UploadDemoOption) middleware.Handler {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		........
+        imageUploadResult:=UploadDemoResult{}
+        ........
 		return imageUploadResult, nil
 	}
 }

@@ -359,6 +359,93 @@ func main() {
 > }
 > ```
 
+我们可以用下面的方式来优化上面的代码。首先在Service层加入一个方法，它传入一个http.Server ，来添加相应的route信息。然后按原来的方式进行service的初始化，最后在http.Server注入的时候，调用我们刚才申明的方法，添加route信息，再返回http.Server即可。
+
+下面是一个相对规范的工程代码示例(去掉了相关业务代码)：
+
+自定义的延迟处理代码
+
+```go
+func UploadHandlerWithMiddleware[T comparable](ctx http.Context, fileFormKey string) (
+	chain middleware.Middleware,
+	request T,
+	reader io.Reader,
+	filename string,
+	err error,
+) {
+	defer func() {
+		if err := recover(); err != nil {
+			log.Println("panic handled:", err)
+		}
+	}()
+	// 文件上传的参数
+	err = ctx.BindForm(&request)
+	if err != nil {
+		return chain, request, nil, "", err
+	}
+	if fileFormKey == "" {
+		fileFormKey = "file"
+	}
+	// 读取文件
+	file, fileHeader, err := ctx.Request().FormFile(fileFormKey)
+	defer file.Close()
+	if err != nil {
+		return nil, request, nil, "", err
+	}
+
+	buf := bufPool.Get()
+	defer bufPool.Put(buf)
+	if _, err := io.Copy(buf, file); err != nil {
+		return nil, request, nil, fileHeader.Filename, err
+	}
+	h := func(handler middleware.Handler) middleware.Handler {
+		return ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
+			return handler(ctx, req)
+		})
+	}
+	return h, request, bytes.NewReader(buf.Bytes()), fileHeader.Filename, nil
+}
+```
+
+在Service中调用
+
+```go
+func (u UploadService) RegisterUploadServiceHttpServer(svr *http.Server) {
+	route := svr.Route("/")
+	route.POST("/v1/upload/demo", u.uploadDemo)
+
+}
+
+// 上传更新处理逻辑
+func (u UploadService) uploadDemo(ctx http.Context) error {
+	http.SetOperation(ctx, "/upload.v1.UploadService/demo")
+	lazyCreator, uploadDemoOpt, reader, filename, err := udhandler.UploadHandlerWithMiddleware[*biz.UploadDemoOption](
+		ctx,
+		"file")
+	if err != nil {
+		return v1.ErrorInvalidUploadDemoRequest("invalid request:%v", err)
+	}
+	handler := u.uploadUc.UploadDemo(filename, reader, uploadDemoOpt)
+	h := lazyCreator(handler)
+	resp, err := h(ctx, uploadDemoOpt)
+	if err != nil {
+		return v1.ErrorInvalidUploadDemoRequest("invalid request:%v", err)
+	}
+	return ctx.JSON(200, resp)
+}
+```
+
+useCase定义
+
+```go
+func (a UploadUseCase) UploadImage(fileName string, reader io.Reader, uploadDemoOption *UploadDemoOption) middleware.Handler {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		........
+		return imageUploadResult, nil
+	}
+}
+```
+
 ## 文件下载、导出服务
 
 文件下载服务既可以是本地静态文件也可能是动态生成的，本质上就是将字节返回到客户端。在Kratos中我们可以将这部分逻辑由ResponseEncoder控制，也就是说我们可以先按proto定义服务，但是返回返回文件下载。
@@ -409,7 +496,7 @@ func handleAttachment(w http.ResponseWriter, attach *attachment.Attachment) erro
 
 参考 [issue](https://github.com/go-kratos/kratos/issues/2073)
 
-我们可以用下面的方式来优化上面的代码。首先在Service层加入一个方法，它传入一个http.Server ，来添加相应的route信息。然后按原来的方式进行service的初始化，最后在http.Server注入的时候，调用我们刚才申明的方法，添加route信息，再返回http.Server即可。
+
 
 ## 静态文件托管
 

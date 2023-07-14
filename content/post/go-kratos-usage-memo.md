@@ -104,6 +104,12 @@ if tr, ok := transport.FromServerContext(ctx); ok {
 }
 
 ```
+在Service中设置响应的Header信息
+```go
+if httpCtx, ok := ctx.(http.Context); ok {
+		httpCtx.Response().Header().Set("x-gopher", "czyt")
+}
+```
 
 ## 日志脱敏与过滤
 

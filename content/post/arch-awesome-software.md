@@ -583,6 +583,20 @@ disabled = true
 
 还有一个[zinit](https://github.com/zdharma-continuum/zinit)也很不错。
 
+安装 [atuin](https://github.com/ellie/atuin)
+
+```
+yay -S atuin
+```
+
+使用zsh插件
+
+```bash
+echo 'eval "$(atuin init zsh)"' >> ~/.zshrc
+```
+
+
+
 ### fish
 
 `yay -S fish` 

@@ -97,14 +97,15 @@ draft: false
       use admin;
       db.createUser(   
       {
-          user: "admin",
+          user: "czyt",
           pwd: "admin_Pwd", 
-          roles: [ { role: "readAnyDatabase", db: "admin" } ]  
+          roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]  
       } );
+      db.grantRolesToUser('czyt',[{ role: "root", db: "admin" }])
       ```
       
-      后期如果需要调整角色，可以使用语句`db.grantRolesToUser("admin",["userAdminAnyDatabase"])`
-   
+      后期如果需要调整角色，可以使用语句`db.grantRolesToUser("otherRole",["userAdminAnyDatabase"])`
+      
       修改配置文件`/etc/mongodb.conf`，启用授权连接。
       
       ```yaml

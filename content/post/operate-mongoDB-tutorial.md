@@ -1133,6 +1133,7 @@ tail -f /var/log/cron | grep CRON
 + [MongoDB设计方法及技巧](https://www.cnblogs.com/zimug/p/13175156.html)
 + https://www.tutorialsteacher.com/mongodb
 + [How to Migrate Data In MongoDB](https://www.loginradius.com/blog/engineering/live-data-migration-mongodb/)
++ https://docs.ferretdb.io
 
 
 

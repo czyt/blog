@@ -187,7 +187,7 @@ test "while" {
 }
 ```
 
-用继续表达。
+用continue 表达式。
 
 ```zig
 test "while with continue expression" {
@@ -200,7 +200,7 @@ test "while with continue expression" {
 }
 ```
 
-随着继续。
+使用continue。
 
 ```zig
 test "while with continue" {
@@ -214,7 +214,7 @@ test "while with continue" {
 }
 ```
 
-休息一下。
+使用break。
 
 ```zig
 test "while with break" {
@@ -230,7 +230,7 @@ test "while with break" {
 
 ## for循环
 
-for 循环用于迭代数组（以及其他类型，稍后讨论）。 for 循环遵循此语法。与 while 一样，for 循环也可以使用 break 和 continue。这里我们必须给 _ 赋值，因为 Zig 不允许我们拥有未使用的值。
+for 循环用于迭代数组（以及其他类型，稍后讨论）。 for 循环遵循此语法。与 while 一样，for 循环也可以使用 break 和 continue。这里我们必须使用作为变量名 _ 赋值，因为 Zig 不允许我们拥有未使用的值。
 
 ```zig
 test "for" {
@@ -256,7 +256,7 @@ test "for" {
 
 ## 函数
 
-所有函数参数都是不可变的 - 如果需要副本，用户必须显式制作一个。与使用蛇形命名法的变量不同，函数使用驼峰式命名法。这是声明和调用简单函数的示例。
+所有函数参数都是不可变的 - 如果需要副本，用户必须显式创建一个。与使用蛇形命名法的变量不同，函数使用驼峰式命名法。这是声明和调用简单函数的示例。
 
 ```zig
 fn addFive(x: u32) u32 {

@@ -15,3 +15,6 @@ draft: false
 
 ## zig资讯
 + [zig news](https://zig.news)
+
+## 软件包
++ https://zig.pm

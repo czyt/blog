@@ -581,6 +581,8 @@ disabled = true
 
 ```
 
+适用于starship的Gruvbox 主题 [github](https://github.com/fang2hou/starship-gruvbox-rainbow)
+
 还有一个[zinit](https://github.com/zdharma-continuum/zinit)也很不错。
 
 安装 [atuin](https://github.com/ellie/atuin)

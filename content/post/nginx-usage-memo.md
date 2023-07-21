@@ -60,6 +60,14 @@ nginx version: nginx/1.25.1
 
 `nginx -s reload` 重新加载配置文件。
 
+>京东云的ubuntu 需要安装下面的这些组件
+>
+>```bash
+>apt-get install gcc libpcre3 libpcre3-dev zlib1g zlib1g-dev openssl libssl-dev libxslt-dev libgd-dev
+>```
+>
+>然后再通过源码编译安装。如果系统已经安装有其他版本请卸载后再进行安装。
+
 # 配置
 
 

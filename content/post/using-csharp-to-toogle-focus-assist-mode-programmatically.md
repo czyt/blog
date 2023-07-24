@@ -1,5 +1,5 @@
 ---
-title: "使用C#切换专注模式"
+title: "使用C#以编程方式切换专注模式"
 date: 2023-07-24
 tags: ["csharp", "pinvoke", "windows"]
 draft: false

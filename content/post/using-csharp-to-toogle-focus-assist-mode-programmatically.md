@@ -72,3 +72,4 @@ public static class FocusAssistToogle
 ## 参考链接
 
 + https://stackoverflow.com/questions/55477041/toggling-focus-assist-mode-in-win-10-programmatically
++ [rust实现](https://github.com/stefnotch/dnd/blob/42b5fc62429559dff753a02d5c51fbbb2e0a69cb/src/focus_mode.rs)

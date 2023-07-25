@@ -69,7 +69,12 @@ public static class FocusAssistToogle
     }
 }
 ```
-ps:如果需要禁用Windows通知中心，不显示通知，可以考虑使用下面这种方式。
+调用时，最好先调用`DisableFoucusMode`方法，再调用`EnableFocusMode`,参考StackOverflow上的说明
+
+> if one attempts to use this to enable focus mode, I recommend first disabling focus mode (pass `new byte[] {0x00, 0x00, 0x00, 0x00}` instead). Then, after a few milliseconds, one can safely enable focus mode.
+
+ps:如果需要禁用Windows通知中心，不显示通知，可以考虑使用下面这种写入注册表的方式。
+
 ```csharp
 void Main()
 {

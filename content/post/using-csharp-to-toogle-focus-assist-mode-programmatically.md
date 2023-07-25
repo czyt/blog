@@ -147,18 +147,18 @@ public static void EnableAllNotifications()
 	SetValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Notifications\Settings", "NOC_GLOBAL_SETTING_TOASTS_ENABLED", 1);
 }
 public static void DisableAllNotifications()
-        {
-            DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer", "TaskbarNoNotification");
-            DeleteValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "EnableBalloonTips");
-            DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "EnableBalloonTips");
-            SetValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Policies\Explorer", "TaskbarNoNotification", 1);
-            SetValue(RegistryHive.CurrentUser, @"Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications", "NoToastApplicationNotification", 1);
-            SetValue(RegistryHive.CurrentUser, @"Software\Policies\Microsoft\Windows\Explorer", "DisableNotificationCenter", 1);
-            SetValue(RegistryHive.LocalMachine, @"Software\Microsoft\WcmSvc\wifinetworkmanager", "WiFiSenseCredShared", 0);
-            SetValue(RegistryHive.LocalMachine, @"Software\Microsoft\WcmSvc\wifinetworkmanager", "WiFiSenseOpen", 0);
-            SetValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Notifications\Settings", "NOC_GLOBAL_SETTING_TOASTS_ENABLED", 0);
-            
-        }
+{
+    DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer", "TaskbarNoNotification");
+    DeleteValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "EnableBalloonTips");
+    DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "EnableBalloonTips");
+    SetValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Policies\Explorer", "TaskbarNoNotification", 1);
+    SetValue(RegistryHive.CurrentUser, @"Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications", "NoToastApplicationNotification", 1);
+    SetValue(RegistryHive.CurrentUser, @"Software\Policies\Microsoft\Windows\Explorer", "DisableNotificationCenter", 1);
+    SetValue(RegistryHive.LocalMachine, @"Software\Microsoft\WcmSvc\wifinetworkmanager", "WiFiSenseCredShared", 0);
+    SetValue(RegistryHive.LocalMachine, @"Software\Microsoft\WcmSvc\wifinetworkmanager", "WiFiSenseOpen", 0);
+    SetValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Notifications\Settings", "NOC_GLOBAL_SETTING_TOASTS_ENABLED", 0);
+
+}
 ```
 ## 参考链接
 

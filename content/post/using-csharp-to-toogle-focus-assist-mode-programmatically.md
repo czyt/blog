@@ -68,7 +68,98 @@ public static class FocusAssistToogle
     }
 }
 ```
+ps:如果需要禁用Windows通知中心，不显示通知，可以考虑使用下面这种方式。
+```csharp
+void Main()
+{
+    // 调用
+	EnableAllNotifications();
+}
 
+private static void SetValue(RegistryHive hive, string keyPath, string valueName, object value)
+{
+	try
+	{
+		RegistryKey key;
+		if (hive == RegistryHive.CurrentUser)
+		{
+			key = Registry.CurrentUser.OpenSubKey(keyPath, true);
+			if (key == null)
+			{
+				key = Registry.CurrentUser.CreateSubKey(keyPath);
+			}
+		}
+		else if (hive == RegistryHive.LocalMachine)
+		{
+			key = Registry.LocalMachine.OpenSubKey(keyPath, true);
+			if (key == null)
+			{
+				key = Registry.LocalMachine.CreateSubKey(keyPath);
+			}
+		}
+		else
+		{
+			throw new ArgumentException("Invalid registry hive specified.");
+		}
+		key.SetValue(valueName, value);
+		key.Close();
+	}
+	catch (Exception ex)
+	{
+		Console.WriteLine($"Failed to set value in registry: {ex.Message}");
+	}
+}
+private static void DeleteValue(RegistryHive hive, string keyPath, string valueName)
+{
+	try
+	{
+		RegistryKey key;
+		if (hive == RegistryHive.CurrentUser)
+		{
+			key = Registry.CurrentUser.OpenSubKey(keyPath, true);
+		}
+		else if (hive == RegistryHive.LocalMachine)
+		{
+			key = Registry.LocalMachine.OpenSubKey(keyPath, true);
+		}
+		else
+		{
+			throw new ArgumentException("Invalid registry hive specified.");
+		}
+		if (key != null)
+		{
+			key.DeleteValue(valueName, false);
+			key.Close();
+		}
+	}
+	catch (Exception ex)
+	{
+		Console.WriteLine($"Failed to delete value from registry: {ex.Message}");
+	}
+}
+public static void EnableAllNotifications()
+{
+	SetValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Policies\Explorer", "TaskbarNoNotification", 0);
+	SetValue(RegistryHive.CurrentUser, @"Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications", "NoToastApplicationNotification", 0);
+	SetValue(RegistryHive.CurrentUser, @"Software\Policies\Microsoft\Windows\Explorer", "DisableNotificationCenter", 0);
+	SetValue(RegistryHive.LocalMachine, @"Software\Microsoft\WcmSvc\wifinetworkmanager", "WiFiSenseCredShared",1);
+	SetValue(RegistryHive.LocalMachine, @"Software\Microsoft\WcmSvc\wifinetworkmanager", "WiFiSenseOpen", 1);
+	SetValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Notifications\Settings", "NOC_GLOBAL_SETTING_TOASTS_ENABLED", 1);
+}
+public static void DisableAllNotifications()
+        {
+            DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer", "TaskbarNoNotification");
+            DeleteValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "EnableBalloonTips");
+            DeleteValue(RegistryHive.LocalMachine, @"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "EnableBalloonTips");
+            SetValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Policies\Explorer", "TaskbarNoNotification", 1);
+            SetValue(RegistryHive.CurrentUser, @"Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications", "NoToastApplicationNotification", 1);
+            SetValue(RegistryHive.CurrentUser, @"Software\Policies\Microsoft\Windows\Explorer", "DisableNotificationCenter", 1);
+            SetValue(RegistryHive.LocalMachine, @"Software\Microsoft\WcmSvc\wifinetworkmanager", "WiFiSenseCredShared", 0);
+            SetValue(RegistryHive.LocalMachine, @"Software\Microsoft\WcmSvc\wifinetworkmanager", "WiFiSenseOpen", 0);
+            SetValue(RegistryHive.CurrentUser, @"Software\Microsoft\Windows\CurrentVersion\Notifications\Settings", "NOC_GLOBAL_SETTING_TOASTS_ENABLED", 0);
+            
+        }
+```
 ## 参考链接
 
 + https://stackoverflow.com/questions/55477041/toggling-focus-assist-mode-in-win-10-programmatically

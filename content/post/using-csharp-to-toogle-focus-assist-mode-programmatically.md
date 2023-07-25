@@ -18,6 +18,7 @@ public static class FocusAssistToogle
     private const string NtdllDlDll = "ntdll.dll";
     private const uint DataBufferSize = 4;
     private static readonly byte[] DisableDataBuf = { 0x00, 0x00, 0x00, 0x00 };
+    // 01仅优先通知 02 仅限闹钟 
     private static readonly byte[] EnableDataBuf = { 0x02, 0x00, 0x00, 0x00 };
 
     [DllImport(NtdllDlDll, SetLastError = true)]

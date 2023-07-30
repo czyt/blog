@@ -259,6 +259,82 @@ curl --location -g --request POST 'http://127.0.0.1:8000/users?password=e77eEDab
 
   > 注意：接口url的定义要注意url覆盖的问题。调整proto中的定义顺序即可。
 
+## 支持Websocket
+
+下面的代码是[官方的例子 ](https://github.com/go-kratos/examples/blob/main/ws)
+
+main.go
+
+```go
+package main
+
+import (
+	"log"
+
+	"github.com/go-kratos/examples/ws/handler"
+	"github.com/go-kratos/kratos/v2"
+	"github.com/go-kratos/kratos/v2/transport/http"
+	"github.com/gorilla/mux"
+)
+
+func main() {
+	router := mux.NewRouter()
+	router.HandleFunc("/ws", handler.WsHandler)
+
+	httpSrv := http.NewServer(http.Address(":8080"))
+	httpSrv.HandlePrefix("/", router)
+
+	app := kratos.New(
+		kratos.Name("ws"),
+		kratos.Server(
+			httpSrv,
+		),
+	)
+	if err := app.Run(); err != nil {
+		log.Println(err)
+	}
+}
+```
+
+handler.go
+
+```go
+package handler
+
+import (
+	"log"
+	"net/http"
+
+	"github.com/gorilla/websocket"
+)
+
+var upgrader = websocket.Upgrader{}
+
+func WsHandler(w http.ResponseWriter, r *http.Request) {
+	c, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Print("upgrade:", err)
+		return
+	}
+	defer c.Close()
+	for {
+		mt, message, err := c.ReadMessage()
+		if err != nil {
+			log.Println("read:", err)
+			break
+		}
+		log.Printf("recv: %s", message)
+		err = c.WriteMessage(mt, message)
+		if err != nil {
+			log.Println("write:", err)
+			break
+		}
+	}
+}
+```
+
+
+
 ## 支持文件上传
 
 因为protobuf官方限制，并不能通过protobuf生成http服务，需要创建相关逻辑，参考[example](https://github.com/go-kratos/examples/tree/main/http/upload)中的实现：
@@ -648,6 +724,70 @@ func UserAgent() middleware.Middleware {
 			}
 			return handler(ctx, req)
 		}
+	}
+}
+```
+
+## 重定向
+
+[官方的例子](https://github.com/go-kratos/examples/blob/main/http/redirect/main.go)
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/go-kratos/examples/helloworld/helloworld"
+	"github.com/go-kratos/kratos/v2"
+	"github.com/go-kratos/kratos/v2/errors"
+	khttp "github.com/go-kratos/kratos/v2/transport/http"
+)
+
+type server struct {
+	helloworld.UnimplementedGreeterServer
+}
+
+// SayHello implements helloworld.GreeterServer
+func (s *server) SayHello(ctx context.Context, in *helloworld.HelloRequest) (*helloworld.HelloReply, error) {
+	if in.Name == "error" {
+		return nil, errors.BadRequest("custom_error", fmt.Sprintf("invalid argument %s", in.Name))
+	}
+	if in.Name == "panic" {
+		panic("server panic")
+	}
+	return &helloworld.HelloReply{Message: fmt.Sprintf("Hello %+v", in.Name)}, nil
+}
+
+func redirectFilter(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/helloworld/kratos" {
+			http.Redirect(w, r, "https://go-kratos.dev/", http.StatusMovedPermanently)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
+func main() {
+	httpSrv := khttp.NewServer(
+		khttp.Address(":8000"),
+		khttp.Filter(redirectFilter),
+	)
+	s := &server{}
+	helloworld.RegisterGreeterHTTPServer(httpSrv, s)
+
+	app := kratos.New(
+		kratos.Name("cors"),
+		kratos.Server(
+			httpSrv,
+		),
+	)
+	if err := app.Run(); err != nil {
+		log.Fatal(err)
 	}
 }
 ```

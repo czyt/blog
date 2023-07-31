@@ -21,8 +21,6 @@ draft: false
         Command="{Binding $parent[Window].DataContext.AddItem}">Add Item
 </Button>
 ```
-您可以使用$parent符号绑定到目标在逻辑上的父级：
-
 ```xaml
 <Border Tag="Hello World!">
 

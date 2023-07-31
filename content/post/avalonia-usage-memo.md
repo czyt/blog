@@ -754,7 +754,10 @@ public class MyView : UserControl
 
 
 
-在这个例子中，ShowDialogRequested方法订阅了ShowDialog的Requested事件，并在事件处理程序中使用MessageBox来显示对话框。在对话框关闭后，通过调用e.Callback?.Invoke()来通知视图模型对话框已关闭。
+在这个例子中，ShowDialogRequested方法订阅了ShowDialog的Requested事件，并在事件处理程序中使用MessageBox来显示对话框。在对话框关闭后，通过调用`e.Callback?.Invoke()`来通知视图模型对话框已关闭。通过这种方式，你可以在视图模型中触发对话框的显示，并在视图中处理对话框的逻辑。
 
-通过这种方式，你可以在视图模型中触发对话框的显示，并在视图中处理对话框的逻辑。
+## 参考资料
 
++ [Avalonia官方文档](https://docs.avaloniaui.net/docs/getting-started/)
++ [Avalonia Example](https://github.com/AvaloniaUI/Avalonia.Samples)
++ [Avalonia Community](https://github.com/AvaloniaCommunity)

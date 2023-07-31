@@ -345,8 +345,6 @@ public MainWindowViewModel(){
   <TextBlock IsVisible="{Binding !Items.Count}">No results found</TextBlock>
 </Panel>
 ```
-
-
 ### Style
 
 avalonia支持css样式风格的样式`style`。样式不像 WPF 中那样存储在 `Resources` 集合中，而是存储在单独的 `Styles` 集合中。
@@ -362,6 +360,39 @@ avalonia支持css样式风格的样式`style`。样式不像 WPF 中那样存储
     <TextBlock Classes="h1">Header</TextBlock>
 <UserControl>
 ```
+### classes属性
+
+在Avalonia中，类（class）属性是用于为控件指定一个CSS类名的属性。通过为控件添加类属性，可以为控件应用自定义的样式。
+要为控件添加类属性，可以使用Classes属性。Classes属性是控件的一个集合，用于存储控件的CSS类名。以下是添加类属性的一般步骤：
+首先，在XAML中找到你要添加类属性的控件。例如，假设你要添加类属性到一个Button控件：
+
+```xaml
+<Button Content="Click me"></Button>
+```
+
+接下来，为该控件添加类属性。你可以通过在XAML中直接指定类属性的值来添加类名，或者通过在代码中动态修改Classes属性来添加或移除类名。以下是两种方法的示例：
+在XAML中直接指定类名：
+
+```xaml
+<Button Content="Click me" Classes="my-button"></Button>
+```
+
+ 在这个例子中，Classes属性被设置为"my-button"，这将为Button控件添加一个类名为"my-button"的CSS类。
+
+通过代码动态修改Classes属性：
+
+```c#
+   using Avalonia.Controls;
+
+   ...
+
+   var myButton = new Button();
+   myButton.Content = "Click me";
+   myButton.Classes.Add("my-button");
+```
+
+在这个例子中，通过调用`Classes.Add("my-button")`方法，将类名"my-button"添加到myButton控件的Classes属性中。通过添加类属性，你可以为控件应用自定义的样式。你可以在CSS样式表中定义与类名对应的样式规则，并通过类属性将这些样式应用到相应的控件。需要注意的是，类属性可以用于任何继承自AvaloniaObject的对象，而不仅仅是控件。这意味着你可以为任何具有Classes属性的对象添加类名。
+
 ### Grid行列定义
 列和行定义可以在 Avalonia 中使用字符串指定，避免 WPF 中笨重的语法：
   ```xaml

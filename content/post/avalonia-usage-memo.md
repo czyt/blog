@@ -790,4 +790,6 @@ public class MyView : UserControl
 + [Avalonia官方文档](https://docs.avaloniaui.net/docs/getting-started/)
 + [Avalonia Example](https://github.com/AvaloniaUI/Avalonia.Samples)
 + [Avalonia Community](https://github.com/AvaloniaCommunity)
++ [AvaloniaUtils](https://github.com/AvaloniaUtils)
 + https://dev.to/t/avalonia
++ [Avalonia中用FluentAvalonia+DialogHost.Avalonia实现界面弹窗和对话框](https://www.raokun.top/archives/avalonia-zhong-yong-fluentavaloniadialoghostavalonia-shi-xian-jie-mian-dan-chuang-he-dui-hua-kuang)

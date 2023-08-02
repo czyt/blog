@@ -232,3 +232,9 @@ func main() {
 ```
 
 证书获取成功以后，再上传到七牛即可。
+
+
+
+## 有用的链接
+
++ [七牛证书管理API](https://developer.qiniu.com/dcdn/10749/dcdn-certificate-of-relevant)

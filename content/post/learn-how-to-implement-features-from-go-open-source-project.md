@@ -411,6 +411,87 @@ func (h *sliceheap[T]) Pop() interface{} {
 }
 
 ```
+### RingBuffer
+
+来源  [tailscale](https://github.com/tailscale/tailscale/blob/main/util/ringbuffer/ringbuffer.go)
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+// Package ringbuffer contains a fixed-size concurrency-safe generic ring
+// buffer.
+package ringbuffer
+
+import "sync"
+
+// New creates a new RingBuffer containing at most max items.
+func New[T any](max int) *RingBuffer[T] {
+	return &RingBuffer[T]{
+		max: max,
+	}
+}
+
+// RingBuffer is a concurrency-safe ring buffer.
+type RingBuffer[T any] struct {
+	mu  sync.Mutex
+	pos int
+	buf []T
+	max int
+}
+
+// Add appends a new item to the RingBuffer, possibly overwriting the oldest
+// item in the buffer if it is already full.
+func (rb *RingBuffer[T]) Add(t T) {
+	rb.mu.Lock()
+	defer rb.mu.Unlock()
+	if len(rb.buf) < rb.max {
+		rb.buf = append(rb.buf, t)
+	} else {
+		rb.buf[rb.pos] = t
+		rb.pos = (rb.pos + 1) % rb.max
+	}
+}
+
+// GetAll returns a copy of all the entries in the ring buffer in the order they
+// were added.
+func (rb *RingBuffer[T]) GetAll() []T {
+	if rb == nil {
+		return nil
+	}
+	rb.mu.Lock()
+	defer rb.mu.Unlock()
+	out := make([]T, len(rb.buf))
+	for i := 0; i < len(rb.buf); i++ {
+		x := (rb.pos + i) % rb.max
+		out[i] = rb.buf[x]
+	}
+	return out
+}
+
+// Len returns the number of elements in the ring buffer. Note that this value
+// could change immediately after being returned if a concurrent caller
+// modifies the buffer.
+func (rb *RingBuffer[T]) Len() int {
+	if rb == nil {
+		return 0
+	}
+	rb.mu.Lock()
+	defer rb.mu.Unlock()
+	return len(rb.buf)
+}
+
+// Clear will empty the ring buffer.
+func (rb *RingBuffer[T]) Clear() {
+	rb.mu.Lock()
+	defer rb.mu.Unlock()
+	rb.pos = 0
+	rb.buf = nil
+}
+```
+
+
+
 ### LRU
 
 tailscale项目，[源地址](https://github.com/tailscale/tailscale/blob/main/util/lru/lru.go)
@@ -1742,6 +1823,162 @@ func writeCompressed(contents []byte, compressedWriterCreator func(io.Writer) (i
 		return err
 	}
 	return os.WriteFile(outputPath, buf.Bytes(), outputMode)
+}
+```
+
+### 获取当前系统运行的发行版本
+
+来源  [tailscale](https://github.com/tailscale/tailscale/blob/main/version/distro/distro.go)
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+// Package distro reports which distro we're running on.
+package distro
+
+import (
+	"bytes"
+	"io"
+	"os"
+	"runtime"
+	"strconv"
+
+	"tailscale.com/types/lazy"
+	"tailscale.com/util/lineread"
+)
+
+type Distro string
+
+const (
+	Debian    = Distro("debian")
+	Arch      = Distro("arch")
+	Synology  = Distro("synology")
+	OpenWrt   = Distro("openwrt")
+	NixOS     = Distro("nixos")
+	QNAP      = Distro("qnap")
+	Pfsense   = Distro("pfsense")
+	OPNsense  = Distro("opnsense")
+	TrueNAS   = Distro("truenas")
+	Gokrazy   = Distro("gokrazy")
+	WDMyCloud = Distro("wdmycloud")
+	Unraid    = Distro("unraid")
+	Alpine    = Distro("alpine")
+)
+
+var distro lazy.SyncValue[Distro]
+var isWSL lazy.SyncValue[bool]
+
+// Get returns the current distro, or the empty string if unknown.
+func Get() Distro {
+	return distro.Get(func() Distro {
+		switch runtime.GOOS {
+		case "linux":
+			return linuxDistro()
+		case "freebsd":
+			return freebsdDistro()
+		default:
+			return Distro("")
+		}
+	})
+}
+
+// IsWSL reports whether we're running in the Windows Subsystem for Linux.
+func IsWSL() bool {
+	return runtime.GOOS == "linux" && isWSL.Get(func() bool {
+		// We could look for $WSL_INTEROP instead, however that may be missing if
+		// the user has started to use systemd in WSL2.
+		return have("/proc/sys/fs/binfmt_misc/WSLInterop") || have("/mnt/wsl")
+	})
+}
+
+func have(file string) bool {
+	_, err := os.Stat(file)
+	return err == nil
+}
+
+func haveDir(file string) bool {
+	fi, err := os.Stat(file)
+	return err == nil && fi.IsDir()
+}
+
+func linuxDistro() Distro {
+	switch {
+	case haveDir("/usr/syno"):
+		return Synology
+	case have("/usr/local/bin/freenas-debug"):
+		// TrueNAS Scale runs on debian
+		return TrueNAS
+	case have("/etc/debian_version"):
+		return Debian
+	case have("/etc/arch-release"):
+		return Arch
+	case have("/etc/openwrt_version"):
+		return OpenWrt
+	case have("/run/current-system/sw/bin/nixos-version"):
+		return NixOS
+	case have("/etc/config/uLinux.conf"):
+		return QNAP
+	case haveDir("/gokrazy"):
+		return Gokrazy
+	case have("/usr/local/wdmcserver/bin/wdmc.xml"): // Western Digital MyCloud OS3
+		return WDMyCloud
+	case have("/usr/sbin/wd_crontab.sh"): // Western Digital MyCloud OS5
+		return WDMyCloud
+	case have("/etc/unraid-version"):
+		return Unraid
+	case have("/etc/alpine-release"):
+		return Alpine
+	}
+	return ""
+}
+
+func freebsdDistro() Distro {
+	switch {
+	case have("/etc/pfSense-rc"):
+		return Pfsense
+	case have("/usr/local/sbin/opnsense-shell"):
+		return OPNsense
+	case have("/usr/local/bin/freenas-debug"):
+		// TrueNAS Core runs on FreeBSD
+		return TrueNAS
+	}
+	return ""
+}
+
+var dsmVersion lazy.SyncValue[int]
+
+// DSMVersion reports the Synology DSM major version.
+//
+// If not Synology, it reports 0.
+func DSMVersion() int {
+	if runtime.GOOS != "linux" {
+		return 0
+	}
+	return dsmVersion.Get(func() int {
+		if Get() != Synology {
+			return 0
+		}
+		// This is set when running as a package:
+		v, _ := strconv.Atoi(os.Getenv("SYNOPKG_DSM_VERSION_MAJOR"))
+		if v != 0 {
+			return v
+		}
+		// But when run from the command line, we have to read it from the file:
+		lineread.File("/etc/VERSION", func(line []byte) error {
+			line = bytes.TrimSpace(line)
+			if string(line) == `majorversion="7"` {
+				v = 7
+				return io.EOF
+			}
+			if string(line) == `majorversion="6"` {
+				v = 6
+				return io.EOF
+			}
+			return nil
+		})
+		return v
+	})
 }
 ```
 

@@ -532,7 +532,9 @@ func (f *Firewall) permitTailscaleService(w weight) error {
 }
 ```
 
+### Linux 
 
+Tailscale的Linux版本实现 https://github.com/tailscale/tailscale/blob/main/util/linuxfw/linuxfw.go
 
 ## 参考链接
 - Tailscale的博客文章[Programming the Windows firewall](https://tailscale.com/blog/windows-firewall/)

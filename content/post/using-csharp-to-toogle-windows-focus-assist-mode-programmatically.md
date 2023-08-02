@@ -1,12 +1,12 @@
 ---
-title: "使用C#以编程方式切换专注模式"
+title: "使用C#以编程方式切换Windows专注模式"
 date: 2023-07-24
 tags: ["csharp", "pinvoke", "windows"]
 draft: false
 ---
 ## 缘起
 
-最近需要以编程方式调用windows api实现专注模式的切换，但是Google一圈，没有现成代码。找到的相关帖子要么是cpp的要么是rust的，而且是undocument的Windows api。
+最近需要以编程方式调用windows api实现windows10专注模式的切换，但是Google一圈，没有现成代码。找到的相关帖子要么是cpp的要么是rust的，而且是undocument的Windows api。
 
 ## Csharp调用
 

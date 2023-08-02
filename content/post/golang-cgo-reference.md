@@ -13,6 +13,7 @@ draft: false
 - https://github.com/tailscale/libtailscale
 - https://github.com/iikira/golang-msvc
 - https://github.com/vladimirvivien/go-cshared-examples
+- https://github.com/tailscale/libtailscale/tree/main
 
 ## 文档
 - [Embedding Go in C](https://www.dolthub.com/blog/2023-02-01-embedding-go-in-c/)

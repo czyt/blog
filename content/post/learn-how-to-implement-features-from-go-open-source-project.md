@@ -411,6 +411,395 @@ func (h *sliceheap[T]) Pop() interface{} {
 }
 
 ```
+### LRU
+
+tailscale项目，[源地址](https://github.com/tailscale/tailscale/blob/main/util/lru/lru.go)
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+// Package lru contains a typed Least-Recently-Used cache.
+package lru
+
+import (
+	"container/list"
+)
+
+// Cache is container type keyed by K, storing V, optionally evicting the least
+// recently used items if a maximum size is exceeded.
+//
+// The zero value is valid to use.
+//
+// It is not safe for concurrent access.
+//
+// The current implementation is just the traditional LRU linked list; a future
+// implementation may be more advanced to avoid pathological cases.
+type Cache[K comparable, V any] struct {
+	// MaxEntries is the maximum number of cache entries before
+	// an item is evicted. Zero means no limit.
+	MaxEntries int
+
+	ll *list.List
+	m  map[K]*list.Element // of *entry[K,V]
+}
+
+// entry is the element type for the container/list.Element.
+type entry[K comparable, V any] struct {
+	key   K
+	value V
+}
+
+// Set adds or replaces a value to the cache, set or updating its associated
+// value.
+//
+// If MaxEntries is non-zero and the length of the cache is greater
+// after any addition, the least recently used value is evicted.
+func (c *Cache[K, V]) Set(key K, value V) {
+	if c.m == nil {
+		c.m = make(map[K]*list.Element)
+		c.ll = list.New()
+	}
+	if ee, ok := c.m[key]; ok {
+		c.ll.MoveToFront(ee)
+		ee.Value.(*entry[K, V]).value = value
+		return
+	}
+	ele := c.ll.PushFront(&entry[K, V]{key, value})
+	c.m[key] = ele
+	if c.MaxEntries != 0 && c.Len() > c.MaxEntries {
+		c.DeleteOldest()
+	}
+}
+
+// Get looks up a key's value from the cache, returning either
+// the value or the zero value if it not present.
+//
+// If found, key is moved to the front of the LRU.
+func (c *Cache[K, V]) Get(key K) V {
+	v, _ := c.GetOk(key)
+	return v
+}
+
+// Contains reports whether c contains key.
+//
+// If found, key is moved to the front of the LRU.
+func (c *Cache[K, V]) Contains(key K) bool {
+	_, ok := c.GetOk(key)
+	return ok
+}
+
+// GetOk looks up a key's value from the cache, also reporting
+// whether it was present.
+//
+// If found, key is moved to the front of the LRU.
+func (c *Cache[K, V]) GetOk(key K) (value V, ok bool) {
+	if ele, hit := c.m[key]; hit {
+		c.ll.MoveToFront(ele)
+		return ele.Value.(*entry[K, V]).value, true
+	}
+	var zero V
+	return zero, false
+}
+
+// Delete removes the provided key from the cache if it was present.
+func (c *Cache[K, V]) Delete(key K) {
+	if e, ok := c.m[key]; ok {
+		c.deleteElement(e)
+	}
+}
+
+// DeleteOldest removes the item from the cache that was least recently
+// accessed. It is a no-op if the cache is empty.
+func (c *Cache[K, V]) DeleteOldest() {
+	if c.ll != nil {
+		if e := c.ll.Back(); e != nil {
+			c.deleteElement(e)
+		}
+	}
+}
+
+func (c *Cache[K, V]) deleteElement(e *list.Element) {
+	c.ll.Remove(e)
+	delete(c.m, e.Value.(*entry[K, V]).key)
+}
+
+// Len returns the number of items in the cache.
+func (c *Cache[K, V]) Len() int { return len(c.m) }
+```
+
+### Set
+
+来源 [tailscale](https://github.com/tailscale/tailscale/blob/main/util/set/set.go)
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+// Package set contains set types.
+package set
+
+// Set is a set of T.
+type Set[T comparable] map[T]struct{}
+
+// Add adds e to the set.
+func (s Set[T]) Add(e T) { s[e] = struct{}{} }
+
+// Contains reports whether s contains e.
+func (s Set[T]) Contains(e T) bool {
+	_, ok := s[e]
+	return ok
+}
+
+// Len reports the number of items in s.
+func (s Set[T]) Len() int { return len(s) }
+
+// HandleSet is a set of T.
+//
+// It is not safe for concurrent use.
+type HandleSet[T any] map[Handle]T
+
+// Handle is a opaque comparable value that's used as the map key
+// in a HandleSet. The only way to get one is to call HandleSet.Add.
+type Handle struct {
+	v *byte
+}
+
+// Add adds the element (map value) e to the set.
+//
+// It returns the handle (map key) with which e can be removed, using a map
+// delete.
+func (s *HandleSet[T]) Add(e T) Handle {
+	h := Handle{new(byte)}
+	if *s == nil {
+		*s = make(HandleSet[T])
+	}
+	(*s)[h] = e
+	return h
+
+```
+
+## 工具类
+
+### Mak
+
+>// Package mak helps make maps. It contains generic helpers to make/assign
+>// things, notably to maps, but also slices.
+
+来源  tailscale [源码路径](https://github.com/tailscale/tailscale/blob/main/util/mak/mak.go)
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+// Package mak helps make maps. It contains generic helpers to make/assign
+// things, notably to maps, but also slices.
+package mak
+
+import (
+	"fmt"
+	"reflect"
+)
+
+// Set populates an entry in a map, making the map if necessary.
+//
+// That is, it assigns (*m)[k] = v, making *m if it was nil.
+func Set[K comparable, V any, T ~map[K]V](m *T, k K, v V) {
+	if *m == nil {
+		*m = make(map[K]V)
+	}
+	(*m)[k] = v
+}
+
+// NonNil takes a pointer to a Go data structure
+// (currently only a slice or a map) and makes sure it's non-nil for
+// JSON serialization. (In particular, JavaScript clients usually want
+// the field to be defined after they decode the JSON.)
+//
+// Deprecated: use NonNilSliceForJSON or NonNilMapForJSON instead.
+func NonNil(ptr any) {
+	if ptr == nil {
+		panic("nil interface")
+	}
+	rv := reflect.ValueOf(ptr)
+	if rv.Kind() != reflect.Ptr {
+		panic(fmt.Sprintf("kind %v, not Ptr", rv.Kind()))
+	}
+	if rv.Pointer() == 0 {
+		panic("nil pointer")
+	}
+	rv = rv.Elem()
+	if rv.Pointer() != 0 {
+		return
+	}
+	switch rv.Type().Kind() {
+	case reflect.Slice:
+		rv.Set(reflect.MakeSlice(rv.Type(), 0, 0))
+	case reflect.Map:
+		rv.Set(reflect.MakeMap(rv.Type()))
+	}
+}
+
+// NonNilSliceForJSON makes sure that *slicePtr is non-nil so it will
+// won't be omitted from JSON serialization and possibly confuse JavaScript
+// clients expecting it to be present.
+func NonNilSliceForJSON[T any, S ~[]T](slicePtr *S) {
+	if *slicePtr != nil {
+		return
+	}
+	*slicePtr = make([]T, 0)
+}
+
+// NonNilMapForJSON makes sure that *slicePtr is non-nil so it will
+// won't be omitted from JSON serialization and possibly confuse JavaScript
+// clients expecting it to be present.
+func NonNilMapForJSON[K comparable, V any, M ~map[K]V](mapPtr *M) {
+	if *mapPtr != nil {
+		return
+	}
+	*mapPtr = make(M)
+}
+```
+
+### Slice
+
+slice
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+package set
+
+import (
+	"golang.org/x/exp/slices"
+	"tailscale.com/types/views"
+)
+
+// Slice is a set of elements tracked in a slice of unique elements.
+type Slice[T comparable] struct {
+	slice []T
+	set   map[T]bool // nil until/unless slice is large enough
+}
+
+// Slice returns the a view of the underlying slice.
+// The elements are in order of insertion.
+// The returned value is only valid until ss is modified again.
+func (ss *Slice[T]) Slice() views.Slice[T] { return views.SliceOf(ss.slice) }
+
+// Contains reports whether v is in the set.
+// The amortized cost is O(1).
+func (ss *Slice[T]) Contains(v T) bool {
+	if ss.set != nil {
+		return ss.set[v]
+	}
+	return slices.Index(ss.slice, v) != -1
+}
+
+// Remove removes v from the set.
+// The cost is O(n).
+func (ss *Slice[T]) Remove(v T) {
+	if ss.set != nil {
+		if !ss.set[v] {
+			return
+		}
+		delete(ss.set, v)
+	}
+	if ix := slices.Index(ss.slice, v); ix != -1 {
+		ss.slice = append(ss.slice[:ix], ss.slice[ix+1:]...)
+	}
+}
+
+// Add adds each element in vs to the set.
+// The amortized cost is O(1) per element.
+func (ss *Slice[T]) Add(vs ...T) {
+	for _, v := range vs {
+		if ss.Contains(v) {
+			continue
+		}
+		ss.slice = append(ss.slice, v)
+		if ss.set != nil {
+			ss.set[v] = true
+		} else if len(ss.slice) > 8 {
+			ss.set = make(map[T]bool, len(ss.slice))
+			for _, v := range ss.slice {
+				ss.set[v] = true
+			}
+		}
+	}
+}
+
+// AddSlice adds all elements in vs to the set.
+func (ss *Slice[T]) AddSlice(vs views.Slice[T]) {
+	for i := 0; i < vs.Len(); i++ {
+		ss.Add(vs.At(i))
+	}
+}
+```
+
+sliceX
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+// Package slicesx contains some helpful generic slice functions.
+package slicesx
+
+import "math/rand"
+
+// Interleave combines two slices of the form [a, b, c] and [x, y, z] into a
+// slice with elements interleaved; i.e. [a, x, b, y, c, z].
+func Interleave[S ~[]T, T any](a, b S) S {
+	// Avoid allocating an empty slice.
+	if a == nil && b == nil {
+		return nil
+	}
+
+	var (
+		i   int
+		ret = make([]T, 0, len(a)+len(b))
+	)
+	for i = 0; i < len(a) && i < len(b); i++ {
+		ret = append(ret, a[i], b[i])
+	}
+	ret = append(ret, a[i:]...)
+	ret = append(ret, b[i:]...)
+	return ret
+}
+
+// Shuffle randomly shuffles a slice in-place, similar to rand.Shuffle.
+func Shuffle[S ~[]T, T any](s S) {
+	// TODO(andrew): use a pooled Rand?
+
+	// This is the same Fisher-Yates shuffle implementation as rand.Shuffle
+	n := len(s)
+	i := n - 1
+	for ; i > 1<<31-1-1; i-- {
+		j := int(rand.Int63n(int64(i + 1)))
+		s[i], s[j] = s[j], s[i]
+	}
+	for ; i > 0; i-- {
+		j := int(rand.Int31n(int32(i + 1)))
+		s[i], s[j] = s[j], s[i]
+	}
+}
+
+// Partition returns two slices, the first containing the elements of the input
+// slice for which the callback evaluates to true, the second containing the rest.
+//
+// This function does not mutate s.
+func Partition[S ~[]T, T any](s S, cb func(T) bool) (trues, falses S) {
+	for _, elem := range s {
+		if cb(elem) {
+			trues = append(trues, elem)
+		} else {
+			falses = append(falses, elem)
+		}
+	}
+	return
+}
+```
 
 ## 日志
 
@@ -1102,7 +1491,264 @@ func TestWriteClose(t *testing.T) {
 
 ```
 
+### 检测PID的所属用户
+
+来源 tailscale [源码路径](https://github.com/tailscale/tailscale/blob/main/util/pidowner/pidowner.go)
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+// Package pidowner handles lookups from process ID to its owning user.
+package pidowner
+
+import (
+	"errors"
+	"runtime"
+)
+
+var ErrNotImplemented = errors.New("not implemented for GOOS=" + runtime.GOOS)
+
+var ErrProcessNotFound = errors.New("process not found")
+
+// OwnerOfPID returns the user ID that owns the given process ID.
+//
+// The returned user ID is suitable to passing to os/user.LookupId.
+//
+// The returned error will be ErrNotImplemented for operating systems where
+// this isn't supported.
+func OwnerOfPID(pid int) (userID string, err error) {
+	return ownerOfPID(pid)
+}
+```
+
+linux实现 pidowner_linux.go
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+package pidowner
+
+import (
+	"fmt"
+	"os"
+	"strings"
+
+	"tailscale.com/util/lineread"
+)
+
+func ownerOfPID(pid int) (userID string, err error) {
+	file := fmt.Sprintf("/proc/%d/status", pid)
+	err = lineread.File(file, func(line []byte) error {
+		if len(line) < 4 || string(line[:4]) != "Uid:" {
+			return nil
+		}
+		f := strings.Fields(string(line))
+		if len(f) >= 2 {
+			userID = f[1] // real userid
+		}
+		return nil
+	})
+	if os.IsNotExist(err) {
+		return "", ErrProcessNotFound
+	}
+	if err != nil {
+		return
+	}
+	if userID == "" {
+		return "", fmt.Errorf("missing Uid line in %s", file)
+	}
+	return userID, nil
+}
+```
+
+
+
+windows实现 pidowner_windows.go
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+package pidowner
+
+import (
+	"fmt"
+	"syscall"
+
+	"golang.org/x/sys/windows"
+)
+
+func ownerOfPID(pid int) (userID string, err error) {
+	procHnd, err := windows.OpenProcess(windows.PROCESS_QUERY_INFORMATION, false, uint32(pid))
+	if err == syscall.Errno(0x57) { // invalid parameter, for PIDs that don't exist
+		return "", ErrProcessNotFound
+	}
+	if err != nil {
+		return "", fmt.Errorf("OpenProcess: %T %#v", err, err)
+	}
+	defer windows.CloseHandle(procHnd)
+
+	var tok windows.Token
+	if err := windows.OpenProcessToken(procHnd, windows.TOKEN_QUERY, &tok); err != nil {
+		return "", fmt.Errorf("OpenProcessToken: %w", err)
+	}
+
+	tokUser, err := tok.GetTokenUser()
+	if err != nil {
+		return "", fmt.Errorf("GetTokenUser: %w", err)
+	}
+
+	sid := tokUser.User.Sid
+	return sid.String(), nil
+}
+```
+
+### 服务端即时压缩
+
+>// Package precompress provides build- and serving-time support for
+>// precompressed static resources, to avoid the cost of repeatedly compressing
+>// unchanging resources.
+
+来源  tailscale [源码路径](https://github.com/tailscale/tailscale/blob/main/util/precompress/precompress.go)
+
+```go
+// Copyright (c) Tailscale Inc & AUTHORS
+// SPDX-License-Identifier: BSD-3-Clause
+
+// Package precompress provides build- and serving-time support for
+// precompressed static resources, to avoid the cost of repeatedly compressing
+// unchanging resources.
+package precompress
+
+import (
+	"bytes"
+	"compress/gzip"
+	"io"
+	"io/fs"
+	"net/http"
+	"os"
+	"path"
+	"path/filepath"
+
+	"github.com/andybalholm/brotli"
+	"golang.org/x/sync/errgroup"
+	"tailscale.com/tsweb"
+)
+
+// PrecompressDir compresses static assets in dirPath using Gzip and Brotli, so
+// that they can be later served with OpenPrecompressedFile.
+func PrecompressDir(dirPath string, options Options) error {
+	var eg errgroup.Group
+	err := fs.WalkDir(os.DirFS(dirPath), ".", func(p string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if d.IsDir() {
+			return nil
+		}
+		if !compressibleExtensions[filepath.Ext(p)] {
+			return nil
+		}
+		p = path.Join(dirPath, p)
+		if options.ProgressFn != nil {
+			options.ProgressFn(p)
+		}
+
+		eg.Go(func() error {
+			return Precompress(p, options)
+		})
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+	return eg.Wait()
+}
+
+type Options struct {
+	// FastCompression controls whether compression should be optimized for
+	// speed rather than size.
+	FastCompression bool
+	// ProgressFn, if non-nil, is invoked when a file in the directory is about
+	// to be compressed.
+	ProgressFn func(path string)
+}
+
+// OpenPrecompressedFile opens a file from fs, preferring compressed versions
+// generated by PrecompressDir if possible.
+func OpenPrecompressedFile(w http.ResponseWriter, r *http.Request, path string, fs fs.FS) (fs.File, error) {
+	if tsweb.AcceptsEncoding(r, "br") {
+		if f, err := fs.Open(path + ".br"); err == nil {
+			w.Header().Set("Content-Encoding", "br")
+			return f, nil
+		}
+	}
+	if tsweb.AcceptsEncoding(r, "gzip") {
+		if f, err := fs.Open(path + ".gz"); err == nil {
+			w.Header().Set("Content-Encoding", "gzip")
+			return f, nil
+		}
+	}
+
+	return fs.Open(path)
+}
+
+var compressibleExtensions = map[string]bool{
+	".js":  true,
+	".css": true,
+}
+
+func Precompress(path string, options Options) error {
+	contents, err := os.ReadFile(path)
+	if err != nil {
+		return err
+	}
+	fi, err := os.Lstat(path)
+	if err != nil {
+		return err
+	}
+
+	gzipLevel := gzip.BestCompression
+	if options.FastCompression {
+		gzipLevel = gzip.BestSpeed
+	}
+	err = writeCompressed(contents, func(w io.Writer) (io.WriteCloser, error) {
+		return gzip.NewWriterLevel(w, gzipLevel)
+	}, path+".gz", fi.Mode())
+	if err != nil {
+		return err
+	}
+	brotliLevel := brotli.BestCompression
+	if options.FastCompression {
+		brotliLevel = brotli.BestSpeed
+	}
+	return writeCompressed(contents, func(w io.Writer) (io.WriteCloser, error) {
+		return brotli.NewWriterLevel(w, brotliLevel), nil
+	}, path+".br", fi.Mode())
+}
+
+func writeCompressed(contents []byte, compressedWriterCreator func(io.Writer) (io.WriteCloser, error), outputPath string, outputMode fs.FileMode) error {
+	var buf bytes.Buffer
+	compressedWriter, err := compressedWriterCreator(&buf)
+	if err != nil {
+		return err
+	}
+	if _, err := compressedWriter.Write(contents); err != nil {
+		return err
+	}
+	if err := compressedWriter.Close(); err != nil {
+		return err
+	}
+	return os.WriteFile(outputPath, buf.Bytes(), outputMode)
+}
+```
+
+
+
 ## 账户
+
 ### 检测当前账号是否是root
 代码来自于HashCorp的nomad项目
 ```go

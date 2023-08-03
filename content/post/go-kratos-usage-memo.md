@@ -1093,7 +1093,94 @@ func (i InitializationUseCase) createCasbinPolicies(roles []*Role) error {
    	xxxx.tech/api v0.0.0 => ./api/xxxx/api
    )
    ```
+
+## 使用buf
+
+下面的buf配置文件使用了tx7do [这个仓库](https://github.com/tx7do/kratos-uba/tree/main/backend)的配置
+
+根目录的`buf.yaml`
+
+```yaml
+version: v1
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT
+```
+
+api目录下的`buf.yaml`
+
+```yaml
+version: v1
+build:
+  excludes: [third_party]
+deps:
+  - buf.build/googleapis/googleapis
+  - buf.build/envoyproxy/protoc-gen-validate
+  - buf.build/kratos/apis
+  - buf.build/tx7do/gnostic
+  - buf.build/gogo/protobuf
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT
+```
+
+`buf.work.yaml`
+
+```yaml
+version: v1
+directories:
+  - api
+```
+
+`buf.gen.yaml`
+
+```yaml
+version: v1
+managed:
+  enabled: false
+plugins:
+  # generate go struct code
+  #- plugin: buf.build/protocolbuffers/go
+  - name: go
+    out: gen/api/go
+    opt: paths=source_relative
+
+  # generate grpc service code
+  #- plugin: buf.build/grpc/go
+  - name: go-grpc
+    out: gen/api/go
+    opt:
+      - paths=source_relative
+
+  # generate rest service code
+  - name: go-http
+    out: gen/api/go
+    opt:
+      - paths=source_relative
+
+  # generate kratos errors code
+  - name: go-errors
+    out: gen/api/go
+    opt:
+      - paths=source_relative
+
+  # generate message validator code
+  #- plugin: buf.build/bufbuild/validate-go
+  - name: validate
+    out: gen/api/go
+    opt:
+      - paths=source_relative
+      - lang=go
+```
+
 ## 系统初始化任务
+
 ### 逻辑抽象
 
 初始化的逻辑，简单抽象为是否初始化判断和初始化，可以使用下面的流程图来表示

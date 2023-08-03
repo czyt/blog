@@ -42,7 +42,7 @@ Buf 工具针对于Schema驱动、基于 Protobuf 的 API 开发，为服务发�
 
 
 ```
-一个[buf.yaml](https://buf.build/docs/configuration/v1/buf-yaml)的样例：
+一个[buf.yaml](https://buf.build/docs/configuration/v1/buf-yaml)的样例，可以通过`buf mod init`来创建：
 
 ```yaml
 version: v1

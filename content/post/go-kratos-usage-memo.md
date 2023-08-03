@@ -1179,6 +1179,44 @@ plugins:
       - lang=go
 ```
 
+也可以参考[Kratos Example 项目](https://github.com/go-kratos/examples/tree/main/blog)的buf配置,这样生成的go文件和proto定义都在一个目录
+
+`buf.gen.yaml`
+
+```yaml
+version: v1
+plugins:
+  # Use protoc-gen-go at v1.28.1
+  - plugin: buf.build/protocolbuffers/go:v1.28.1
+    out: api
+    opt: paths=source_relative
+  # Use the latest version of protoc-gen-go-grpc
+  - plugin: buf.build/grpc/go
+    out: api
+    opt:
+      - paths=source_relative
+      - require_unimplemented_servers=false
+  - plugin: go-http
+    out: api
+    opt:
+      - paths=source_relative
+  - plugin: openapi
+    out: api
+    opt:
+      - paths=source_relative
+  # Use the latest version of protoc-gen-validate
+  - plugin:  buf.build/bufbuild/validate-go
+    out: api
+    opt:
+      - paths=source_relative
+  - plugin: go-errors
+    out: api
+    opt:
+      - paths=source_relative
+```
+
+
+
 ## 系统初始化任务
 
 ### 逻辑抽象

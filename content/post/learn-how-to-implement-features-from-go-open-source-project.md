@@ -2108,3 +2108,7 @@ func (s *SMTPServer) ValidateVerificationCode(codeToken, vCode, email, usage str
 ```
 
 其他类型的数据库均有实现。
+
+## 有用的链接
+
++ https://github.com/TheAlgorithms/Go

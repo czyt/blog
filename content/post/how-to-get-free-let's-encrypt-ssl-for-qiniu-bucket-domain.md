@@ -81,7 +81,66 @@ draft: false
 
 ## 七牛的证书申请
 
-​    目前七牛支持两种证书设置方式。自行购买和上传。自行购买需要购买七牛提供的证书，目前只有一个一年的免费。后面不清楚什么时候就要开始收费。我们想要申请证书，那么感觉http-01更适合，由于七牛的bucket域名是直接绑定的，所以要配合七牛的sdk来实现证书申请的功能。
+​    目前七牛支持两种证书设置方式。自行购买和上传。自行购买需要购买七牛提供的证书，目前只有一个一年的免费。后面不清楚什么时候就要开始收费。一般自行购买的证书需要进行验证。我们可以选择文件验证。下面是一个go的例子。
+
+```go
+package main
+
+import (
+	"bytes"
+	"context"
+	"fmt"
+	"github.com/qiniu/go-sdk/v7/auth/qbox"
+	"github.com/qiniu/go-sdk/v7/storage"
+)
+
+const (
+	accessKey        = "lUkkMTqUK-fY7t6Tbg7zq-p3iaopntRM3232kEEDW"
+	secretKey        = "3svBHRvSBJlp0iVJMx-7urereu82mcLQPLJ1"
+	bucket           = "golang"
+	challengeKey     = ".well-known/pki-validation/2FA8BE94165E014EA0AE3F664EF548E8.txt"
+	challengeContent = `88518DD627533E6481D735B37C1BF258DCAF3ECA120CC86ED49A243446CB7D0B
+trust-provider.com
+TTDzhPt2m4`
+)
+
+func main() {
+	putPolicy := storage.PutPolicy{
+		Scope: bucket,
+	}
+	mac := qbox.NewMac(accessKey, secretKey)
+	upToken := putPolicy.UploadToken(mac)
+	cfg := storage.Config{}
+	// 空间对应的机房
+	cfg.Region = &storage.ZoneXinjiapo
+	// 是否使用https域名
+	cfg.UseHTTPS = true
+	// 上传是否使用CDN上传加速
+	cfg.UseCdnDomains = false
+
+	formUploader := storage.NewFormUploader(&cfg)
+	ret := storage.PutRet{}
+	putExtra := storage.PutExtra{
+		Params: map[string]string{
+			"x:name": challengeKey,
+		},
+	}
+	data := []byte(challengeContent)
+	dataLen := int64(len(data))
+	err := formUploader.Put(context.Background(),
+		&ret, upToken, challengeKey,
+		bytes.NewReader(data),
+		dataLen,
+		&putExtra)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(ret.Key, ret.Hash)
+
+}
+```
+
+如果我们需要使用Let's Encrypt的免费证书，我们还要配合ACME的客户端。上面的几种认证，如果本身没有DNS的权限，但是又想更新七牛证书，那么选择http-01更感觉适合，因为七牛的bucket域名是通过dns直接绑定的，同时还要配合七牛的sdk来实现证书申请的功能。
 
   下面是一个go的代码：
 
@@ -231,7 +290,7 @@ func main() {
 }
 ```
 
-证书获取成功以后，再上传到七牛即可。上传的这部分代码，我在GitHub上找到了相关的封装：[源](https://github.com/tuotoo/qiniu-auto-cert/blob/master/qiniu/api.go)
+证书获取成功以后，再上传到七牛即可。上传的这部分代码，我在GitHub上找到了相关的go包：[源](https://github.com/tuotoo/qiniu-auto-cert/blob/master/qiniu/api.go)
 
 调用：
 

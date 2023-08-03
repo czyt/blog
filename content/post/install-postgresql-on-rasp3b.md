@@ -85,7 +85,31 @@ postgres=# \q
 mongodb://root:root@127.0.0.1:27017/auth_microservice_db?authSource=admin
 ```
 
+### 修改Mongodb数据文件路径
 
+修改配置文件`mongod.conf`
+
+```yaml
+# Where and how to store data.
+storage:
+  dbPath: /usr/mongodb/data
+  journal:
+    enabled: true
+```
+
+然后将之前数据目录的文件拷贝过来
+
+```bash
+scp -r /var/lib/mondb/* /usr/mongodb/data
+```
+
+重启服务，如果报错 `"error":"IllegalOperation: Attempted to create a lock file on a read-only directory:`,则需要将 `/usr/mongodb/data`给mongod用户属主权限
+
+```bash
+chown -R mongod:mongod /usr/mongodb/data
+```
+
+然后再重启服务即可。
 
 ## 参考文档
 

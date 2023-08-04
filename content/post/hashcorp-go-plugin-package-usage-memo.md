@@ -9,3 +9,4 @@ draft: true
 ## 例子
 ## 参考链接
 + https://eli.thegreenplace.net/2023/rpc-based-plugins-in-go/
++ https://zerofruit-web3.medium.com/hashicorp-plugin-system-design-and-implementation-5f939f09e3b3

@@ -2109,6 +2109,19 @@ func (s *SMTPServer) ValidateVerificationCode(codeToken, vCode, email, usage str
 
 其他类型的数据库均有实现。
 
+## 调试代码
+### 获取panic时的调用堆栈
+```go
+if p := recover(); p != nil {
+    buf := make([]byte, 64<<10)
+    buf = buf[:runtime.Stack(buf, false)]
+    log.Printf("panic captured: %v\r\n,stack:%s",
+               p,
+               string(buf))
+    ....
+}
+```
+
 ## 有用的链接
 
 + https://github.com/TheAlgorithms/Go

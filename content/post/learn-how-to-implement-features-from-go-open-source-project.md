@@ -494,7 +494,7 @@ func (rb *RingBuffer[T]) Clear() {
 
 ### LRU
 
-tailscale项目，[源地址](https://github.com/tailscale/tailscale/blob/main/util/lru/lru.go)
+tailscale项目，[源地址](https://github.com/tailscale/tailscale/blob/main/util/lru/lru.go) 另外 Hashcorp也有一个 [地址](https://github.com/hashicorp/golang-lru)
 
 ```go
 // Copyright (c) Tailscale Inc & AUTHORS

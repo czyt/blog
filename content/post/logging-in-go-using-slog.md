@@ -937,4 +937,8 @@ func (u *User) LogValue() slog.Value {
 ## 原文
 
 + [A Comprehensive Guide to Logging in Go with Slog](https://betterstack.com/community/guides/logging/logging-in-go/#contextual-logging-in-go-with-slog)
+
 + https://thedevelopercafe.com/articles/logging-in-go-with-slog-a7bb489755c2 
+
+## 相关库
++ [samber/slog-multi](https://github.com/samber/slog-multi)

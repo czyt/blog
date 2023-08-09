@@ -24,6 +24,8 @@ draft: false
 
 + [官方博客 Profiling Go Programs](https://go.dev/blog/pprof)
 
++ [Profile-guided optimization](https://go.dev/doc/pgo)
+
 + https://dave.cheney.net/high-performance-go-workshop/dotgo-paris.html
 
 + https://github.com/golang/go/wiki/Performance

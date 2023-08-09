@@ -1,6 +1,6 @@
 ---
 title: "在GO中使用日志库slog"
-date: 2022-08-09
+date: 2023-08-09
 tags: ["golang", "slog"]
 draft: false
 ---

@@ -34,4 +34,4 @@ mail: x-gopher@qq.com or go-x@qq.com
 - [libgen mirror](https://libgen.czyt.tech)
 
 
-![image-20221010120813657](https://assets.czyt.tech/img/aifadian.jpg)
+[![赞赏](https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.jpg)](https://afdian.net/a/x-czyt)

@@ -577,4 +577,5 @@ func main() {
 - [官方GO驱动使用详解](https://www.mongodb.com/docs/drivers/go/current/)
 - [Custom-marshal Golang structs with flattening](https://sudssm.medium.com/custom-marshal-golang-structs-with-flattening-908d5006404c)
 - https://medium.com/@amsokol.com/new-official-mongodb-go-driver-and-google-protobuf-making-them-work-together-6357b0118f3f
+- [How to Implement a GraphQL API Server using Golang and MongoDB](https://www.section.io/engineering-education/implement-graphql-api-using-golang-and-mongodb-database/)
 

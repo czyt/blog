@@ -12,6 +12,7 @@ summary: "一些链接"
 + [Preslav Rachev](https://preslav.me/)
 + [Adam Toth](https://medium.com/@adykaaa)
 + [Neenad Ingole](https://www.iamninad.com)
++ [Boldly Go](https://boldlygo.tech)
 
 ### Web
 

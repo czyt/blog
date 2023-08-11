@@ -1423,5 +1423,7 @@ String _getLibraryPath() {
 在上面的示例代码中，我们首先定义了一个 Dart 类 Point，它表示 C 中的结构体。然后，我们定义了一个 Dart 函数 DartPrintPoint，它接受一个指向结构体的指针。我们使用 ffi.allocate() 方法分配一个结构体，并设置其字段的值。然后，我们使用 nativePrintPoint() 函数调用 C 函数，并传递结构体的指针。最后，我们使用 ffi.free() 方法释放结构体的内存。
 
 可以使用[ffigen](https://pub.dev/packages/ffigen)来生成ffi调用代码。参考Google的这篇文章[Using FFI in a Flutter plugin](https://codelabs.developers.google.com/codelabs/flutter-ffigen)。
-## 参考文档
-+[在 Dart 里使用 Stream](https://dart.cn/articles/libraries/creating-streams)
+## 参考资料
++ [在 Dart 里使用 Stream](https://dart.cn/articles/libraries/creating-streams)
+
++ [shorebirdtech(调用rust ffi的dart升级包)](https://github.com/shorebirdtech/updater)

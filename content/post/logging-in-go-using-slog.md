@@ -942,3 +942,5 @@ func (u *User) LogValue() slog.Value {
 
 ## 相关库
 + [samber/slog-multi](https://github.com/samber/slog-multi)
+## 其他资料
++ [Go (golang) Slog Package](https://www.gopherguides.com/articles/golang-slog-package)

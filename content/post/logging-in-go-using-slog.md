@@ -5,7 +5,7 @@ tags: ["golang", "slog"]
 draft: false
 ---
 
-> 本文根据两篇文章机翻拼凑而来。两篇文章发布时，slog还未进入标准库。golang 1.21.0 于2023-08-09发布，slog也包含在正式库中，本文根据原文内容进行了部分的修订和补充。
+> 本文根据三篇文章机翻拼凑而来。其中两篇文章发布时，slog还未进入标准库。golang 1.21.0 于2023-08-09发布，slog也包含在正式库中，本文根据原文内容进行了部分的修订和补充。
 
 ## 什么是slog？ #
 
@@ -134,7 +134,7 @@ $ go run main.go
 ##  具体类型的属性
 
 
-slog 是一个结构化记录器，提供指定属性的能力。
+slog 是一个结构化记录器，提供指定具体类型属性的能力。使用`slog.Int` 、 `slog.String,` `slog.Bool` and `slog.Any`这种方式可以避免日志记录在输出之前的内存分配从而显著提高日志性能。
 
 ```go
 package main
@@ -175,6 +175,7 @@ Float64
 Bool
 Time
 Duration
+Any
 ```
 
 
@@ -933,14 +934,90 @@ func (u *User) LogValue() slog.Value {
   }
 }
 ```
+## 添加源文件信息
+很多时候，查找错误最困难的部分是确定日志消息源自哪个文件和哪一行。在 slog 包中，通过在创建处理程序选项时设置 AddSource 选项来简化这一过程。
+```go
+package main
 
+import (
+	"log/slog"
+	"os"
+	"training/store"
+)
+
+func main() {
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{AddSource: true}))
+	// Set the logger for the application
+	slog.SetDefault(logger)
+
+	slog.Info("hello gophers")
+	slog.Warn("be warned!")
+	slog.Error("this is broken")
+
+	_ = store.New()
+}
+```
+输出
+```bash
+$ go run .
+
+{"time":"2023-08-10T10:41:34.903505-05:00","level":"INFO","source":{"function":"main.main","file":"./main.go","line":14},"msg":"hello gophers"}
+{"time":"2023-08-10T10:41:34.90392-05:00","level":"WARN","source":{"function":"main.main","file":"./main.go","line":15},"msg":"be warned!"}
+{"time":"2023-08-10T10:41:34.90393-05:00","level":"ERROR","source":{"function":"main.main","file":"./main.go","line":16},"msg":"this is broken"}
+{"time":"2023-08-10T10:41:34.903941-05:00","level":"INFO","source":{"function":"training/store.New","file":"./store/store.go","line":8},"msg":"starting store"}
+
+--------------------------------------------------------------------------------
+Go Version: go1.21.0
+```
+请注意，您获得了完全限定的路径。这可能不是您想要的，因此我们也可以使用 ReplaceAttr 选项来创建所需的输出：
+```go
+package main
+
+import (
+	"log/slog"
+	"os"
+	"path/filepath"
+
+	"training/store"
+)
+
+func main() {
+	replacer := func(groups []string, a slog.Attr) slog.Attr {
+		if a.Key == slog.SourceKey {
+			source := a.Value.Any().(*slog.Source)
+			source.File = filepath.Base(source.File)
+		}
+		return a
+	}
+
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{AddSource: true, ReplaceAttr: replacer}))
+	// Set the logger for the application
+	slog.SetDefault(logger)
+
+	slog.Info("hello gophers")
+	slog.Warn("be warned!")
+	slog.Error("this is broken")
+
+	_ = store.New()
+}
+```
+输出
+```bash
+$ go run .
+
+{"time":"2023-08-10T10:41:34.592023-05:00","level":"INFO","source":{"function":"main.main","file":"main.go","line":24},"msg":"hello gophers"}
+{"time":"2023-08-10T10:41:34.592243-05:00","level":"WARN","source":{"function":"main.main","file":"main.go","line":25},"msg":"be warned!"}
+{"time":"2023-08-10T10:41:34.592248-05:00","level":"ERROR","source":{"function":"main.main","file":"main.go","line":26},"msg":"this is broken"}
+{"time":"2023-08-10T10:41:34.592251-05:00","level":"INFO","source":{"function":"training/store.New","file":"store.go","line":8},"msg":"starting store"}
+
+--------------------------------------------------------------------------------
+Go Version: go1.21.0
+```
 ## 原文
 
 + [A Comprehensive Guide to Logging in Go with Slog](https://betterstack.com/community/guides/logging/logging-in-go/#contextual-logging-in-go-with-slog)
-
 + https://thedevelopercafe.com/articles/logging-in-go-with-slog-a7bb489755c2 
+ + [Go (golang) Slog Package](https://www.gopherguides.com/articles/golang-slog-package)
 
 ## 相关库
 + [samber/slog-multi](https://github.com/samber/slog-multi)
-## 其他资料
-+ [Go (golang) Slog Package](https://www.gopherguides.com/articles/golang-slog-package)

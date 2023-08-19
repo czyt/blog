@@ -40,3 +40,8 @@ go install github.com/ServiceWeaver/weaver-gke/cmd/weaver-gke@latest
 >export CGO_ENABLED=1; export CC=gcc; go install github.com/ServiceWeaver/weaver/cmd/weaver@latest
 >```
 
+## 参考文章
+
++ https://atoo.hashnode.dev/gingonic-service-weaver
+
+  

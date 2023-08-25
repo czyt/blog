@@ -11,7 +11,7 @@ draft: false
 
 如果你使用的是企业邮箱，可能需要添加SPF记录。SPF（Sender Policy Framework） 是电子邮件系统中发送方策略框架的缩写，它的内容写在DNS的txt类型的记录里面；作用是防止别人伪造你的邮件地址进行发信，是一种非常高效的反垃圾邮件解决方案。**如果你的服务器没有设置邮件的SPF，那么在发送邮件到Gmail等邮箱地址时，会发生退信**。
 
-一般给域名添加SPF记录的方式是添加一条TXT记录。以网易企业邮箱为例，添加的TXT记录值是`v=spf1 include:spf.163.com -all`
+一般给域名添加SPF记录的方式是添加一条TXT记录。以腾讯企业邮箱为例，添加的TXT记录值是`v=spf1 include:spf.mail.qq.com -all`
 
 使用go可以实现查询域名的TXT信息。
 
@@ -24,6 +24,23 @@ func TestNetLookupTxt(t *testing.T) {
 	t.Log(txt)
 }
 ```
+### DMARC（可选）
+ DMARC（Domain-based Message Authentication, Reporting & Conformance）是一种基于现有的SPF和DKIM协议的可扩展电子邮件认证协议，邮件收发双方建立了邮件反馈机制，便于邮件发送方和邮件接收方共同对域名的管理进行完善和监督。对于未通过前述检查的邮件，接收方则按照发送方指定的策略进行处理，如直接投入垃圾箱或拒收。从而有效识别并拦截欺诈邮件和钓鱼邮件，保障用户个人信息安全。这里同样以腾讯企业邮箱为例。在DNS管理的地方添加以下DMARC记录：
+
+主机记录：` _dmarc`
+
+记录类型：`TXT`
+
+记录值: `v=DMARC1; p=none; rua=mailto:mailauth-reports@qq.com`
+
+> 注意：DMARC记录里，有一个值可由你来自定义：
+> p：用于告知收件方，当检测到某封邮件存在伪造发件人的情况，收件方要做出什么处理；
+>
+> p=none; 为收件方不作任何处理
+>
+> p=quarantine; 为收件方将邮件标记为垃圾邮件
+>
+> p=reject; 为收件方拒绝该邮件
 
 ## 消息体
 

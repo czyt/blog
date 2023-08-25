@@ -601,7 +601,7 @@ yay -S atuin
 echo 'eval "$(atuin init zsh)"' >> ~/.zshrc
 ```
 
-
+另外有个仓库也可以参考下  https://github.com/unixorn/awesome-zsh-plugins
 
 ### fish
 

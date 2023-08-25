@@ -24,7 +24,12 @@ func TestNetLookupTxt(t *testing.T) {
 	t.Log(txt)
 }
 ```
-### DMARC（可选）
+### DKIM
+
+[腾讯企业邮箱 DKIM配置说明](https://open.work.weixin.qq.com/help2/pc/19647?person_id=1)
+
+### DMARC
+
  DMARC（Domain-based Message Authentication, Reporting & Conformance）是一种基于现有的SPF和DKIM协议的可扩展电子邮件认证协议，邮件收发双方建立了邮件反馈机制，便于邮件发送方和邮件接收方共同对域名的管理进行完善和监督。对于未通过前述检查的邮件，接收方则按照发送方指定的策略进行处理，如直接投入垃圾箱或拒收。从而有效识别并拦截欺诈邮件和钓鱼邮件，保障用户个人信息安全。这里同样以腾讯企业邮箱为例。在DNS管理的地方添加以下DMARC记录：
 
 主机记录：` _dmarc`
@@ -41,6 +46,12 @@ func TestNetLookupTxt(t *testing.T) {
 > p=quarantine; 为收件方将邮件标记为垃圾邮件
 >
 > p=reject; 为收件方拒绝该邮件
+>
+> rua：用于在收件方检测后，将一段时间的汇总报告，发送到哪个邮箱地址。
+>
+> ruf：用于当检测到伪造邮件时，收件方须将该伪造信息的报告发送到哪个邮箱地址。`ruf=mailto:xxx@xxxxxx.com;`
+>
+> DMARC是基于DKIM和SPF的，所以开启DMARC必须先开启DKIM或SPF任意一种
 
 ## 消息体
 

@@ -2047,7 +2047,11 @@ func ValidateStructCN(data interface{}) error {
 
 ## 插件化路由和Handler
 
-Todo
+TODO
+
+## GraphQL
+
+TODO
 
 ## pb类型到struct的快速复制
 

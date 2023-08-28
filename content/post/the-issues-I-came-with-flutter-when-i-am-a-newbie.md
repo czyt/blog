@@ -115,4 +115,5 @@ Widget build(BuildContext context) {
 + [Networking in Flutter using Dio](https://blog.logrocket.com/networking-flutter-using-dio/)
 ### 文档
 + [Flutter跨平台编译](https://github.com/flexi-creator/multiplat)
++ On-Device ML using Flutter and TensorFlow Lite [part1](https://medium.com/@romanejaquez/on-device-ml-using-flutter-and-tensorflow-lite-pt-1-model-training-2a84a685f2de) [part2](https://medium.com/flutter-community/on-device-ml-using-flutter-and-tensorflow-lite-pt-2-consume-your-trained-model-in-flutter-470bf314cd2d)
 + [Deploying Flutter Apps with Github Actions Part I](https://blog.auguron.com/deploying-flutter-apps-with-github-actions-c547c23c0e2f)

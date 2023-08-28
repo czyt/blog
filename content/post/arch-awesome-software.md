@@ -5,6 +5,7 @@ tags: ["linux", "Arch", "Manjaro", "tools"]
 draft: false
 ---
 
+> 本文部分内容基于manjaro，另外如果喜欢苹果界面，可以试下[pearos](https://pearos.xyz)
 ## 更换软件源
 
 使用中国的镜像排名
@@ -276,6 +277,8 @@ toDesk远程工具 安装 `yay -S todesk-bin` (设置服务 `systemctl start\ena
 parsec 远程工具 安装 `yay -S parsec-bin ` 
 
 v2ray 安装 `yay -S v2ray`  （安装配置工具`yay -S qv2ray ` qv2ray 插件 `yay -S qv2ray-plugin` ，[福利订阅](https://jiang.netlify.app) 新版已经使用AppImage格式发布，下载AppImage格式即可 或者 v2rayDesktop `yay -S v2ray-desktop` ）
+
+clash https://aur.archlinux.org/packages?K=clash [福利](https://neko-warp.nloli.xyz)
 
 [nekoray-bin ](https://github.com/MatsuriDayo/nekoray)Qt based cross-platform GUI proxy configuration manager  安装 `yay -S nekoray-bin`
 
@@ -599,7 +602,7 @@ yay -S atuin
 echo 'eval "$(atuin init zsh)"' >> ~/.zshrc
 ```
 
-
+另外有个仓库也可以参考下  https://github.com/unixorn/awesome-zsh-plugins
 
 ### fish
 

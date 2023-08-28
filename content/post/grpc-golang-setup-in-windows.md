@@ -247,6 +247,7 @@ go install \
 1. [https://www.liwenzhou.com/posts/Go/gRPC/](https://www.liwenzhou.com/posts/Go/gRPC/)
 1. [https://blog.didiyun.com/index.php/2018/12/12/grpc-golang-1/](https://blog.didiyun.com/index.php/2018/12/12/grpc-golang-1/)
 1. https://www.infracloud.io/blogs/understanding-grpc-concepts-best-practices/
+1. https://dev.to/homayoonalimohammadi/protoc-plugins-with-go-4fpj
 
 
 

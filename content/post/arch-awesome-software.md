@@ -5,6 +5,7 @@ tags: ["linux", "Arch", "Manjaro", "tools"]
 draft: false
 ---
 
+> 本文部分内容基于manjaro，另外如果喜欢苹果界面，可以试下[pearos](https://pearos.xyz)
 ## 更换软件源
 
 使用中国的镜像排名

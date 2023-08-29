@@ -17,6 +17,7 @@ draft: false
 + [inside rust std library](https://github.com/Warrenren/inside-rust-std-library)
 + https://learning-rust.github.io
 + https://github.com/CleanCut/ultimate_rust_crash_course
++ [Writing a JVM in Rust](https://andreabergia.com/series/writing-a-jvm-in-rust/)
 ## 一些文档
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/

@@ -68,72 +68,78 @@ Windows进行网络检查的地址是 http://www.msftconnecttest.com/connecttest
 
 这些配置可以在注册表`HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet`中找到。注册表内容可以参考[这个项目](https://github.com/dantmnf/NCSIOverride/blob/master/install.reg)。下面是通过NCSI来检查网络是否连接的代码：
 
+首先先遍历注册表相关的键值对，因为用户可能修改相关配置。
+
 ```c#
-          public Dictionary<string, string> GetNCSIData()
+public Dictionary<string, string> GetNCSIData()
+{
+    RegistryKey internetKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet");
+    if (internetKey != null)
+    {
+        Dictionary<string, string> NCSIData = new Dictionary<string, string>();
+        string[] valueNames = internetKey.GetValueNames();
+
+        foreach (string key in valueNames)
         {
-            RegistryKey internetKey =
-                Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet");
-            if (internetKey != null)
+            object value = internetKey.GetValue(key);
+            if (value is string v)
             {
-                Dictionary<string, string> NCSIData = new Dictionary<string, string>();
-                string[] valueNames = internetKey.GetValueNames();
-
-                foreach (string key in valueNames)
-                {
-                    object value = internetKey.GetValue(key);
-                    if (value is string v)
-                    {
-                        NCSIData.Add(key, v);
-                    }
-                }
-
-                return NCSIData;
+                NCSIData.Add(key, v);
             }
-
-            return null;
         }
 
-        public async Task<bool> IsInternetConnected()
+        return NCSIData;
+    }
+
+    return null;
+}
+```
+
+然后进行检查
+
+```c#
+
+public async Task<bool> IsInternetConnected()
+{
+    var ncsiDataDic = GetNCSIData();
+    string probeHost = ncsiDataDic["ActiveDnsProbeHost"];
+    string NCSIDnsIpAddress = ncsiDataDic["ActiveDnsProbeContent"];
+
+    string webProbeHost = ncsiDataDic["ActiveWebProbeHost"];
+    string WebProbePath = ncsiDataDic["ActiveWebProbePath"];
+    string NCSITestResult = ncsiDataDic["ActiveWebProbeContent"];
+
+    string NCSITestUrl = new UriBuilder()
+    {
+        Scheme = "http",
+        Host = webProbeHost,
+        Port = 80,
+        Path = WebProbePath
+    }.Uri.ToString();
+
+
+    string NCSIDns = probeHost;
+
+    try
+    {
+        using (var webClient = new WebClient())
         {
-            var ncsiDataDic = GetNCSIData();
-            string probeHost = ncsiDataDic["ActiveDnsProbeHost"];
-            string NCSIDnsIpAddress = ncsiDataDic["ActiveDnsProbeContent"];
-
-            string webProbeHost = ncsiDataDic["ActiveWebProbeHost"];
-            string WebProbePath = ncsiDataDic["ActiveWebProbePath"];
-            string NCSITestResult = ncsiDataDic["ActiveWebProbeContent"];
-
-            string NCSITestUrl = new UriBuilder()
-            {
-                Scheme = "http",
-                Host = webProbeHost,
-                Port = 80,
-                Path = WebProbePath
-            }.Uri.ToString();
-
-
-            string NCSIDns = probeHost;
-
-            try
-            {
-                using (var webClient = new WebClient())
-                {
-                    string result = await webClient.DownloadStringTaskAsync(NCSITestUrl);
-                    if (result != NCSITestResult)
-                    {
-                        return false;
-                    }
-                }
-
-                // Check NCSI DNS IP
-                var dnsIpAddresses = await Dns.GetHostAddressesAsync(NCSIDns);
-                return dnsIpAddresses.Any(addr => addr.ToString() == NCSIDnsIpAddress);
-            }
-            catch (Exception )
+            string result = await webClient.DownloadStringTaskAsync(NCSITestUrl);
+            if (result != NCSITestResult)
             {
                 return false;
             }
         }
+
+        // Check NCSI DNS IP
+        var dnsIpAddresses = await Dns.GetHostAddressesAsync(NCSIDns);
+        return dnsIpAddresses.Any(addr => addr.ToString() == NCSIDnsIpAddress);
+    }
+    catch (Exception )
+    {
+        return false;
+    }
+}
 ```
 
 ## 其他方式

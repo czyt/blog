@@ -13,6 +13,7 @@ summary: "一些链接"
 + [Adam Toth](https://medium.com/@adykaaa)
 + [Neenad Ingole](https://www.iamninad.com)
 + [Boldly Go](https://boldlygo.tech)
++ [shane](https://shane.ai)
 
 ### Web
 

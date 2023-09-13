@@ -333,7 +333,39 @@ func WsHandler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
+webSocket工程化方面，我一般是在service层中通过context转换为`http.context`来传递到useCase层进行
 
+```go
+
+if httpCtx, ok := ctx.(http.Context); ok {
+		if req.Id == "" {
+			// 处理验证逻辑
+		}
+		if err := a.wsUc.HandleWebsocket(req.Id, httpCtx); err != nil {
+			return nil, err
+		}
+  }
+```
+
+对应的UseCase代码
+
+```go
+upGrader = websocket.Upgrader{
+		CheckOrigin: func(r *http.Request) bool {
+			return true
+		},
+}
+
+func HandleWebsocket(id string,httpCtx http.Context) error {
+    conn, err := upGrader.Upgrade(ctx.Response(), ctx.Request(), nil)
+	if err != nil {
+		c.log.Error(err)
+		return err
+	}
+	go handleWsMessage(id, conn)
+	return nil
+}
+```
 
 ## 支持文件上传
 

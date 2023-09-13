@@ -602,6 +602,9 @@ mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 - [shellcheck](https://github.com/koalaman/shellcheck)：一个静态 shell 脚本分析工具，本质上是 bash／sh／zsh 的 lint。
 - [Filenames and Pathnames in Shell](http://www.dwheeler.com/essays/filenames-in-shell.html)：有关如何在 shell 脚本里正确处理文件名的细枝末节。
 - [Data Science at the Command Line](http://datascienceatthecommandline.com/#tools)：用于数据科学的一些命令和工具，摘自同名书籍。
+> 增补
++ [最牛B的Linux Shell命令](https://plantegg.github.io/2017/01/01/top_linux_commands/)
++ [linux network performance parameters](https://github.com/leandromoreira/linux-network-performance-parameters)
 
 ## 免责声明
 
@@ -613,3 +616,8 @@ mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 [![Creative Commons License](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
 
 本文使用授权协议 [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)。
+
+
+
+## 增补
+

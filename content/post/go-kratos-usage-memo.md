@@ -260,6 +260,7 @@ curl --location -g --request POST 'http://127.0.0.1:8000/users?password=e77eEDab
   > 注意：接口url的定义要注意url覆盖的问题。调整proto中的定义顺序即可。
 
 ## 支持Websocket
+### ws
 
 下面的代码是[官方的例子 ](https://github.com/go-kratos/examples/blob/main/ws)
 
@@ -365,6 +366,76 @@ func HandleWebsocket(id string,httpCtx http.Context) error {
 	go handleWsMessage(id, conn)
 	return nil
 }
+```
+### wss
+
+ webSocket服务如果要支持wss，一般必须监听tls，也就是说你需要相关的域名证书。有两种实现方式：
+
+1. 使用autoTls。免费用Let's Encrypt的证书。这种方式需要强制使用443端口，对于部署了nginx的平台不是很友好。
+2. 使用证书和证书key。这种方式比较推荐，没有端口强制要求。相关代码后续再进行更新。
+
+另外再说下nginx下配置wss需要注意的几点：
+
+1. proxy_pass 的时候是https的，比如你以前的ws的proxy_pass 是`http://ws/hello` 那么你的wss的proxy_pass就应该是`https://ws/hello`
+
+2. 在https的网站映射下面，对应的是wss，而http对应的是ws。
+
+参考下面的nginx配置：
+```nginx
+map $http_upgrade $connection_upgrade {
+      default upgrade;
+      '' close;
+}
+
+upstream tiny_wssserver {
+   server 0.0.0.0:8079;
+   ip_hash;
+}
+
+server {
+    listen      80;
+    server_name test.czyt.tech;
+    location / {
+         root /opt/web/home/;
+         index  index.html index.htm;
+
+    }
+
+   location /ws {
+     proxy_pass https://tiny_wssserver/ws;
+     proxy_http_version 1.1;
+     proxy_set_header Upgrade $http_upgrade;
+     proxy_set_header Connection $connection_upgrade;
+     proxy_set_header   Host $host;
+     proxy_read_timeout 36000s;
+   }
+}
+
+
+server {
+    listen       443  ssl;
+    server_name  test.czyt.tech;
+    client_max_body_size 50m;
+
+    ssl_certificate /opt/certs/certificates/test.czyt.tech.crt;
+    ssl_certificate_key /opt/certs/certificates/test.czyt.tech.key;
+
+    location / {
+         root /opt/web/home/;
+         index  index.html index.htm;
+
+    }
+
+   location /ws {
+     proxy_pass https://tiny_wssserver/ws;
+     proxy_http_version 1.1;
+     proxy_set_header Upgrade $http_upgrade;
+     proxy_set_header Connection $connection_upgrade;
+     proxy_set_header   Host $host;
+     proxy_read_timeout 36000s;
+   }
+}
+
 ```
 
 ## 支持文件上传

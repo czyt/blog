@@ -4,6 +4,9 @@ date: 2022-08-12
 tags: ["golang", "kratos"]
 draft: false
 ---
+## 需要特别注意的坑
+### API路由覆盖的问题
+比如有两个接口 A `get /v1/user/{user_id}`和 B `get /v1/user/profile`如果Ad定义在B之前，那么B可能会被A覆盖路由。需要将A放到B之前。
 ## 自定义接口返回内容
 + 正常的响应序列化逻辑通过[Response Encoder](https://go-kratos.dev/docs/component/transport/http#responseencoderen-encoderesponsefunc-serveroption)实现。
 

@@ -36,6 +36,30 @@ for /f "tokens=1,*" %%A in ('reg query "%path%" /f "Microsoft" ^| findstr /R "%v
 
 del /q /f "%userprofile%\Desktop\Microsoft Edge.lnk" >NUL 2>nul
 ```
+## 注册表
+### 安全
+#### 智能应用助理
+打开
+```
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Policy]
+"VerifiedAndReputablePolicyState"=dword:00000001
+```
+评估
+```
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Policy]
+"VerifiedAndReputablePolicyState"=dword:00000002
+```
+关闭
+```
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CI\Policy]
+"VerifiedAndReputablePolicyState"=dword:00000000
+```
 
 ## 工具
 

@@ -1805,6 +1805,58 @@ func ownerOfPID(pid int) (userID string, err error) {
 }
 ```
 
+### 检查指定PID是否alive
+
+linux
+
+来源  [hashcorp/go-plugin](https://github.com/hashicorp/go-plugin/blob/main/internal/cmdrunner/process_posix.go#L16)
+
+这段代码利用了`kill -0`信号，具体可以参考[这篇文章](https://www.linuxjournal.com/content/monitoring-processes-kill-0)
+
+```go
+// _pidAlive tests whether a process is alive or not by sending it Signal 0,
+// since Go otherwise has no way to test this.
+func _pidAlive(pid int) bool {
+	proc, err := os.FindProcess(pid)
+	if err == nil {
+		err = proc.Signal(syscall.Signal(0))
+	}
+
+	return err == nil
+}
+```
+
+windows [来源](https://github.com/hashicorp/go-plugin/blob/main/internal/cmdrunner/process_windows.go)
+
+```go
+const (
+	// Weird name but matches the MSDN docs
+	exit_STILL_ACTIVE = 259
+
+	processDesiredAccess = syscall.STANDARD_RIGHTS_READ |
+		syscall.PROCESS_QUERY_INFORMATION |
+		syscall.SYNCHRONIZE
+)
+
+// _pidAlive tests whether a process is alive or not
+func _pidAlive(pid int) bool {
+	h, err := syscall.OpenProcess(processDesiredAccess, false, uint32(pid))
+	if err != nil {
+		return false
+	}
+	defer syscall.CloseHandle(h)
+
+	var ec uint32
+	if e := syscall.GetExitCodeProcess(h, &ec); e != nil {
+		return false
+	}
+
+	return ec == exit_STILL_ACTIVE
+}
+```
+
+
+
 ### 服务端即时压缩
 
 >// Package precompress provides build- and serving-time support for

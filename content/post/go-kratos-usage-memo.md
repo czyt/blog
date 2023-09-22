@@ -659,6 +659,24 @@ func (a UploadUseCase) UploadImage(fileName string, reader io.Reader, uploadDemo
 }
 ```
 
+## Http跳转
+
+参考下面的Service代码
+
+```go
+imports(
+    	"github.com/go-kratos/kratos/v2/transport/http"
+	stdHttp "net/http"
+)
+......
+if httpCtx, ok := ctx.(http.Context); ok {
+		stdHttp.Redirect(httpCtx.Response(), httpCtx.Request(), targetUrl, stdHttp.StatusMovedPermanently)
+	}
+......
+```
+
+
+
 ## 文件下载、导出服务
 
 文件下载服务既可以是本地静态文件也可能是动态生成的，本质上就是将字节返回到客户端。在Kratos中我们可以将这部分逻辑由ResponseEncoder控制，也就是说我们可以先按proto定义服务，但是返回返回文件下载。

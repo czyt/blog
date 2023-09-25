@@ -1,5 +1,5 @@
 ---
-title: "【译】Go 中的 Redis 缓存：初学者指南"
+title: "Go 中的 Redis 缓存：初学者指南【译】"
 date: 2023-09-22
 tags: ["golang","redis"]
 draft: false

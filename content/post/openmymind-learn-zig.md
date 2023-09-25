@@ -419,7 +419,7 @@ pub fn print(comptime fmt: []const u8, args: anytype) void {
 
 其原因是 `print` 会进行额外的编译时检查，这是大多数其他语言中不会进行的。什么样的检查？好吧，假设您将格式更改为 `"it's over {d}\n"` ，但保留了两个参数。你会得到一个编译时错误：‘it's over {d}’中未使用参数。它还会进行类型检查：将格式字符串更改为 `"{s}'s power is {s}\n"` ，您将得到类型“u64”的无效格式字符串“s”。如果编译时未知字符串格式，则无法在编译时执行这些检查。因此需要一个comptime已知的值。
 
-The one place where `comptime` will immediately impact your coding is the default types for integer and float literals, the special `comptime_int` and `comptime_float`. This line of code isn't valid: `var i = 0;`. You'll get a compile-time error: *variable of type 'comptime_int' must be const or comptime*. `comptime` code can only work with data that is known at compile time and, for integers and floats, such data is identified by the special `comptime_int` and `comptime_float` types. A value of this type can be used in compile time execution. But you're likely not going to spend the majority of your time writing code for compile time execution, so it isn't a particularly useful default. What you'll need to do is give your variables an explicit type:
+comptime将立即影响您的编码的一个地方是整数和浮点字面值的默认类型，即特殊的comptime_int和comptime_float。这行代码无效:var i = 0;你会得到一个编译时错误:' comptime_int '类型的变量必须是const或comptime。Comptime代码只能处理编译时已知的数据，对于整数和浮点数，这些数据由特殊的comptime_int和comptime_float类型标识。此类型的值可在编译时执行时使用。但是您可能不会花费大部分时间编写用于编译时执行的代码，因此它不是一个特别有用的默认值。你需要做的是给你的变量一个显式的类型:
 
 ```zig
 var i: usize = 0;
@@ -847,7 +847,7 @@ const OpenError = error {
 };
 ```
 
-If you try to run this, you'll get an error: *expected type 'void', found 'error{AccessDenied,NotFound}'*. This makes sense: we defined `main` with a `void` return type, yet we return something (an error, sure, but that's still not `void`). To solve this, we need to change our function's return type.
+如果你试着运行这个，你会得到一个错误:`expected type ' void '， found ' error{AccessDenied,NotFound} '`。这是有道理的:我们用void返回类型定义了main，但是我们返回了一些东西(当然是错误，但仍然不是void)。为了解决这个问题，我们需要更改函数的返回类型。
 
 ```zig
 pub fn main() OpenError!void {
@@ -2004,7 +2004,7 @@ Test [1/1] test.IntList: add... [gpa] (err): memory address 0x101154000 leaked:
   try list.add(@intCast(i+10));
 ```
 
-We have multiple memory leaks. Thankfully the testing allocator tells us exactly where the leaking memory was allocated. Are you able to spot the leak now? If not, remember that, in general, every `alloc` should have a corresponding `free`. Our code calls `free` once, in `deinit`. However, `alloc` is called once in `init` and then every time `add` is called and we need more space. Every time we `alloc` more space, we need to `free` the previous `self.items`:
+我们有多个内存泄漏。幸运的是，测试分配器告诉我们泄漏内存的确切分配位置。你现在能发现漏洞了吗?如果没有，请记住，一般来说，每个alloc都应该有相应的free。我们的代码在deinit中调用free一次。然而，在init中调用一次alloc，然后每次调用add，我们需要更多的空间。每次分配更多的空间时，我们都需要释放之前的`self.items`:
 
 ```zig
 // existing code

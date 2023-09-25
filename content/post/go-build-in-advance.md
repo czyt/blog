@@ -1,5 +1,5 @@
 ---
-title: "Golang编译进阶[译]"
+title: "Golang编译进阶【译】"
 date: 2023-08-31
 tags: ["golang"]
 draft: false

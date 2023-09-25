@@ -1,6 +1,6 @@
 ---
-title: "【译】学习zig"
-date: 2022-09-23
+title: "学习zig【译】"
+date: 2023-09-23
 tags: ["zig"]
 draft: false
 ---

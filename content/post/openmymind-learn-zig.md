@@ -225,7 +225,7 @@ pub const User = struct {
 }
 ```
 
-The use of `init` is merely a convention and in some cases `open` or some other name might make more sense. If you're like me and not a C++ programmer, the syntax to initalize fields, `.$field = $value,` might be a little odd, but you'll get used to it in no time.
+Init 的使用仅仅是一种约定，在某些情况下，open 或其他名称可能更有意义。如果你和我一样，不是 C + + 程序员，初始化字段的语法，。`$field = $value`，可能有点奇怪，但您很快就会习惯它。
 
 当我们创建“Goku”时，我们将 `user` 变量声明为 `const` ：
 

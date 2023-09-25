@@ -6,7 +6,7 @@ draft: false
 ---
 > 原文链接 https://www.openmymind.net/learning_zig/ 采用Google翻译机翻整理
 
-## [ 安装 Zig](https://www.openmymind.net/learning_zig/#install)
+## 安装 Zig
 
 Zig 的下载页面包括适用于常见平台的预编译二进制文件。在此页面上，您将找到最新开发版本以及主要版本的二进制文件。本指南跟踪的最新版本可以在页面顶部找到。
 
@@ -14,7 +14,7 @@ Zig 的下载页面包括适用于常见平台的预编译二进制文件。在�
 
 您现在应该能够运行 `zig zen` 和 `zig version` 来测试您的设置。
 
-# [语言概述 - 第 1 部分](https://www.openmymind.net/learning_zig/language_overview_1/#language_overview)
+# 语言概述 - 第 1 部分
 
 Zig 是一种强类型编译语言。它支持泛型，具有强大的编译时元编程功能，并且不包含垃圾收集器。许多人认为 Zig 是 C 的现代替代品。因此，该语言的语法与 C 类似。我们正在讨论以分号结尾的语句和大括号分隔的块。
 
@@ -45,7 +45,7 @@ pub const User = struct {
 
 请参阅安装 zig 部分以快速启动并运行。
 
-## [ 输入](https://www.openmymind.net/learning_zig/language_overview_1/#importing)
+## 导入包
 
 很少有程序是作为单个文件编写的，没有标准库或外部库。我们的第一个程序也不例外，它使用 Zig 的标准库来打印我们的输出。 Zig 的导入系统非常简单，并且依赖于 `@import` 函数和 `pub` 关键字（使代码可以在当前文件外部访问）。
 
@@ -92,7 +92,7 @@ const MAX_POWER = user.MAX_POWER
 
 此时，您的问题可能多于答案。在上面的代码片段中， `user` 是什么？我们还没有看到它，但是如果我们使用 `var` 而不是 `const` 呢？或者您可能想知道如何使用第三方库。这些都是好问题，但要回答这些问题，我们首先需要更多地了解 Zig。现在我们必须对所学的内容感到满意：如何导入 Zig 的标准库、如何导入其他文件以及如何导出定义。
 
-## [ 注释](https://www.openmymind.net/learning_zig/language_overview_1/#comments)
+## 代码注释
 
 Zig 示例的下一行是注释：
 
@@ -104,7 +104,7 @@ Zig 没有多行注释，如 C 的 `/* ... */` 。
 
 对基于评论的自动文档生成有实验支持。如果您看过 Zig 的标准库文档，那么您就已经看到了它的实际效果。 `//!` 被称为顶级文档注释，可以放置在文件的顶部。三斜杠注释 ( `///` )，称为文档注释，可以放在特定位置，例如声明之前。如果您尝试在错误的位置使用任一类型的文档注释，您将收到编译器错误。
 
-## [ 函数](https://www.openmymind.net/learning_zig/language_overview_1/#functions)
+## 函数
 
 我们的下一行代码是 `main` 函数的开始：
 
@@ -148,7 +148,7 @@ fn add(a: i64, b: i64) i64 {
 
 为了提高可读性，没有函数重载（使用不同的参数类型和/或参数数量定义的同一函数）。现在，这就是我们需要了解的有关函数的全部内容。
 
-## [ 结构](https://www.openmymind.net/learning_zig/language_overview_1/#structures)
+## 结构体
 
 下一行代码是创建 `User` ，这是在代码片段末尾定义的类型。 `User` 的定义是：
 
@@ -268,7 +268,7 @@ pub fn init(name: []const u8, power: u64) User {
 
 与我们迄今为止探索的大多数内容一样，我们将来在讨论语言的其他部分时将重新审视结构。但是，在大多数情况下，它们都很简单。
 
-## [ 数组和切片](https://www.openmymind.net/learning_zig/language_overview_1/#arrays)
+## 数组和切片
 
 我们可以掩盖代码的最后一行，但考虑到我们的小片段包含两个字符串“Goku”和“{s}'s power is {d}\n”，您可能对 Zig 中的字符串感到好奇。为了更好地理解字符串，让我们首先探索数组和切片。
 
@@ -364,7 +364,7 @@ pub fn main() void {
 
 我们将在研究该语言的其他方面（尤其是字符串）的同时，发现有关数组和切片的更多信息。
 
-## [ 弦乐](https://www.openmymind.net/learning_zig/language_overview_1/#strings)
+## 字符串
 
 我希望我可以说 Zig 有一个 `string` 类型，而且非常棒。不幸的是，事实并非如此，他们也不是。最简单的是，Zig 字符串是字节序列（即数组或切片）( `u8` )。我们实际上通过 `name` 字段的定义看到了这一点： `name: []const u8,` 。
 
@@ -398,7 +398,7 @@ pub fn main() void {
 
 当然，在真实的程序中，大多数字符串（更一般地说，数组）在编译时是未知的。典型的例子是用户输入，在编译程序时是未知的。这是我们在谈论内存时必须重新讨论的问题。但简短的答案是，对于此类数据，在编译时其值未知，因此长度未知，我们将在运行时动态分配内存。我们的字符串变量（仍然是 `[]const u8` 类型）将是指向此动态分配的内存的切片。
 
-## [ comptime 和任何类型](https://www.openmymind.net/learning_zig/language_overview_1/#comptime)
+## comptime 和anytype
 
 在我们最后一行未探索的代码中，发生的事情比我们看到的要多得多：
 
@@ -450,11 +450,11 @@ struct{comptime year: comptime_int = 2023, comptime month: comptime_int = 8}
 
 Zig 没有函数重载，也没有 vardiadic 函数（具有任意数量参数的函数）。但它确实有一个编译器，能够根据传递的类型创建专门的函数，包括编译器本身推断和创建的类型。
 
-# [语言概述 - 第 2 部分](https://www.openmymind.net/learning_zig/language_overview_2/#language_overview)
+# 语言概述 - 第 2 部分
 
 这部分继续上一部分的内容：熟悉该语言。我们将探索 Zig 的控制流和结构之外的类型。连同第一部分，我们将涵盖该语言的大部分语法，使我们能够处理更多该语言和标准库的内容。
 
-## [ 控制流](https://www.openmymind.net/learning_zig/language_overview_2/#control_flow)
+##  控制流
 
 Zig 的控制流程可能很熟悉，但与我们尚未探索的语言的某些方面有额外的协同作用。我们将从控制流的快速概述开始，然后在讨论引起特殊控制流行为的功能时回来。
 
@@ -648,7 +648,7 @@ const personality_analysis = blk: {
 
 稍后，当我们探索标记联合、错误联合和可选类型时，我们将看到这些控制流还提供什么。
 
-## [ 枚举](https://www.openmymind.net/learning_zig/language_overview_2/#enums)
+## 枚举
 
 枚举是带有标签的整数常量。它们的定义很像一个结构体：
 
@@ -683,7 +683,7 @@ const Stage = enum {
 
 `switch` 的详尽性质使其与枚举完美搭配，因为它确保您已经处理了所有可能的情况。不过，在使用 `switch` 的 `else` 子句时要小心，因为它会匹配任何新添加的枚举值，这可能是也可能不是您想要的行为。
 
-## [ 标记工会](https://www.openmymind.net/learning_zig/language_overview_2/#unions)
+## union(联合)
 
 联合定义了值可以具有的一组类型。例如，此 `Number` 联合可以是 `integer` 、 `float` 或 `nan` （不是数字）：
 
@@ -762,7 +762,7 @@ const Timestamp = union(enum) {
 
 Zig 会根据我们联合的字段创建一个隐式枚举。
 
-## [ 选修的](https://www.openmymind.net/learning_zig/language_overview_2/#optionals)
+## optionals
 
 通过在类型前面添加问号 `?` ，可以将任何值声明为可选值。可选类型可以是 `null` 或定义类型的值：
 
@@ -808,7 +808,7 @@ while (rows.next()) |row| {
 }
 ```
 
-## [ 不明确的](https://www.openmymind.net/learning_zig/language_overview_2/#undefined)
+## undefined
 
 到目前为止，我们看到的每个变量都已初始化为合理的值。但有时我们并不知道变量声明时的值。选项是一种选择，但并不总是有意义。在这种情况下，我们可以将变量设置为 `undefined` 以使它们保持未初始化状态。
 
@@ -821,7 +821,7 @@ std.crypto.random.bytes(&pseudo_uuid);
 
 上面仍然创建了一个 16 字节的数组，但使内存未初始化。
 
-## [ 错误](https://www.openmymind.net/learning_zig/language_overview_2/#errors)
+## errors
 
 Zig 具有简单实用的错误处理能力。这一切都始于错误集，其外观和行为类似于枚举：
 
@@ -965,11 +965,11 @@ pub const Save = struct {
 
 虽然 Zig 更深入，并且某些语言特性具有更强大的功能，但我们在前两部分中看到的是该语言的重要部分。它将作为基础，使我们能够探索更复杂的主题，而不会因为语法而分心。
 
-# [时尚指南](https://www.openmymind.net/learning_zig/style_guide/#styleguide)
+# styleguide
 
 在这个简短的部分中，我们将介绍编译器强制执行的两条编码规则以及标准库的命名约定。
 
-## [ 未使用的变量](https://www.openmymind.net/learning_zig/style_guide/#unused_variables)
+## 未使用的变量unused_variables
 
 Zig 不允许变量闲置。下面给出了两个编译时错误：
 
@@ -1014,7 +1014,7 @@ fn add(a: i64, _: i64) i64 {
 
 请注意， `std` 也未使用，但不会生成错误。在未来的某个时候，预计 Zig 也会将此视为编译时错误。
 
-## [ 影子](https://www.openmymind.net/learning_zig/style_guide/#shadowing)
+## shadowing
 
 Zig 不允许一个标识符通过使用相同的名称来“隐藏”另一个标识符。从套接字读取的此代码无效：
 
@@ -1031,7 +1031,7 @@ fn read(stream: std.net.Stream) ![]const u8 {
 
 我们的 `read` 变量隐藏了我们的函数名称。我不喜欢这条规则，因为它通常会导致开发人员使用简短的无意义的名称。例如，要编译此代码，我会将 `read` 更改为 `n` 。在我看来，在这种情况下，开发人员可以更好地选择最具可读性的选项。
 
-## [ 命名约定](https://www.openmymind.net/learning_zig/style_guide/#naming)
+##  命名约定naming
 
 除了编译器强制执行的规则之外，您当然可以自由遵循您喜欢的任何命名约定。但它确实有助于理解 Zig 自己的命名约定，因为您将与之交互的大部分代码（从标准库到第三方库）都使用了它。
 
@@ -1052,7 +1052,7 @@ std.debug.print("{any}\n", .{T});
 
 `zig` 可执行文件确实有一个 `fmt` 命令，给定一个文件或目录，该命令将根据 Zig 自己的样式指南格式化该文件。但它并没有涵盖所有内容，例如它将调整标识和大括号位置，但不会更改标识符大小写。
 
-# [指针](https://www.openmymind.net/learning_zig/pointers/#pointers)
+# 指针pointers
 
 Zig 不包含垃圾收集器。管理内存的重担落在了开发人员的身上。这是一项重大责任，因为它直接影响应用程序的性能、稳定性和安全性。
 
@@ -1208,7 +1208,7 @@ pub const User = struct {
 
 该代码现在可以按预期工作。一般来说，函数参数和我们的内存模型仍然存在许多微妙之处，但我们正在取得进展。现在也许是时候提一下，除了特定的语法之外，这些都不是 Zig 所独有的。我们在这里探索的模型是最常见的，某些语言可能只是向开发人员隐藏了许多细节，从而隐藏了灵活性。
 
-## [ 方法](https://www.openmymind.net/learning_zig/pointers/#methods)
+## 方法methods
 
 您很可能将 `levelUp` 编写为 `User` 结构的方法：
 
@@ -1227,7 +1227,7 @@ pub const User = struct {
 
 我最初选择了一个函数，因为它很明确，因此更容易学习。
 
-## [常数函数参数](https://www.openmymind.net/learning_zig/pointers/#const_paremeters)
+## 常数函数参数const_paremeters
 
 我不止是暗示，默认情况下，Zig 将传递一个值的副本（称为“按值传递”）。很快我们就会发现现实有点微妙（提示：嵌套对象的复杂值怎么样？）
 
@@ -1239,7 +1239,7 @@ pub const User = struct {
 
 也许您想知道即使与复制非常小的结构相比，通过引用传递如何会更慢。接下来我们会更清楚地看到这一点，但要点是，当 `user` 是指针时执行 `user.power` 会增加一点点开销。编译器必须权衡复制的成本与通过指针间接访问字段的成本。
 
-## [ 指针到指针](https://www.openmymind.net/learning_zig/pointers/#pointer_to_pointer)
+## 指针到指针pointer_to_pointer
 
 我们之前查看了 `main` 函数中 `user` 的内存是什么样的。现在我们已经改变了 `levelUp` 它的内存会是什么样子？：
 
@@ -1279,7 +1279,7 @@ fn levelUp(user: *User) void {
 
 有多个间接级别的用例，但这不是我们现在需要的。本节的目的是表明指针并不特殊，它们只是一个值，即地址和类型。
 
-## [ 嵌套指针](https://www.openmymind.net/learning_zig/pointers/#nested_pointers)
+## 嵌套指针nested_pointers
 
 到目前为止，我们的 `User` 很简单，包含两个整数。很容易将其记忆形象化，并且当我们谈论“复制”时，没有任何歧义。但是，当 `User` 变得更加复杂并包含指针时会发生什么？
 
@@ -1392,7 +1392,7 @@ pub const User = struct {
 
 有些语言有不同的实现，但许多语言的工作原理与此完全相同（或非常接近）。虽然所有这些看起来似乎深奥，但它是日常编程的基础。好消息是，您可以使用简单的示例和片段来掌握这一点；它不会随着系统其他部分复杂性的增加而变得更加复杂。
 
-## [ 递归结构](https://www.openmymind.net/learning_zig/pointers/#recursive_structures)
+## 递归结构recursive_structures
 
 有时您需要一个递归结构。保留现有代码，让我们向 `User` 添加一个 `?User` 类型的可选 `manager` 。当我们这样做时，我们将创建两个 `Users` 并将一个分配给另一个作为经理：
 
@@ -1462,7 +1462,7 @@ pub const User = struct {
 
 许多开发人员都为指针而烦恼，它们可能有些难以捉摸。它们不像整数、字符串或 `User` 那样具体。所有这些都不必非常清楚才能让您继续前进。但它值得掌握，而且不仅仅是为了 Zig。这些细节可能隐藏在 Ruby、Python 和 JavaScript 等语言中，在较小程度上隐藏在 C#、Java 和 Go 中，但它们仍然存在，影响着您编写代码的方式以及代码的运行方式。因此，请花点时间，尝试一下示例，添加调试打印语句来查看变量及其地址。你探索得越多，它就会变得越清晰。
 
-# [ 堆栈内存](https://www.openmymind.net/learning_zig/stack_memory/#stack_memory)
+#  堆栈内存stack_memory
 
 深入研究指针可以深入了解变量、数据和内存之间的关系。我们已经了解了内存的样子，但我们还没有讨论数据以及内存是如何管理的。对于短暂且简单的脚本来说，这可能并不重要。在 32GB 笔记本电脑时代，您可以启动程序，使用几百兆的 RAM 读取文件并解析 HTTP 响应，执行一些令人惊奇的操作，然后退出。在程序退出时，操作系统知道它为程序提供的任何内存现在都可以用于其他用途。
 
@@ -1474,7 +1474,7 @@ pub const User = struct {
 
 内存区域之间没有真正的物理差异，它是操作系统和可执行文件创建的概念。
 
-## [ 堆栈帧](https://www.openmymind.net/learning_zig/stack_memory/#stack_frames)
+## 堆栈帧stack_frames
 
 到目前为止，我们看到的所有数据都是存储在二进制或局部变量的全局数据部分中的常量。 “局部”表示该变量仅在其声明的范围内有效。在 Zig 中，作用域以花括号 `{ ... }` 开始和结束。大多数变量的作用域都是函数，包括函数参数或控制流块，例如 `if` 。但是，正如我们所看到的，您可以创建任意块，从而创建任意范围。
 
@@ -1548,7 +1548,7 @@ main: user ->    -------------  (id: 1043368d0)
 
 与我们的全局数据一样，调用堆栈由操作系统和可执行文件管理。在程序启动时，以及之后启动的每个线程，都会创建一个调用堆栈（其大小通常可以在操作系统中配置）。调用堆栈在程序的生命周期内存在，或者在线程的情况下，在线程的生命周期内存在。在程序或线程退出时，调用堆栈被释放。但是，当我们的全局数据具有所有程序全局数据时，调用堆栈仅具有当前执行的函数层次结构的堆栈帧。这在内存使用方面以及将堆栈帧推入和弹出堆栈的简单性方面都是高效的。
 
-## [ 悬空指针](https://www.openmymind.net/learning_zig/stack_memory/#danling_pointers)
+## 悬空指针danling_pointers
 
 调用堆栈因其简单性和效率而令人惊叹。但它也很可怕：当函数返回时，它的任何本地数据都将变得无法访问。这听起来可能很合理，毕竟它是本地数据，但它可能会带来严重的问题。考虑这段代码：
 
@@ -1612,7 +1612,7 @@ fn read() !void {
 
 在深入讨论堆之前，请注意，在本指南结束之前我们将看到一个悬空指针的最后一个示例。到那时，我们就已经涵盖了足够多的语言内容，可以给出一个看起来不那么复杂的例子了。我想重新讨论这个主题，因为对于来自垃圾收集语言的开发人员来说，这可能会导致错误和挫败感。这是你会掌握的事情。归根结底是要了解数据存在的位置和时间。
 
-# [堆内存和分配器](https://www.openmymind.net/learning_zig/heap_memory/#heap_memory)
+# 堆内存和分配器heap_memory
 
 到目前为止，我们所看到的一切都受到预先尺寸要求的限制。数组始终具有编译时已知的长度（事实上，长度是类型的一部分）。我们所有的字符串都是字符串文字，它们具有编译时已知的长度。
 
@@ -1620,7 +1620,7 @@ fn read() !void {
 
 这部分分为两个主题。第一个是对第三个内存区域（堆）的总体概述。另一个是 Zig 管理堆内存的简单但独特的方法。即使您熟悉堆内存（例如使用 C 的 `malloc` ），您也需要阅读第一部分，因为它是 Zig 特有的。
 
-## [ 堆](https://www.openmymind.net/learning_zig/heap_memory/#heap)
+##  堆heap
 
 堆是我们可以使用的第三个也是最后一个内存区域。与全局数据和调用堆栈相比，堆有点狂野西部：任何事情都会发生。具体来说，在堆中，我们可以在运行时创建具有运行时已知大小的内存，并完全控制其生命周期。
 
@@ -1658,7 +1658,7 @@ fn getRandomCount() !u8 {
 
 作为一般规则，每个 `alloc` 都会有一个相应的 `free` 。 `alloc` 分配内存， `free` 释放它。不要让这个简单的代码限制了您的想象力。这种 `try alloc` + `defer free` 模式很常见，并且有充分的理由：释放靠近我们分配的位置是相对万无一失的。但同样常见的是在一个地方分配而在另一个地方释放。正如我们之前所说，堆没有内置的生命周期管理。您可以在 HTTP 处理程序中分配内存并在后台线程中释放内存，这是代码的两个完全独立的部分。
 
-## [ 延迟与错误延迟](https://www.openmymind.net/learning_zig/heap_memory/#defer)
+## 延迟与错误延迟
 
 作为一个小绕道，上面的代码引入了一个新的语言功能： `defer` ，它在作用域退出时执行给定的代码或块。 “范围退出”包括到达范围的末尾或从范围返回。 `defer` 与分配器或内存管理并不严格相关；您可以使用它来执行任何代码。但上面的用法很常见。
 
@@ -1705,7 +1705,7 @@ pub const Game = struct {
 
 名称 `init` 和 `deinit` 并不特殊。它们正是 Zig 标准库所使用的以及社区所采用的。在某些情况下，包括在标准库中，使用 `open` 和 `close` 或其他更合适的名称。
 
-## [双重释放和内存泄漏](https://www.openmymind.net/learning_zig/heap_memory/#memory_leaks)
+## 双重释放和内存泄漏memory_leaks
 
 就在上面，我提到没有任何规则来规定何时必须释放某些东西。但这并不完全正确，有一些重要的规则，除非您自己小心谨慎，否则它们不会被强制执行。
 
@@ -1762,7 +1762,7 @@ fn isSpecial(allocator: Allocator, name: [] const u8) !bool {
 
 至少在双重释放的情况下，我们会遭遇严重崩溃。内存泄漏可能是阴险的。这不仅仅是根本原因难以识别。非常小的泄漏或不经常执行的代码中的泄漏甚至很难检测到。这是一个非常常见的问题，Zig 确实提供了帮助，我们将在讨论分配器时看到这一点。
 
-## [ 创造与毁灭](https://www.openmymind.net/learning_zig/heap_memory/#create)
+## create
 
 `std.mem.Allocator` 的 `alloc` 方法返回一个切片，其长度作为第二个参数传递。如果您想要单个值，请使用 `create` 和 `destroy` 而不是 `alloc` 和 `free` 。前面几部分，在学习指针时，我们创建了一个 `User` 并尝试增强其功能。这是使用 `create:` 的该代码的基于堆的工作版本
 
@@ -1832,7 +1832,7 @@ fn init(allocator: std.mem.Allocator, id: u64, power: i32) !*User{
 
 我引入了新语法 `user.* = .{...}` 。这有点奇怪，我不喜欢它，但你会看到的。右侧是您已经看到的内容：它是具有推断类型的结构初始值设定项。我们可以明确地使用： `user.* = User{...}` 。左侧 `user.*` 是我们取消引用指针的方式。 `&` 接受 `T` 并给我们 `*T` 。 `.*` 是相反的，应用于 `*T` 类型的值，它给我们 `T` 。请记住， `create` 返回 `!*User` ，因此我们的 `user` 类型为 `*User` 。
 
-## [ 分配器](https://www.openmymind.net/learning_zig/heap_memory/#allocators)
+## 分配器allocators
 
 Zig 的核心原则之一是无隐藏内存分配。根据您的背景，这可能听起来不太特别。但这与 C 语言中使用标准库的 `malloc` 函数分配内存的情况形成鲜明对比。在 C 中，如果您想知道函数是否分配内存，您需要阅读源代码并查找对 `malloc` 的调用。
 
@@ -1853,7 +1853,7 @@ Zig 没有用于创建界面的良好语法糖。接口生命行为的一种模�
 
 如果您正在构建一个库，那么最好接受 `std.mem.Allocator` 并让您的库的用户决定使用哪个分配器实现。否则，您需要选择正确的分配器，并且正如我们将看到的，这些分配器并不相互排斥。有充分的理由在程序中创建不同的分配器。
 
-## [通用分配器](https://www.openmymind.net/learning_zig/heap_memory/#gpa)
+## 通用分配器heap_memory gpa
 
 顾名思义， `std.heap.GeneralPurposeAllocator` 是一个全面的“通用”线程安全分配器，可以用作应用程序的主分配器。对于许多程序来说，这将是唯一需要的分配器。在程序启动时，会创建一个分配器并将其传递给需要它的函数。我的 HTTP 服务器库中的示例代码就是一个很好的例子：
 
@@ -1894,7 +1894,7 @@ var gpa = std.heap.GeneralPurposeAllocator(.{}){};
 
 也许您仍然不确定 `.{}` 的含义。这也是我们之前见过的：它是一个具有隐式类型的结构初始值设定项。类型是什么以及字段在哪里？该类型是 `std.heap.general_purpose_allocator.Config` ，尽管它没有像这样直接公开，这是我们不明确的原因之一。没有设置任何字段，因为 `Config` 结构定义了我们将使用的默认值。这是配置/选项的常见模式。事实上，当我们将 `.{.port = 5882}` 传递给 `init` 时，我们会在几行后再次看到它。在本例中，我们对除一个字段 `port` 之外的所有字段使用默认值。
 
-## [ 标准测试分配器](https://www.openmymind.net/learning_zig/heap_memory/#testing)
+## 测试testing
 
 希望当我们谈论内存泄漏时您已经感到足够的困扰，并且当我提到 Zig 可以提供帮助时您渴望了解更多信息。此帮助来自 `std.testing.allocator` ，它是一个 `std.mem.Allocator` 。目前它是使用 `GeneralPurposeAllocator` 实现的，并在 Zig 的测试运行器中添加了集成，但这只是一个实现细节。重要的是，如果我们在测试中使用 `std.testing.allocator` ，我们就可以捕获大多数内存泄漏。
 
@@ -2018,7 +2018,7 @@ self.allocator.free(self.items);
 
 将项目复制到 `larger` 切片后添加最后一行即可解决问题。如果运行 `zig test learning.zig` ，应该不会出现错误。
 
-## [ 竞技场分配器](https://www.openmymind.net/learning_zig/heap_memory/#arena)
+## arena
 
 GeneralPurposeAllocator 是一个合理的默认值，因为它在所有可能的情况下都能很好地工作。但在程序中，您可能会遇到可以从更专门的分配器中受益的分配模式。一个例子是需要短暂的状态，当处理完成时可以将其丢弃。解析器经常有这样的需求。骨架 `parse` 函数可能如下所示：
 
@@ -2102,7 +2102,7 @@ defer list.deinit();
 
 作为最后一个简单的例子，我上面提到的 HTTP 服务器在 `Response` 上公开了一个 arena 分配器。一旦发送响应，竞技场就会被清空。 arena 的可预测生命周期（从请求开始到请求结束）使其成为一个有效的选择。在性能和易用性方面高效。
 
-## [ 固定缓冲区分配器](https://www.openmymind.net/learning_zig/heap_memory/#fixedbuffer)
+## 固定缓冲区fixedbuffer
 
 我们要查看的最后一个分配器是 `std.heap.FixedBufferAllocator` ，它从我们提供的缓冲区（即 `[]u8` ）分配内存。这个分配器有两个主要好处。首先，由于它可能使用的所有内存都是预先创建的，因此速度很快。其次，它自然限制了可以分配的内存量。这种硬性限制也可以被视为一个缺点。另一个缺点是 `free` 和 `destroy` 仅适用于最后分配/创建的项目（想想堆栈）。释放非最后的分配可以安全地调用，但不会执行任何操作。
 
@@ -2181,7 +2181,7 @@ pub fn main() !void {
 
 目标不是消除所有动态分配。这是行不通的，因为这些替代方案仅在特定情况下才有意义。但现在您有很多选择可供选择。从堆栈帧到通用分配器，以及介于两者之间的所有东西，例如静态缓冲区、流写入器和专用分配器。
 
-# [泛型](https://www.openmymind.net/learning_zig/generics/#generics)
+# 泛型generics
 
 在上一部分中，我们构建了一个名为 `IntList` 的简单动态数组。数据结构的目标是存储动态数量的值。尽管我们使用的算法适用于任何类型的数据，但我们的实现与 `i64` 值相关。输入泛型，其目标是从特定类型中抽象算法和数据结构。
 
@@ -2380,11 +2380,11 @@ fn List(comptime T: type) type {
 
 我们可以创建更复杂的示例，具有多个类型参数和更高级的算法。但是，最终，核心通用代码将与上面的简单示例没有什么不同。在下一部分中，当我们查看标准库的 `ArrayList(T)` 和 `StringHashMap(V)` 时，我们将再次触及泛型。
 
-# [Zig 编码](https://www.openmymind.net/learning_zig/coding_in_zig/#coding)
+# 使用zig进行编程
 
 现在已经涵盖了大部分语言，我们将通过重新审视一些主题并研究使用 Zig 的一些更实际的方面来结束本文。在此过程中，我们将介绍更多的标准库并提供一些不那么琐碎的代码片段。
 
-## [ 悬空指针](https://www.openmymind.net/learning_zig/coding_in_zig/#danling_pointers)
+## 悬空指针danling_pointers
 
 我们首先查看更多悬空指针的示例。这似乎是一件奇怪的事情，但如果您来自垃圾收集语言，这可能是您将面临的最大挑战。
 
@@ -2480,7 +2480,7 @@ const User = struct {
 
 由于所有内容都在一个函数中并且值很小，例如 `User` ，这仍然感觉像是一个人为创建的问题。我们需要一个合理地使数据所有权成为紧迫问题的例子。
 
-## [ 所有权](https://www.openmymind.net/learning_zig/coding_in_zig/#ownership)
+## 所有权ownership
 
 我喜欢哈希映射，因为它们是每个人都知道并且每个人都使用的东西。它们还有许多不同的用例，其中大多数您可能已经亲身体验过。虽然它们可以用作短期查找，但它们通常是长期存在的，因此需要同样长期存在的值。
 
@@ -2586,7 +2586,7 @@ defer {
 
 我保证，我们已经讨论完了悬空指针和内存管理。我们所讨论的内容可能仍然不清楚或过于抽象。当您有更多实际问题需要解决时，最好重新审视这一点。也就是说，如果您打算编写任何重要的内容，那么您几乎肯定需要掌握这一点。当您感觉可以时，我强烈建议您采用提示循环示例并自己使用它。引入一个 `UserLookup` 类型来封装我们必须执行的所有内存管理。尝试使用 `*User` 值而不是 `User` ，在堆上创建用户并释放它们，就像我们释放键一样。编写涵盖新结构的测试，使用 `std.testing.allocator` 确保不会泄漏任何内存。
 
-## [ArrayList](https://www.openmymind.net/learning_zig/coding_in_zig/#arraylist)
+## ArrayList
 
 您会很高兴知道您可以忘记我们的 `IntList` 和我们创建的通用替代方案。 Zig 有一个正确的动态数组实现： `std.ArrayList(T)` 。
 
@@ -2675,7 +2675,7 @@ pub fn main() !void {
 }
 ```
 
-## [ 任何类型](https://www.openmymind.net/learning_zig/coding_in_zig/#anytype)
+## anytype
 
 在第 1 部分中，我们简要讨论了 `anytype` 。这是编译时鸭子类型的一种非常有用的形式。这是一个简单的记录器：
 
@@ -2740,8 +2740,7 @@ fn stringify(
 
 第一个参数 `value: anytype` 很明显。它是要序列化的值，它可以是任何东西（实际上，有些东西 Zig 的 JSON 序列化器无法序列化）。我们可以猜测 `out_stream` 是编写 JSON 的位置，但是对于它需要实现哪些方法，您的猜测和我的一样好。解决这个问题的唯一方法是阅读源代码，或者传递一个虚拟值并使用编译器错误作为我们的文档。通过更好的自动文档生成器可能会改善这一点。但是，我并不是第一次希望 Zig 有接口。
 
-## [@TypeOf](https://www.openmymind.net/learning_zig/coding_in_zig/#typeof)
-
+## @TypeOf
 在前面的部分中，我们使用 `@TypeOf` 来帮助我们检查各种变量的类型。从我们的用法来看，您可能会认为它以字符串形式返回类型的名称。但是，鉴于它是一个 PascalCase 函数，您应该更了解：它返回一个 `type` 。
 
 我最喜欢的 `anytype` 用法之一是将其与 `@TypeOf` 和 `@hasField` 内置函数配对来编写测试助手。尽管我们见过的每种 `User` 类型都非常简单，但我会要求您想象一个包含许多字段的更复杂的结构。在我们的许多测试中，我们需要 `User` ，但我们只想指定与测试相关的字段。让我们创建一个 `userFactory` ：
@@ -2769,7 +2768,7 @@ pub const User = struct {
 
 更常见的是 `@TypeOf` 与 `@typeInfo` 配对，后者返回 `std.builtin.Type` 。这是一个功能强大的标记联合，可以完整地描述类型。 `std.json.stringify` 函数在提供的 `value` 上递归地使用它来确定如何序列化它。
 
-## [ 之字形构建](https://www.openmymind.net/learning_zig/coding_in_zig/#build)
+## Zig的编译build
 
 如果您已经阅读了整个指南，等待深入了解设置具有多个依赖项和各种目标的更复杂的项目，那么您将会感到失望。 Zig 拥有强大的构建系统，以至于越来越多的非 Zig 项目正在使用它，例如 libsodium。不幸的是，所有这些功能意味着，对于更简单的需求，它并不是最容易使用或理解的。
 
@@ -2854,7 +2853,7 @@ test "dummy build test" {
 
 这是启动和运行所需的最低配置。但请放心，如果您需要构建它，Zig 可能可以处理它。最后，您可以而且可能应该在项目根目录中使用 `zig init-exe` 或 `zig init-lib` 让 Zig 为您创建一个记录良好的 build.zig 文件。
 
-## [第三方依赖项](https://www.openmymind.net/learning_zig/coding_in_zig/#dependencies)
+## 第三方依赖库
 
 Zig 的内置包管理器相对较新，因此存在许多缺陷。虽然还有改进的空间，但它可以按原样使用。我们需要查看两个部分：创建包和使用包。我们将完整地讨论这一点。
 
@@ -3016,7 +3015,7 @@ found:
 
 我们已经涵盖了很多基础知识，探索了一些核心数据结构，并将之前部分的大部分内容整合在一起。我们的代码变得更加复杂了，更少关注特定的语法，看起来更像真实的代码。我很兴奋的是，尽管代码很复杂，但大部分都是有意义的。如果没有，请不要放弃。选择一个示例并打破它，添加打印语句，为其编写一些测试。亲自动手编写代码，编写自己的代码，然后回来阅读那些没有意义的部分。
 
-# [结论](https://www.openmymind.net/learning_zig/conclusion/#coding)
+# 结论conclusion
 
 有些读者可能会认出我是各种“The Little $TECH Book”的作者，并想知道为什么这本书不被称为“The Little Zig Book”。事实上，我不确定 Zig 是否适合“The Little”格式。部分挑战在于，Zig 的复杂性和学习曲线将根据您自己的背景和经验而有很大差异。如果您是一位经验丰富的 C 或 C++ 程序员，那么该语言的简洁摘要可能就很好，但是您可能会依赖 Zig 语言参考。
 

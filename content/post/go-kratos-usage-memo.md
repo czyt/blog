@@ -997,6 +997,10 @@ func newApp(logger log.Logger, gs *grpc.Server, hs *http.Server) *kratos.App {
   >
   >⚠️ fgtrace may cause noticeable stop-the-world pauses in your applications. It is intended for dev and testing environments for now.
 
+其他性能相关库：
+
++ https://github.com/mosn/holmes
+
 ## 服务端跨域配置
 
 参考[官方项目](https://github.com/go-kratos/beer-shop/blob/main/app/shop/interface/internal/server/http.go)

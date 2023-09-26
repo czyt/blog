@@ -749,6 +749,12 @@ message DeviceMsg{
 
 Todo
 
+
+
+参考链接：
+
++ [动态可扩展性和Protocol Buffer](https://skyao.io/post/201909-dynamic-extensibility-and-protocol-buffers/)
+
 ## 静态文件托管
 
 官方例子

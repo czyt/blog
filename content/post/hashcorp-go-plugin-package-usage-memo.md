@@ -31,6 +31,47 @@ HashiCorp 插件系统通过启动子进程并通过 RPC 进行通信（使用�
 
 ## 例子
 
+### 计算年龄的服务
+
+#### 准备proto文件
+
+proto定义
+
+```protobuf
+syntax = "proto3";
+package proto;
+option go_package="proto/v1;age";
+
+message CalcAgeResponse {
+    string message = 1;
+    int32  age = 2;
+}
+
+message CalcAgeRequest {
+    string birthday = 1;
+}
+
+service AgeService {
+    rpc GetAge(CalcAgeRequest) returns (CalcAgeResponse);
+}
+```
+
+项目结构
+
+```
+│  go.mod
+│  go.sum
+└─proto
+    └─v1
+       └─ age_svc.proto
+```
+
+执行命令 `protoc -I . .\proto\v1\age_svc.proto --go-grpc_out=. --go_out=.` 生成文件
+
+#### 定义接口
+
+### 双向通信
+
 
 
 ## 参考链接

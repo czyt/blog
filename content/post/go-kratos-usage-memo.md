@@ -711,6 +711,44 @@ func handleAttachment(w http.ResponseWriter, attach *attachment.Attachment) erro
 
 
 
+## 支持动态内容
+
+### 实现json.RawMessage
+
+在go中，json.RawMessage适用于延迟解析的场景，比如你定义了一个消息，这个消息有N种类型，那么消息的payload可以使用这种类型。
+
+```
+// RawMessage is a raw encoded JSON value.
+// It implements Marshaler and Unmarshaler and can
+// be used to delay JSON decoding or precompute a JSON encoding.
+type RawMessage []byte
+```
+
+在protobuf中，只需要将字段定义为`byte`即可
+
+```protobuf
+message DeviceMsg{
+    int32 msg_type = 1;
+    bytes msg_payload = 2;
+}
+```
+
+客户端在传递时，只需要将payload base64 encode下，即可。服务端再根据type动态解析。
+
+### 使用`google.protobuf.Struct`
+
+也可以将消息定义为`google.protobuf.Struct` 
+
+>`Struct` represents a structured data value, consisting of fields which map to dynamically typed values. In some languages, `Struct` might be supported by a native representation. For example, in scripting languages like JS a struct is represented as an object. The details of that representation are described together with the proto support for the language.
+>
+>The JSON representation for `Struct` is JSON object.
+>
+>| Field name | Type                 | Description                      |
+>| ---------- | -------------------- | -------------------------------- |
+>| `fields`   | `map<string, Value>` | Map of dynamically typed values. |
+
+Todo
+
 ## 静态文件托管
 
 官方例子

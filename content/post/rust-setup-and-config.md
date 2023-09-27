@@ -5,7 +5,7 @@ tags: ["rust", "mirror", "windows", "setup"]
 draft: false
 ---
 ## 下载rustup
-从[此处](https://www.rust-lang.org/tools/install)下载
+从[此处](https://www.rust-lang.org/tools/install)下载，如果你需要安装vs的cpp生成工具，可以在[这个页面](https://visualstudio.microsoft.com/downloads/)进行下载。
 ## 设置rustup镜像
 
 
@@ -24,6 +24,8 @@ export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 ```bash
 export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 ```
+设置`RUSTUP_HOME`和`CARGO_HOME`可以实现自定义安装路径
+
 ## crates.io 镜像
 编辑 `~/.cargo/config `
 
@@ -41,11 +43,9 @@ index = "https://rsproxy.cn/crates.io-index"
 git-fetch-with-cli = true
 
 ```
-## 
-
 
 ## 安装Rust
-安装rust即可。可以参考我的步骤
+安装rust即可。可以参考我的步骤，如果安装的是vs的cpp build tools，可以跳过。
 
 ``` bash
 Current installation options:

@@ -78,6 +78,16 @@ draft: false
      ```
   
      有个问题就是返回的json中会多出`"@type": "type.googleapis.comxxxxx"`这样的一个字段。
+     
+     > 零值问题，还可以通过脚本将json tag清除 群友 Ccheers提供
+     >
+     > ```bash
+     > ifeq ($(GOHOSTOS), darwin)
+     > 	find ./pb -name '*.pb.go' -exec  sed -i "" -e "s/,omitempty/,optional/g" {} \;
+     > else
+     > 	find ./pb -name '*.pb.go' -exec  sed -i -e "s/,omitempty/,optional/g" {} \;
+     > endif
+     > ```
 
 ## 通过Context取得信息
 

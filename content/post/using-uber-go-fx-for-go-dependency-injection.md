@@ -86,6 +86,8 @@ func NewServeMux(echo *EchoHandler) *http.ServeMux {
 
 ### fx.Invoke
 
+### fx.Annotated
+
 ### fx.Supply()
 
 ### fx.Module
@@ -95,6 +97,10 @@ func NewServeMux(echo *EchoHandler) *http.ServeMux {
 ### fx.Replace
 
 ### fx.Extract
+
+### fx.Populate
+
+
 
 ## 参考
 

@@ -94,6 +94,8 @@ func NewServeMux(echo *EchoHandler) *http.ServeMux {
 
 ### fx.Replace
 
+### fx.Extract
+
 ## 参考
 
 + [Dependency injection in Go with uber-go/fx](https://vincent.composieux.fr/article/dependency-injection-in-go-with-uber-go-fx)

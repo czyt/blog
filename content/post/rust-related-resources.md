@@ -19,6 +19,7 @@ draft: false
 + https://github.com/CleanCut/ultimate_rust_crash_course
 + [Writing a JVM in Rust](https://andreabergia.com/series/writing-a-jvm-in-rust/)
 + [Writing an OS in Rust ](https://os.phil-opp.com/zh-CN/)
++ [清华大学程序设计训练（Rust）](https://lab.cs.tsinghua.edu.cn/rust/)
 ## 一些文档
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/

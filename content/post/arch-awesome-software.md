@@ -3,6 +3,7 @@ title: "Arch Linux 常用软件"
 date: 2022-02-23
 tags: ["linux", "Arch", "Manjaro", "tools"]
 draft: false
+weight: 9
 ---
 
 > 本文部分内容基于manjaro，另外如果喜欢苹果界面，可以试下[pearos](https://pearos.xyz)

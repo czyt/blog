@@ -2,6 +2,7 @@
 title: "go-kratos使用备忘"
 date: 2022-08-12
 tags: ["golang", "kratos"]
+weight: 10
 draft: false
 ---
 ## 需要特别注意的坑

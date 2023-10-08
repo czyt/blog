@@ -20,6 +20,7 @@ draft: false
 + [Writing a JVM in Rust](https://andreabergia.com/series/writing-a-jvm-in-rust/)
 + [Writing an OS in Rust ](https://os.phil-opp.com/zh-CN/)
 + [清华大学程序设计训练（Rust）](https://lab.cs.tsinghua.edu.cn/rust/)
++ [Rust 异步编程指南](https://github.com/rustlang-cn/async-book)
 ## 一些文档
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/

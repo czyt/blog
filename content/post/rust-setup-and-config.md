@@ -27,21 +27,28 @@ export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 设置`RUSTUP_HOME`和`CARGO_HOME`可以实现自定义安装路径
 
 ## crates.io 镜像
-编辑 `~/.cargo/config `
+编辑 `~/.cargo/config `，这里使用的是中科大的镜像。
 
 ```
 [source.crates-io]
-replace-with = 'rsproxy'
+replace-with = 'ustc'
 
+[source.ustc]
+registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+
+```
+或者使用字节的,参考[官网文档](https://rsproxy.cn/#getStarted)
+```
+[source.crates-io]
+replace-with = 'rsproxy-sparse'
 [source.rsproxy]
 registry = "https://rsproxy.cn/crates.io-index"
-
+[source.rsproxy-sparse]
+registry = "sparse+https://rsproxy.cn/index/"
 [registries.rsproxy]
 index = "https://rsproxy.cn/crates.io-index"
-
 [net]
 git-fetch-with-cli = true
-
 ```
 
 ## 安装Rust

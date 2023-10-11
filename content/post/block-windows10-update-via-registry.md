@@ -169,3 +169,17 @@ Windows Registry Editor Version 5.00
 
 ```
 
+还可以通过注册表来暂停windows更新，操作如下：
+
+1. 按下 WIN 加 R 输入 regedit 进入注册表
+2. 点击 HKEY LOCAL-MACHINE
+3. 点击 SOFTWARE
+4. 点击 Microsoft
+5. 点击 WindowsUpdate
+6. 点击 UX
+7. 点击 Settings 然后空白区点击右键
+8. 选择新建，选择项，选择 dword 值
+命名为 FlightSettingsMaxPauseDays
+基数选择十进制
+
+左边栏数值数据即可填写你想暂停更新的天数，然后确定即可此刻，再去 WINDOWS 更新界面，就会发现暂停更新的时间，就是我们刚刚写的，要多长有多长，万一后悔了想要恢复，也只需点击继续更新即可保留备用。

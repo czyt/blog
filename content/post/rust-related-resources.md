@@ -23,7 +23,7 @@ draft: false
 + [Rust 异步编程指南](https://github.com/rustlang-cn/async-book)
 + [Rust基础教程](http://docs.os2edu.cn)
 + [rCore-Tutorial-Book 第三版](https://rcore-os.cn/rCore-Tutorial-Book-v3/index.html)
-## 一些文档
++ [OffensiveRust](https://github.com/0xTriboulet/OffensiveRust#offensiverust)
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
 

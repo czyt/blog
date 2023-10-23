@@ -200,7 +200,7 @@ MegaSync 安装 `yay -S megasync-bin`
 
 天翼云盘 安装 `yay -S cloudpan189-go`
 
-OneDive 安装 `yay -S onedrive` 或者 `yay -S onedrive-abraunegg` (GUI `yay -S onedrivegui-git `)
+OneDive 安装 `yay -S onedrive` 或者 `yay -S onedrive-abraunegg` (GUI `yay -S onedrivegui-git `) 或者使用onedriver（推荐） `yay -S onedriver`
 
 百度云 安装 `yay -S baidunetdisk-bin` 或者 安装深度的版本 `yay -S deepin-baidu-pan`
 

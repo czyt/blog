@@ -15,6 +15,7 @@ draft: false
 + [Operating System development tutorials in Rust on the Raspberry Pi](https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials)
 + [Rust语言实战](https://zh.practice.rs)
 + [inside rust std library](https://github.com/Warrenren/inside-rust-std-library)
++ [A Plugin System in Rust](https://nullderef.com/series/rust-plugins/)
 + https://learning-rust.github.io
 + https://github.com/CleanCut/ultimate_rust_crash_course
 + [Writing a JVM in Rust](https://andreabergia.com/series/writing-a-jvm-in-rust/)

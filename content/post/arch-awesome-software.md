@@ -194,6 +194,8 @@ sudo sed -i "s/PKGEXT='.pkg.tar.xz'/PKGEXT='.pkg.tar'/g" /etc/makepkg.conf
 
 ## 下载上传
 
+文件蜈蚣 安装 `yay -S  filecentipede-bin ` [激活码](http://www.filecxx.com/zh_CN/activation_code.html)
+
 MegaSync 安装 `yay -S megasync-bin`
 
 115网盘 安装 `yay -S 115pc`

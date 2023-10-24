@@ -234,6 +234,8 @@ qbittorrent 安装  `yay -S qbittorrent`([增强版](https://github.com/c0re100/
 
 moose 支持边下边播的BT工具 `yay -S moose ` 
 
+[Spacedrive](https://www.spacedrive.com/) 安装 `yay -S spacedrive-bin`
+
 参考
 
 - dreamcast的网盘 http://dreamcast2.ys168.com

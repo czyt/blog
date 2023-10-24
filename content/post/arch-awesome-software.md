@@ -970,7 +970,7 @@ SystemMaxUse=50M
 - 字体渲染 [http://www.badwolfbay.cn/2020/03/17/manjaro-setting/](http://www.badwolfbay.cn/2020/03/17/manjaro-setting/)
 
 ## 常见问题
-- swappinessinvalid or corrupted package (PGP signature)
++ swappinessinvalid or corrupted package (PGP signature)
 
 ```bash
 sudo rm -R /etc/pacman.d/gnupg/
@@ -984,7 +984,9 @@ sudo pacman-key --populate archlinuxcn
   ```bash
   sudo resolvectl flush-caches
   ```
-  
++ KDE重建图标缓存
+ `rm ~/.cache/icon-cache.kcache`
+
   
 
 ## 参考连接

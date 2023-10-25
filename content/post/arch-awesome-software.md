@@ -90,7 +90,12 @@ ClientAliveInterval 300
 ClientAliveCountMax 2
 ```
 
-这些设置将使 SSH 客户端或服务器每300秒(5分钟)向另一端发送一个空包，如果在2次尝试后没有收到任何响应，则放弃，此时连接很可能已被丢弃。
+这些设置将使 SSH 客户端或服务器每300秒(5分钟)向另一端发送一个空包，如果在2次尝试后没有收到任何响应，则放弃，此时连接很可能已被丢弃。对于客户端，可以在配置文件`/etc/ssh/sshd_config`,添加下面内容：
+
+```
+TCPKeepAlive yes
+ServerAliveInterval 60
+```
 
 参考 `ssh_config`的帮助文档
 
@@ -105,16 +110,20 @@ ClientAliveCountMax 2
 
 ## 浏览器
 
-vivaldi 安装 `yay -S vivaldi`
+vivaldi 安装 `yay -S vivaldi vivaldi-ffmpeg-codecs` 
 
 microsoft Edge `yay -S microsoft-edge-stable-bin`
 
-Chrome 安装 `yay -S google-chrome`
+Chrome 安装 `yay -S google-chrome chromium-codecs-ffmpeg  chromium-codecs-ffmpeg-extra`
 
-参考
+Opera 安装 `yay -S opera opera-ffmpeg-codecs `
 
-- 解决打开Chrome出现 输入密码以解锁您的登录密钥环 [https://blog.csdn.net/kangear/article/details/20789451](https://blog.csdn.net/kangear/article/details/20789451)
-- bilibili视频不能播放的问题 需要安装对应浏览器的解码包。`yay -S vivaldi-ffmpeg-codecs  chromium-codecs-ffmpeg  chromium-codecs-ffmpeg-extra opera-ffmpeg-codecs`  (只需安装对应浏览器的包即可，不必全部安装)
+firefox 安装 `yay -S firefox `
+
+> 参考
+>
+> - 解决打开Chrome出现 输入密码以解锁您的登录密钥环 [https://blog.csdn.net/kangear/article/details/20789451](https://blog.csdn.net/kangear/article/details/20789451)
+> - bilibili视频不能播放的问题 需要安装对应浏览器的解码包。
 
 
 
@@ -230,6 +239,8 @@ zssh 安装 `yay -S zssh` 配合lrzsz(安装命令 `yay -S lrzsz`)食用效果�
 
 motrix 安装 `yay -S motrix`  
 
+uget 安装 `yay -S uget`
+
 Mega网盘安装 `yay -S megatools-git` 
 
 qbittorrent 安装  `yay -S qbittorrent`([增强版](https://github.com/c0re100/qBittorrent-Enhanced-Edition/releases) `yay -S qbittorrent-enhanced-git` [搜索插件](https://github.com/qbittorrent/search-plugins/wiki/Unofficial-search-plugins))
@@ -267,9 +278,15 @@ flameshot 截图工具 安装 `yay -S flameshot`
 
 kazam录屏软件 安装 `yay -S kazam `
 
+屏幕录制为gif 工具 peek `yay -S peek`
+
+> 这个工具已经停止维护
+
 geogebra 几何绘图软件 `yay -S geogebra  `
 
 福昕pdf阅读器 `yay -S foxitreader` 
+
+masterpdfeditor 对linux用户免费的PDF浏览及编辑器,支持实时预览 `yay -S masterpdfeditor  ` 
 
 Teamviewer `yay -S teamviewer`如果一直显示未连接，则请退出teamviewer，执行`sudo teamviewer --daemon enable` 再打开试试
 
@@ -733,6 +750,8 @@ postman 安装 `yay -S postman` [汉化文件](https://github.com/hlmd/Postman-c
 apifox 安装 `yay -S apifox`
 
 Typora markdown编辑器 安装 `yay -S typora`
+
+>也可以试下 remarkable `yay -S remarkable `
 
 dnspy 安装 `yay -S dnspy` (需要使用blackarch源)
 

@@ -235,6 +235,15 @@ localsend 安装 `yay -S localsend-bin`
 
 zssh 安装 `yay -S zssh` 配合lrzsz(安装命令 `yay -S lrzsz`)食用效果最佳。
 
+>lrzsz 安装后在/usr/bin下面目录下有下面几个文件lrzsz-rb、lrzsz-rx、lrzsz-rz、lrzsz-sb、lrzsz-sx、lrzsz-sz可以使用下面的命令去掉文件名中的lrzsz- 并添加执行权限
+>
+>```bash
+>for f in lrzsz-*; do
+>    mv "$f" "${f#lrzsz-}"
+>    chmod +x "${f#lrzsz-}"
+>done
+>```
+
 [trzsz](https://github.com/trzsz/trzsz) 安装 `yay -S trzsz ` 
 
 motrix 安装 `yay -S motrix`  

@@ -328,6 +328,8 @@ realvnc-viewer `yay -S realvnc-vnc-viewer`
 [macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `yay -S 
 macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
 
+pdf合并工具 `yay -S pdfmerger`
+
 在线流程图工具 [https://excalidraw.com](https://excalidraw.com)
 参考
 

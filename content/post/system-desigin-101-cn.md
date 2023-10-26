@@ -15,7 +15,7 @@ draft: false
 
 架构风格定义了应用程序编程接口（API）不同组件之间的交互方式。因此，它们通过提供设计和构建 API 的标准方法，确保了效率、可靠性以及与其他系统集成的便捷性。以下是最常用的样式：
 
-[![img](https://assets.czyt.tech/img/api-architecture-styles.png)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/api-architecture-styles.png)
+[![img](https://assets.czyt.tech/img/api-architecture-styles.png)](https://assets.czyt.tech/img/api-architecture-styles.png)
 
 -  SOAP：
 
@@ -59,7 +59,7 @@ draft: false
 
 下图显示了 REST 和 GraphQL 的快速比较。
 
-[![img](https://assets.czyt.tech/img/graphQL.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/graphQL.jpg)
+[![img](https://assets.czyt.tech/img/graphQL.jpg)](https://assets.czyt.tech/img/graphQL.jpg)
 
 REST
 
@@ -87,7 +87,7 @@ RPC（远程过程调用）之所以被称为 "远程"，是因为在微服务�
 
 下图说明了 gRPC 的整体数据流。
 
-[![img](https://assets.czyt.tech/img/grpc.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/grpc.jpg)
+[![img](https://assets.czyt.tech/img/grpc.jpg)](https://assets.czyt.tech/img/grpc.jpg)
 
 步骤 1：从客户端发出 REST 调用。请求体通常为 JSON 格式。
 
@@ -105,7 +105,7 @@ RPC（远程过程调用）之所以被称为 "远程"，是因为在微服务�
 
 下图显示了轮询和 Webhook 的比较。
 
-[![img](https://assets.czyt.tech/img/webhook.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/webhook.jpeg)
+[![img](https://assets.czyt.tech/img/webhook.jpeg)](https://assets.czyt.tech/img/webhook.jpeg)
 
 假设我们运行一个电子商务网站。客户通过 API 网关向订单服务发送订单，订单服务转到支付服务进行支付交易。然后，支付服务与外部支付服务提供商（PSP）对话以完成交易。
 
@@ -138,7 +138,7 @@ Webhook 通常被称为反向 API 或推送 API，因为服务器会向客户端
 
 下图显示了提高应用程序接口性能的 5 种常见技巧。
 
-[![img](https://assets.czyt.tech/img/api-performance.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/api-performance.jpg)
+[![img](https://assets.czyt.tech/img/api-performance.jpg)](https://assets.czyt.tech/img/api-performance.jpg)
 
  分页
 
@@ -166,7 +166,7 @@ Webhook 通常被称为反向 API 或推送 API，因为服务器会向客户端
 
 下图说明了主要特征。
 
-[![img](https://assets.czyt.tech/img/http3.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/http3.jpg)
+[![img](https://assets.czyt.tech/img/http3.jpg)](https://assets.czyt.tech/img/http3.jpg)
 
 - 1996 年，HTTP 1.0 最终定稿并形成完整文档。对同一服务器的每个请求都需要单独的 TCP 连接。
 
@@ -190,13 +190,13 @@ QUIC 基于 UDP。它将数据流作为一等公民引入传输层。QUIC 流共
 
 您可以在图中查看每种样式的用例。
 
-[![img](https://assets.czyt.tech/img/SOAP%20vs%20REST%20vs%20GraphQL%20vs%20RPC.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/SOAP vs REST vs GraphQL vs RPC.jpeg)
+[![img](https://assets.czyt.tech/img/SOAP%20vs%20REST%20vs%20GraphQL%20vs%20RPC.jpeg)](https://assets.czyt.tech/img/SOAP vs REST vs GraphQL vs RPC.jpeg)
 
 ### [代码优先与应用程序接口优先](https://github.com/ByteByteGoHq/system-design-101#code-first-vs-api-first)
 
 下图显示了代码优先开发和 API 优先开发之间的区别。为什么要考虑 API 优先设计？
 
-[![img](https://assets.czyt.tech/img/api_first.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/api_first.jpg)
+[![img](https://assets.czyt.tech/img/api_first.jpg)](https://assets.czyt.tech/img/api_first.jpg)
 
 - 微服务增加了系统的复杂性，我们需要单独的服务来服务于系统的不同功能。虽然这种架构有利于解耦和职责分离，但我们需要处理服务之间的各种通信。
 
@@ -216,7 +216,7 @@ QUIC 基于 UDP。它将数据流作为一等公民引入传输层。QUIC 流共
 
 ### [ HTTP 状态代码](https://github.com/ByteByteGoHq/system-design-101#http-status-codes)
 
-[![img](https://assets.czyt.tech/img/http-status-code.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/http-status-code.jpg)
+[![img](https://assets.czyt.tech/img/http-status-code.jpg)](https://assets.czyt.tech/img/http-status-code.jpg)
 
 HTTP 的响应代码分为五类：
 
@@ -226,7 +226,7 @@ HTTP 的响应代码分为五类：
 
 下图显示了详细情况。
 
-[![img](https://assets.czyt.tech/img/api_gateway.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/api_gateway.jpg)
+[![img](https://assets.czyt.tech/img/api_gateway.jpg)](https://assets.czyt.tech/img/api_gateway.jpg)
 
 第 1 步 - 客户端向 API 网关发送 HTTP 请求。
 
@@ -248,7 +248,7 @@ HTTP 的响应代码分为五类：
 
 下图以购物车为例展示了典型的应用程序接口设计。
 
-[![img](https://assets.czyt.tech/img/safe-apis.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/safe-apis.jpg)
+[![img](https://assets.czyt.tech/img/safe-apis.jpg)](https://assets.czyt.tech/img/safe-apis.jpg)
 
 请注意，应用程序接口设计不仅仅是 URL 路径设计。大多数时候，我们需要选择合适的资源名称、标识符和路径模式。设计适当的 HTTP 头域或在 API 网关中设计有效的速率限制规则也同样重要。
 
@@ -256,7 +256,7 @@ HTTP 的响应代码分为五类：
 
 数据如何通过网络发送？为什么 OSI 模型需要这么多层？
 
-[![img](https://assets.czyt.tech/img/osi%20model.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/osi model.jpeg)
+[![img](https://assets.czyt.tech/img/osi%20model.jpeg)](https://assets.czyt.tech/img/osi model.jpeg)
 
 下图显示了数据在网络上传输时的封装和解封过程。
 
@@ -278,7 +278,7 @@ HTTP 的响应代码分为五类：
 
 下图显示了 𝐟𝐨𝐫𝐰𝐚𝐫𝐝 𝐩𝐫𝐨𝐱𝐲 和 𝐫𝐞𝐯𝐞𝐫𝐬𝐞 𝐩𝐫𝐨𝐱𝐲 之间的区别。
 
-[![img](https://assets.czyt.tech/img/Forward%20Proxy%20v.s.%20Reverse%20Proxy2x.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/Forward Proxy v.s. Reverse Proxy2x.jpg)
+[![img](https://assets.czyt.tech/img/Forward%20Proxy%20v.s.%20Reverse%20Proxy2x.jpg)](https://assets.czyt.tech/img/Forward Proxy v.s. Reverse Proxy2x.jpg)
 
 前向代理是位于用户设备和互联网之间的服务器。
 
@@ -301,7 +301,7 @@ HTTP 的响应代码分为五类：
 
 下图显示了 6 种常见算法。
 
-[![img](https://assets.czyt.tech/img/lb-algorithms.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/lb-algorithms.jpg)
+[![img](https://assets.czyt.tech/img/lb-algorithms.jpg)](https://assets.czyt.tech/img/lb-algorithms.jpg)
 
 -  静态算法
 
@@ -335,7 +335,7 @@ HTTP 的响应代码分为五类：
 
 下图显示了 URL、URI 和 URN 的比较。
 
-[![img](https://assets.czyt.tech/img/url-uri-urn.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/url-uri-urn.jpg)
+[![img](https://assets.czyt.tech/img/url-uri-urn.jpg)](https://assets.czyt.tech/img/url-uri-urn.jpg)
 
 -  通用资源识别号
 
@@ -357,7 +357,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 ### [简单解释 CI/CD 管道](https://github.com/ByteByteGoHq/system-design-101#cicd-pipeline-explained-in-simple-terms)
 
-[![img](https://assets.czyt.tech/img/ci-cd-pipeline.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/ci-cd-pipeline.jpg)
+[![img](https://assets.czyt.tech/img/ci-cd-pipeline.jpg)](https://assets.czyt.tech/img/ci-cd-pipeline.jpg)
 
 第 1 节 - 采用 CI/CD 的 SDLC
 
@@ -385,7 +385,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 ### [Netflix 技术栈（CI/CD 管道）](https://github.com/ByteByteGoHq/system-design-101#netflix-tech-stack-cicd-pipeline)
 
-[![img](https://assets.czyt.tech/img/netflix-ci-cd.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/netflix-ci-cd.jpg)
+[![img](https://assets.czyt.tech/img/netflix-ci-cd.jpg)](https://assets.czyt.tech/img/netflix-ci-cd.jpg)
 
 规划：Netflix 工程部使用 JIRA 进行规划，使用 Confluence 编写文档。
 
@@ -409,7 +409,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 无论是 iOS 还是 Android 平台，这些架构模式都是应用程序开发中最常用的模式之一。开发人员引入这些模式是为了克服早期模式的局限性。那么，它们有什么不同呢？
 
-[![img](https://assets.czyt.tech/img/client%20arch%20patterns.png)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/client arch patterns.png)
+[![img](https://assets.czyt.tech/img/client%20arch%20patterns.png)](https://assets.czyt.tech/img/client arch patterns.png)
 
 - MVC 是最古老的模式，可追溯到近 50 年前
 - 每个模式都有一个 "视图"（V），负责显示内容和接收用户输入
@@ -420,7 +420,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 模式是针对常见设计问题的可重复使用的解决方案，可使开发过程更顺畅、更高效。它们是构建更好的软件结构的蓝图。以下是一些最流行的模式：
 
-[![img](https://assets.czyt.tech/img/18-oo-patterns.png)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/18-oo-patterns.png)
+[![img](https://assets.czyt.tech/img/18-oo-patterns.png)](https://assets.czyt.tech/img/18-oo-patterns.png)
 
 - 抽象工厂：家族创建器 - 创建相关项目组。
 - 建造者乐高大师 - 逐步构建物体，将创建和外观分开。
@@ -445,7 +445,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 ### [云服务中不同数据库的小抄](https://github.com/ByteByteGoHq/system-design-101#a-nice-cheat-sheet-of-different-databases-in-cloud-services)
 
-[![img](https://assets.czyt.tech/img/cloud-dbs2.png)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/cloud-dbs2.png)
+[![img](https://assets.czyt.tech/img/cloud-dbs2.png)](https://assets.czyt.tech/img/cloud-dbs2.png)
 
 为项目选择合适的数据库是一项复杂的任务。数据库选项众多，每种都适合不同的使用情况，很快就会导致决策疲劳。
 
@@ -457,7 +457,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 答案因使用情况而异。数据可以在内存或磁盘中建立索引。同样，数据格式也各不相同，如数字、字符串、地理坐标等。系统可能重写，也可能重读。所有这些因素都会影响数据库索引格式的选择。
 
-[![img](https://assets.czyt.tech/img/8-ds-db.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/8-ds-db.jpg)
+[![img](https://assets.czyt.tech/img/8-ds-db.jpg)](https://assets.czyt.tech/img/8-ds-db.jpg)
 
 以下是一些最常用的索引数据结构：
 
@@ -474,7 +474,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 下图显示了这一过程。请注意，不同数据库的架构各不相同，下图展示了一些常见的设计。
 
-[![img](https://assets.czyt.tech/img/sql%20execution%20order%20in%20db.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/sql execution order in db.jpeg)
+[![img](https://assets.czyt.tech/img/sql%20execution%20order%20in%20db.jpeg)](https://assets.czyt.tech/img/sql execution order in db.jpeg)
 
 步骤 1 - 通过传输层协议（如 TCP）向数据库发送 SQL 语句。
 
@@ -496,7 +496,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 CAP 定理是计算机科学中最著名的术语之一，但我敢打赌，不同的开发人员对它有不同的理解。让我们来看看它到底是什么，以及为什么会让人感到困惑。
 
-[![img](https://assets.czyt.tech/img/cap%20theorem.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/cap theorem.jpeg)
+[![img](https://assets.czyt.tech/img/cap%20theorem.jpeg)](https://assets.czyt.tech/img/cap theorem.jpeg)
 
 CAP 定理指出，分布式系统无法同时提供这三种保证中的两种以上。
 
@@ -518,11 +518,11 @@ CAP 定理指出，分布式系统无法同时提供这三种保证中的两种�
 
 ### [内存和存储器类型](https://github.com/ByteByteGoHq/system-design-101#types-of-memory-and-storage)
 
-[![img](https://assets.czyt.tech/img/Types_of_Memory_and_Storage.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/Types_of_Memory_and_Storage.jpeg)
+[![img](https://assets.czyt.tech/img/Types_of_Memory_and_Storage.jpeg)](https://assets.czyt.tech/img/Types_of_Memory_and_Storage.jpeg)
 
 ### [可视化 SQL 查询](https://github.com/ByteByteGoHq/system-design-101#visualizing-a-sql-query)
 
-[![img](https://assets.czyt.tech/img/sql-execution-order.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/sql-execution-order.jpg)
+[![img](https://assets.czyt.tech/img/sql-execution-order.jpg)](https://assets.czyt.tech/img/sql-execution-order.jpg)
 
 数据库系统执行 SQL 语句有几个步骤，包括
 
@@ -542,7 +542,7 @@ SQL 的执行非常复杂，需要考虑很多因素，例如
 
 1986 年，SQL（结构化查询语言）成为一种标准。在接下来的 40 年里，它成为关系数据库管理系统的主流语言。阅读最新标准（ANSI SQL 2016）可能很费时间。如何学习？
 
-[![img](https://assets.czyt.tech/img/how-to-learn-sql.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/how-to-learn-sql.jpg)
+[![img](https://assets.czyt.tech/img/how-to-learn-sql.jpg)](https://assets.czyt.tech/img/how-to-learn-sql.jpg)
 
 SQL 语言有 5 个组成部分：
 
@@ -560,7 +560,7 @@ SQL 语言有 5 个组成部分：
 
 该图说明了我们在典型架构中缓存数据的位置。
 
-[![img](https://assets.czyt.tech/img/where%20do%20we%20cache%20data.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/where do we cache data.jpeg)
+[![img](https://assets.czyt.tech/img/where%20do%20we%20cache%20data.jpeg)](https://assets.czyt.tech/img/where do we cache data.jpeg)
 
 水流有多个层次。
 
@@ -583,7 +583,7 @@ SQL 语言有 5 个组成部分：
 
 如下图所示，主要有 3 个原因。
 
-[![img](https://assets.czyt.tech/img/why_redis_fast.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/why_redis_fast.jpeg)
+[![img](https://assets.czyt.tech/img/why_redis_fast.jpeg)](https://assets.czyt.tech/img/why_redis_fast.jpeg)
 
 1. Redis 是一种基于 RAM 的数据存储。RAM 访问速度至少是随机磁盘访问速度的 1000 倍。
 2. Redis 利用 IO 多路复用和单线程执行循环提高执行效率。
@@ -595,7 +595,7 @@ SQL 语言有 5 个组成部分：
 
 ### [如何使用 Redis？](https://github.com/ByteByteGoHq/system-design-101#how-can-redis-be-used)
 
-[![img](https://assets.czyt.tech/img/top-redis-use-cases.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/top-redis-use-cases.jpg)
+[![img](https://assets.czyt.tech/img/top-redis-use-cases.jpg)](https://assets.czyt.tech/img/top-redis-use-cases.jpg)
 
 Redis 不仅仅是缓存。
 
@@ -645,13 +645,13 @@ Redis 不仅仅是缓存。
 
 设计大型系统通常需要仔细考虑缓存问题。以下是经常使用的五种缓存策略。
 
-[![img](https://assets.czyt.tech/img/top_caching_strategy.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/top_caching_strategy.jpeg)
+[![img](https://assets.czyt.tech/img/top_caching_strategy.jpeg)](https://assets.czyt.tech/img/top_caching_strategy.jpeg)
 
 ## [微服务架构](https://github.com/ByteByteGoHq/system-design-101#microservice-architecture)
 
 ### [典型的微服务架构是什么样的？](https://github.com/ByteByteGoHq/system-design-101#what-does-a-typical-microservice-architecture-look-like)
 
-[![img](https://assets.czyt.tech/img/typical-microservice-arch.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/typical-microservice-arch.jpg)
+[![img](https://assets.czyt.tech/img/typical-microservice-arch.jpg)](https://assets.czyt.tech/img/typical-microservice-arch.jpg)
 
 下图显示了典型的微服务架构。
 
@@ -673,7 +673,7 @@ Redis 不仅仅是缓存。
 
 一图胜千言：开发微服务的 9 项最佳实践。
 
-[![img](https://assets.czyt.tech/img/microservice-best-practices.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/microservice-best-practices.jpeg)
+[![img](https://assets.czyt.tech/img/microservice-best-practices.jpeg)](https://assets.czyt.tech/img/microservice-best-practices.jpeg)
 
 在开发微服务时，我们需要遵循以下最佳实践：
 
@@ -691,7 +691,7 @@ Redis 不仅仅是缓存。
 
 下图展示了开发阶段和生产阶段的微服务技术栈。
 
-[![img](https://assets.czyt.tech/img/microservice-tech.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/microservice-tech.jpeg)
+[![img](https://assets.czyt.tech/img/microservice-tech.jpeg)](https://assets.czyt.tech/img/microservice-tech.jpeg)
 
 ▶️ 𝐏𝐫𝐞-𝐏𝐫𝐨𝐝𝐮𝐜𝐭𝐢𝐨𝐧
 
@@ -712,7 +712,7 @@ Redis 不仅仅是缓存。
 
 Kafka 的性能得益于许多设计决策。在本篇文章中，我们将重点讨论其中两项。我们认为这两项决定的分量最重。
 
-[![img](https://assets.czyt.tech/img/why_is_kafka_fast.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/why_is_kafka_fast.jpeg)
+[![img](https://assets.czyt.tech/img/why_is_kafka_fast.jpeg)](https://assets.czyt.tech/img/why_is_kafka_fast.jpeg)
 
 1. 首先是 Kafka 对顺序 I/O 的依赖。
 2. 赋予 Kafka 性能优势的第二个设计选择是其对效率的关注：零拷贝原则。
@@ -742,13 +742,13 @@ Kafka 的性能得益于许多设计决策。在本篇文章中，我们将重�
 
 ### [如何学习支付系统？](https://github.com/ByteByteGoHq/system-design-101#how-to-learn-payment-systems)
 
-[![img](https://assets.czyt.tech/img/learn-payments.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/learn-payments.jpg)
+[![img](https://assets.czyt.tech/img/learn-payments.jpg)](https://assets.czyt.tech/img/learn-payments.jpg)
 
 ### [为什么信用卡被称为 "银行最赚钱的产品"？VISA/Mastercard 如何赚钱？](https://github.com/ByteByteGoHq/system-design-101#why-is-the-credit-card-called-the-most-profitable-product-in-banks-how-does-visamastercard-make-money)
 
 下图显示了信用卡支付流程的经济学原理。
 
-[![img](https://assets.czyt.tech/img/how%20does%20visa%20makes%20money.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/how does visa makes money.jpg)
+[![img](https://assets.czyt.tech/img/how%20does%20visa%20makes%20money.jpg)](https://assets.czyt.tech/img/how does visa makes money.jpg)
 
 1. 持卡人向商家支付 100 美元购买产品。
 
@@ -769,7 +769,7 @@ Kafka 的性能得益于许多设计决策。在本篇文章中，我们将重�
 
 ### [当我们在商铺刷卡时，VISA 是如何运作的？](https://github.com/ByteByteGoHq/system-design-101#how-does-visa-work-when-we-swipe-a-credit-card-at-a-merchants-shop)
 
-[![img](https://assets.czyt.tech/img/visa_payment.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/visa_payment.jpeg)
+[![img](https://assets.czyt.tech/img/visa_payment.jpeg)](https://assets.czyt.tech/img/visa_payment.jpeg)
 
 VISA 卡、万事达卡和美国运通卡是清算和结算资金的银行卡网络。收卡银行和发卡银行可以是不同的，而且往往是不同的。如果银行在没有中间人的情况下逐一结算交易，那么每家银行都必须与所有其他银行结算交易。这样做效率很低。
 
@@ -809,7 +809,7 @@ VISA 卡、万事达卡和美国运通卡是清算和结算资金的银行卡网
 
 UPI = 支付标记语言 + 互操作支付标准
 
-[![img](https://assets.czyt.tech/img/how-does-upi-work.png)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/how-does-upi-work.png)
+[![img](https://assets.czyt.tech/img/how-does-upi-work.png)](https://assets.czyt.tech/img/how-does-upi-work.png)
 
 ## [DevOps](https://github.com/ByteByteGoHq/system-design-101#devops)
 
@@ -817,7 +817,7 @@ UPI = 支付标记语言 + 互操作支付标准
 
 DevOps、SRE 和平台工程的概念出现于不同时期，由不同的个人和组织发展而来。
 
-[![img](https://assets.czyt.tech/img/devops-sre-platform.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/devops-sre-platform.jpg)
+[![img](https://assets.czyt.tech/img/devops-sre-platform.jpg)](https://assets.czyt.tech/img/devops-sre-platform.jpg)
 
 DevOps 这一概念是 Patrick Debois 和 Andrew Shafer 于 2009 年在敏捷大会上提出的。他们试图通过推广协作文化和分担整个软件开发生命周期的责任，来弥合软件开发和运营之间的差距。
 
@@ -831,7 +831,7 @@ SRE，即网站可靠性工程，由谷歌于 2000 年代初首创，旨在解�
 
 K8s 是一个容器协调系统。它用于容器部署和管理。它的设计深受谷歌内部系统 Borg 的影响。
 
-[![img](https://assets.czyt.tech/img/k8s.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/k8s.jpeg)
+[![img](https://assets.czyt.tech/img/k8s.jpeg)](https://assets.czyt.tech/img/k8s.jpeg)
 
 k8s 集群由一组运行容器化应用程序的工作机器（称为节点）组成。每个集群至少有一个工作节点。
 
@@ -871,7 +871,7 @@ k8s 集群由一组运行容器化应用程序的工作机器（称为节点）�
 
 ### [Docker 与 Kubernetes。我们应该使用哪一个？](https://github.com/ByteByteGoHq/system-design-101#docker-vs-kubernetes-which-one-should-we-use)
 
-[![img](https://assets.czyt.tech/img/docker-vs-k8s.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/docker-vs-k8s.jpg)
+[![img](https://assets.czyt.tech/img/docker-vs-k8s.jpg)](https://assets.czyt.tech/img/docker-vs-k8s.jpg)
 
 什么是 Docker？
 
@@ -895,7 +895,7 @@ KubernetesKubernetes 在集群级别运行。它管理多个主机上的多个�
 
 下图显示了 Docker 的架构，以及当我们运行 "docker build"、"docker pull "和 "docker run "时它是如何工作的。
 
-[![img](https://assets.czyt.tech/img/docker.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/docker.jpg)
+[![img](https://assets.czyt.tech/img/docker.jpg)](https://assets.czyt.tech/img/docker.jpg)
 
 Docker 架构有 3 个组成部分：
 
@@ -925,7 +925,7 @@ Docker 架构有 3 个组成部分：
 
 首先，必须确定代码的存储位置。通常的假设是只有两个位置，一个在 Github 等远程服务器上，另一个在我们的本地机器上。然而，这并不完全准确。Git 在我们的机器上有三个本地存储空间，这意味着我们的代码可以在四个地方找到：
 
-[![img](https://assets.czyt.tech/img/git-commands.png)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/git-commands.png)
+[![img](https://assets.czyt.tech/img/git-commands.png)](https://assets.czyt.tech/img/git-commands.png)
 
 - 工作目录：我们编辑文件的地方
 - 暂存区：为下一次提交保存文件的临时位置
@@ -938,7 +938,7 @@ Docker 架构有 3 个组成部分：
 
 下图显示了 Git 的工作流程。
 
-[![img](https://assets.czyt.tech/img/git-workflow.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/git-workflow.jpeg)
+[![img](https://assets.czyt.tech/img/git-workflow.jpeg)](https://assets.czyt.tech/img/git-workflow.jpeg)
 
 Git 是一种分布式版本控制系统。
 
@@ -952,7 +952,7 @@ Git 是一种分布式版本控制系统。
 
 有哪些区别？
 
-[![img](https://assets.czyt.tech/img/git-merge-git-rebase.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/git-merge-git-rebase.jpeg)
+[![img](https://assets.czyt.tech/img/git-merge-git-rebase.jpeg)](https://assets.czyt.tech/img/git-merge-git-rebase.jpeg)
 
 当我们从一个 Git 分支合并改动到另一个分支时，可以使用 "git merge "或 "git rebase"。下图显示了这两个命令的工作原理。
 
@@ -978,13 +978,13 @@ rebase 的好处是它有一个线性的提交历史。
 
 ### [不同云服务的小抄（2023 年版）](https://github.com/ByteByteGoHq/system-design-101#a-nice-cheat-sheet-of-different-cloud-services-2023-edition)
 
-[![img](https://assets.czyt.tech/img/cloud-compare.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/cloud-compare.jpg)
+[![img](https://assets.czyt.tech/img/cloud-compare.jpg)](https://assets.czyt.tech/img/cloud-compare.jpg)
 
 ### [什么是云原生？](https://github.com/ByteByteGoHq/system-design-101#what-is-cloud-native)
 
 下图显示了自 20 世纪 80 年代以来架构和流程的演变。
 
-[![img](https://assets.czyt.tech/img/cloud-native.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/cloud-native.jpeg)
+[![img](https://assets.czyt.tech/img/cloud-native.jpeg)](https://assets.czyt.tech/img/cloud-native.jpeg)
 
 企业可以使用云原生技术在公共云、私有云和混合云上构建和运行可扩展的应用程序。
 
@@ -1018,11 +1018,11 @@ JsonCrack 可从 JSON 文件生成图表，并使其易于阅读。
 
 此外，生成的图表还可以下载为图片。
 
-[![img](https://assets.czyt.tech/img/json-cracker.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/json-cracker.jpeg)
+[![img](https://assets.czyt.tech/img/json-cracker.jpeg)](https://assets.czyt.tech/img/json-cracker.jpeg)
 
 ### [自动将代码转化为架构图](https://github.com/ByteByteGoHq/system-design-101#automatically-turn-code-into-architecture-diagrams)
 
-[![img](https://assets.czyt.tech/img/diagrams_as_code.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/diagrams_as_code.jpeg)
+[![img](https://assets.czyt.tech/img/diagrams_as_code.jpeg)](https://assets.czyt.tech/img/diagrams_as_code.jpeg)
 
 它有什么作用？
 
@@ -1037,7 +1037,7 @@ JsonCrack 可从 JSON 文件生成图表，并使其易于阅读。
 
 ### [Linux 文件系统说明](https://github.com/ByteByteGoHq/system-design-101#linux-file-system-explained)
 
-[![img](https://assets.czyt.tech/img/linux-file-systems.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/linux-file-systems.jpg)
+[![img](https://assets.czyt.tech/img/linux-file-systems.jpg)](https://assets.czyt.tech/img/linux-file-systems.jpg)
 
 过去，Linux 文件系统就像一个无序的小镇，人们随心所欲地建造自己的房屋。然而，1994 年，文件系统层次标准（FHS）的引入为 Linux 文件系统带来了秩序。
 
@@ -1049,7 +1049,7 @@ Linux 命令是与操作系统交互的指令。它们有助于管理文件、�
 
 下图显示了常用的 Linux 命令：
 
-[![img](https://assets.czyt.tech/img/18%20Most-Used%20Linux%20Commands%20You%20Should%20Know-01.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/18 Most-Used Linux Commands You Should Know-01.jpeg)
+[![img](https://assets.czyt.tech/img/18%20Most-Used%20Linux%20Commands%20You%20Should%20Know-01.jpeg)](https://assets.czyt.tech/img/18 Most-Used Linux Commands You Should Know-01.jpeg)
 
 - ls - 列出文件和目录
 - cd - 更改当前目录
@@ -1076,7 +1076,7 @@ Linux 命令是与操作系统交互的指令。它们有助于管理文件、�
 
 超文本传输协议安全（HTTPS）是超文本传输协议（HTTP）的扩展。HTTPS 使用传输层安全（TLS）传输加密数据。
 
-[![img](https://assets.czyt.tech/img/https.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/https.jpg)
+[![img](https://assets.czyt.tech/img/https.jpg)](https://assets.czyt.tech/img/https.jpg)
 
 如何加密和解密数据？
 
@@ -1099,7 +1099,7 @@ Linux 命令是与操作系统交互的指令。它们有助于管理文件、�
 
 OAuth 2.0 是一个强大而安全的框架，它允许不同的应用程序代表用户进行安全交互，而无需共享敏感凭据。
 
-[![img](https://assets.czyt.tech/img/oAuth2.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/oAuth2.jpg)
+[![img](https://assets.czyt.tech/img/oAuth2.jpg)](https://assets.czyt.tech/img/oAuth2.jpg)
 
 参与 OAuth 的实体包括用户、服务器和身份提供者（IDP）。
 
@@ -1117,7 +1117,7 @@ OAuth 令牌能做什么？
 
 ### [四大认证机制形式](https://github.com/ByteByteGoHq/system-design-101#top-4-forms-of-authentication-mechanisms)
 
-[![img](https://assets.czyt.tech/img/top4-most-used-auth.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/top4-most-used-auth.jpg)
+[![img](https://assets.czyt.tech/img/top4-most-used-auth.jpg)](https://assets.czyt.tech/img/top4-most-used-auth.jpg)
 
 1.  SSH 密钥：
 
@@ -1139,7 +1139,7 @@ OAuth 令牌能做什么？
 
 这些术语都与用户身份管理有关。当你登录一个网站时，你要声明你是谁（身份识别）。你的身份会得到验证（认证），并被授予必要的权限（授权）。过去已经提出了许多解决方案，而且这个清单还在不断扩大。
 
-[![img](https://assets.czyt.tech/img/session.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/session.jpeg)
+[![img](https://assets.czyt.tech/img/session.jpeg)](https://assets.czyt.tech/img/session.jpeg)
 
 从简单到复杂，这就是我对用户身份管理的理解：
 
@@ -1152,7 +1152,7 @@ OAuth 令牌能做什么？
 
 ### [如何在数据库中安全存储密码以及如何验证密码？](https://github.com/ByteByteGoHq/system-design-101#how-to-store-passwords-safely-in-the-database-and-how-to-validate-a-password)
 
-[![img](https://assets.czyt.tech/img/salt.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/salt.jpg)
+[![img](https://assets.czyt.tech/img/salt.jpg)](https://assets.czyt.tech/img/salt.jpg)
 
  **不该做的事**
 
@@ -1180,7 +1180,7 @@ OAuth 令牌能做什么？
 
 ### [向 10 岁的孩子解释 JSON 网络令牌 (JWT)](https://github.com/ByteByteGoHq/system-design-101#explaining-json-web-token-jwt-to-a-10-year-old-kid)
 
-[![img](https://assets.czyt.tech/img/jwt.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/jwt.jpg)
+[![img](https://assets.czyt.tech/img/jwt.jpg)](https://assets.czyt.tech/img/jwt.jpg)
 
 想象一下，你有一个叫做 JWT 的特殊盒子。在这个盒子里，有三个部分：头、有效载荷和签名。
 
@@ -1196,7 +1196,7 @@ OAuth 令牌能做什么？
 
 Google Authenticator 是一款基于软件的验证器，可实现两步验证服务。下图提供了详细信息。
 
-[![img](https://assets.czyt.tech/img/google_authenticate.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/google_authenticate.jpeg)
+[![img](https://assets.czyt.tech/img/google_authenticate.jpeg)](https://assets.czyt.tech/img/google_authenticate.jpeg)
 
 这涉及两个阶段：
 
@@ -1235,7 +1235,7 @@ Google Authenticator 是一款基于软件的验证器，可实现两步验证�
 
 本文章基于对许多 Netflix 工程博客和开源项目的研究。如果您发现任何不准确之处，请随时告知我们。
 
-[![img](https://assets.czyt.tech/img/netflix%20tech%20stack.png)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/netflix tech stack.png)
+[![img](https://assets.czyt.tech/img/netflix%20tech%20stack.png)](https://assets.czyt.tech/img/netflix tech stack.png)
 
 移动和网络：Netflix 采用 Swift 和 Kotlin 构建本地移动应用程序。在网络应用方面，它使用 React。
 
@@ -1257,13 +1257,13 @@ CI/CD：Netflix 在 CI/CD 流程中使用了 JIRA、Confluence、PagerDuty、Jen
 
 没错，这就是真正的 Twitter 架构。它是由埃隆-马斯克发布的，我们重新绘制了它，以提高可读性。
 
-[![img](https://assets.czyt.tech/img/twitter-arch.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/twitter-arch.jpeg)
+[![img](https://assets.czyt.tech/img/twitter-arch.jpeg)](https://assets.czyt.tech/img/twitter-arch.jpeg)
 
 ### [Airbnb 微服务架构在过去 15 年中的演变](https://github.com/ByteByteGoHq/system-design-101#evolution-of-airbnbs-microservice-architecture-over-the-past-15-years)
 
 Airbnb 的微服务架构主要经历了三个阶段。
 
-[![img](https://assets.czyt.tech/img/airbnb_arch.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/airbnb_arch.jpeg)
+[![img](https://assets.czyt.tech/img/airbnb_arch.jpeg)](https://assets.czyt.tech/img/airbnb_arch.jpeg)
 
 巨石（2008 - 2017）
 
@@ -1296,7 +1296,7 @@ Airbnb 最初只是一个简单的房东和客人市场。它是由 Ruby on Rail
 
 哪种方案最好？为什么不同的公司选择不同的方案？
 
-[![img](https://assets.czyt.tech/img/monorepo-microrepo.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/monorepo-microrepo.jpg)
+[![img](https://assets.czyt.tech/img/monorepo-microrepo.jpg)](https://assets.czyt.tech/img/monorepo-microrepo.jpg)
 
 Monorepo 并不新鲜；Linux 和 Windows 都是使用 Monorepo 创建的。为了提高可扩展性和构建速度，谷歌开发了内部专用工具链以加快扩展速度，并制定了严格的编码质量标准以保持一致性。
 
@@ -1320,7 +1320,7 @@ Microrepo 既可以制定自己的标准，也可以通过采纳最佳实践来�
 
 如果你的答案是内部部署服务器和单片机（如下图底部），你很可能无法通过面试，但这就是现实中的构建方式！
 
-[![img](https://assets.czyt.tech/img/stackoverflow.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/stackoverflow.jpg)
+[![img](https://assets.czyt.tech/img/stackoverflow.jpg)](https://assets.czyt.tech/img/stackoverflow.jpg)
 
 **人们认为它应该是什么样子**
 
@@ -1343,7 +1343,7 @@ Stack Overflow 仅使用 9 台内部网络服务器为所有流量提供服务�
 
 下图显示了迁移前后的架构对比。
 
-[![img](https://assets.czyt.tech/img/serverless-to-monolithic.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/serverless-to-monolithic.jpeg)
+[![img](https://assets.czyt.tech/img/serverless-to-monolithic.jpeg)](https://assets.czyt.tech/img/serverless-to-monolithic.jpeg)
 
 什么是亚马逊 Prime 视频监控服务？
 
@@ -1372,7 +1372,7 @@ Prime Video 服务需要监控数千个直播流的质量。监控工具会自�
 
 ### [迪斯尼 Hotstar 如何在一场比赛中捕获 50 亿个表情符号？](https://github.com/ByteByteGoHq/system-design-101#how-does-disney-hotstar-capture-5-billion-emojis-during-a-tournament)
 
-[![img](https://assets.czyt.tech/img/hotstar_emojis.jpeg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/hotstar_emojis.jpeg)
+[![img](https://assets.czyt.tech/img/hotstar_emojis.jpeg)](https://assets.czyt.tech/img/hotstar_emojis.jpeg)
 
 1. 客户端通过标准 HTTP 请求发送表情符号。您可以将 Golang 服务视为典型的 Web 服务器。之所以选择 Golang，是因为它能很好地支持并发性。Golang 中的线程是轻量级的。
 2. 由于写入量非常大，Kafka（消息队列）被用作缓冲区。
@@ -1387,7 +1387,7 @@ LinkedIn 也采用了类似的设计，它能以每秒一百万个赞的速度�
 
 下图显示了 Discord 消息存储的演变过程：
 
-[![img](https://assets.czyt.tech/img/discord-store-messages.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/discord-store-messages.jpg)
+[![img](https://assets.czyt.tech/img/discord-store-messages.jpg)](https://assets.czyt.tech/img/discord-store-messages.jpg)
 
 MongoDB ➡️ Cassandra ➡️ ScyllaDB
 
@@ -1413,7 +1413,7 @@ ScyllaDB 的 p99 读取延迟为 15 毫秒，而 Cassandra 为 40-125 毫秒。p
 
 下图解释了实现这一点的幕后原因。
 
-[![img](https://assets.czyt.tech/img/live_streaming_updated.jpg)](https://github.com/ByteByteGoHq/system-design-101/blob/main/images/live_streaming_updated.jpg)
+[![img](https://assets.czyt.tech/img/live_streaming_updated.jpg)](https://assets.czyt.tech/img/live_streaming_updated.jpg)
 
 步骤 1：原始视频数据由麦克风和摄像头采集。数据被发送到服务器端。
 

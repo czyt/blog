@@ -11,7 +11,7 @@ draft: false
 
 无论您是在准备系统设计面试，还是只是想了解系统在表面之下是如何工作的，我们都希望本资料库能帮助您实现这一目标。
 
-## [通信协议](https://github.com/ByteByteGoHq/system-design-101#communication-protocols)
+## 通信协议
 
 架构风格定义了应用程序编程接口（API）不同组件之间的交互方式。因此，它们通过提供设计和构建 API 的标准方法，确保了效率、可靠性以及与其他系统集成的便捷性。以下是最常用的样式：
 
@@ -53,7 +53,7 @@ draft: false
 
   事件发生时通知系统
 
-### [REST API 与 GraphQL](https://github.com/ByteByteGoHq/system-design-101#rest-api-vs-graphql)
+### REST API 与 GraphQL
 
 在应用程序接口设计方面，REST 和 GraphQL 各有优缺点。
 
@@ -81,7 +81,7 @@ REST 和 GraphQL 之间的最佳选择取决于应用程序和开发团队的具
 
 API 方法都不是万能的。仔细评估需求和权衡利弊对于选择正确的风格非常重要。REST 和 GraphQL 都是公开数据和支持现代应用程序的有效选择。
 
-### [gRPC 如何工作？](https://github.com/ByteByteGoHq/system-design-101#how-does-grpc-work)
+### gRPC 如何工作？
 
 RPC（远程过程调用）之所以被称为 "远程"，是因为在微服务架构下，当服务部署到不同的服务器时，它可以实现远程服务之间的通信。从用户的角度来看，它就像一个本地函数调用。
 
@@ -101,7 +101,7 @@ RPC（远程过程调用）之所以被称为 "远程"，是因为在微服务�
 
 步骤 12 - 14：订单服务接收数据包、解码并将结果发送给客户端应用程序。
 
-### [什么是网络钩子？](https://github.com/ByteByteGoHq/system-design-101#what-is-a-webhook)
+### 什么是Webhook？
 
 下图显示了轮询和 Webhook 的比较。
 
@@ -120,7 +120,7 @@ RPC（远程过程调用）之所以被称为 "远程"，是因为在微服务�
 - 不断轮询状态需要支付服务的资源。
 - 外部服务直接与支付服务通信，会造成安全漏洞。
 
- **2.网络钩子** 
+ **2.Webhook** 
 
 我们可以向外部服务注册网络钩子。这意味着：当您有关于请求的最新信息时，请在某个 URL 上给我回电。PSP 完成处理后，将调用 HTTP 请求更新付款状态。
 
@@ -134,7 +134,7 @@ Webhook 通常被称为反向 API 或推送 API，因为服务器会向客户端
 2. 出于安全考虑，我们需要在 API 网关中设置适当的规则。
 3. 我们需要在外部服务中注册正确的 URL。
 
-### [如何提高应用程序接口的性能？](https://github.com/ByteByteGoHq/system-design-101#how-to-improve-api-performance)
+### 如何提高应用程序接口的性能？
 
 下图显示了提高应用程序接口性能的 5 种常见技巧。
 
@@ -160,7 +160,7 @@ Webhook 通常被称为反向 API 或推送 API，因为服务器会向客户端
 
 访问资源时，我们经常需要从数据库加载数据。打开和关闭数据库连接会增加大量开销。因此，我们应该通过一个开放连接池来连接数据库。连接池负责管理连接的生命周期。
 
-### [HTTP 1.0 -> HTTP 1.1 -> HTTP 2.0 -> HTTP 3.0 (QUIC)](https://github.com/ByteByteGoHq/system-design-101#http-10---http-11---http-20---http-30-quic)
+### HTTP 1.0 -> HTTP 1.1 -> HTTP 2.0 -> HTTP 3.0 (QUIC)
 
 每一代 HTTP 解决了什么问题？
 
@@ -182,7 +182,7 @@ Webhook 通常被称为反向 API 或推送 API，因为服务器会向客户端
 
 QUIC 基于 UDP。它将数据流作为一等公民引入传输层。QUIC 流共享同一个 QUIC 连接，因此无需额外的握手和慢速启动来创建新的 QUIC 流，但 QUIC 流是独立传输的，因此在大多数情况下，影响一个流的数据包丢失不会影响其他流。
 
-### [SOAP vs REST vs GraphQL vs RPC](https://github.com/ByteByteGoHq/system-design-101#soap-vs-rest-vs-graphql-vs-rpc)
+### SOAP vs REST vs GraphQL vs RPC
 
 下图说明了 API 时间轴和 API 样式的比较。
 
@@ -192,7 +192,7 @@ QUIC 基于 UDP。它将数据流作为一等公民引入传输层。QUIC 流共
 
 [![img](https://assets.czyt.tech/img/SOAP%20vs%20REST%20vs%20GraphQL%20vs%20RPC.jpeg)](https://assets.czyt.tech/img/SOAP vs REST vs GraphQL vs RPC.jpeg)
 
-### [代码优先与应用程序接口优先](https://github.com/ByteByteGoHq/system-design-101#code-first-vs-api-first)
+### 代码优先与应用程序接口优先
 
 下图显示了代码优先开发和 API 优先开发之间的区别。为什么要考虑 API 优先设计？
 
@@ -214,7 +214,7 @@ QUIC 基于 UDP。它将数据流作为一等公民引入传输层。QUIC 流共
 
 因为我们先设计了应用程序接口，所以可以在开发代码的同时设计测试。在某种程度上，使用 API 优先开发时，我们还可以进行 TDD（测试驱动设计）。
 
-### [ HTTP 状态代码](https://github.com/ByteByteGoHq/system-design-101#http-status-codes)
+### HTTP 状态代码
 
 [![img](https://assets.czyt.tech/img/http-status-code.jpg)](https://assets.czyt.tech/img/http-status-code.jpg)
 
@@ -222,7 +222,7 @@ HTTP 的响应代码分为五类：
 
 信息 (100-199) 成功 (200-299) 重定向 (300-399) 客户端错误 (400-499) 服务器错误 (500-599)
 
-### [API 网关有什么作用？](https://github.com/ByteByteGoHq/system-design-101#what-does-api-gateway-do)
+### API 网关有什么作用？
 
 下图显示了详细情况。
 
@@ -244,7 +244,7 @@ HTTP 的响应代码分为五类：
 
 步骤 9-12：API 网关可以正确处理错误，并在错误需要较长时间恢复（断路）时处理故障。它还可以利用 ELK（Elastic-Logstash-Kibana）栈进行日志记录和监控。我们有时会在 API 网关中缓存数据。
 
-### [如何设计有效、安全的应用程序接口？](https://github.com/ByteByteGoHq/system-design-101#how-do-we-design-effective-and-safe-apis)
+### 如何设计有效、安全的应用程序接口？
 
 下图以购物车为例展示了典型的应用程序接口设计。
 
@@ -252,7 +252,7 @@ HTTP 的响应代码分为五类：
 
 请注意，应用程序接口设计不仅仅是 URL 路径设计。大多数时候，我们需要选择合适的资源名称、标识符和路径模式。设计适当的 HTTP 头域或在 API 网关中设计有效的速率限制规则也同样重要。
 
-### [ TCP/IP 封装](https://github.com/ByteByteGoHq/system-design-101#tcpip-encapsulation)
+###  TCP/IP 封装
 
 数据如何通过网络发送？为什么 OSI 模型需要这么多层？
 
@@ -274,7 +274,7 @@ HTTP 的响应代码分为五类：
 
 在网络模型中，我们需要分层，因为每一层都专注于自己的职责。每一层都可以依靠标头来处理指令，而不需要知道上一层数据的含义。
 
-### [为什么 Nginx 被称为 "反向 "代理？](https://github.com/ByteByteGoHq/system-design-101#why-is-nginx-called-a-reverse-proxy)
+### 为什么 Nginx 被称为 "反向 "代理？
 
 下图显示了 𝐟𝐨𝐫𝐰𝐚𝐫𝐝 𝐩𝐫𝐨𝐱𝐲 和 𝐫𝐞𝐯𝐞𝐫𝐬𝐞 𝐩𝐫𝐨𝐱𝐲 之间的区别。
 
@@ -297,7 +297,7 @@ HTTP 的响应代码分为五类：
 3.  缓存静态内容
 4. 加密和解密 SSL 通信
 
-### [常见的负载平衡算法有哪些？](https://github.com/ByteByteGoHq/system-design-101#what-are-the-common-load-balancing-algorithms)
+### 常见的负载平衡算法有哪些？
 
 下图显示了 6 种常见算法。
 
@@ -331,7 +331,7 @@ HTTP 的响应代码分为五类：
 
    新请求会发送到响应时间最快的服务实例。
 
-### [URL、URI、URN - 您知道它们的区别吗？](https://github.com/ByteByteGoHq/system-design-101#url-uri-urn---do-you-know-the-differences)
+### URL、URI、URN - 您知道它们的区别吗？
 
 下图显示了 URL、URI 和 URN 的比较。
 
@@ -353,9 +353,9 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 如果您想了解这方面的更多详情，我建议您阅读 W3C 的说明。
 
-## [CI/CD](https://github.com/ByteByteGoHq/system-design-101#cicd)
+## CI/CD
 
-### [简单解释 CI/CD 管道](https://github.com/ByteByteGoHq/system-design-101#cicd-pipeline-explained-in-simple-terms)
+### 简单解释 CI/CD 管道
 
 [![img](https://assets.czyt.tech/img/ci-cd-pipeline.jpg)](https://assets.czyt.tech/img/ci-cd-pipeline.jpg)
 
@@ -383,7 +383,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 - 在发布之前，可在暂存阶段进行进一步测试
 - CD 系统将批准的变更部署到生产中
 
-### [Netflix 技术栈（CI/CD 管道）](https://github.com/ByteByteGoHq/system-design-101#netflix-tech-stack-cicd-pipeline)
+### Netflix 技术栈（CI/CD 管道）
 
 [![img](https://assets.czyt.tech/img/netflix-ci-cd.jpg)](https://assets.czyt.tech/img/netflix-ci-cd.jpg)
 
@@ -403,9 +403,9 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 事件报告：根据优先级派遣事件，并使用 PagerDuty 进行事件处理。
 
-## [ 建筑模式](https://github.com/ByteByteGoHq/system-design-101#architecture-patterns)
+## 架构模式
 
-### [MVC、MVP、MVVM、MVVM-C 和 VIPER](https://github.com/ByteByteGoHq/system-design-101#mvc-mvp-mvvm-mvvm-c-and-viper)
+### MVC、MVP、MVVM、MVVM-C 和 VIPER
 
 无论是 iOS 还是 Android 平台，这些架构模式都是应用程序开发中最常用的模式之一。开发人员引入这些模式是为了克服早期模式的局限性。那么，它们有什么不同呢？
 
@@ -416,7 +416,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 - 大多数模式都包含一个 "模型"（M），用于管理业务数据
 - "控制器"、"演示器 "和 "视图-模型 "是视图和模型（VIPER 模式中的 "实体"）之间的翻译器。
 
-### [每个开发人员都应了解的 18 种关键设计模式](https://github.com/ByteByteGoHq/system-design-101#18-key-design-patterns-every-developer-should-know)
+### 每个开发人员都应了解的 18 种关键设计模式
 
 模式是针对常见设计问题的可重复使用的解决方案，可使开发过程更顺畅、更高效。它们是构建更好的软件结构的蓝图。以下是一些最流行的模式：
 
@@ -441,9 +441,9 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 - 观察者新闻播报员 - 通知类其他对象的变化。
 - 游客技艺高超的访客 - 在不改变类别的情况下为类别添加新的操作。
 
-## [ 数据库](https://github.com/ByteByteGoHq/system-design-101#database)
+##  数据库
 
-### [云服务中不同数据库的小抄](https://github.com/ByteByteGoHq/system-design-101#a-nice-cheat-sheet-of-different-databases-in-cloud-services)
+### 云服务中不同数据库的小抄
 
 [![img](https://assets.czyt.tech/img/cloud-dbs2.png)](https://assets.czyt.tech/img/cloud-dbs2.png)
 
@@ -453,7 +453,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 注：谷歌数据库用例文档有限。尽管我们尽最大努力查看了现有资料，并得出了最佳方案，但某些条目可能需要更加准确。
 
-### [为数据库提供动力的 8 种数据结构](https://github.com/ByteByteGoHq/system-design-101#8-data-structures-that-power-your-databases)
+### 为数据库提供动力的 8 种数据结构
 
 答案因使用情况而异。数据可以在内存或磁盘中建立索引。同样，数据格式也各不相同，如数字、字符串、地理坐标等。系统可能重写，也可能重读。所有这些因素都会影响数据库索引格式的选择。
 
@@ -470,7 +470,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 - 后缀树：用于字符串模式搜索
 - R 树：多维搜索，如寻找最近的邻居
 
-### [如何在数据库中执行 SQL 语句？](https://github.com/ByteByteGoHq/system-design-101#how-is-an-sql-statement-executed-in-the-database)
+### 如何在数据库中执行 SQL 语句？
 
 下图显示了这一过程。请注意，不同数据库的架构各不相同，下图展示了一些常见的设计。
 
@@ -492,7 +492,7 @@ URN 代表统一资源名称。它使用 urn 方案。URN 不能用于定位资�
 
 步骤 8 - 在事务处理期间，数据处于锁定模式。这是由锁管理器保证的。这也确保了事务的 ACID 属性。
 
-### [ CAP 定理](https://github.com/ByteByteGoHq/system-design-101#cap-theorem)
+###  CAP 定理
 
 CAP 定理是计算机科学中最著名的术语之一，但我敢打赌，不同的开发人员对它有不同的理解。让我们来看看它到底是什么，以及为什么会让人感到困惑。
 
@@ -516,11 +516,11 @@ CAP 定理指出，分布式系统无法同时提供这三种保证中的两种�
 
 我认为它仍然有用，因为它为我们提供了一系列权衡讨论的思路，但它只是故事的一部分。在选择合适的数据库时，我们需要深入挖掘。
 
-### [内存和存储器类型](https://github.com/ByteByteGoHq/system-design-101#types-of-memory-and-storage)
+### 内存和存储器类型
 
 [![img](https://assets.czyt.tech/img/Types_of_Memory_and_Storage.jpeg)](https://assets.czyt.tech/img/Types_of_Memory_and_Storage.jpeg)
 
-### [可视化 SQL 查询](https://github.com/ByteByteGoHq/system-design-101#visualizing-a-sql-query)
+### 可视化 SQL 查询
 
 [![img](https://assets.czyt.tech/img/sql-execution-order.jpg)](https://assets.czyt.tech/img/sql-execution-order.jpg)
 
@@ -538,7 +538,7 @@ SQL 的执行非常复杂，需要考虑很多因素，例如
 -  并发控制
 -  事务管理
 
-### [ SQL 语言](https://github.com/ByteByteGoHq/system-design-101#sql-language)
+###  SQL 语言
 
 1986 年，SQL（结构化查询语言）成为一种标准。在接下来的 40 年里，它成为关系数据库管理系统的主流语言。阅读最新标准（ANSI SQL 2016）可能很费时间。如何学习？
 
@@ -554,10 +554,9 @@ SQL 语言有 5 个组成部分：
 
 对于后端工程师来说，您可能需要了解其中的大部分内容。作为数据分析师，您可能需要充分了解 DQL。选择与您最相关的主题。
 
-## [ 缓存](https://github.com/ByteByteGoHq/system-design-101#cache)
+##  缓存
 
-### [数据缓存无处不在](https://github.com/ByteByteGoHq/system-design-101#data-is-cached-everywhere)
-
+### 数据缓存无处不在
 该图说明了我们在典型架构中缓存数据的位置。
 
 [![img](https://assets.czyt.tech/img/where%20do%20we%20cache%20data.jpeg)](https://assets.czyt.tech/img/where do we cache data.jpeg)
@@ -579,7 +578,7 @@ SQL 语言有 5 个组成部分：
 - 事务日志：记录所有事务和数据库更新
 - 复制日志：用于记录数据库群集中的复制状态
 
-### [Redis 为什么这么快？](https://github.com/ByteByteGoHq/system-design-101#why-is-redis-so-fast)
+### Redis 为什么这么快？
 
 如下图所示，主要有 3 个原因。
 
@@ -593,7 +592,7 @@ SQL 语言有 5 个组成部分：
 
 您可能已经注意到，这张图的风格与我以前的文章不同。请告诉我您更喜欢哪一种。
 
-### [如何使用 Redis？](https://github.com/ByteByteGoHq/system-design-101#how-can-redis-be-used)
+### 如何使用 Redis？
 
 [![img](https://assets.czyt.tech/img/top-redis-use-cases.jpg)](https://assets.czyt.tech/img/top-redis-use-cases.jpg)
 
@@ -641,15 +640,15 @@ Redis 不仅仅是缓存。
 
   我们可以使用 ZSet 对文章进行排序。
 
-### [ 顶级缓存策略](https://github.com/ByteByteGoHq/system-design-101#top-caching-strategies)
+### 顶级缓存策略
 
 设计大型系统通常需要仔细考虑缓存问题。以下是经常使用的五种缓存策略。
 
 [![img](https://assets.czyt.tech/img/top_caching_strategy.jpeg)](https://assets.czyt.tech/img/top_caching_strategy.jpeg)
 
-## [微服务架构](https://github.com/ByteByteGoHq/system-design-101#microservice-architecture)
+## 微服务架构
 
-### [典型的微服务架构是什么样的？](https://github.com/ByteByteGoHq/system-design-101#what-does-a-typical-microservice-architecture-look-like)
+### 典型的微服务架构是什么样的？
 
 [![img](https://assets.czyt.tech/img/typical-microservice-arch.jpg)](https://assets.czyt.tech/img/typical-microservice-arch.jpg)
 
@@ -669,7 +668,7 @@ Redis 不仅仅是缓存。
 - 每个域都可由一个专门团队独立维护。
 - 因此，每个领域的业务需求都可以定制，并得到更好的支持。
 
-### [微服务最佳实践](https://github.com/ByteByteGoHq/system-design-101#microservice-best-practices)
+### 微服务最佳实践
 
 一图胜千言：开发微服务的 9 项最佳实践。
 
@@ -687,7 +686,7 @@ Redis 不仅仅是缓存。
 8.  设计微型前端
 9. 协调微服务
 
-### [微服务通常使用什么技术栈？](https://github.com/ByteByteGoHq/system-design-101#what-tech-stack-is-commonly-used-for-microservices)
+### 微服务通常使用什么技术栈？
 
 下图展示了开发阶段和生产阶段的微服务技术栈。
 
@@ -708,7 +707,7 @@ Redis 不仅仅是缓存。
 - 持久性 - 我们可以使用 MySQL 或 PostgreSQL 作为关系数据库，使用 Amazon S3 作为对象存储。如有必要，我们还可以使用 Cassandra 进行宽列存储。
 - 管理与监控 - 为了管理如此多的微服务，常用的运维工具包括 Prometheus、Elastic Stack 和 Kubernetes。
 
-### [Kafka 为何如此快速](https://github.com/ByteByteGoHq/system-design-101#why-is-kafka-fast)
+### Kafka 为何如此快速
 
 Kafka 的性能得益于许多设计决策。在本篇文章中，我们将重点讨论其中两项。我们认为这两项决定的分量最重。
 
@@ -738,13 +737,13 @@ Kafka 的性能得益于许多设计决策。在本篇文章中，我们将重�
 
 零拷贝是保存应用程序上下文和内核上下文之间多个数据副本的快捷方式。
 
-## [ 支付系统](https://github.com/ByteByteGoHq/system-design-101#payment-systems)
+## 支付系统
 
-### [如何学习支付系统？](https://github.com/ByteByteGoHq/system-design-101#how-to-learn-payment-systems)
+### 如何学习支付系统？
 
 [![img](https://assets.czyt.tech/img/learn-payments.jpg)](https://assets.czyt.tech/img/learn-payments.jpg)
 
-### [为什么信用卡被称为 "银行最赚钱的产品"？VISA/Mastercard 如何赚钱？](https://github.com/ByteByteGoHq/system-design-101#why-is-the-credit-card-called-the-most-profitable-product-in-banks-how-does-visamastercard-make-money)
+### 为什么信用卡被称为 "银行最赚钱的产品"？VISA/Mastercard 如何赚钱？
 
 下图显示了信用卡支付流程的经济学原理。
 
@@ -767,8 +766,7 @@ Kafka 的性能得益于许多设计决策。在本篇文章中，我们将重�
 - 发卡机构在持卡人向发卡机构付款之前向商户付款。
 - 发行机构还有其他运营成本，包括管理客户账户、提供报表、欺诈检测、风险管理、清算和结算等。
 
-### [当我们在商铺刷卡时，VISA 是如何运作的？](https://github.com/ByteByteGoHq/system-design-101#how-does-visa-work-when-we-swipe-a-credit-card-at-a-merchants-shop)
-
+### 当我们在商铺刷卡时，VISA 是如何运作的？
 [![img](https://assets.czyt.tech/img/visa_payment.jpeg)](https://assets.czyt.tech/img/visa_payment.jpeg)
 
 VISA 卡、万事达卡和美国运通卡是清算和结算资金的银行卡网络。收卡银行和发卡银行可以是不同的，而且往往是不同的。如果银行在没有中间人的情况下逐一结算交易，那么每家银行都必须与所有其他银行结算交易。这样做效率很低。
@@ -801,7 +799,7 @@ VISA 卡、万事达卡和美国运通卡是清算和结算资金的银行卡网
 
 在此过程中，银行卡网络承担了与每家银行对话的负担，并收取服务费作为回报。
 
-### [世界各地的支付系统系列（第 1 部分）：印度的统一支付接口（UPI）](https://github.com/ByteByteGoHq/system-design-101#payment-systems-around-the-world-series-part-1-unified-payments-interface-upi-in-india)
+### 世界各地的支付系统系列（第 1 部分）：印度的统一支付接口（UPI）
 
 什么是 UPI？UPI 是印度国家支付公司开发的即时实时支付系统。
 
@@ -811,9 +809,9 @@ UPI = 支付标记语言 + 互操作支付标准
 
 [![img](https://assets.czyt.tech/img/how-does-upi-work.png)](https://assets.czyt.tech/img/how-does-upi-work.png)
 
-## [DevOps](https://github.com/ByteByteGoHq/system-design-101#devops)
+## DevOps
 
-### [DevOps vs. SRE vs. 平台工程。有什么区别？](https://github.com/ByteByteGoHq/system-design-101#devops-vs-sre-vs-platform-engineering-what-is-the-difference)
+### DevOps vs. SRE vs. 平台工程。有什么区别？
 
 DevOps、SRE 和平台工程的概念出现于不同时期，由不同的个人和组织发展而来。
 
@@ -827,7 +825,7 @@ SRE，即网站可靠性工程，由谷歌于 2000 年代初首创，旨在解�
 
 值得注意的是，虽然这些概念出现的时间不同。它们都与改善软件开发和运营中的协作、自动化和效率这一更广泛的趋势有关。
 
-### [什么是 k8s（Kubernetes）？](https://github.com/ByteByteGoHq/system-design-101#what-is-k8s-kubernetes)
+### 什么是 k8s（Kubernetes）？
 
 K8s 是一个容器协调系统。它用于容器部署和管理。它的设计深受谷歌内部系统 Borg 的影响。
 
@@ -869,7 +867,7 @@ k8s 集群由一组运行容器化应用程序的工作机器（称为节点）�
 
    Kube-proxy 是一种网络代理，可在集群中的每个节点上运行。它会路由从服务进入节点的流量。它将工作请求转发给正确的容器。
 
-### [Docker 与 Kubernetes。我们应该使用哪一个？](https://github.com/ByteByteGoHq/system-design-101#docker-vs-kubernetes-which-one-should-we-use)
+### Docker 与 Kubernetes。我们应该使用哪一个？
 
 [![img](https://assets.czyt.tech/img/docker-vs-k8s.jpg)](https://assets.czyt.tech/img/docker-vs-k8s.jpg)
 
@@ -891,7 +889,7 @@ KubernetesKubernetes 在集群级别运行。它管理多个主机上的多个�
 
 简而言之，Docker 专注于容器化和在单个主机上运行容器，而 Kubernetes 则擅长在主机集群中大规模管理和协调容器。
 
-### [Docker 如何运行？](https://github.com/ByteByteGoHq/system-design-101#how-does-docker-work)
+### Docker 如何运行？
 
 下图显示了 Docker 的架构，以及当我们运行 "docker build"、"docker pull "和 "docker run "时它是如何工作的。
 
@@ -919,10 +917,9 @@ Docker 架构有 3 个组成部分：
 4. Docker 会创建一个网络接口，将容器连接到默认网络。
 5. Docker 启动容器
 
-## [GIT](https://github.com/ByteByteGoHq/system-design-101#git)
+## GIT
 
-### [Git 命令的工作原理](https://github.com/ByteByteGoHq/system-design-101#how-git-commands-work)
-
+### Git 命令的工作原理
 首先，必须确定代码的存储位置。通常的假设是只有两个位置，一个在 Github 等远程服务器上，另一个在我们的本地机器上。然而，这并不完全准确。Git 在我们的机器上有三个本地存储空间，这意味着我们的代码可以在四个地方找到：
 
 [![img](https://assets.czyt.tech/img/git-commands.png)](https://assets.czyt.tech/img/git-commands.png)
@@ -934,7 +931,7 @@ Docker 架构有 3 个组成部分：
 
 大多数 Git 命令主要是在这四个位置之间移动文件。
 
-### [Git 如何工作？](https://github.com/ByteByteGoHq/system-design-101#how-does-git-work)
+### Git 如何工作？
 
 下图显示了 Git 的工作流程。
 
@@ -948,7 +945,7 @@ Git 是一种分布式版本控制系统。
 
 如果远程存储库崩溃，可以从本地存储库恢复文件。
 
-### [Git merge 与 Git rebase](https://github.com/ByteByteGoHq/system-design-101#git-merge-vs-git-rebase)
+### Git merge 与 Git rebase
 
 有哪些区别？
 
@@ -974,13 +971,13 @@ rebase 的好处是它有一个线性的提交历史。
 
 切勿在公共分支机构使用！
 
-## [ 云服务](https://github.com/ByteByteGoHq/system-design-101#cloud-services)
+## 云服务
 
-### [不同云服务的小抄（2023 年版）](https://github.com/ByteByteGoHq/system-design-101#a-nice-cheat-sheet-of-different-cloud-services-2023-edition)
+### 不同云服务的小抄（2023 年版）
 
 [![img](https://assets.czyt.tech/img/cloud-compare.jpg)](https://assets.czyt.tech/img/cloud-compare.jpg)
 
-### [什么是云原生？](https://github.com/ByteByteGoHq/system-design-101#what-is-cloud-native)
+### 什么是云原生？
 
 下图显示了自 20 世纪 80 年代以来架构和流程的演变。
 
@@ -1008,9 +1005,9 @@ rebase 的好处是它有一个线性的提交历史。
 
    应用程序被大规模部署在云基础设施上，而不是自托管服务器上。
 
-## [开发人员生产力工具](https://github.com/ByteByteGoHq/system-design-101#developer-productivity-tools)
+## 开发人员生产力工具
 
-### [ 可视化 JSON 文件](https://github.com/ByteByteGoHq/system-design-101#visualize-json-files)
+### 可视化 JSON 文件
 
 嵌套的 JSON 文件很难读取。
 
@@ -1020,8 +1017,7 @@ JsonCrack 可从 JSON 文件生成图表，并使其易于阅读。
 
 [![img](https://assets.czyt.tech/img/json-cracker.jpeg)](https://assets.czyt.tech/img/json-cracker.jpeg)
 
-### [自动将代码转化为架构图](https://github.com/ByteByteGoHq/system-design-101#automatically-turn-code-into-architecture-diagrams)
-
+### 自动将代码转化为架构图
 [![img](https://assets.czyt.tech/img/diagrams_as_code.jpeg)](https://assets.czyt.tech/img/diagrams_as_code.jpeg)
 
 它有什么作用？
@@ -1033,9 +1029,9 @@ JsonCrack 可从 JSON 文件生成图表，并使其易于阅读。
 
 [Github repo](https://github.com/mingrammer/diagrams)
 
-## [ 利纳克斯](https://github.com/ByteByteGoHq/system-design-101#linux)
+## Linux]
 
-### [Linux 文件系统说明](https://github.com/ByteByteGoHq/system-design-101#linux-file-system-explained)
+### Linux 文件系统说明
 
 [![img](https://assets.czyt.tech/img/linux-file-systems.jpg)](https://assets.czyt.tech/img/linux-file-systems.jpg)
 
@@ -1043,7 +1039,7 @@ JsonCrack 可从 JSON 文件生成图表，并使其易于阅读。
 
 通过实施像 FHS 这样的标准，软件可以确保在不同的 Linux 发行版中使用一致的布局。不过，并非所有 Linux 发行版都严格遵守这一标准。它们通常会融入自己独特的元素或迎合特定的要求。要熟练掌握这一标准，可以从探索开始。使用 "cd "等命令进行导航，使用 "ls "命令列出目录内容。将文件系统想象成一棵树，从根 (/) 开始。随着时间的推移，这将成为你的第二天性，使你成为一名熟练的 Linux 管理员。
 
-### [你应该知道的 18 种最常用 Linux 命令](https://github.com/ByteByteGoHq/system-design-101#18-most-used-linux-commands-you-should-know)
+### 你应该知道的 18 种最常用 Linux 命令
 
 Linux 命令是与操作系统交互的指令。它们有助于管理文件、目录、系统进程和系统的许多其他方面。你需要熟悉这些命令，才能高效地浏览和维护基于 Linux 的系统。
 
@@ -1070,7 +1066,7 @@ Linux 命令是与操作系统交互的指令。它们有助于管理文件、�
 - ifconfig - 配置网络接口
 - ping - 测试主机之间的网络连通性
 
-## [ 安全](https://github.com/ByteByteGoHq/system-design-101#security)
+##  安全
 
 ### [HTTPS 如何工作？](https://github.com/ByteByteGoHq/system-design-101#how-does-https-work)
 
@@ -1095,7 +1091,7 @@ Linux 命令是与操作系统交互的指令。它们有助于管理文件、�
 1. 安全性：非对称加密只能单向进行。这意味着，如果服务器尝试将加密数据发送回客户端，任何人都可以使用公开密钥解密数据。
 2. 服务器资源：非对称加密增加了大量数学开销。它不适合长时间的数据传输。
 
-### [Oauth 2.0 简明解释](https://github.com/ByteByteGoHq/system-design-101#oauth-20-explained-with-simple-terms)
+### Oauth 2.0 简明解释
 
 OAuth 2.0 是一个强大而安全的框架，它允许不同的应用程序代表用户进行安全交互，而无需共享敏感凭据。
 
@@ -1115,7 +1111,7 @@ OAuth 令牌能做什么？
 
 请记住，OAuth 2.0 的目的是保证您和您的数据安全，同时让您的在线体验在不同的应用程序和服务之间无缝衔接、轻松自如。
 
-### [四大认证机制形式](https://github.com/ByteByteGoHq/system-design-101#top-4-forms-of-authentication-mechanisms)
+### 四大认证机制形式
 
 [![img](https://assets.czyt.tech/img/top4-most-used-auth.jpg)](https://assets.czyt.tech/img/top4-most-used-auth.jpg)
 
@@ -1135,7 +1131,7 @@ OAuth 令牌能做什么？
 
    用户身份验证信息用于验证和授予对各种系统和服务的访问权限
 
-### [会话、Cookie、JWT、令牌、SSO 和 OAuth 2.0 - 它们是什么？](https://github.com/ByteByteGoHq/system-design-101#session-cookie-jwt-token-sso-and-oauth-20---what-are-they)
+### 会话、Cookie、JWT、令牌、SSO 和 OAuth 2.0 - 它们是什么？
 
 这些术语都与用户身份管理有关。当你登录一个网站时，你要声明你是谁（身份识别）。你的身份会得到验证（认证），并被授予必要的权限（授权）。过去已经提出了许多解决方案，而且这个清单还在不断扩大。
 
@@ -1150,7 +1146,7 @@ OAuth 令牌能做什么？
 - 通过使用 SSO（单点登录），您只需登录一次，即可登录多个网站。它使用 CAS（中央验证服务）来维护跨网站信息。
 - 通过使用 OAuth 2.0，您可以授权一个网站访问您在另一个网站上的信息。
 
-### [如何在数据库中安全存储密码以及如何验证密码？](https://github.com/ByteByteGoHq/system-design-101#how-to-store-passwords-safely-in-the-database-and-how-to-validate-a-password)
+### 如何在数据库中安全存储密码以及如何验证密码？
 
 [![img](https://assets.czyt.tech/img/salt.jpg)](https://assets.czyt.tech/img/salt.jpg)
 
@@ -1178,7 +1174,7 @@ OAuth 令牌能做什么？
 3. 系统会将盐添加到密码中并进行散列。我们将散列值称为 H1。
 4. 系统会比较 H1 和 H2，其中 H2 是存储在数据库中的哈希值。如果两者相同，则密码有效。
 
-### [向 10 岁的孩子解释 JSON 网络令牌 (JWT)](https://github.com/ByteByteGoHq/system-design-101#explaining-json-web-token-jwt-to-a-10-year-old-kid)
+### 向 10 岁的孩子解释 JSON 网络令牌 (JWT)
 
 [![img](https://assets.czyt.tech/img/jwt.jpg)](https://assets.czyt.tech/img/jwt.jpg)
 
@@ -1190,7 +1186,7 @@ OAuth 令牌能做什么？
 
 当您要将 JWT 发送到服务器时，您需要将标头、有效载荷和签名放在盒子里。然后发送给服务器。服务器可以很容易地读取标头和有效载荷，以了解您是谁以及您想做什么。
 
-### [Google Authenticator（或其他类型的双因素身份验证器）如何工作？](https://github.com/ByteByteGoHq/system-design-101#how-does-google-authenticator-or-other-types-of-2-factor-authenticators-work)
+### Google Authenticator（或其他类型的双因素身份验证器）如何工作？
 
 当启用双因素身份验证时，Google Authenticator 通常用于登录我们的账户。它如何保证安全？
 
@@ -1229,9 +1225,9 @@ Google Authenticator 是一款基于软件的验证器，可实现两步验证�
 
   密码有 6 位数字，因此生成的密码有 100 万种可能的组合。另外，密码每 30 秒就会更改一次。如果黑客想在 30 秒内猜出密码，他们每秒需要输入 3 万个密码组合。
 
-## [真实世界案例研究](https://github.com/ByteByteGoHq/system-design-101#real-world-case-studies)
+## 真实世界案例研究
 
-### [ Netflix 的技术栈](https://github.com/ByteByteGoHq/system-design-101#netflixs-tech-stack)
+### Netflix 的技术栈
 
 本文章基于对许多 Netflix 工程博客和开源项目的研究。如果您发现任何不准确之处，请随时告知我们。
 
@@ -1253,13 +1249,13 @@ Google Authenticator 是一款基于软件的验证器，可实现两步验证�
 
 CI/CD：Netflix 在 CI/CD 流程中使用了 JIRA、Confluence、PagerDuty、Jenkins、Gradle、Chaos Monkey、Spinnaker、Atlas 等多种工具。
 
-### [推特架构 2022](https://github.com/ByteByteGoHq/system-design-101#twitter-architecture-2022)
+### 推特架构 2022
 
 没错，这就是真正的 Twitter 架构。它是由埃隆-马斯克发布的，我们重新绘制了它，以提高可读性。
 
 [![img](https://assets.czyt.tech/img/twitter-arch.jpeg)](https://assets.czyt.tech/img/twitter-arch.jpeg)
 
-### [Airbnb 微服务架构在过去 15 年中的演变](https://github.com/ByteByteGoHq/system-design-101#evolution-of-airbnbs-microservice-architecture-over-the-past-15-years)
+### Airbnb 微服务架构在过去 15 年中的演变
 
 Airbnb 的微服务架构主要经历了三个阶段。
 
@@ -1292,7 +1288,7 @@ Airbnb 最初只是一个简单的房东和客人市场。它是由 Ruby on Rail
 
 这就是 Airbnb 目前正在努力的方向。微服务和宏服务混合模式的重点是统一应用程序接口。
 
-### [ Monorepo 与 Microrepo。](https://github.com/ByteByteGoHq/system-design-101#monorepo-vs-microrepo)
+### Monorepo 与 Microrepo。
 
 哪种方案最好？为什么不同的公司选择不同的方案？
 
@@ -1316,7 +1312,7 @@ Microrepo 既可以制定自己的标准，也可以通过采纳最佳实践来�
 
 多年来，Microrepo 支持的工具越来越多，包括 Java 的 Maven 和 Gradle、NodeJS 的 NPM 和 C/C++ 的 CMake 等等。
 
-### [您将如何设计 Stack Overflow 网站？](https://github.com/ByteByteGoHq/system-design-101#how-will-you-design-the-stack-overflow-website)
+### 您将如何设计 Stack Overflow 网站？
 
 如果你的答案是内部部署服务器和单片机（如下图底部），你很可能无法通过面试，但这就是现实中的构建方式！
 
@@ -1339,7 +1335,7 @@ Stack Overflow 仅使用 9 台内部网络服务器为所有流量提供服务�
 
 这与我们如今的流行观念背道而驰。
 
-### [亚马逊 Prime Video 监控为何从无服务器转向单体？如何节省 90% 的成本？](https://github.com/ByteByteGoHq/system-design-101#why-did-amazon-prime-video-monitoring-move-from-serverless-to-monolithic-how-can-it-save-90-cost)
+### 亚马逊 Prime Video 监控为何从无服务器转向单体？如何节省 90% 的成本？
 
 下图显示了迁移前后的架构对比。
 
@@ -1370,7 +1366,7 @@ Prime Video 服务需要监控数千个直播流的质量。监控工具会自�
 
 前亚马逊可持续发展副总裁 Adrian Cockcroft："Prime Video 团队走的是一条我称之为无服务器优先（Serverless First）的道路......我并不主张只使用无服务器"。
 
-### [迪斯尼 Hotstar 如何在一场比赛中捕获 50 亿个表情符号？](https://github.com/ByteByteGoHq/system-design-101#how-does-disney-hotstar-capture-5-billion-emojis-during-a-tournament)
+### 迪斯尼 Hotstar 如何在一场比赛中捕获 50 亿个表情符号？
 
 [![img](https://assets.czyt.tech/img/hotstar_emojis.jpeg)](https://assets.czyt.tech/img/hotstar_emojis.jpeg)
 
@@ -1383,7 +1379,7 @@ Prime Video 服务需要监控数千个直播流的质量。监控工具会自�
 
 LinkedIn 也采用了类似的设计，它能以每秒一百万个赞的速度传播信息。
 
-### [Discord 如何存储数以万亿计的信息](https://github.com/ByteByteGoHq/system-design-101#how-discord-stores-trillions-of-messages)
+### Discord 如何存储数以万亿计的信息
 
 下图显示了 Discord 消息存储的演变过程：
 
@@ -1407,7 +1403,7 @@ ScyllaDB 是用 C++ 编写的 Cassandra 兼容数据库。Discord 重新设计�
 
 ScyllaDB 的 p99 读取延迟为 15 毫秒，而 Cassandra 为 40-125 毫秒。p99 的写延迟为 5 毫秒，而 Cassandra 为 5-70 毫秒。
 
-### [YouTube、TikTok Live 或 Twitch 上的视频直播是如何进行的？](https://github.com/ByteByteGoHq/system-design-101#how-do-video-live-streamings-work-on-youtube-tiktok-live-or-twitch)
+### YouTube、TikTok Live 或 Twitch 上的视频直播是如何进行的？
 
 实时流媒体不同于普通流媒体，因为视频内容是通过互联网实时发送的，延迟时间通常只有几秒钟。
 

@@ -782,6 +782,8 @@ vscode 安装 `yay -S visual-studio-code-bin`
 
 终端录屏幕[asciinema](https://asciinema.org/) 安装 `yay -S asciinema` 
 
+[zoxide](https://github.com/ajeetdsouza/zoxide) **smarter cd command** `yay -S zoxide`
+
 证书生成工具 mkcert 安装 `yay -S mkcert` 
 
 netcat `yay -S  --noconfirm gnu-netcat` 或者 `yay -S --noconfirm openbsd-netcat ` 

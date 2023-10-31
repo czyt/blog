@@ -26,6 +26,8 @@ draft: false
 + [Rust基础教程](http://docs.os2edu.cn)
 + [rCore-Tutorial-Book 第三版](https://rcore-os.cn/rCore-Tutorial-Book-v3/index.html)
 + [OffensiveRust](https://github.com/0xTriboulet/OffensiveRust#offensiverust)
++ [Rust Atomics and Locks 中文版](https://github.com/rustcc/Rust_Atomics_and_Locks)
++ [Rust 程序设计语言 2021版 中文](https://github.com/KaiserY/trpl-zh-cn)
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
 

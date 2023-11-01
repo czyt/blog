@@ -494,8 +494,6 @@ var wasConnected = NativeWifi.ConnectNetwork(network.Interface.Id, network.Ssid.
 -->
 ```
 
-## 附录
-
 ### 命令行连接WiFi
 
 下面是不同的平台调用命令行进行wifi控制的例子：

@@ -494,3 +494,51 @@ var wasConnected = NativeWifi.ConnectNetwork(network.Interface.Id, network.Ssid.
 -->
 ```
 
+## 附录
+
+### 命令行连接WiFi
+
+下面是不同的平台调用命令行进行wifi控制的例子：
+
+#### linux
+连接wifi
+`nmcli d wifi connect ssidxxx password passwordxxx ifname xxxxinterface`
+
+断开连接
+`nmcli d disconnect ifname xxxxinterface`
+
+检查wifi是否开启 
+`nmcli radio wifi` 判断返回值中是否包含"enabled"
+开启wifi
+`nmcli radio wifi on`
+关闭wifi
+`nmcli radio wifi off`
+
+#### mac
+连接wifi
+`networksetup -setairportnetwork xxxxinterface ssidxxx passwordxxx`
+断开WiFi
+`networksetup -removepreferredwirelessnetwork xxxxinterface`
+
+检查wifi是否开启 
+`networksetup radio wifi` 判断返回值中是否包含"enabled" 
+开启wifi
+`networksetup -setairportpower on`
+关闭wifi
+`networksetup -setairportpower off`
+
+#### windows
+
+写配置文件  然后 netsh wlan add profile filename=profilePath
+
+连接wifi
+`netsh wlan connect name=ssidxxx`
+检查WiFi是否开启
+`netsh wlan show interface name="Wireless Network Connection"`是否包含 “"There is no wireless interface"”
+开启wifi
+`netsh wlan set interface name="Wireless Network Connection" ENABLED`
+关闭wifi
+`netsh wlan set interface name="Wireless Network Connection" DISABLED`
+
+断开连接
+`netsh wlan disconnect`

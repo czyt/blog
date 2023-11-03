@@ -313,7 +313,7 @@ clash-verge-bin `yay -S clash-verge-bin`
 
 clash https://aur.archlinux.org/packages?K=clash [福利](https://neko-warp.nloli.xyz)
 
-[nekoray-bin ](https://github.com/MatsuriDayo/nekoray)Qt based cross-platform GUI proxy configuration manager  安装 `yay -S nekoray-bin`
+[nekoray-bin ](https://github.com/MatsuriDayo/nekoray)Qt based cross-platform GUI proxy configuration manager  安装 `yay -S nekoray-bin`( 可能需要安装相关插件 `yay -S sing-geosite sing-geoip  `)
 
 cloudflare Warp 安装 `yay -S cloudflare-warp-bin`  [基于wiregurd](https://www.ianbashford.net/post/setupcloudflarewarplinuxarch/) [自选ip脚本](https://gitlab.com/rwkgyg/CFwarp) [自选ip脚本2](https://gitlab.com/ProjectWARP/warp-script)
 

@@ -734,6 +734,8 @@ c/c++开发  安装 `yay -S make cmake gdb gcc`
 
 goland 安装 `yay -S goland goland-jre`
 
+rustrover 安装 `yay -s rustrover rustrover-jre`
+
 uinityHub 安装 `yay -S unityhub`
 
 Android Studio 安装 `yay -S android-studio`

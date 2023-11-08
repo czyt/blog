@@ -734,6 +734,10 @@ c/c++开发  安装 `yay -S make cmake gdb gcc`
 
 goland 安装 `yay -S goland goland-jre`
 
+lazarus 安装 `yay -S lazarus `
+
+>lazarus 是Delphi 的开源继承者，使用 Free Pascal （支持 Delphi 语法扩展）+ Free VCL （跨平台的 VCL 开源版）实现，主打简单，快速，可能仍然是目前开发速度最快的 GUI 解决方案，可以轻松开发：Windows / macOS / Linux 的桌面程序
+
 rustrover 安装 `yay -s rustrover rustrover-jre`
 
 uinityHub 安装 `yay -S unityhub`

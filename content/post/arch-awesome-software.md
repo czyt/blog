@@ -57,6 +57,8 @@ sudo pacman-key --init && sudo pacman-key --populate
 yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
 ```
 
+> yay的配置文件路径为 `$XDG_CONFIG_HOME/yay/` 如果使用有问题，可以删除config.json实现重置。
+
 可选安装 编译包 `yay -S base-devel` 
 注：类似的包管理器还可以用 `paru` 
 

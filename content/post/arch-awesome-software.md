@@ -714,6 +714,12 @@ docker-image-extract  https://github.com/jjlin/docker-image-extract
 
 [gitui](https://github.com/extrawurst/gitui) `yay -S gitui`
 
+[inshellisense](https://github.com/microsoft/inshellisense#inshellisense)  `yay -S nodejs-inshellisense`
+
+![](https://github.com/microsoft/inshellisense/blob/main/docs/demo.gif)
+
+> inshellisense provides IDE style autocomplete for shells. It's a terminal native runtime for autocomplete which has support for 600+ command line tools. inshellisense supports Windows, Linux, & MacOS.
+
 github Desktop `yay -S github-desktop-bin`
 
 代码生成图片[silicon](https://github.com/Aloxaf/silicon) `yay -S --needed pkgconf freetype2 fontconfig libxcb xclip silicon `

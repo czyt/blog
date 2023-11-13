@@ -120,14 +120,18 @@ Chrome 安装 `yay -S google-chrome chromium-codecs-ffmpeg  chromium-codecs-ffmp
 
 Opera 安装 `yay -S opera opera-ffmpeg-codecs `
 
+brave浏览器 `yay -S brave-bin `
+
 firefox 安装 `yay -S firefox `
+
+社区维护版本firefox `yay -S librewolf-bin`
 
 > 参考
 >
 > - 解决打开Chrome出现 输入密码以解锁您的登录密钥环 [https://blog.csdn.net/kangear/article/details/20789451](https://blog.csdn.net/kangear/article/details/20789451)
 > - bilibili视频不能播放的问题 需要安装对应浏览器的解码包。
 
-
+tor `yay -S tor-browser-bin `
 
 ## 翻译软件
 
@@ -141,6 +145,8 @@ goldendict 安装 `yay -S goldendict` [词库](https://github.com/czytcn/goldend
 ## 聊天软件
 
 微信 安装 `yay -S deepin-wine-wechat`  (新版可能卡死，可以使用下面的命令`killall WeChatBrowser.exe && /opt/deepinwine/tools/sendkeys.sh w wechat 4`)
+
+ [微信Spark Store版本](https://aur.archlinux.org/packages/com.qq.weixin.spark) `yay -S com.qq.weixin.spark`
 
 QQ 安装 `yay -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`
 
@@ -303,6 +309,8 @@ Teamviewer `yay -S teamviewer`如果一直显示未连接，则请退出teamview
 
 Xrdp `yay -S xrdp xorgxrdp-git` ([参考文档](https://wiki.archlinux.org/title/xrdp))
 
+rustdesk `yay -S rustdesk-bin`
+
 向日葵 安装 `yay -S sunloginclient` (需要设置开机启动服务 `systemctl enable runsunloginclient` 启动服务 `systemctl start runsunloginclient` )
 
 toDesk远程工具 安装 `yay -S todesk-bin` (设置服务 `systemctl start\enable todeskd` 才能正常运行)
@@ -325,7 +333,7 @@ proxychains-ng 安装 `yay -S proxychains-ng`
 
 evernote 开源版本 nixnote2 安装 `yay -S nixnote2` 
 
-joplin 安装 `yay -S joplin` 
+joplin 安装 `yay -S joplin` or `yay -S joplin-desktop`
 
 Okular （[KDE上的通用文档阅读器](https://www.appinn.com/okular/)）` yay -S okular` 
 
@@ -335,6 +343,10 @@ Screen屏幕共享软件 安装 `yay -S screen-desktop `
 
 U盘启动制作[etcher](https://github.com/balena-io/etcher) `yay -S etcher-bin` 
 
+[ isoimagewriter](https://aur.archlinux.org/packages/isoimagewriter) `yay -S isoimagewriter`
+
+[rpi-imager](https://aur.archlinux.org/packages/rpi-imager) 树莓派的镜像写入工具 `yay -S rpi-imager `
+
 xmind-2020 安装 `yay -S xmind-2020` ([福利链接](https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g))
 
 drawio  安装` yay -S drawio-desktop-bin` 或者 ` yay -S drawio-desktop`
@@ -343,15 +355,33 @@ drawio  安装` yay -S drawio-desktop-bin` 或者 ` yay -S drawio-desktop`
 
 企业微信 `yay -S deepin-wine-wxwork` 
 
+腾讯会议 `yay -S wemeet-bin`
+
 飞书 `yay -S feishu-bin`
 
 剪切板工具 [uniclip](https://github.com/quackduck/uniclip) `yay -S uniclip`
 
 onenote `yay -S p3x-onenote` 
 
+[crow-translate](https://github.com/crow-translate/crow-translate) 翻译工具`yay -S crow-translate`
+
 realvnc-server `yay -S realvnc-vnc-server ` (安装完毕后需要注册`sudo vnclicense -add 3TH6P-DV5AE-BLHY6-PNENS-B3AQA`,启动服务 `systemctl enable vncserver-x11-serviced`)
 
 realvnc-viewer `yay -S realvnc-vnc-viewer`
+
+Zotero  `yay -S zotero-bin`
+
+windows11 字体 `yay -S ttf-ms-win11-auto `
+
+>如果是针对某种语言，可以按下面内容进行安装：
+>
+>ttf-ms-win11-auto-japanese			Microsoft Windows 11 Japanese TrueType fonts
+>ttf-ms-win11-auto-korean Microsoft Windows 11 Korean TrueType fonts
+>ttf-ms-win11-auto-sea		Microsoft Windows 11 Southeast Asian TrueType fonts
+>ttf-ms-win11-auto-thai	Microsoft Windows 11 Thai TrueType fonts	
+>ttf-ms-win11-auto-zh_cn	Microsoft Windows 11 Simplified Chinese TrueType fonts
+>ttf-ms-win11-auto-zh_tw	Microsoft Windows 11 Traditional Chinese TrueType fonts
+>ttf-ms-win11-auto-other
 
 [macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `yay -S 
 macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
@@ -397,7 +427,7 @@ QT_IM_MODULE=fcitx
 安装相关字体fcitx5
 
 ```bash
-yay -S wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-code-pro-fonts  adobe-source-han-sans-cn-fonts ttf-monaco noto-fonts-emoji ttf-fira-code 
+yay -S wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-code-pro-fonts  adobe-source-han-sans-cn-fonts ttf-monaco noto-fonts-emoji ttf-fira-code otf-monaspace
 ttf-ms-fonts ttf-sarasa-gothic nerd-fonts-complete noto-fonts-cjk  noto-fonts-sc
 ```
 
@@ -702,6 +732,8 @@ flutter 安装 `yay -S flutter`
 
 .net core 安装 `yay -S dotnet-sdk-bin` 
 
+bun `yay -S bun-bin`
+
 ## 开发工具
 
 wireshark    GUI `yay -S  wireshark-qt `  Cli `yay -S wireshark-cli`
@@ -762,6 +794,12 @@ Android Studio 安装 `yay -S android-studio` (安卓SDK `yay -S android-sdk`)
 
 clion 安装 `yay -S clion clion-jre` 
 
+> 可选下面这些包
+>
+> clion-cmake	JetBrains packaged CMake tools for CLion
+> clion-gdb	JetBrains packaged GNU Debugger for CLion
+> clion-lldb	JetBrains packaged LLVM Debugger for CLion
+
 pycharm 安装 `yay -S pycharm-professional` 
 
 rider安装 `yay -S rider` 
@@ -770,7 +808,7 @@ webstorm 安装 `yay -S webstorm webstorm-jre`
 
 vmware 安装 `yay -S vmware-workstation`
 
-postman 安装 `yay -S postman` [汉化文件](https://github.com/hlmd/Postman-cn)（jetbrains新版自带的resful 测试工具，可以不用安装）
+postman 安装 `yay -S postman-bin` [汉化文件](https://github.com/hlmd/Postman-cn)（jetbrains新版自带的resful 测试工具，可以不用安装）
 
 apifox 安装 `yay -S apifox`
 
@@ -809,6 +847,8 @@ netcat `yay -S  --noconfirm gnu-netcat` 或者 `yay -S --noconfirm openbsd-netca
 Platform-Tools for Google Android SDK (adb and fastboot) 安装 `yay -S android-sdk-platform-tools` 
 
 neovim `yay -S neovim` (插件 [lazyvim](https://www.lazyvim.org))
+
+[sublime-text-4](https://aur.archlinux.org/packages/sublime-text-4)  `yay -S sublime-text-4 `
 
 编译链工具[xmake](http://xmake.io) 安装 `yay -S xmake` 
 
@@ -901,6 +941,8 @@ thefuck输错命令更正工具 `yay -S thefuck`
 appimagelauncher 安装 `yay -S  appimagelauncher` 
 
 终端文件管理器ranger 安装 `yay -S ranger` 
+
+ventoy U盘启动制作 `yay -S ventoy-bin`
 
 硬盘自动休眠 [hd-idle](http://hd-idle.sourceforge.net) 安装 `yay -S hd-idle`  （或者 `hdparam` ）
 

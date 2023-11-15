@@ -785,6 +785,57 @@ public class MyView : UserControl
 
 在这个例子中，ShowDialogRequested方法订阅了ShowDialog的Requested事件，并在事件处理程序中使用MessageBox来显示对话框。在对话框关闭后，通过调用`e.Callback?.Invoke()`来通知视图模型对话框已关闭。通过这种方式，你可以在视图模型中触发对话框的显示，并在视图中处理对话框的逻辑。
 
+## 常见问题
+
+### Linux
+
+####  Default font family name can't be null or empty
+
+需要添加相应的字体设置，我这里是统一设置为某个字体
+
+```c#
+class Program
+{
+    // Initialization code. Don't use any Avalonia, third-party APIs or any
+    // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+    // yet and stuff might break.
+    [STAThread]
+    public static void Main(string[] args) => BuildAvaloniaApp()
+        .StartWithClassicDesktopLifetime(args);
+    
+    string GetDefaultFontFamily()
+    {
+        if (OperatingSystem.IsLinux())
+        {
+            return "<Linux Default Font Family Name Here>";
+        }
+
+        if (OperatingSystem.IsMacOS())
+        {
+            return "<macOS Default Font Family Name Here>";
+        }
+
+        return "<Windows Default Font Family Name Here>";
+    }
+    
+    // 这里可以根据不同的操作系统进行设置，通过调用GetDefaultFontFamily()
+   private  static FontManagerOptions _options = new(){DefaultFamilyName = "Menlo"};
+   
+    
+
+// Avalonia configuration, don't remove; also used by visual designer.
+    public static AppBuilder BuildAvaloniaApp()
+        => AppBuilder.Configure<App>()
+            .UsePlatformDetect()
+            .WithInterFont()
+            .LogToTrace()
+            .With(_options);
+
+}
+```
+
+
+
 ## 参考资料
 
 + [Avalonia官方文档](https://docs.avaloniaui.net/docs/getting-started/)

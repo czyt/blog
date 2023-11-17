@@ -403,6 +403,8 @@ db.movies.countDocuments({"year": 1999})
 | $count   | 统计操作符，用于统计文档的数量。                             |
 | $sum     | 对文档字段求和。                                             |
 | $avg     | 对文档字段进行平均值计算。                                   |
+| $bucket  | $bucket是MongoDB中的聚合操作符,它可以将文档根据指定的条件划分到不同的桶(bucket)中。$bucket接受以下参数:groupBy - 要进行分组的字段boundaries - 一个数组,定义每个桶的边界范围default - 默认的桶,不在boundaries范围内的文档会分到这个桶output - 定义每个桶返回的内容。一个示例用法如下:`db.scores.aggregate([{$bucket: {groupBy: "$score",boundaries: [0, 50, 70, 90, 100], default: "Other",output: {"count": { $sum: 1 },"grades" : { $push: "$grade" }}}}])`这个示例根据score字段将文档分到5个桶中,并统计每个桶中的文档数量以及文档的grade字段。 |
+| $facet   | $facet用于在聚合管道中执行多个聚合操作,并将各个管道的结果组合成一个文档返回。$facet的参数是一个文档,键是管道的名称,值是定义管道各个阶段的聚合操作符数组。例如:`db.sales.aggregate([{$facet: {"topProducts": [{ $sortByCount: "$product" },{ $limit: 5 }],"avgPrice": [{ $group: { _id: null, avg: { $avg: "$price" } } } ] }}])`这个示例使用$facet执行两个聚合管道:topProducts: 返回销量最高的5个商品avgPrice: 计算所有商品的平均价格$facet将两个管道的结果合并到一个文档中返回。 |
 
    更多管道操作符,参考[官网](https://link.jianshu.com/?t=https://docs.mongodb.com/manual/reference/operator/aggregation/)、[中文文档](https://mongodb.net.cn/manual/reference/operator/aggregation-pipeline/)。             
 

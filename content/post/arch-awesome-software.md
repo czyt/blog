@@ -792,6 +792,8 @@ datagrip 安装 `yay -S datagrip datagrip-jre`
 
 studio 3T (mongoDB开发工具) `yay -S studio-3t`
 
+mongodb compass `yay -S mongodb-compass`
+
 Android Studio 安装 `yay -S android-studio` (安卓SDK `yay -S android-sdk`) 
 
 clion 安装 `yay -S clion clion-jre` 

@@ -406,10 +406,33 @@ db.movies.countDocuments({"year": 1999})
 | $bucket  | $bucket是MongoDB中的聚合操作符,它可以将文档根据指定的条件划分到不同的桶(bucket)中。$bucket接受以下参数:groupBy - 要进行分组的字段boundaries - 一个数组,定义每个桶的边界范围default - 默认的桶,不在boundaries范围内的文档会分到这个桶output - 定义每个桶返回的内容。一个示例用法如下:`db.scores.aggregate([{$bucket: {groupBy: "$score",boundaries: [0, 50, 70, 90, 100], default: "Other",output: {"count": { $sum: 1 },"grades" : { $push: "$grade" }}}}])`这个示例根据score字段将文档分到5个桶中,并统计每个桶中的文档数量以及文档的grade字段。 |
 | $facet   | $facet用于在聚合管道中执行多个聚合操作,并将各个管道的结果组合成一个文档返回。$facet的参数是一个文档,键是管道的名称,值是定义管道各个阶段的聚合操作符数组。例如:`db.sales.aggregate([{$facet: {"topProducts": [{ $sortByCount: "$product" },{ $limit: 5 }],"avgPrice": [{ $group: { _id: null, avg: { $avg: "$price" } } } ] }}])`这个示例使用$facet执行两个聚合管道:topProducts: 返回销量最高的5个商品avgPrice: 计算所有商品的平均价格$facet将两个管道的结果合并到一个文档中返回。 |
 
-   更多管道操作符,参考[官网](https://link.jianshu.com/?t=https://docs.mongodb.com/manual/reference/operator/aggregation/)、[中文文档](https://mongodb.net.cn/manual/reference/operator/aggregation-pipeline/)。             
+   更多管道操作符,参考[官网](https://link.jianshu.com/?t=https://docs.mongodb.com/manual/reference/operator/aggregation/)、[中文文档](https://mongodb.net.cn/manual/reference/operator/aggregation-pipeline/)。  
 
+> 下面这部分文档引用自[MongoDB 聚合初学者指南](https://studio3t.com/knowledge-base/articles/mongodb-aggregation-framework/)   可以[下载pdf](https://assets.czyt.tech/docs/3t_guide_to_aggregation.pdf)       
 
+这是如何构建聚合查询的示例：
 
+`db.*collectionName*.aggregate(*pipeline*, *options*)`,
+
+- 其中 collectionName – 是集合的名称，
+- pipeline – 是一个包含聚合阶段的数组，
+- options – 聚合的可选参数
+
+这是聚合管道语法的示例：
+
+```sql
+pipeline = [
+        { $match : { … } },
+        { $group : { … } },
+        { $sort : { … } }
+       ]
+```
+聚合在内存中进行。每个阶段最多可使用 100 MB RAM。如果超过此限制，您将从数据库收到错误。
+
+如果它成为一个不可避免的问题，您可以选择分页到磁盘，唯一的缺点是您将等待更长的时间，因为在磁盘上工作比在内存中工作要慢。要选择页面到磁盘方法，您只需将选项 allowDiskUse 设置为 true，如下所示：
+
+`db.collectionName.aggregate(pipeline, { allowDiskUse : true })`
+请注意，此选项并不总是可用的共享服务。例如 Atlas M0、M2 和 M5 集群禁用此选项。聚合查询返回的文档（无论是作为游标还是通过 $out 存储在另一个集合中）的大小限制为 16MB。也就是说，它们不能大于 MongoDB 文档的最大大小。如果您可能会超出此限制，那么您应该指定聚合查询的输出将作为游标而不是文档。
 
 ## 数据库定义与设计
 

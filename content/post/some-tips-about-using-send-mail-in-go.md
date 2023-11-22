@@ -98,6 +98,10 @@ func (w *inviteCode) Email() hermes.Email {
 }
 ```
 
+## 参考资料
+
++ https://taoshu.in/net/email-dns.html
+
 ## 好用的库
 
 + https://github.com/Shopify/gomail （[源仓库](https://github.com/go-gomail/gomail) 作者已经离开人世 这个是fork继续维护的版本）

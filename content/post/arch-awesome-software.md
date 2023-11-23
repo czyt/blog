@@ -744,6 +744,8 @@ bun `yay -S bun-bin`
 
 wireshark    GUI `yay -S  wireshark-qt `  Cli `yay -S wireshark-cli`
 
+[Tiny RDM](https://github.com/tiny-craft/tiny-rdm)(**a modern lightweight cross-platform Redis desktop manager** ) `yay -S tiny-rdm-bin`
+
 [github520](https://github.com/521xueweihan/GitHub520) `sed -i "/# GitHub520 Host Start/Q" /etc/hosts && curl https://raw.hellogithub.com/hosts >> /etc/hosts` (刷新缓存 `systemctl restart nscd`)
 
 docker-image-extract  https://github.com/jjlin/docker-image-extract

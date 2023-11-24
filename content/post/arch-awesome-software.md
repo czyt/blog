@@ -742,6 +742,8 @@ bun `yay -S bun-bin`
 
 ## 开发工具
 
+[fleek ]( https://getfleek.dev) "Home as Code" for Humans
+
 wireshark    GUI `yay -S  wireshark-qt `  Cli `yay -S wireshark-cli`
 
 [Tiny RDM](https://github.com/tiny-craft/tiny-rdm)(**a modern lightweight cross-platform Redis desktop manager** ) `yay -S tiny-rdm-bin`

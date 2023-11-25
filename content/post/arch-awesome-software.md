@@ -301,6 +301,8 @@ kazam录屏软件 安装 `yay -S kazam `
 
 geogebra 几何绘图软件 `yay -S geogebra  `
 
+labplot科学绘图 `yay -S labplot ` 
+
 福昕pdf阅读器 `yay -S foxitreader` 
 
 masterpdfeditor 对linux用户免费的PDF浏览及编辑器,支持实时预览 `yay -S masterpdfeditor  ` 

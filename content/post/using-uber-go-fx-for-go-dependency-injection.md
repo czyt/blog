@@ -84,6 +84,41 @@ func NewServeMux(echo *EchoHandler) *http.ServeMux {
 
 ### fx.Lifecycle
 
+使用 `fx.Lifecycle` 对象向应用程序添加生命周期挂钩。这告诉 Fx 如何启动和停止 HTTP 服务器。
+
+```go
+func NewHTTPServer(lc fx.Lifecycle) *http.Server {
+  srv := &http.Server{Addr: ":8080"}
+  lc.Append(fx.Hook{
+    OnStart: func(ctx context.Context) error {
+      ln, err := net.Listen("tcp", srv.Addr)
+      if err != nil {
+        return err
+      }
+      fmt.Println("Starting HTTP server at", srv.Addr)
+      go srv.Serve(ln)
+      return nil
+    },
+    OnStop: func(ctx context.Context) error {
+      return srv.Shutdown(ctx)
+    },
+  })
+  return srv
+}
+```
+
+### fx.Provide
+
+使用 `fx.Provide` 将上面的HttpServer构造函数提供给 Fx 应用程序。
+
+```go
+func main() {
+  fx.New(
+    fx.Provide(NewHTTPServer),
+  ).Run()
+}
+```
+
 ### fx.Invoke
 
 ### fx.Annotated

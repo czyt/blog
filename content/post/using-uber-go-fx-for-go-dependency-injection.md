@@ -106,7 +106,41 @@ func NewHTTPServer(lc fx.Lifecycle) *http.Server {
   return srv
 }
 ```
+Fx 应用程序的生命周期有两个高级阶段：初始化和执行。这两者又由多个步骤组成。
 
+在初始化期间，Fx 将，
+
+1. 注册传递给 `fx.Provide` 的所有构造函数
+2. 注册所有传递给 `fx.Decorate` 的装饰器
+3. 运行传递给 `fx.Invoke` 的所有函数，根据需要调用构造函数和装饰器
+4. 在执行期间，Fx 将，运行由提供者、装饰器和调用的函数附加到应用程序的所有启动挂钩等待信号停止运行运行附加到应用程序的所有关闭挂钩
+
+{{<mermaid>}}
+flowchart LR
+    subgraph "Initialization (fx.New)"
+        Provide --> Decorate --> Invoke
+    end
+    subgraph "Execution (fx.App.Run)"
+        Start --> Wait --> Stop
+    end
+    Invoke --> Start
+    
+
+    style Wait stroke-dasharray: 5 5
+{{</mermaid>}}
+
+生命周期挂钩提供了在应用程序启动或关闭时安排 Fx 执行的工作的能力。 Fx提供了两种钩子：
+
+- 启动挂钩，也称为 OnStart 挂钩。它们按照附加的顺序运行。
+
+- 关闭挂钩，也称为 OnStop 挂钩。它们以与附加顺序相反的顺序运行。
+  通常，提供启动钩子的组件也会提供相应的关闭钩子来释放它们在启动时获取的资源。
+
+Fx 运行两种类型的钩子并强制执行硬超时。因此，钩子仅在需要安排工作时才会阻塞。换句话说，
+
+挂钩不得阻塞以同步运行长时间运行的任务
+hooks 应该在后台 goroutine 中安排长时间运行的任务
+关闭钩子应该停止由启动钩子启动的后台工作
 ### fx.Provide
 
 使用 `fx.Provide` 将上面的HttpServer构造函数提供给 Fx 应用程序。

@@ -746,6 +746,18 @@ bun `yay -S bun-bin`
 
 [Homebrew](https://brew.sh) 安装 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` ([设置镜像源](https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/) [使用指南](https://sspai.com/post/56009))
 
+>国内安装
+>
+>```
+>rm Homebrew.sh ; wget https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh ; bash Homebrew.sh
+>```
+>
+>国内卸载
+>
+>```
+>rm HomebrewUninstall.sh ; wget https://gitee.com/cunkai/HomebrewCN/raw/master/HomebrewUninstall.sh ; bash HomebrewUninstall.sh
+>```
+
 [fleek ]( https://getfleek.dev) "Home as Code" for Humans
 
 wireshark    GUI `yay -S  wireshark-qt `  Cli `yay -S wireshark-cli`

@@ -744,7 +744,7 @@ bun `yay -S bun-bin`
 
 ## 开发工具
 
-Homebrew 安装 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` ([设置镜像源](https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/))
+[Homebrew](https://brew.sh) 安装 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` ([设置镜像源](https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/))
 
 [fleek ]( https://getfleek.dev) "Home as Code" for Humans
 

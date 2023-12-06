@@ -842,6 +842,8 @@ postman 安装 `yay -S postman-bin` [汉化文件](https://github.com/hlmd/Postm
 
 apifox 安装 `yay -S apifox`
 
+[insomnia](https://insomnia.rest) API调试客户端 安装 `yay -S insomnia-bin`
+
 Typora markdown编辑器 安装 `yay -S typora`
 
 >也可以试下 remarkable `yay -S remarkable `

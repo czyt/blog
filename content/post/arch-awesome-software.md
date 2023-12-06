@@ -60,7 +60,27 @@ yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
 > yay的配置文件路径为 `$XDG_CONFIG_HOME/yay/` 如果使用有问题，可以删除config.json实现重置。
 
 可选安装 编译包 `yay -S base-devel` 
-注：类似的包管理器还可以用 `paru` 
+注：类似的包管理器还有 `paru` 可以使用 `sudo pacman -S paru`进行安装
+
+>`paru <target>` -- Interactively search and install `<target>`.
+>
+>`paru` -- Alias for `paru -Syu`.
+>
+>`paru -S <target>` -- Install a specific package.
+>
+>`paru -Sua` -- Upgrade AUR packages.
+>
+>`paru -Qua` -- Print available AUR updates.
+>
+>`paru -G <target>` -- Download the PKGBUILD and related files of `<target>`.
+>
+>`paru -Gp <target>` -- Print the PKGBUILD of `<target>`.
+>
+>`paru -Gc <target>` -- Print the AUR comments of `<target>`.
+>
+>`paru --gendb` -- Generate the devel database for tracking `*-git` packages. This is only needed when you initially start using paru.
+>
+>`paru -Bi .` -- Build and install a PKGBUILD in the current directory.
 
 ## SSH管理工具
 

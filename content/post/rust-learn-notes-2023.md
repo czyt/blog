@@ -1,5 +1,5 @@
 ---
-title: "Rust学习笔记"
+title: "Rust学习笔记2023"
 date: 2023-12-06
 tags: ["rust"]
 draft: false

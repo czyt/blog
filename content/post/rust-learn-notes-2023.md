@@ -117,3 +117,167 @@ foo(1); // 必须通过名称foo来调用
 2. 闭包一般用于回调或高阶函数参数,函数用于通用逻辑封装。
 
 所以总结来说,闭包更灵活,适合需要保存状态或环境的场景;函数更结构化,适合封装通用逻辑。
+
+### 常见的模式匹配用法
+
+一般可以使用`match` 语句来根据值的不同情况执行不同的代码块。以下是 `match` 的基本用法示例：
+
+```rust
+rustCopy codefn main() {
+    let number = 5;
+
+    match number {
+        1 => println!("One"),
+        2 => println!("Two"),
+        3 | 4 => println!("Three or Four"),  // Matching multiple values
+        5..=10 => println!("Five to Ten"),  // Matching a range
+        _ => println!("Other"),              // Default case
+    }
+}
+```
+
+在这个例子中，`match` 语句匹配变量 `number` 的值，根据不同的情况执行不同的代码块。下面是各个模式的解释：
+
+- `1 => println!("One")`: 如果 `number` 的值为 1，执行这个代码块。
+- `2 => println!("Two")`: 如果 `number` 的值为 2，执行这个代码块。
+- `3 | 4 => println!("Three or Four")`: 如果 `number` 的值为 3 或 4，执行这个代码块。
+- `5..=10 => println!("Five to Ten")`: 如果 `number` 的值在 5 到 10 的范围内（包括5和10），执行这个代码块。
+- `_ => println!("Other")`: 对于所有其他情况，执行这个代码块（通配符 `_` 表示匹配任何值）。
+
+你还可以在 `match` 中使用模式匹配结构体、枚举、引用等。下面是一个匹配结构体的示例：
+
+```rust
+rustCopy codestruct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let point = Point { x: 1, y: 2 };
+
+    match point {
+        Point { x: 0, y: 0 } => println!("Origin"),
+        Point { x, y } => println!("Non-origin point at ({}, {})", x, y),
+    }
+}
+```
+
+在这个例子中，`match` 语句根据结构体 `Point` 的不同情况执行不同的代码块。
+
+### `if let` 示例：
+
+```rust
+rustCopy codestruct Person {
+    name: Option<String>,
+    age: Option<u32>,
+}
+
+fn main() {
+    let person = Person {
+        name: Some(String::from("Alice")),
+        age: Some(30),
+    };
+
+    // 使用 if let 处理 Option 中的某个特定模式
+    if let Some(name) = person.name {
+        println!("Name: {}", name);
+    } else {
+        println!("No name available");
+    }
+}
+```
+
+在这个例子中，`if let` 用于匹配 `person.name` 是否包含值，如果是，将值绑定给 `name` 并执行相应的代码块。
+
+### `while let` 示例：
+
+```rust
+rustCopy codefn main() {
+    let mut stack = Vec::new();
+    stack.push(Some(42));
+    stack.push(Some(23));
+    stack.push(None);
+
+    // 使用 while let 处理迭代过程中的某个特定模式
+    while let Some(value) = stack.pop() {
+        if let Some(inner_value) = value {
+            println!("Popped value: {}", inner_value);
+        } else {
+            println!("Encountered None");
+        }
+    }
+}
+```
+
+在这个例子中，`while let` 用于迭代 `stack` 同时检查是否存在值，如果存在，将值绑定给 `value` 并执行相应的代码块。
+
+在Rust中，模式匹配通常会涉及所有权的转移。但是，如果你想避免转移所有权，可以使用引用或者`ref`关键字。下面是一个示例，展示了如何在模式匹配中避免所有权的转移：
+
+```rust
+rustCopy codestruct Person {
+    name: String,
+    age: u32,
+    city: String,
+}
+
+fn main() {
+    let person = Person {
+        name: String::from("Alice"),
+        age: 30,
+        city: String::from("Wonderland"),
+    };
+
+    // 使用引用来避免所有权的转移
+    match &person {
+        // 使用引用解构结构体
+        &Person { ref name, age, ref city } => {
+            // 注意：name 和 city 现在是引用，不会转移所有权
+            println!("Name: {}, Age: {}, City: {}", name, age, city);
+        }
+    }
+
+    // 在这里可以继续使用 person，因为它并没有被移动
+    println!("Person is still accessible: {:?}", person);
+}
+```
+
+在这个例子中，使用`&`来创建结构体`Person`的引用，然后使用`ref`来创建对`name`和`city`的引用，从而避免了对这些字段的所有权转移。这允许你在`match`块内使用这些字段，而在匹配之后仍然可以继续使用`person`，因为它的所有权并没有被转移。
+
+在Rust中，你可以在函数参数中使用模式匹配来解构元组。以下是一个简单的示例，演示了如何在函数中使用模式匹配处理元组：
+
+```rust
+rustCopy code// 函数接收一个包含多个值的元组作为参数，并使用模式匹配解构元组
+fn process_person_info(person: (String, u32, String)) {
+    match person {
+        // 使用模式匹配解构元组
+        (name, age, city) => {
+            println!("Name: {}, Age: {}, City: {}", name, age, city);
+        }
+    }
+}
+
+fn main() {
+    // 创建包含多个值的元组
+    let person_info = ("Alice".to_string(), 30, "Wonderland".to_string());
+
+    // 调用函数并传递元组作为参数
+    process_person_info(person_info);
+}
+```
+
+在这个例子中，`process_person_info` 函数接收一个包含多个值的元组作为参数，并使用 `match` 语句进行模式匹配。模式 `(name, age, city)` 将元组的各个元素解构并绑定到相应的变量，然后你可以在 `match` 的代码块中使用这些变量。
+
+如果你不关心元组的所有元素，也可以使用通配符 `_`：
+
+```rust
+rustCopy codefn process_person_info(person: (String, u32, String)) {
+    match person {
+        (_, age, _) => {
+            println!("Age: {}", age);
+        }
+    }
+}
+```
+
+这样，只有 `age` 被解构并使用，而其他的元素被忽略。
+

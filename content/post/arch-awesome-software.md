@@ -900,6 +900,12 @@ Platform-Tools for Google Android SDK (adb and fastboot) 安装 `yay -S android-
 
 neovim `yay -S neovim` (插件 [lazyvim](https://www.lazyvim.org))
 
+>下面是其他的一些nvim的资料：
+>
+>+ [nvim配置rust编程环境](https://rsdlt.github.io/posts/rust-nvim-ide-guide-walkthrough-development-debug/)
+>+ [巢鹏大佬的nvim配置](https://github.com/chaopeng/nvim-config)
+>+ [NeoVim setup for golang programming](https://medium.com/@yanglyu5201/neovim-setup-for-golang-programming-68ebf59336d9)
+
 [sublime-text-4](https://aur.archlinux.org/packages/sublime-text-4)  `yay -S sublime-text-4 `
 
 编译链工具[xmake](http://xmake.io) 安装 `yay -S xmake` 

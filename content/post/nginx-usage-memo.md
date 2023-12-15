@@ -70,5 +70,35 @@ nginx version: nginx/1.25.1
 
 # 配置
 
+### 配置基本认证
+
+现在，让我们添加基本身份验证（Basic Auth）到现有的Nginx网站。由于你没有提供具体的配置信息，我将提供一个通用的示例。请替换示例中的占位符为你实际的信息。
+
+1. **生成用户名和密码：** 使用 `htpasswd` 工具生成用户名和密码。如果你没有安装这个工具，你可以通过安装 `apache2-utils` 包来获取它。运行以下命令：
+
+   ```
+   bashCopy code
+   htpasswd -c /etc/nginx/.htpasswd username
+   ```
+
+   这将提示你输入密码。请记住生成的用户名和密码，我们稍后会在Nginx配置中使用它。
+
+2. **编辑Nginx配置文件：** 打开你的Nginx配置文件，通常位于 `/etc/nginx/nginx.conf` 或 `/etc/nginx/sites-available/default`。在你的服务器块中添加以下配置：
+
+   ```
+   nginxCopy codeserver {
+       # 其他配置项...
+   
+       location / {
+           auth_basic "Restricted Access";
+           auth_basic_user_file /etc/nginx/.htpasswd;
+   
+           # 其他配置项...
+       }
+   
+       # 其他服务器块或配置项...
+   }
+   ```
+
 
 

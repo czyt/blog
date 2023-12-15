@@ -581,8 +581,6 @@ Fx 模块应该只向应用程序提供其权限范围内的类型。模块不�
 
 下面是 `fx.In` 和 `fx.Out` 的使用例子：
 
-go
-
 ```go
 type MyType1 struct{
     Value int
@@ -637,8 +635,6 @@ func main() {
 `fx.Populate`用于在Go应用程序中填充多个值。
 
 在fx中，有时我们的组件需要访问由另一个函数提供的一组值。这种情况下，可以使用fx.Populate构造一个值，并将它传递给组件，如以下例子所示：
-
-go
 
 ```go
 var result struct {

@@ -1,8 +1,8 @@
 ---
 title: "使用uber-go的fx进行依赖注入"
-date: 2023-09-37
+date: 2023-12-13
 tags: ["golang", "dependency injection"]
-draft: true
+draft: false
 ---
 
 ## 入门
@@ -155,9 +155,162 @@ func main() {
 
 ### fx.Invoke
 
+`fx.Invoke`可以注册一些在应用启动时立即执行的函数。这些函数的参数由在应用生命周期内注册的构造函数构建。换句话说，这些函数会在所有提供的组件都已经被构造并且已经添加到容器中后执行。
+
+这是一个例子来说明如何使用`fx.Invoke`：
+
+```go
+package main
+
+import (
+    "go.uber.org/fx"
+    "log"
+)
+
+func main() {
+    app := fx.New(
+        fx.Invoke(func() {
+            log.Println("Application started")
+        }),
+    )
+
+    app.Run()
+}
+```
+
+在这个例子中，我们注册了一个匿名函数到`fx.Invoke`。这个函数会在应用启动时立即执行并记录 "Application started"。
+
+`fx.Invoke`通常用于执行像数据库迁移或运行HTTP服务器等需要在应用启动时完成的任务。
+
+请注意，任何从invoke函数返回的错误都会导致应用的启动失败，并立即返回错误给`App.Start`。
+
 ### fx.Annotated
 
+`fx.Annotated`fx库中的一个结构体，主要用于给提供给容器的函数或调用的函数添加元数据。
+
+下面是`fx.Annotated`的定义：
+
+```go
+type Annotated struct {
+    Name   string
+    Target interface{}
+    Group  string
+}
+```
+
+- Name字段可以指定该函数提供的结果在fx图中的名称。此名称可用于解析命名的实例。
+- Target字段是你想添加注释的构造函数。
+- Group字段可以指定结果应该添加到的值组。
+
+这是如何使用`fx.Annotated`的一个例子：
+
+```go
+type Result struct{}
+
+func NewResult() Result {
+    return Result{}
+}
+
+func main() {
+    fx.New(
+        fx.Provide(
+            fx.Annotated{
+                Name:   "example",
+                Target: NewResult,
+            },
+        ),
+    )
+}
+```
+
+在这个例子中，我们使用 `fx.Annotated`将 `NewResult` 函数的返回值以 "example" 的名称提供给fx容器。然后，我们可以通过该名称在其他地方获取此结果。
+
+这种提供命名实例的能力非常有用，特别是当你有多个实现同一接口的值时，在fx中需要明确指定使用哪一个。
+
+#### Group字段的作用
+
+在构建Fx应用程序时，你可能会遇到一种情况，也就是你需要把多个提供者的结果（通常是具有共同类型或接口的对象）集中在一起，这就是“Group”派上用场的地方。
+
+以下是使用值组的一些典型情况：
+
+1. **多个提供者提供相同类型的结果**：你可能有多个提供者都返回相同的类型，这在创建插件系统或模块化设计时很常见。在这种情况下，你可能需要将所有的插件（通过各自的提供者提供）聚合到一个列表中。
+2. **需要动态注入依赖项**：有时候，你可能不知道需要依赖多少或哪些具体的实例。例如，你的应用可能依赖一个插件系统，这个系统允许其他开发者添加他们自己的插件。在这种情况下，你可以使用值组来动态地收集和注入插件。
+3. **需要将多个对象组合在一起进行处理**：例如，你可能想把所有实现了特定接口的对象收集起来，并在单个函数中一次处理它们。通过使用值组，你可以轻松地将这些对象注入到这个函数中。
+
+值组允许你在不知道具体数量或具体实例的情况下注入一组对象，同时保持代码的解耦。这样可以帮助你创建更模块化和可扩展的应用程序。
+
+在`fx.Annotated`中，`Group`字段用于将一个供应器的结果注入到一个特定的“值组”中。在构建fx应用程序时，你可能会遇到一种情况，也就是你不知道需要提供多少实例，或者你想把多个提供者的结果集中在一起。这就是“值组”派上用场的地方。
+
+在fx中，你可以定义一个供应器的结果应该被添加到一个特定的值组。然后，你可以注入这整个结果集。`Group`字段就是用来标识这个值组的名称。
+
+下面是一个例子：
+
+```go
+type ResType struct{
+    Value string
+}
+
+func Provider1() ResType {
+    return ResType{Value: "From Provider 1"}
+}
+
+func Provider2() ResType {
+    return ResType{Value: "From Provider 2"}
+}
+
+type ResGroup struct {
+    Group []ResType `group:"myGroup"`
+}
+
+func main() {
+    fx.New(
+        fx.Provide(
+            fx.Annotated{
+                Group:  "myGroup",
+                Target: Provider1,
+            },
+            fx.Annotated{
+                Group:  "myGroup",
+                Target: Provider2,
+            },
+        ),
+        fx.Invoke(func(r *ResGroup) {
+            for _, res := range r.Group {
+                fmt.Println(res.Value)
+            }
+        }),
+    ).Run()
+}
+```
+
+在这个例子中，`Provider1`和`Provider2`的结果都被添加到名为 `myGroup` 的值组。然后，我们可以通过在一个类型中定义一个带有 `group:"myGroup"` 标签的字段来注入整个 `myGroup` 组。`fx.Invoke` 的函数接收这个类型作为参数，然后它可以访问这个值组中的所有实例。
+
 ### fx.Supply()
+
+`fx.Supply` 用于供应一个或多个已经存在的值到 Fx App 的依赖注入容器中。这个函数是 `fx.Provide` 的一个特例，它用于处理那些你已经拥有的值，不需要通过任何构造函数创建新的实例。
+
+下面是 `fx.Supply` 的使用方法：
+
+```go
+type MyType struct{
+    Value int
+}
+
+func main() {
+    myInstance := MyType{Value: 10}
+
+    app := fx.New(
+        fx.Supply(myInstance),
+        fx.Invoke(func(m MyType) {
+            fmt.Println(m.Value)  // Output: 10
+        }),
+    )
+
+    app.Run()
+}
+```
+
+在这个例子中，我们首先创建一个 `MyType` 的实例 `myInstance`，然后我们通过 `fx.Supply` 函数将这个已经存在的实例供应到 Fx App 的依赖图中。然后使用 `fx.Invoke` 依赖注入这个实例到目标函数中。
 
 ### fx.Module
 
@@ -420,11 +573,104 @@ Fx 模块应该只向应用程序提供其权限范围内的类型。模块不�
 
 ### fx.In/fx.Out
 
+`fx.In` 和 `fx.Out` 是 Uber 的 go 语言 fx 库中的结构体，被用作函数的参数和返回值的标记，以告知 fx 应用如何处理这些函数的参数和返回值。
+
+`fx.In` 用于标记一个函数的输入参数，这允许函数声明其依赖项，而 fx 应用会自动提供这些依赖项。在 fx 中，你可以通过在参数结构体中使用 `fx.In` 标签来注入多个依赖项。
+
+`fx.Out` 用于标记一个函数的输出，这使得函数的返回值可以被添加到 fx 应用的依赖图中，供后续的组件使用。你可以使用 `fx.Out` 标签在结构体中定义多个返回值。
+
+下面是 `fx.In` 和 `fx.Out` 的使用例子：
+
+go
+
+```go
+type MyType1 struct{
+    Value int
+}
+
+type MyType2 struct{
+    Value string
+}
+
+type ModuleAParams struct{
+    fx.In
+
+    Value1 MyType1
+}
+
+type ModuleAResults struct {
+    fx.Out
+
+    Value2 MyType2
+}
+
+func ModuleA(p ModuleAParams) ModuleAResults {
+    // use p.Value1
+    return ModuleAResults{
+        Value2: MyType2{Value: "Hello, world"},
+    }
+}
+
+func main() {
+    v1 := MyType1{Value: 10}
+    
+    app := fx.New(
+        fx.Supply(v1),
+        fx.Provide(ModuleA),
+        fx.Invoke(func(v2 MyType2) {
+            fmt.Println(v2.Value)  // Output: Hello, world
+        }),
+    )
+
+    app.Run()
+}
+```
+
+在这个例子中，`ModuleA` 通过 `ModuleAParams` 结构体声明它需要 `MyType1` 类型的对象，然后 fx 应用会自动从依赖图中提供这个对象。`ModuleA` 也通过 `ModuleAResults` 结构体把它的输出 `MyType2` 类型的对象添加到依赖图中，供后续的组件使用。
+
 ### fx.Replace
 
 ### fx.Extract
 
 ### fx.Populate
+
+`fx.Populate`用于在Go应用程序中填充多个值。
+
+在fx中，有时我们的组件需要访问由另一个函数提供的一组值。这种情况下，可以使用fx.Populate构造一个值，并将它传递给组件，如以下例子所示：
+
+go
+
+```go
+var result struct {
+    Reader io.Reader
+    Writer io.Writer
+}
+app := fx.New(
+    fx.Provide(fx.Annotated{
+        Group: "io",
+        Target: func() io.Reader { return strings.NewReader("...") },
+    }),
+    fx.Provide(fx.Annotated{
+        Group: "io",
+        Target: func() io.Writer { return ioutil.Discard },
+    }),
+    fx.Invoke(func(in struct {
+        In  `group:"io"`
+        Out `group:"io"`
+    }) {
+        r := in.In.Reader
+        w := in.Out.Writer
+    }),
+    fx.Populate(&result),
+)
+app.Run()
+```
+
+在此例中，我们使用fx.Annotated的Group标签分别提供了io.Reader和io.Writer，并使用fx.Invoke填充了结果对象的Reader和Writer字段。
+
+这只是`fx.Populate`可能的用法之一，更多复杂的用法可能涉及在运行时配置对象的字段到特定的提供者。
+
+因此，在适当的地方使用`fx.Populate`，能有效地实现依赖注入从而简化应用程序组件之间的通信。
 
 
 

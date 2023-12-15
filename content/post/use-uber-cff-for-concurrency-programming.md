@@ -662,11 +662,78 @@ func main() {
 ```
 ## 适用场景
 
+cff 由两部分组成：
+
+- cff 命令行工具
+- go.uber.org/cff 库
+
+go.uber.org/cff 库定义了几个特殊函数，它们被归类为代码生成指令。例如 `cff.Flow` 、 `cff.Parallel` 和 `cff.Task` 。这些函数的实现是存根：它们实际上不做任何有用的事情。
+
+当你编写使用这些函数的代码并运行 cff CLI 时，它会分析你的代码并搜索对这些函数的调用。一旦在一个文件（例如 `foo.go` ）中找到这些函数，它就会创建一个该文件的镜像副本（ `foo_gen.go` ），并用 cff 生成的代码替换对这些指令的调用。
+
+```go
+foo.go                                | foo_gen.go
+------------------------------------- | -------------------------------------
+//go:build cff                        | //go:build !cff
+package foo                           | package foo
+                                      |                                       
+import (                              | import (                              
+  "context"                           |   "context"                           
+                                      |                                       
+  "go.uber.org/cff"                   |   "go.uber.org/cff"                   
+)                                     | )                                     
+                                      |                                       
+func Bar(ctx context.Context) error { | func Bar(ctx context.Context) error {
+  var res Result                      |   var res Result                      
+  err := cff.Flow(ctx,                |   err := func() {
+    cff.Task(fn1),                    |     x := fn1()
+    cff.Task(fn2),                    |     y := fn2()
+    // ...                            |     // ...                            
+    cff.Results(&res),                |     res = ...
+  )                                   |   }()
+  if err != nil {                     |   if err != nil {                     
+    return err                        |     return err                        
+  }                                   |   }                                   
+  fmt.Println(res)                    |   fmt.Println(res)                    
+}                                     | }                    
+```
+
 ### cff.Flow
 
 cff.Flow 适用于同时运行相互依赖的函数，并保证函数不会先于其依赖函数运行。
 
-例如，使用 cff，您可以向两个不同的应用程序接口发送请求，并将请求结果反馈到向其他五个应用程序接口发送的请求中，其中一些请求又相互反馈，如此循环，直到所有请求都反馈到代表结果的两个结构体中。同时运行相互依赖的函数，并保证函数不会先于其依赖函数运行。所有这一切都要尽可能多地利用依赖关系的并发性。
+例如，使用 cff，您可以向两个不同的应用程序接口发送请求，并将请求结果反馈到向其他五个应用程序接口发送的请求中，其中一些请求又相互反馈，如此循环，直到所有请求都反馈到代表结果的两个结构体中。同时运行相互依赖的函数，并保证函数不会先于其依赖函数运行。所有这一切都要尽可能多地利用依赖关系的并发性。cc.Flow的解析过程如下假设有三个函数：
+
+- `func f() A`
+- `func g() B`
+- `func h(A, B) C`
+
+当您编写以下代码时：
+
+```go
+var c C
+cff.Flow(ctx,
+	cff.Task(f),
+	cff.Task(g),
+	cff.Task(h),
+	cff.Results(&c),
+)
+```
+
+找到 `cff.Flow` 调用后，cff 会检查所有提供的任务来组合数据
+
+{{<mermaid>}}
+
+graph TB
+    f["f() A"] & g["g() B"] --feeds--> h["h(A, B) C"] --sets--> c[var c C]
+
+{{</mermaid>}}
+
+然后，它生成代码，用 cff 调度器调度这些任务，并正确指定和连接依赖关系，使 `f` 和 `g` 同时运行，当它们都完成时， `h` 运行它们的结果。当 `h` 完成时，它会将其结果放入 `c` 中。
+
+>cff 调度器是一种通用任务调度器，它使用标准的工作队列模型，在一定数量的程序上运行任务。
+>
+>它的特别之处在于支持任务之间的依赖关系。在所有被标记为其依赖任务的任务也完成运行之前，它不会运行某个任务。
 
 ### cff.Parallel
 

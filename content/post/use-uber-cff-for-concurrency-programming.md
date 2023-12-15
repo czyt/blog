@@ -739,6 +739,44 @@ graph TB
 
 cff.Parallel适用于同时运行独立功能。您可以选择是在第一次失败后就停下来，还是在失败后继续前进。
 
+{{<mermaid>}}
+
+flowchart TD
+  A; B; dots[...]; H
+
+  done(( Done ))
+
+  A --> done
+  B --Error--x done
+  dots -.-> done
+  H --> done
+
+  style done fill:none,stroke:none
+  style dots fill:none,stroke:none
+
+{{</mermaid>}}
+
 ### cff.Slice 和cff.Map
 
 cff.Slice 和cff.Map在map或切片的每个元素上运行相同的函数，而不会出现无限制的程序增长。
+{{<mermaid>}}
+
+flowchart RL
+  subgraph Slice ["[]T"]
+    i0["x1"]; i1["x2"]; dots1[...]; iN["xN"]
+    style dots1 fill:none,stroke:none
+  end
+
+  subgraph Map ["map[K]V"]
+    m1["(k1, v1)"]; m2["(k2, v2)"]; dots2[...]; mN["(kN, vN)"]
+    style dots2 fill:none,stroke:none
+  end
+
+  subgraph Workers
+    direction LR
+    1; 2
+  end
+
+  Slice & Map -.-> Workers
+
+{{</mermaid>}}

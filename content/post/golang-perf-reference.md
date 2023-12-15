@@ -60,6 +60,8 @@ draft: false
 + [Golang Quirks & Intermediate Tricks, Pt 1: Declarations, Control Flow, & Typesystem](https://eblog.fly.dev/quirks.html)
 + [How debugging Go programs with Delve and eBPF is faster](https://developers.redhat.com/articles/2023/02/13/how-debugging-go-programs-delve-and-ebpf-faster)
 + [Go arm64 Function Call Assembly](https://blog.felixge.de/go-arm64-function-call-assembly/)
++ [Profile Guided Optimizations in Go](https://landontclipp.github.io/blog/2023/08/25/profile-guided-optimizations-in-go/)
++ [Analyzing Go Heap Escapes](https://landontclipp.github.io/blog/2023/07/15/analyzing-go-heap-escapes/)
 
 ## 性能监控系统
 

@@ -518,7 +518,11 @@ ibus-daemon -d -x
 [四叶草输入法](https://github.com/fkxxyz/rime-cloverpinyin) `yay -S rime-cloverpinyin` 
 参考 https://wiki.archlinux.org/index.php/Fcitx
 
-雾凇拼音 https://github.com/iDvel/rime-ice
+#### 有用的仓库
+
++ 雾凇拼音 https://github.com/iDvel/rime-ice
+
++ [Rime auto deploy](https://github.com/Mark24Code/rime-auto-deploy)
 
 ## 媒体软件
 

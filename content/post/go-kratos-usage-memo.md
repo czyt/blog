@@ -973,7 +973,8 @@ func Idempotent(authClient auth.AuthClient) middleware.Middleware {
 }
 ```
 
-文档说明   https://go-cinch.github.io/docs/#/base/7.idempotent
++ 文档说明   https://go-cinch.github.io/docs/#/base/7.idempotent
++ 代码 https://github.com/go-cinch/common/blob/main/idempotent/idempotent.go
 
 ## 重定向
 

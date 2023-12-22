@@ -889,6 +889,92 @@ func UserAgent() middleware.Middleware {
 }
 ```
 
+## 接口幂等性
+
+关于幂等性，下面是GPT4的解释
+
+>幂等性是一种在计算机科学和数学中的概念，用来描述一个操作无论执行多少次，其结果都是相同的特性。
+>
+>在Web API设计中，"幂等性"指的是一个HTTP请求方法无论调用多少次，服务器上的资源状态都不会发生改变。它常用于设计RESTful接口，并且HTTP协议中定义的某些方法（如GET, PUT, DELETE, HEAD, OPTIONS, TRACE）被定义为幂等的。
+>
+>例如，使用GET方法从服务器上获取资源就是幂等的，不论你调用一次或一百次，服务器上的资源状态都不会发生改变。
+>
+>同样，使用DELETE方法删除一个资源也是幂等的。第一次调用会删除资源，然后再多次调用对于服务器上的资源状态没有任何影响（因为资源已经在第一次调用时被删除了）。
+>
+>需要注意的一点是，幂等性并不意味着每次请求的返回结果都一样。例如，第一次DELETE请求可能返回200（成功），而接下来的DELETE请求可能返回404（未找到），因为资源已经在第一次请求时被删除了。
+>
+>除了上述的Get和DELETE方法，PUT方法也是幂等的。PUT是用来更新资源的，如果你多次发送相同的PUT请求，那么虽然服务器可能会多次执行更新操作，但是资源的最终状态都是一样的。
+>
+>这与POST方法不同，每次的POST请求都可能导致一个新资源的创建，因此它不是幂等的。
+
+Kratos中，可以参考  https://github.com/go-cinch/layout/blob/dev/internal/server/middleware/idempotent.go 这样在要求幂等性的接口的时候，需要请求一个幂等性的token，用完就失效。
+
+```go
+package middleware
+
+import (
+	"context"
+
+	"github.com/go-cinch/layout/api/auth"
+	"github.com/go-cinch/layout/internal/biz"
+	"github.com/go-kratos/kratos/v2/middleware"
+	"github.com/go-kratos/kratos/v2/transport"
+	kratosHttp "github.com/go-kratos/kratos/v2/transport/http"
+)
+
+const (
+	WhitelistIdempotentCategory uint32 = 2
+)
+
+func Idempotent(authClient auth.AuthClient) middleware.Middleware {
+	return func(handler middleware.Handler) middleware.Handler {
+		return func(ctx context.Context, req interface{}) (rp interface{}, err error) {
+			tr, ok := transport.FromServerContext(ctx)
+			if !ok {
+				err = biz.ErrIdempotentMissingToken(ctx)
+				return
+			}
+			var method, path string
+			switch tr.Kind() {
+			case transport.KindHTTP:
+				if ht, ok3 := tr.(kratosHttp.Transporter); ok3 {
+					method = ht.Request().Method
+					path = ht.Request().URL.Path
+				}
+			}
+			// check idempotent blacklist
+			whitelist, err := authClient.HasWhitelist(ctx, &auth.HasWhitelistRequest{
+				Category: WhitelistIdempotentCategory,
+				Permission: &auth.HasWhitelistRequest_CheckPermission{
+					Resource: tr.Operation(),
+					Method:   method,
+					Uri:      path,
+				},
+			})
+			if err != nil {
+				return
+			}
+			if !whitelist.Ok {
+				return handler(ctx, req)
+			}
+			// check idempotent token
+			token := tr.RequestHeader().Get("x-idempotent")
+			if token == "" {
+				err = biz.ErrIdempotentMissingToken(ctx)
+				return
+			}
+			_, err = authClient.CheckIdempotent(ctx, &auth.CheckIdempotentRequest{Token: token})
+			if err != nil {
+				return
+			}
+			return handler(ctx, req)
+		}
+	}
+}
+```
+
+文档说明   https://go-cinch.github.io/docs/#/base/7.idempotent
+
 ## 重定向
 
 [官方的例子](https://github.com/go-kratos/examples/blob/main/http/redirect/main.go)

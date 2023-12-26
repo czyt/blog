@@ -673,3 +673,5 @@ app.Run()
 ## 参考
 
 + [Dependency injection in Go with uber-go/fx](https://vincent.composieux.fr/article/dependency-injection-in-go-with-uber-go-fx)
++ [How to build large Golang applications using FX](https://medium.com/@devops-guy/how-to-build-large-golang-applications-using-fx-3ccfac153fc1)
++ [基于FX构建大型Golang应用](https://mp.weixin.qq.com/s/ha0DkTOxUwexTV-c_sx1jg)

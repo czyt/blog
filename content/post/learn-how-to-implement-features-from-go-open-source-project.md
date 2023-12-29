@@ -1691,6 +1691,64 @@ func (rw *RWCancel) Close() {
 }
 ```
 
+### 获取系统可用端口
+
+来源 [temporal](https://github.com/temporalio/temporal/-/blob/internal/temporalite/freeport.go)
+
+```go
+package temporalite
+
+import (
+	"fmt"
+	"net"
+)
+
+func newPortProvider() *portProvider {
+	return &portProvider{}
+}
+
+type portProvider struct {
+	listeners []*net.TCPListener
+}
+
+// GetFreePort finds an open port on the system which is ready to use.
+func (p *portProvider) GetFreePort() (int, error) {
+	addr, err := net.ResolveTCPAddr("tcp", "127.0.0.1:0")
+	if err != nil {
+		if addr, err = net.ResolveTCPAddr("tcp6", "[::1]:0"); err != nil {
+			return 0, fmt.Errorf("failed to get free port: %w", err)
+		}
+	}
+
+	l, err := net.ListenTCP("tcp", addr)
+	if err != nil {
+		return 0, err
+	}
+
+	p.listeners = append(p.listeners, l)
+
+	return l.Addr().(*net.TCPAddr).Port, nil
+}
+
+// MustGetFreePort calls GetFreePort, panicking on error.
+func (p *portProvider) MustGetFreePort() int {
+	port, err := p.GetFreePort()
+	if err != nil {
+		panic(err)
+	}
+	return port
+}
+
+func (p *portProvider) Close() error {
+	for _, l := range p.listeners {
+		if err := l.Close(); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+```
+
 ### 检测PID的所属用户
 
 来源 tailscale [源码路径](https://github.com/tailscale/tailscale/blob/main/util/pidowner/pidowner.go)

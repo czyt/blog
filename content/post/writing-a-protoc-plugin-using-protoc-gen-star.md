@@ -273,4 +273,5 @@ PG*目前实现了pgsgo子包，为针对Go语言的插件提供这些工具。�
 
 + [Writing a protoc plugin with google.golang.org/protobuf](https://medium.com/@tim.r.coulson/writing-a-protoc-plugin-with-google-golang-org-protobuf-cd5aa75f5777)
 + https://github.com/favadi/protoc-go-inject-tag
++ https://github.com/VictorTesterok/protoc-gen-go-helpers
 

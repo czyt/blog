@@ -529,7 +529,7 @@ ok      github.com/pratikjagrut/book-catalog/ent
 
 #### **安装并配置 entgql**
 
-Ent 提供了一个名为 contrib/entgql 的便捷扩展，可以无缝生成 GraphQL 模式。通过安装和利用此扩展，我们可以根据 Ent 数据模型轻松生成 GraphQL 模式。
+Ent 提供了一个名为 [contrib/entgql ](https://pkg.go.dev/entgo.io/contrib/entgql)的便捷扩展，可以无缝生成 GraphQL 模式。通过安装和利用此扩展，我们可以根据 Ent 数据模型轻松生成 GraphQL 模式。
 
 要开始使用 contrib/entgql，您可以通过运行以下命令来安装它：
 

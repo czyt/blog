@@ -14,6 +14,16 @@ draft: true
 ### httptest 
 ### iotest
 
+# 故障测试
+## failpoints
+  Failpoints 是一种在代码中注入错误或其他行为的工具，主要用于测试。当Failpoints被配置为激活状态时，对应的代码片段才会被执行。它可以模拟各种复杂系统中的错误处理，以提高它们的容错性和稳定性。
+例如，你可以在开发和调试应用程序时使用 Failpoints 使程序在特定时刻进行错误处理或表现出异常行为。最常见的使用场景是模拟网络延迟、磁盘损坏等异常情况，以测试应用程序对这些异常的处理能力。
+Failpoints 也可以用于优化代码。在一些情况下，当有多个 guard 语句时，Failpoints 可以将这些不必要的代码提供给全部内联，使代码更符合 DRY(Don’t Repeat Yourself) 原则。
+
+相关链接：
+  - [Pingcap/failpoint](https://github.com/pingcap/failpoint)
+  - [etcd-io/gofail](https://github.com/etcd-io/gofail)
+
 # Mock测试
 ## GoMock
 

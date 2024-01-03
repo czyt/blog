@@ -315,6 +315,8 @@ libreoffice 安装  `yay -S libreoffice`
 
 flameshot 截图工具 安装 `yay -S flameshot` 
 
+Snipaste 截图工具  安装 `yay -S Snipaste  `
+
 kazam录屏软件 安装 `yay -S kazam `
 
 屏幕录制为gif 工具 peek `yay -S peek`

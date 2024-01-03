@@ -276,6 +276,8 @@ zssh 安装 `yay -S zssh` 配合lrzsz(安装命令 `yay -S lrzsz`)食用效果�
 
 motrix 安装 `yay -S motrix`  
 
+gopeed 安装 `yay -S gopeed-bin`
+
 uget 安装 `yay -S uget`
 
 Mega网盘安装 `yay -S megatools-git` 

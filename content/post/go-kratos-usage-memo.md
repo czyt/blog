@@ -90,6 +90,8 @@ draft: false
      > endif
      > ```
 
+HTTP API 的错误响应还有一些业界的标准，比如RFC 7807、RFC 9457等，感兴趣的可以参考下这篇文章 [HTTP API 的错误响应标准](https://www.jitao.tech/posts/problem-details-for-http-apis)
+
 ## 通过Context取得信息
 
 Server端取JWT中的key数据

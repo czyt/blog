@@ -1249,7 +1249,10 @@ Ladon 是用 Go 语言编写的用于实现访问控制策略的库，类似于 
 + 资源（Resource），描述授权的具体数据。
 + 生效条件（Condition），描述策略生效的约束条件。描述（Description），策略的描述。有了授权策略，我们就可以传入请求上下文，由 Ladon 来决定请求是否能通过授权。
 
-https://github.com/ory/ladon
+参考链接：
+
++ https://github.com/ory/ladon
++ https://github.com/marmotedu/iam
 
 ### OPA（Open Policy Agent）
 
@@ -2390,10 +2393,10 @@ TODO
 
 ## pb类型到struct的快速复制
 
-借助[copier](https://github.com/jinzhu/copier)，可以实现pb消息到golang struct的复制。对于一般的pb消息没有问题，但是对于wrapper的pb消息，则需要进行一定的方法扩展。copier提供了用户添加自定义转换规则的选项。我将常见的wrappervalue进行了封装 https://github.com/czyt/copieroptpb 包只有一个方法。简单示例：
+借助[copier](https://github.com/jinzhu/copier)，可以实现pb消息到golang struct的复制。对于一般的pb消息没有问题，但是对于wrapper的pb消息，则需要进行一定的方法扩展。copier提供了用户添加自定义转换规则的选项。我将常见的wrappervalue进行了封装 https://github.com/tiny-lib/copieroptpb 包只有一个方法。简单示例：
 
 ```go
-import "github.com/czyt/copieroptpb"
+import "github.com/tiny-lib/copieroptpb"
 ....
 // biz层结构体
 user:=&User{}

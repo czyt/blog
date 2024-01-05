@@ -50,17 +50,18 @@ sudo pacman -S archlinux-keyring archlinuxcn-keyring
 sudo pacman-key --init && sudo pacman-key --populate
 ```
 
-因为本文的软件使用yay进行安装，故需要使用命令进行安装，命令为  ` sudo pacman -S yay`
-设置yay的mirror
+因为本文的软件使用paru进行安装，故需要使用命令进行安装，命令为  ` sudo pacman -S paru`
 
-```bash
-yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
-```
-
+> 注：类似的包管理器还有 `yay` 可以使用 `sudo pacman -S yay`进行安装
+> 设置yay的mirror
+>
+> ```bash
+> yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
+> ```
 > yay的配置文件路径为 `$XDG_CONFIG_HOME/yay/` 如果使用有问题，可以删除config.json实现重置。
 
-可选安装 编译包 `yay -S base-devel` 
-注：类似的包管理器还有 `paru` 可以使用 `sudo pacman -S paru`进行安装
+可选安装 编译包 `paru -S base-devel` 
+
 
 >`paru <target>` -- Interactively search and install `<target>`.
 >
@@ -84,7 +85,7 @@ yay --aururl "https://aur.tuna.tsinghua.edu.cn" --save
 
 ## SSH管理工具
 
-Remmina 安装 `yay -S remmina`
+Remmina 安装 `paru -S remmina`
 可以选装这些插件
 
 
@@ -93,9 +94,9 @@ freerdp remmina-plugin-teamviewer remmina-plugin-webkit remmina-plugin-rdesktop 
 ```
 
 终端：
-深度终端 安装 `yay -S deepin-terminal` 
-alacritty 安装 `yay -S alacritty ` 
-终端渐变色工具lolcat `yay -S lolcat` 
+深度终端 安装 `paru -S deepin-terminal` 
+alacritty 安装 `paru -S alacritty ` 
+终端渐变色工具lolcat `paru -S lolcat` 
 
 ssh设置如果只是修改客户端选项,创建`~/.ssh/config`或者修改`/etc/ssh/ssh_config`(需要root权限),文件输入下面内容：
 
@@ -132,55 +133,55 @@ ServerAliveInterval 60
 
 ## 浏览器
 
-vivaldi 安装 `yay -S vivaldi vivaldi-ffmpeg-codecs` 
+vivaldi 安装 `paru -S vivaldi vivaldi-ffmpeg-codecs` 
 
-microsoft Edge `yay -S microsoft-edge-stable-bin`
+microsoft Edge `paru -S microsoft-edge-stable-bin`
 
-Chrome 安装 `yay -S google-chrome chromium-codecs-ffmpeg  chromium-codecs-ffmpeg-extra`
+Chrome 安装 `paru -S google-chrome chromium-codecs-ffmpeg  chromium-codecs-ffmpeg-extra`
 
-Opera 安装 `yay -S opera opera-ffmpeg-codecs `
+Opera 安装 `paru -S opera opera-ffmpeg-codecs `
 
-brave浏览器 `yay -S brave-bin `
+brave浏览器 `paru -S brave-bin `
 
-firefox 安装 `yay -S firefox `
+firefox 安装 `paru -S firefox `
 
-社区维护版本firefox `yay -S librewolf-bin`
+社区维护版本firefox `paru -S librewolf-bin`
 
 > 参考
 >
 > - 解决打开Chrome出现 输入密码以解锁您的登录密钥环 [https://blog.csdn.net/kangear/article/details/20789451](https://blog.csdn.net/kangear/article/details/20789451)
 > - bilibili视频不能播放的问题 需要安装对应浏览器的解码包。
 
-tor `yay -S tor-browser-bin `
+tor `paru -S tor-browser-bin `
 
 ## 翻译软件
 
-有道词典 安装 `yay -S youdao-dict`
+有道词典 安装 `paru -S youdao-dict`
 
-金山词霸 安装 `yay -S powerword-bin` 
+金山词霸 安装 `paru -S powerword-bin` 
 
-goldendict 安装 `yay -S goldendict` [词库](https://github.com/czytcn/goldendict)
+goldendict 安装 `paru -S goldendict` [词库](https://github.com/czytcn/goldendict)
 
 
 ## 聊天软件
 
-微信 安装 `yay -S deepin-wine-wechat`  (新版可能卡死，可以使用下面的命令`killall WeChatBrowser.exe && /opt/deepinwine/tools/sendkeys.sh w wechat 4`)
+微信 安装 `paru -S deepin-wine-wechat`  (新版可能卡死，可以使用下面的命令`killall WeChatBrowser.exe && /opt/deepinwine/tools/sendkeys.sh w wechat 4`)
 
- [微信Spark Store版本](https://aur.archlinux.org/packages/com.qq.weixin.spark) `yay -S com.qq.weixin.spark`
+ [微信Spark Store版本](https://aur.archlinux.org/packages/com.qq.weixin.spark) `paru -S com.qq.weixin.spark`
 
-QQ 安装 `yay -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`
+QQ 安装 `paru -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`
 
-新版LinuxQQ `yay -S linuxqq`
+新版LinuxQQ `paru -S linuxqq`
 
-tim `yay -S com.qq.tim.spark` 
+tim `paru -S com.qq.tim.spark` 
 
-ipmsg 安装`yay -S iptux`
+ipmsg 安装`paru -S iptux`
 
-mattermost 安装 `yay -S mattermost-desktop`
+mattermost 安装 `paru -S mattermost-desktop`
 
-slack 安装 `yay -S slack-desktop` 
+slack 安装 `paru -S slack-desktop` 
 
-Discord  安装 `yay -S discord`
+Discord  安装 `paru -S discord`
 
 >### Discord强制要求更新
 >
@@ -197,13 +198,13 @@ Discord  安装 `yay -S discord`
 >
 >参考文章：[Discord won’t open on Linux when an update is available](https://support.discord.com/hc/en-us/community/posts/360057789311-Discord-won-t-open-on-Linux-when-an-update-is-available)
 
-Telegram `yay -S telegram-desktop`
+Telegram `paru -S telegram-desktop`
 
 ### 可自建的聊天软件
 
-mattermost 安装 `yay -S mattermost` [参阅](https://wiki.archlinux.org/title/Mattermost)
+mattermost 安装 `paru -S mattermost` [参阅](https://wiki.archlinux.org/title/Mattermost)
 
-rocketchat-server 安装 `yay -S rocketchat-server ` 
+rocketchat-server 安装 `paru -S rocketchat-server ` 
 
 说明：
 
@@ -231,37 +232,37 @@ sudo sed -i "s/PKGEXT='.pkg.tar.xz'/PKGEXT='.pkg.tar'/g" /etc/makepkg.conf
 
 ## 下载上传
 
-文件蜈蚣 安装 `yay -S  filecentipede-bin ` [激活码](http://www.filecxx.com/zh_CN/activation_code.html)
+文件蜈蚣 安装 `paru -S  filecentipede-bin ` [激活码](http://www.filecxx.com/zh_CN/activation_code.html)
 
-MegaSync 安装 `yay -S megasync-bin`
+MegaSync 安装 `paru -S megasync-bin`
 
-115网盘 安装 `yay -S 115pc`
+115网盘 安装 `paru -S 115pc`
 
-天翼云盘 安装 `yay -S cloudpan189-go`
+天翼云盘 安装 `paru -S cloudpan189-go`
 
-OneDive 安装 `yay -S onedrive` 或者 `yay -S onedrive-abraunegg` (GUI `yay -S onedrivegui-git `) 或者使用onedriver（推荐） `yay -S onedriver`
+OneDive 安装 `paru -S onedrive` 或者 `paru -S onedrive-abraunegg` (GUI `paru -S onedrivegui-git `) 或者使用onedriver（推荐） `paru -S onedriver`
 
-百度云 安装 `yay -S baidunetdisk-bin` 或者 安装深度的版本 `yay -S deepin-baidu-pan`
+百度云 安装 `paru -S baidunetdisk-bin` 或者 安装深度的版本 `paru -S deepin-baidu-pan`
 
-坚果云 安装 `yay -S nutstore` 或者 坚果云实验版 `yay -S nutstore-experimental `
+坚果云 安装 `paru -S nutstore` 或者 坚果云实验版 `paru -S nutstore-experimental `
 
 [^坚果云窗口太小，看不到输入框。]: 可以用 `sudo pacman -S gvfs libappindicator-gtk3`
 
-DropBox 安装 `yay -S dropbox` 
+DropBox 安装 `paru -S dropbox` 
 
-resilio sync 安装 ` yay -S rslsync` 
+resilio sync 安装 ` paru -S rslsync` 
 
-迅雷linux版本 安装 `yay -S xunlei-bin` 
+迅雷linux版本 安装 `paru -S xunlei-bin` 
 
-迅雷极速版 `yay -S deepin-wine-thunderspeed`
+迅雷极速版 `paru -S deepin-wine-thunderspeed`
 
-rclone 同步工具 `yay -S rclone` ([同步onedrive配置](https://rclone.org/onedrive/) [GUI](https://rclone.org/gui/))
+rclone 同步工具 `paru -S rclone` ([同步onedrive配置](https://rclone.org/onedrive/) [GUI](https://rclone.org/gui/))
 
-axel 安装 `yay -S axel`
+axel 安装 `paru -S axel`
 
-localsend 安装 `yay -S localsend-bin`
+localsend 安装 `paru -S localsend-bin`
 
-zssh 安装 `yay -S zssh` 配合lrzsz(安装命令 `yay -S lrzsz`)食用效果最佳。
+zssh 安装 `paru -S zssh` 配合lrzsz(安装命令 `paru -S lrzsz`)食用效果最佳。
 
 >lrzsz 安装后在/usr/bin下面目录下有下面几个文件lrzsz-rb、lrzsz-rx、lrzsz-rz、lrzsz-sb、lrzsz-sx、lrzsz-sz可以使用下面的命令去掉文件名中的lrzsz- 并添加执行权限
 >
@@ -272,21 +273,21 @@ zssh 安装 `yay -S zssh` 配合lrzsz(安装命令 `yay -S lrzsz`)食用效果�
 >done
 >```
 
-[trzsz](https://github.com/trzsz/trzsz) 安装 `yay -S trzsz ` 
+[trzsz](https://github.com/trzsz/trzsz) 安装 `paru -S trzsz ` 
 
-motrix 安装 `yay -S motrix`  
+motrix 安装 `paru -S motrix`  
 
-gopeed 安装 `yay -S gopeed-bin`
+gopeed 安装 `paru -S gopeed-bin`
 
-uget 安装 `yay -S uget`
+uget 安装 `paru -S uget`
 
-Mega网盘安装 `yay -S megatools-git` 
+Mega网盘安装 `paru -S megatools-git` 
 
-qbittorrent 安装  `yay -S qbittorrent`([增强版](https://github.com/c0re100/qBittorrent-Enhanced-Edition/releases) `yay -S qbittorrent-enhanced-git` [搜索插件](https://github.com/qbittorrent/search-plugins/wiki/Unofficial-search-plugins))
+qbittorrent 安装  `paru -S qbittorrent`([增强版](https://github.com/c0re100/qBittorrent-Enhanced-Edition/releases) `paru -S qbittorrent-enhanced-git` [搜索插件](https://github.com/qbittorrent/search-plugins/wiki/Unofficial-search-plugins))
 
-moose 支持边下边播的BT工具 `yay -S moose ` 
+moose 支持边下边播的BT工具 `paru -S moose ` 
 
-[Spacedrive](https://www.spacedrive.com/) 安装 `yay -S spacedrive-bin`
+[Spacedrive](https://www.spacedrive.com/) 安装 `paru -S spacedrive-bin`
 
 参考
 
@@ -295,109 +296,109 @@ moose 支持边下边播的BT工具 `yay -S moose `
 
 ## 办公软件
 
-[看雪安全接入](https://ksa.kanxue.com)ksa 安装 `yay -S ksa` 
+[看雪安全接入](https://ksa.kanxue.com)ksa 安装 `paru -S ksa` 
 
-Android屏幕共享[Scrcpy](https://github.com/Genymobile/scrcpy) 安装 `yay -S scrcpy`
+Android屏幕共享[Scrcpy](https://github.com/Genymobile/scrcpy) 安装 `paru -S scrcpy`
 
-[tailscale](https://tailscale.com) 安装 `yay -S tailscale` 
+[tailscale](https://tailscale.com) 安装 `paru -S tailscale` 
 
-[达芬奇视频剪辑](http://www.blackmagicdesign.com/products/davinciresolve/) 安装 `yay -S davinci-resolve` 
+[达芬奇视频剪辑](http://www.blackmagicdesign.com/products/davinciresolve/) 安装 `paru -S davinci-resolve` 
 
-handbrake 视频格式转换工具 `yay -S handbrake-full`
+handbrake 视频格式转换工具 `paru -S handbrake-full`
 
-[zettlr](https://www.zettlr.com) markdown编辑器 安装 `yay -S zettlr ` 
+[zettlr](https://www.zettlr.com) markdown编辑器 安装 `paru -S zettlr ` 
 
-[vnode](https://tamlok.github.io/vnote/zh_cn/#!index.md) markdown编辑器 安装 `yay -S vnote` 
+[vnode](https://tamlok.github.io/vnote/zh_cn/#!index.md) markdown编辑器 安装 `paru -S vnote` 
 
-Wps 安装 `yay -S wps-office ttf-wps-fonts wps-office-mui-zh-cn  wps-office-mime`
+Wps 安装 `paru -S wps-office ttf-wps-fonts wps-office-mui-zh-cn  wps-office-mime`
 
-libreoffice 安装  `yay -S libreoffice` 
+libreoffice 安装  `paru -S libreoffice` 
 
-flameshot 截图工具 安装 `yay -S flameshot` 
+flameshot 截图工具 安装 `paru -S flameshot` 
 
-Snipaste 截图工具  安装 `yay -S Snipaste  `
+Snipaste 截图工具  安装 `paru -S Snipaste  `
 
-kazam录屏软件 安装 `yay -S kazam `
+kazam录屏软件 安装 `paru -S kazam `
 
-屏幕录制为gif 工具 peek `yay -S peek`
+屏幕录制为gif 工具 peek `paru -S peek`
 
 > 这个工具已经停止维护
 
-geogebra 几何绘图软件 `yay -S geogebra  `
+geogebra 几何绘图软件 `paru -S geogebra  `
 
-labplot科学绘图 `yay -S labplot ` 
+labplot科学绘图 `paru -S labplot ` 
 
-福昕pdf阅读器 `yay -S foxitreader` 
+福昕pdf阅读器 `paru -S foxitreader` 
 
-masterpdfeditor 对linux用户免费的PDF浏览及编辑器,支持实时预览 `yay -S masterpdfeditor  ` 
+masterpdfeditor 对linux用户免费的PDF浏览及编辑器,支持实时预览 `paru -S masterpdfeditor  ` 
 
-Teamviewer `yay -S teamviewer`如果一直显示未连接，则请退出teamviewer，执行`sudo teamviewer --daemon enable` 再打开试试
+Teamviewer `paru -S teamviewer`如果一直显示未连接，则请退出teamviewer，执行`sudo teamviewer --daemon enable` 再打开试试
 
-Xrdp `yay -S xrdp xorgxrdp-git` ([参考文档](https://wiki.archlinux.org/title/xrdp))
+Xrdp `paru -S xrdp xorgxrdp-git` ([参考文档](https://wiki.archlinux.org/title/xrdp))
 
-rustdesk `yay -S rustdesk-bin`
+rustdesk `paru -S rustdesk-bin`
 
-向日葵 安装 `yay -S sunloginclient` (需要设置开机启动服务 `systemctl enable runsunloginclient` 启动服务 `systemctl start runsunloginclient` )
+向日葵 安装 `paru -S sunloginclient` (需要设置开机启动服务 `systemctl enable runsunloginclient` 启动服务 `systemctl start runsunloginclient` )
 
-toDesk远程工具 安装 `yay -S todesk-bin` (设置服务 `systemctl start\enable todeskd` 才能正常运行)
+toDesk远程工具 安装 `paru -S todesk-bin` (设置服务 `systemctl start\enable todeskd` 才能正常运行)
 
-parsec 远程工具 安装 `yay -S parsec-bin ` 
+parsec 远程工具 安装 `paru -S parsec-bin ` 
 
-v2ray 安装 `yay -S v2ray`  （安装配置工具`yay -S qv2ray ` qv2ray 插件 `yay -S qv2ray-plugin` ，[福利订阅](https://jiang.netlify.app) 新版已经使用AppImage格式发布，下载AppImage格式即可 或者 v2rayDesktop `yay -S v2ray-desktop` ）
+v2ray 安装 `paru -S v2ray`  （安装配置工具`paru -S qv2ray ` qv2ray 插件 `paru -S qv2ray-plugin` ，[福利订阅](https://jiang.netlify.app) 新版已经使用AppImage格式发布，下载AppImage格式即可 或者 v2rayDesktop `paru -S v2ray-desktop` ）
 
-clash-verge-bin `yay -S clash-verge-bin`
+clash-verge-bin `paru -S clash-verge-bin`
 
 clash https://aur.archlinux.org/packages?K=clash [福利](https://neko-warp.nloli.xyz)
 
-[nekoray-bin ](https://github.com/MatsuriDayo/nekoray)Qt based cross-platform GUI proxy configuration manager  安装 `yay -S nekoray-bin`( 可能需要安装相关插件 `yay -S sing-geosite sing-geoip  `)
+[nekoray-bin ](https://github.com/MatsuriDayo/nekoray)Qt based cross-platform GUI proxy configuration manager  安装 `paru -S nekoray-bin`( 可能需要安装相关插件 `paru -S sing-geosite sing-geoip  `)
 
-cloudflare Warp 安装 `yay -S cloudflare-warp-bin`  [基于wiregurd](https://www.ianbashford.net/post/setupcloudflarewarplinuxarch/) [自选ip脚本](https://gitlab.com/rwkgyg/CFwarp) [自选ip脚本2](https://gitlab.com/ProjectWARP/warp-script)
+cloudflare Warp 安装 `paru -S cloudflare-warp-bin`  [基于wiregurd](https://www.ianbashford.net/post/setupcloudflarewarplinuxarch/) [自选ip脚本](https://gitlab.com/rwkgyg/CFwarp) [自选ip脚本2](https://gitlab.com/ProjectWARP/warp-script)
 
-n2n [VPN软件](https://www.meirenji.info/2018/02/03/N2N%E7%BB%84%E7%BD%91-%E5%AE%9E%E7%8E%B0%E5%AE%B6%E9%87%8C%E8%AE%BF%E4%B8%8E%E5%85%AC%E5%8F%B8%E7%BD%91%E7%BB%9C%E4%BA%92%E8%AE%BF-%E7%B2%BE%E7%BC%96%E7%89%88/) `yay -S n2n` 
+n2n [VPN软件](https://www.meirenji.info/2018/02/03/N2N%E7%BB%84%E7%BD%91-%E5%AE%9E%E7%8E%B0%E5%AE%B6%E9%87%8C%E8%AE%BF%E4%B8%8E%E5%85%AC%E5%8F%B8%E7%BD%91%E7%BB%9C%E4%BA%92%E8%AE%BF-%E7%B2%BE%E7%BC%96%E7%89%88/) `paru -S n2n` 
 
-proxychains-ng 安装 `yay -S proxychains-ng`
+proxychains-ng 安装 `paru -S proxychains-ng`
 
-evernote 开源版本 nixnote2 安装 `yay -S nixnote2` 
+evernote 开源版本 nixnote2 安装 `paru -S nixnote2` 
 
-joplin 安装 `yay -S joplin` or `yay -S joplin-desktop`
+joplin 安装 `paru -S joplin` or `paru -S joplin-desktop`
 
-Okular （[KDE上的通用文档阅读器](https://www.appinn.com/okular/)）` yay -S okular` 
+Okular （[KDE上的通用文档阅读器](https://www.appinn.com/okular/)）` paru -S okular` 
 
-Foliate [简单、现代的电子书阅读器](https://www.appinn.com/foliate-for-linux/) 安装 `yay -S foliate` 
+Foliate [简单、现代的电子书阅读器](https://www.appinn.com/foliate-for-linux/) 安装 `paru -S foliate` 
 
-Screen屏幕共享软件 安装 `yay -S screen-desktop ` 
+Screen屏幕共享软件 安装 `paru -S screen-desktop ` 
 
-U盘启动制作[etcher](https://github.com/balena-io/etcher) `yay -S etcher-bin` 
+U盘启动制作[etcher](https://github.com/balena-io/etcher) `paru -S etcher-bin` 
 
-[ isoimagewriter](https://aur.archlinux.org/packages/isoimagewriter) `yay -S isoimagewriter`
+[ isoimagewriter](https://aur.archlinux.org/packages/isoimagewriter) `paru -S isoimagewriter`
 
-[rpi-imager](https://aur.archlinux.org/packages/rpi-imager) 树莓派的镜像写入工具 `yay -S rpi-imager `
+[rpi-imager](https://aur.archlinux.org/packages/rpi-imager) 树莓派的镜像写入工具 `paru -S rpi-imager `
 
-xmind-2020 安装 `yay -S xmind-2020` ([福利链接](https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g))
+xmind-2020 安装 `paru -S xmind-2020` ([福利链接](https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g))
 
-drawio  安装` yay -S drawio-desktop-bin` 或者 ` yay -S drawio-desktop`
+drawio  安装` paru -S drawio-desktop-bin` 或者 ` paru -S drawio-desktop`
 
-钉钉 安装 `yay -S  dingtalk-electron ` 
+钉钉 安装 `paru -S  dingtalk-electron ` 
 
-企业微信 `yay -S deepin-wine-wxwork` 
+企业微信 `paru -S deepin-wine-wxwork` 
 
-腾讯会议 `yay -S wemeet-bin`
+腾讯会议 `paru -S wemeet-bin`
 
-飞书 `yay -S feishu-bin`
+飞书 `paru -S feishu-bin`
 
-剪切板工具 [uniclip](https://github.com/quackduck/uniclip) `yay -S uniclip`
+剪切板工具 [uniclip](https://github.com/quackduck/uniclip) `paru -S uniclip`
 
-onenote `yay -S p3x-onenote` 
+onenote `paru -S p3x-onenote` 
 
-[crow-translate](https://github.com/crow-translate/crow-translate) 翻译工具`yay -S crow-translate`
+[crow-translate](https://github.com/crow-translate/crow-translate) 翻译工具`paru -S crow-translate`
 
-realvnc-server `yay -S realvnc-vnc-server ` (安装完毕后需要注册`sudo vnclicense -add 3TH6P-DV5AE-BLHY6-PNENS-B3AQA`,启动服务 `systemctl enable vncserver-x11-serviced`)
+realvnc-server `paru -S realvnc-vnc-server ` (安装完毕后需要注册`sudo vnclicense -add 3TH6P-DV5AE-BLHY6-PNENS-B3AQA`,启动服务 `systemctl enable vncserver-x11-serviced`)
 
-realvnc-viewer `yay -S realvnc-vnc-viewer`
+realvnc-viewer `paru -S realvnc-vnc-viewer`
 
-Zotero  `yay -S zotero-bin`
+Zotero  `paru -S zotero-bin`
 
-windows11 字体 `yay -S ttf-ms-win11-auto `
+windows11 字体 `paru -S ttf-ms-win11-auto `
 
 >如果是针对某种语言，可以按下面内容进行安装：
 >
@@ -409,10 +410,10 @@ windows11 字体 `yay -S ttf-ms-win11-auto `
 >ttf-ms-win11-auto-zh_tw	Microsoft Windows 11 Traditional Chinese TrueType fonts
 >ttf-ms-win11-auto-other
 
-[macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `yay -S 
+[macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `paru -S 
 macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
 
-pdf合并工具 `yay -S pdfmerger`
+pdf合并工具 `paru -S pdfmerger`
 
 在线流程图工具 [https://excalidraw.com](https://excalidraw.com)
 参考
@@ -424,14 +425,14 @@ pdf合并工具 `yay -S pdfmerger`
 
 ### fcitx
 
-sun输入法 安装 `yay -S fcitx fcitx-im fcitx-configtool fcitx-sunpinyin fcitx-googlepinyin fcitx-cloudpinyin fcitx-libpinyin`
+sun输入法 安装 `paru -S fcitx fcitx-im fcitx-configtool fcitx-sunpinyin fcitx-googlepinyin fcitx-cloudpinyin fcitx-libpinyin`
 
-皮肤 安装 `yay -S fcitx-skin-material` 
+皮肤 安装 `paru -S fcitx-skin-material` 
 
-百度输入法 安装 `yay -S fcitx-baidupinyin` 安装完成以后记得重启下，不然输入候选框会乱码。
+百度输入法 安装 `paru -S fcitx-baidupinyin` 安装完成以后记得重启下，不然输入候选框会乱码。
 
-讯飞输入法 安装 `yay -S  iflyime` 
-or `yay -S manjaro-asian-input-support-fcitx` 
+讯飞输入法 安装 `paru -S  iflyime` 
+or `paru -S manjaro-asian-input-support-fcitx` 
 
 KDM, GDM, LightDM 等显示管理器，请使用 ~/.xprofile 
 警告: 上述用户不要在~/.xinitrc中加入下述脚本，否则会造成无法登陆。(但在里头加了也没挂) 如果您用 startx 或者 Slim 启动，请使用~/.xinitrc 中加入
@@ -453,25 +454,25 @@ QT_IM_MODULE=fcitx
 安装相关字体fcitx5
 
 ```bash
-yay -S wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-code-pro-fonts  adobe-source-han-sans-cn-fonts ttf-monaco noto-fonts-emoji 
+paru -S wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-code-pro-fonts  adobe-source-han-sans-cn-fonts ttf-monaco noto-fonts-emoji 
 ttf-ms-fonts ttf-sarasa-gothic noto-fonts-cjk  noto-fonts-sc
 ```
 
 下面是一些编程字体
 
 ```bash
-yay -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sarasa-term ttf-maple-latest
+paru -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sarasa-term ttf-maple-latest
 ```
 
 输入法有问题，需要重置，使用命令 `rm -r ~/.config/fcitx` 然后注销即可。
 
 ### fcitx5
 
-基本安装 `yay -S fcitx5-im fcitx5-chinese-addons  `
+基本安装 `paru -S fcitx5-im fcitx5-chinese-addons  `
 
-或者 `yay -S manjaro-asian-input-support-fcitx5 fcitx5 fcitx5-configtool fcitx5-chinese-addons fcitx5-qt fcitx5-gtk`
+或者 `paru -S manjaro-asian-input-support-fcitx5 fcitx5 fcitx5-configtool fcitx5-chinese-addons fcitx5-qt fcitx5-gtk`
 
-安装字典 `yay -S fcitx5-pinyin-zhwiki fcitx5-pinyin-sougou`
+安装字典 `paru -S fcitx5-pinyin-zhwiki fcitx5-pinyin-sougou`
 
 安装皮肤：
 
@@ -509,7 +510,7 @@ yay -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sara
 ### rime
 
 参考官网 [传送门](https://rime.im)
-基本库 `yay -S ibus ibus-qt ibus-rime` 
+基本库 `paru -S ibus ibus-qt ibus-rime` 
 配置文件内容
 
 ```json
@@ -519,7 +520,7 @@ export QT_IM_MODULE=ibus
 ibus-daemon -d -x
 ```
 
-[四叶草输入法](https://github.com/fkxxyz/rime-cloverpinyin) `yay -S rime-cloverpinyin` 
+[四叶草输入法](https://github.com/fkxxyz/rime-cloverpinyin) `paru -S rime-cloverpinyin` 
 参考 https://wiki.archlinux.org/index.php/Fcitx
 
 #### 有用的仓库
@@ -530,45 +531,45 @@ ibus-daemon -d -x
 
 ## 媒体软件
 
-网易云音乐 安装 `yay -S netease-cloud-music` 
+网易云音乐 安装 `paru -S netease-cloud-music` 
 
-腾讯视频 安装 `yay -S tenvideo`
+腾讯视频 安装 `paru -S tenvideo`
 
-全聚合影视 安装 `yay -S vst-video-bin` 
+全聚合影视 安装 `paru -S vst-video-bin` 
 
-OBS推流工具 `yay -S obs-studio` 
+OBS推流工具 `paru -S obs-studio` 
 
-bilibili `yay -S bilibili-bin`
+bilibili `paru -S bilibili-bin`
 
-smPlayer `yay -S smplayer`
+smPlayer `paru -S smplayer`
 
 ## 美化
 
 ### docky 安装
 
-`yay -S docky`
+`paru -S docky`
 或者
-`yay -S plank` (这个比较简单，推荐)
+`paru -S plank` (这个比较简单，推荐)
 
 > XFCE桌面下安装plank后可能会出现屏幕下方会有一条阴影直线，十分影响视觉。解决方案是在开始菜单的设置管理器(Settings Manager)-窗口管理器微调(Window Manager Tweaks)-合成器(Compositor)中去掉dock阴影(Show shadows under dock windows)前面的勾。
 
 如果是KDE桌面
-`yay -S latte-dock` 
+`paru -S latte-dock` 
 
 KDE
 
-（KDE推荐安装部件([下载网站](https://store.kde.org/),最好安装ocs-url `yay -S ocs-url`) `appication title` `全局菜单` `Launchpad plasma` `latte Spacer` `Event calendar` (个人google三色时间配置 `'<font color="#EB4334">'hh'</font>':'<font color="#35AA53">'mm'</font>':'<font color="#4586F3">'ss'</font>'` )）
+（KDE推荐安装部件([下载网站](https://store.kde.org/),最好安装ocs-url `paru -S ocs-url`) `appication title` `全局菜单` `Launchpad plasma` `latte Spacer` `Event calendar` (个人google三色时间配置 `'<font color="#EB4334">'hh'</font>':'<font color="#35AA53">'mm'</font>':'<font color="#4586F3">'ss'</font>'` )）
 
-KDE whitesur主题 安装 `yay -S whitesur-kde-theme-git`
+KDE whitesur主题 安装 `paru -S whitesur-kde-theme-git`
 
 XFCE whitesur主题 
 
 + https://github.com/vinceliuice/WhiteSur-gtk-theme
 + https://github.com/paullinuxthemer/McOS-XFCE-Edition
 
-mcmojave-circle-icon-theme-git 图标主题 `yay -S mcmojave-circle-icon-theme-git`
+mcmojave-circle-icon-theme-git 图标主题 `paru -S mcmojave-circle-icon-theme-git`
 
-xfce全局菜单([参考链接1](https://blog.csdn.net/kewen_123/article/details/115465909) [参考链接2](https://www.cnblogs.com/maxwell-blog/p/10337514.html)) `yay -S libdbusmenu-glib libdbusmenu-gtk3 libdbusmenu-gtk2  vala-panel-appmenu-xfce appmenu-gtk-module appmenu-qt4  vala-panel-appmenu-registrar xfce4-windowck-plugin-xfwm4-theme-support`   启用使用下面的命令
+xfce全局菜单([参考链接1](https://blog.csdn.net/kewen_123/article/details/115465909) [参考链接2](https://www.cnblogs.com/maxwell-blog/p/10337514.html)) `paru -S libdbusmenu-glib libdbusmenu-gtk3 libdbusmenu-gtk2  vala-panel-appmenu-xfce appmenu-gtk-module appmenu-qt4  vala-panel-appmenu-registrar xfce4-windowck-plugin-xfwm4-theme-support`   启用使用下面的命令
 
 ```
 xfconf-query -c xsettings -p /Gtk/ShellShowsAppmenu -n -t bool -s true
@@ -577,12 +578,12 @@ xfconf-query -c xsettings -p /Gtk/ShellShowsMenubar -n -t bool -s true
 
 
 
-[conky](https://github.com/brndnmtthws/conky) 性能显示组件 安装 `yay -S conky conky-manager`
+[conky](https://github.com/brndnmtthws/conky) 性能显示组件 安装 `paru -S conky conky-manager`
 
 
 ### ohmyzh 安装
 
-`yay -S zsh && sh -c "$(curl -fsSL https://fastgit.czyt.tech/https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
+`paru -S zsh && sh -c "$(curl -fsSL https://fastgit.czyt.tech/https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
 安装插件
 
 ```
@@ -640,7 +641,7 @@ zsh在使用nohup执行任务的时候，可能会出现session注销后，nohup
 > **HUP**
 > ... In zsh, if you have a background job running when the shell exits, the shell will assume you want that to be killed; in this case it is sent a particular signal called SIGHUP... If you often start jobs that should go on even when the shell has exited, then you can set the option NO_HUP, and background jobs will be left alone.
 
-[starship](https://github.com/starship/starship) 安装 `yay -S starship` (如是安装的zsh，安装完成后在~/.zshrc 加入`eval "$(starship init zsh)"`即可,[配置文档](https://starship.rs/config/)),个人配置文件(通过`mkdir -p ~/.config && touch ~/.config/starship.toml`创建)
+[starship](https://github.com/starship/starship) 安装 `paru -S starship` (如是安装的zsh，安装完成后在~/.zshrc 加入`eval "$(starship init zsh)"`即可,[配置文档](https://starship.rs/config/)),个人配置文件(通过`mkdir -p ~/.config && touch ~/.config/starship.toml`创建)
 
 ```toml
 # Get editor completions based on the config schema
@@ -696,7 +697,7 @@ disabled = true
 安装 [atuin](https://github.com/ellie/atuin)
 
 ```
-yay -S atuin
+paru -S atuin
 ```
 
 使用zsh插件
@@ -709,7 +710,7 @@ echo 'eval "$(atuin init zsh)"' >> ~/.zshrc
 
 ### fish
 
-`yay -S fish` 
+`paru -S fish` 
 安装oh-my-fish 
 
 ```bash
@@ -733,13 +734,13 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 
 ### nushell
 
-安装 `yay -S nushell` 
+安装 `paru -S nushell` 
 
 [Warp Terminal](https://www.warp.dev) （有Linux版本的计划，暂未发布）
 
 ### 自定义主题
 
-需要事先安装软件 `yay -S gnome-tweaks chrome-gnome-shell`
+需要事先安装软件 `paru -S gnome-tweaks chrome-gnome-shell`
 
 #### 手动安装
 
@@ -760,15 +761,15 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 
 ## 编程语言
 
-go 安装 `yay -S go`
+go 安装 `paru -S go`
 
-rust 安装 `yay -S rustup`
+rust 安装 `paru -S rustup`
 
-flutter 安装 `yay -S flutter`
+flutter 安装 `paru -S flutter`
 
-.net core 安装 `yay -S dotnet-sdk-bin` 
+.net core 安装 `paru -S dotnet-sdk-bin` 
 
-bun `yay -S bun-bin`
+bun `paru -S bun-bin`
 
 ## 开发工具
 
@@ -786,71 +787,73 @@ bun `yay -S bun-bin`
 >rm HomebrewUninstall.sh ; wget https://gitee.com/cunkai/HomebrewCN/raw/master/HomebrewUninstall.sh ; bash HomebrewUninstall.sh
 >```
 
+[pixi(支持Python, C++,  R的包管理器 )](https://github.com/prefix-dev/pixi) 安装 `paru -S pixi`
+
 [fleek ]( https://getfleek.dev) "Home as Code" for Humans
 
-wireshark    GUI `yay -S  wireshark-qt `  Cli `yay -S wireshark-cli`
+wireshark    GUI `paru -S  wireshark-qt `  Cli `paru -S wireshark-cli`
 
-[Tiny RDM](https://github.com/tiny-craft/tiny-rdm)(**a modern lightweight cross-platform Redis desktop manager** ) `yay -S tiny-rdm-bin`
+[Tiny RDM](https://github.com/tiny-craft/tiny-rdm)(**a modern lightweight cross-platform Redis desktop manager** ) `paru -S tiny-rdm-bin`
 
 [github520](https://github.com/521xueweihan/GitHub520) `sed -i "/# GitHub520 Host Start/Q" /etc/hosts && curl https://raw.hellogithub.com/hosts >> /etc/hosts` (刷新缓存 `systemctl restart nscd`)
 
 docker-image-extract  https://github.com/jjlin/docker-image-extract
 
-[lapce](https://github.com/lapce/lapce) `yay -S lapce`
+[lapce](https://github.com/lapce/lapce) `paru -S lapce`
 
-[lazygit](https://github.com/jesseduffield/lazygit) `yay -S lazygit`
+[lazygit](https://github.com/jesseduffield/lazygit) `paru -S lazygit`
 
-[gitui](https://github.com/extrawurst/gitui) `yay -S gitui`
+[gitui](https://github.com/extrawurst/gitui) `paru -S gitui`
 
-[inshellisense](https://github.com/microsoft/inshellisense#inshellisense)  `yay -S nodejs-inshellisense`
+[inshellisense](https://github.com/microsoft/inshellisense#inshellisense)  `paru -S nodejs-inshellisense`
 
 ![](https://github.com/microsoft/inshellisense/blob/main/docs/demo.gif)
 
 > inshellisense provides IDE style autocomplete for shells. It's a terminal native runtime for autocomplete which has support for 600+ command line tools. inshellisense supports Windows, Linux, & MacOS.
 
-github Desktop `yay -S github-desktop-bin`
+github Desktop `paru -S github-desktop-bin`
 
-代码生成图片[silicon](https://github.com/Aloxaf/silicon) `yay -S --needed pkgconf freetype2 fontconfig libxcb xclip silicon `
+代码生成图片[silicon](https://github.com/Aloxaf/silicon) `paru -S --needed pkgconf freetype2 fontconfig libxcb xclip silicon `
 
-redis管理工具 `yay -S redis-desktop-manager` 
+redis管理工具 `paru -S redis-desktop-manager` 
 
-github-cli 安装 `yay -S github-cli-bin` 
+github-cli 安装 `paru -S github-cli-bin` 
 
-minicom串口工具 安装 `yay -S minicom` (设置参数 `sudo minicom -s` )
+minicom串口工具 安装 `paru -S minicom` (设置参数 `sudo minicom -s` )
 
-串口助手 安装 `yay -S serialtool` 
+串口助手 安装 `paru -S serialtool` 
 
-[serial-studio](https://github.com/Serial-Studio/Serial-Studio/blob/master/doc/README_ZH.md) 串行数据可视化工具 安装 `yay -S serial-studio-git`
+[serial-studio](https://github.com/Serial-Studio/Serial-Studio/blob/master/doc/README_ZH.md) 串行数据可视化工具 安装 `paru -S serial-studio-git`
 
-nodejs 安装 ` yay -S nodejs npm` （安装cnpm `npm install -g cnpm --registry=https://registry.npm.taobao.org  ` ）
+nodejs 安装 ` paru -S nodejs npm` （安装cnpm `npm install -g cnpm --registry=https://registry.npm.taobao.org  ` ）
 
-跨平台编译工具链 安装 `yay -S arm-linux-gnueabihf-g++ arm-linux-gnueabihf-gcc` 
+跨平台编译工具链 安装 `paru -S arm-linux-gnueabihf-g++ arm-linux-gnueabihf-gcc` 
 
-c/c++开发  安装 `yay -S make cmake gdb gcc` 
+c/c++开发  安装 `paru -S make cmake gdb gcc` 
 
-goland 安装 `yay -S goland goland-jre`
+goland 安装 `paru -S goland goland-jre`
 
-lazarus 安装 `yay -S lazarus `
+lazarus 安装 `paru -S lazarus `
 
 >lazarus 是Delphi 的开源继承者，使用 Free Pascal （支持 Delphi 语法扩展）+ Free VCL （跨平台的 VCL 开源版）实现，主打简单，快速，可能仍然是目前开发速度最快的 GUI 解决方案，可以轻松开发：Windows / macOS / Linux 的桌面程序
 
-rustrover 安装 `yay -s rustrover rustrover-jre`
+rustrover 安装 `paru -S rustrover rustrover-jre`
 
-uinityHub 安装 `yay -S unityhub`
+uinityHub 安装 `paru -S unityhub`
 
-Android Studio 安装 `yay -S android-studio`
+Android Studio 安装 `paru -S android-studio`
 
-[commitizen-go](https://github.com/lintingzhen/commitizen-go) 安装 `yay -S commitizen-go `  相似的程序[gitcz](https://github.com/xiaoqidun/gitcz)
+[commitizen-go](https://github.com/lintingzhen/commitizen-go) 安装 `paru -S commitizen-go `  相似的程序[gitcz](https://github.com/xiaoqidun/gitcz)
 
-datagrip 安装 `yay -S datagrip datagrip-jre`
+datagrip 安装 `paru -S datagrip datagrip-jre`
 
-studio 3T (mongoDB开发工具) `yay -S studio-3t`
+studio 3T (mongoDB开发工具) `paru -S studio-3t`
 
-mongodb compass `yay -S mongodb-compass`
+mongodb compass `paru -S mongodb-compass`
 
-Android Studio 安装 `yay -S android-studio` (安卓SDK `yay -S android-sdk`) 
+Android Studio 安装 `paru -S android-studio` (安卓SDK `paru -S android-sdk`) 
 
-clion 安装 `yay -S clion clion-jre` 
+clion 安装 `paru -S clion clion-jre` 
 
 > 可选下面这些包
 >
@@ -858,55 +861,55 @@ clion 安装 `yay -S clion clion-jre`
 > clion-gdb	JetBrains packaged GNU Debugger for CLion
 > clion-lldb	JetBrains packaged LLVM Debugger for CLion
 
-pycharm 安装 `yay -S pycharm-professional` 
+pycharm 安装 `paru -S pycharm-professional` 
 
-rider安装 `yay -S rider` 
+rider安装 `paru -S rider` 
 
-webstorm 安装 `yay -S webstorm webstorm-jre` 
+webstorm 安装 `paru -S webstorm webstorm-jre` 
 
-vmware 安装 `yay -S vmware-workstation`
+vmware 安装 `paru -S vmware-workstation`
 
-postman 安装 `yay -S postman-bin` [汉化文件](https://github.com/hlmd/Postman-cn)（jetbrains新版自带的resful 测试工具，可以不用安装）
+postman 安装 `paru -S postman-bin` [汉化文件](https://github.com/hlmd/Postman-cn)（jetbrains新版自带的resful 测试工具，可以不用安装）
 
-apifox 安装 `yay -S apifox`
+apifox 安装 `paru -S apifox`
 
-[insomnia](https://insomnia.rest) API调试客户端 安装 `yay -S insomnia-bin`
+[insomnia](https://insomnia.rest) API调试客户端 安装 `paru -S insomnia-bin`
 
-Typora markdown编辑器 安装 `yay -S typora`
+Typora markdown编辑器 安装 `paru -S typora`
 
->也可以试下 remarkable `yay -S remarkable `
+>也可以试下 remarkable `paru -S remarkable `
 
-dnspy 安装 `yay -S dnspy` (需要使用blackarch源)
+dnspy 安装 `paru -S dnspy` (需要使用blackarch源)
 
-tmux 终端工具 安装 `yay -S tmux`
+tmux 终端工具 安装 `paru -S tmux`
 
-[pre-commit](https://github.com/pre-commit/pre-commit) 安装 `yay -S python-pre-commit` (管理和维护 pre-commit hooks的工具. [官网](https://pre-commit.com/) )
+[pre-commit](https://github.com/pre-commit/pre-commit) 安装 `paru -S python-pre-commit` (管理和维护 pre-commit hooks的工具. [官网](https://pre-commit.com/) )
 
-byobu 终端工具 安装 `yay -S byobu`
+byobu 终端工具 安装 `paru -S byobu`
 
-API文档工具 zeal 安装 `yay -S zeal` 
+API文档工具 zeal 安装 `paru -S zeal` 
 
-[windterm](https://github.com/kingToolbox/WindTerm) 安装 `yay -S windterm-bin `
+[windterm](https://github.com/kingToolbox/WindTerm) 安装 `paru -S windterm-bin `
 
-bcompare 安装 `yay -S bcompare ` 
+bcompare 安装 `paru -S bcompare ` 
 
-tldr 简化版文档工具 ` yay -S tldr` （rust版本 `yay -S  tealdeer ` ）
+tldr 简化版文档工具 ` paru -S tldr` （rust版本 `paru -S  tealdeer ` ）
 
-vscode 安装 `yay -S visual-studio-code-bin` 
+vscode 安装 `paru -S visual-studio-code-bin` 
 
-终端录屏幕[asciinema](https://asciinema.org/) 安装 `yay -S asciinema` 
+终端录屏幕[asciinema](https://asciinema.org/) 安装 `paru -S asciinema` 
 
-[zoxide](https://github.com/ajeetdsouza/zoxide) **smarter cd command** `yay -S zoxide`
+[zoxide](https://github.com/ajeetdsouza/zoxide) **smarter cd command** `paru -S zoxide`
 
-证书生成工具 mkcert 安装 `yay -S mkcert` 
+证书生成工具 mkcert 安装 `paru -S mkcert` 
 
-netcat `yay -S  --noconfirm gnu-netcat` 或者 `yay -S --noconfirm openbsd-netcat ` 
+netcat `paru -S  --noconfirm gnu-netcat` 或者 `paru -S --noconfirm openbsd-netcat ` 
 
-微信开发者工具 `yay -S wechat-devtool ` 
+微信开发者工具 `paru -S wechat-devtool ` 
 
-Platform-Tools for Google Android SDK (adb and fastboot) 安装 `yay -S android-sdk-platform-tools` 
+Platform-Tools for Google Android SDK (adb and fastboot) 安装 `paru -S android-sdk-platform-tools` 
 
-neovim `yay -S neovim` (插件 [lazyvim](https://www.lazyvim.org))
+neovim `paru -S neovim` (插件 [lazyvim](https://www.lazyvim.org))
 
 >下面是其他的一些nvim的资料：
 >
@@ -914,37 +917,37 @@ neovim `yay -S neovim` (插件 [lazyvim](https://www.lazyvim.org))
 >+ [巢鹏大佬的nvim配置](https://github.com/chaopeng/nvim-config)
 >+ [NeoVim setup for golang programming](https://medium.com/@yanglyu5201/neovim-setup-for-golang-programming-68ebf59336d9)
 
-[sublime-text-4](https://aur.archlinux.org/packages/sublime-text-4)  `yay -S sublime-text-4 `
+[sublime-text-4](https://aur.archlinux.org/packages/sublime-text-4)  `paru -S sublime-text-4 `
 
-编译链工具[xmake](http://xmake.io) 安装 `yay -S xmake` 
+编译链工具[xmake](http://xmake.io) 安装 `paru -S xmake` 
 
-[goreleaser](https://goreleaser.com) 安装 `yay -S goreleaser-bin`
+[goreleaser](https://goreleaser.com) 安装 `paru -S goreleaser-bin`
 
-percona-toolkit (mysql辅助分析工具) `yay -S percona-toolkit` 
+percona-toolkit (mysql辅助分析工具) `paru -S percona-toolkit` 
 
 注：
 
 jetbrains系列软件，自带更新功能，但是我们一般使用非root用户进行登录，这时需要将安装目录授权给当前登录用户即可。以goland为例，只需要执行 ` chown -R $(whoami) /opt/goland ` 即可进行自动升级。 
 
-strace `yay -S strace` 
+strace `paru -S strace` 
 
-dtrace `yay -S dtrace-utils`  (使用[教程](https://zhuanlan.zhihu.com/p/180053751))
+dtrace `paru -S dtrace-utils`  (使用[教程](https://zhuanlan.zhihu.com/p/180053751))
 
-cloudflare Argo tunnel `yay -S cloudflared` （使用[教程](https://www.blueskyxn.com/202102/4176.html)）
+cloudflare Argo tunnel `paru -S cloudflared` （使用[教程](https://www.blueskyxn.com/202102/4176.html)）
 
-nmon `yay -S nmon` 
+nmon `paru -S nmon` 
 
-nload `yay -S nload` 
+nload `paru -S nload` 
 
-tcpflow `yay -S tcpflow` 
+tcpflow `paru -S tcpflow` 
 
- pyroscope性能监测工具  `yay -S pyroscope-bin` (使用[教程](https://colobu.com/2022/01/27/pyroscope-a-continuous-profiling-platform/) [官方教程](https://pyroscope.io/docs/server-install-linux/))
+ pyroscope性能监测工具  `paru -S pyroscope-bin` (使用[教程](https://colobu.com/2022/01/27/pyroscope-a-continuous-profiling-platform/) [官方教程](https://pyroscope.io/docs/server-install-linux/))
 
-crontab `yay -S cronie`
+crontab `paru -S cronie`
 
-charles抓包工具  `yay -S charles ` ([注册码生成](https://www.charles.ren) [汉化](https://github.com/cuiqingandroid/CharlesZH))
+charles抓包工具  `paru -S charles ` ([注册码生成](https://www.charles.ren) [汉化](https://github.com/cuiqingandroid/CharlesZH))
 
-[notepadnext](https://github.com/dail8859/NotepadNext) Notepad++ 跨平台版本实现 `yay -S notepadnext `
+[notepadnext](https://github.com/dail8859/NotepadNext) Notepad++ 跨平台版本实现 `paru -S notepadnext `
 
 参考
 
@@ -952,7 +955,7 @@ charles抓包工具  `yay -S charles ` ([注册码生成](https://www.charles.re
 
 - 科学技术大学blackarch源使用说明 [https://lug.ustc.edu.cn/wiki/mirrors/help/blackarch](https://lug.ustc.edu.cn/wiki/mirrors/help/blackarch)
 
-- jetbrains系列软件markdown插件无预览标签 `yay -S  java-openjfx-bin` ，参考[链接](https://intellij-support.jetbrains.com/hc/en-us/community/posts/360001515959-Markdown-Support-plugin-preview-not-working-in-Linux)
+- jetbrains系列软件markdown插件无预览标签 `paru -S  java-openjfx-bin` ，参考[链接](https://intellij-support.jetbrains.com/hc/en-us/community/posts/360001515959-Markdown-Support-plugin-preview-not-working-in-Linux)
 
 - 安装charless证书。导出根证书保存为pem格式。转换为crt格式
 
@@ -964,57 +967,57 @@ charles抓包工具  `yay -S charles ` ([注册码生成](https://www.charles.re
 
 ### 数据库
 
-redis `yay -S redis` 
+redis `paru -S redis` 
 
-percona-Server `yay -S percona-server`
+percona-Server `paru -S percona-server`
 
-postresql `yay -S postgresql` 
+postresql `paru -S postgresql` 
 
-mongoDB `yay -S mongodb ` 或者 `yay -S mongodb-bin` 
+mongoDB `paru -S mongodb ` 或者 `paru -S mongodb-bin` 
 
-percona-mongoDB `yay -S percona-server-mongodb-bin`  (mongosh `yay -S mongosh-bin`)
+percona-mongoDB `paru -S percona-server-mongodb-bin`  (mongosh `paru -S mongosh-bin`)
 
-[Mariadb](https://wiki.archlinux.org/title/MariaDB) `yay -S mariadb`
+[Mariadb](https://wiki.archlinux.org/title/MariaDB) `paru -S mariadb`
 
 tiup (可以快速启动tidb的playground) `curl --proto '=https' --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh`
 
-clickhouse `yay -S clickhouse` ([官方文档](https://clickhouse.com/docs/en/getting-started/install))
+clickhouse `paru -S clickhouse` ([官方文档](https://clickhouse.com/docs/en/getting-started/install))
 
 ## 其他
 
-screenfetch (终端打印出你的系统信息) 安装 `yay -S screenfetch`
+screenfetch (终端打印出你的系统信息) 安装 `paru -S screenfetch`
 
-neofetch `yay -S neofetch`
+neofetch `paru -S neofetch`
 
-easystroke 鼠标手势 `yay -S easystroke`
+easystroke 鼠标手势 `paru -S easystroke`
 
 ![image-20220409140401125](https://assets.czyt.tech/img/image-20220409140401125.png)
 
-copyQ (类似ditto) 安装 `yay -S copyq`
+copyQ (类似ditto) 安装 `paru -S copyq`
 
-ifconfig、netstat 安装 `yay -S net-tools`
+ifconfig、netstat 安装 `paru -S net-tools`
 
-文件搜索albert（类似mac上的Spotlight） 安装 `yay -S albert`
+文件搜索albert（类似mac上的Spotlight） 安装 `paru -S albert`
 
-Stow配置管理软件 安装 `yay -S stow`
+Stow配置管理软件 安装 `paru -S stow`
 
-snap 安装 `yay -S --noconfirm --needed snapd`
+snap 安装 `paru -S --noconfirm --needed snapd`
 
-figlet 字符串logo生成工具 `yay -S figlet` 
+figlet 字符串logo生成工具 `paru -S figlet` 
 
-软件包降级工具 downgrade `yay -S downgrade` 
+软件包降级工具 downgrade `paru -S downgrade` 
 
-thefuck输错命令更正工具 `yay -S thefuck` 
+thefuck输错命令更正工具 `paru -S thefuck` 
 
-appimagelauncher 安装 `yay -S  appimagelauncher` 
+appimagelauncher 安装 `paru -S  appimagelauncher` 
 
-终端文件管理器ranger 安装 `yay -S ranger` 
+终端文件管理器ranger 安装 `paru -S ranger` 
 
-ventoy U盘启动制作 `yay -S ventoy-bin`
+ventoy U盘启动制作 `paru -S ventoy-bin`
 
-硬盘自动休眠 [hd-idle](http://hd-idle.sourceforge.net) 安装 `yay -S hd-idle`  （或者 `hdparam` ）
+硬盘自动休眠 [hd-idle](http://hd-idle.sourceforge.net) 安装 `paru -S hd-idle`  （或者 `hdparam` ）
 
-宽带连接 rp-pppoe 安装 `yay -S rp-pppoe` （参考[官方wiki](https://wiki.archlinux.org/title/NetworkManager_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))）
+宽带连接 rp-pppoe 安装 `paru -S rp-pppoe` （参考[官方wiki](https://wiki.archlinux.org/title/NetworkManager_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))）
 
 磁盘清理
 
@@ -1046,7 +1049,7 @@ $ sudo pacman -Rs xdg-user-dirs-gtk
 
 ## 品牌笔记本支持
 
-thinkpad thinkfan 安装`yay -S thinkfan`
+thinkpad thinkfan 安装`paru -S thinkfan`
 
 > 获取温度传感器 `find /sys/devices -type f -name "temp*_input"`,Thinkpad T430 显示如下：
 >
@@ -1068,7 +1071,7 @@ thinkpad thinkfan 安装`yay -S thinkfan`
 
 
 
-thinkpad 充电阀值软件 `yay -S tlp tp_smapi acpi_call  threshy threshy-gui` （ 需要 `systemctl enable tlp`）
+thinkpad 充电阀值软件 `paru -S tlp tp_smapi acpi_call  threshy threshy-gui` （ 需要 `systemctl enable tlp`）
 
 参考
 
@@ -1083,7 +1086,7 @@ thinkpad 充电阀值软件 `yay -S tlp tp_smapi acpi_call  threshy threshy-gui`
 
 ## 网卡
 
-8811cu `yay -S rtl8821cu-dkms-git `
+8811cu `paru -S rtl8821cu-dkms-git `
 
 
  参考[链接](https://wiki.archlinux.org/index.php/Network_configuration/Wireless#rtl8811cu/rtl8821cu)

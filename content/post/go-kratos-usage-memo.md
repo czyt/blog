@@ -5,9 +5,18 @@ tags: ["golang", "kratos"]
 weight: 10
 draft: false
 ---
-## 需要特别注意的坑
+## 需要特别注意的一些建议
 ### API路由覆盖的问题
 比如有两个接口 A `get /v1/user/{user_id}`和 B `get /v1/user/profile`如果A定义在B之前，那么B可能会被A覆盖路由。需要将A放到B之前。
+
+### JWT使用的建议
+
+>摘自极客时间课程[《高并发系统实战课》](https://time.geekbang.org/column/article/597664)
+
++ 通讯过程必须使用 HTTPS 协议，这样才可以降低被拦截的可能。
++ 要注意限制 token 的更换次数，并定期刷新 token，比如用户的 access_token 每天只能更换 50 次，超过了就要求用户重新登陆，同时 token 每隔 15 分钟更换一次。这样可以降低 token 被盗取后给用户带来的影响。
++ Web 用户的 token 保存在 cookie 中时，建议加上 httponly、SameSite=Strict 限制，以防止 cookie 被一些特殊脚本偷走。
+
 ## 自定义接口返回内容
 + 正常的响应序列化逻辑通过[Response Encoder](https://go-kratos.dev/docs/component/transport/http#responseencoderen-encoderesponsefunc-serveroption)实现。
 

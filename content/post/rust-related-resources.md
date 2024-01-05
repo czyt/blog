@@ -29,6 +29,7 @@ draft: false
 + [RustPrimer](https://rustcc.gitbooks.io/rustprimer/content/)
 + [Rust Atomics and Locks 中文版](https://github.com/rustcc/Rust_Atomics_and_Locks)
 + [Rust 程序设计语言 2021版 中文](https://github.com/KaiserY/trpl-zh-cn)
++ [ust 教程资料收集 - fkysly](https://graceful-direction-b61.notion.site/Rust-fkysly-7e1a57dd614b4a2d9173b09ab9506895)
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
 

@@ -1233,8 +1233,24 @@ Todo
 ###  Cerbos
 Todo
 ### Ladon
-ToDo
+
+>引用自极客时间专栏《Go 语言项目开发实战》，参考[ladon的使用示例](https://github.com/marmotedu/geekbang-go/blob/master/LadonCondition%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B.md)
+
+Ladon 是用 Go 语言编写的用于实现访问控制策略的库，类似于 RBAC（基于角色的访问控制系统，Role Based Access Control）和 ACL（访问控制列表，Access Control Lists）。但是与 RBAC 和 ACL 相比，Ladon 可以实现更细粒度的访问控制，并且能够在更为复杂的环境中（例如多租户、分布式应用程序和大型组织）工作。Ladon 解决了这个问题：在特定的条件下，谁能够 / 不能够对哪些资源做哪些操作。为了解决这个问题，Ladon 引入了授权策略。授权策略是一个有语法规范的文档，这个文档描述了谁在什么条件下能够对哪些资源做哪些操作。Ladon 可以用请求的上下文，去匹配设置的授权策略，最终判断出当前授权请求是否通过。下面是一个 Ladon 的授权策略样例：
+
+```json
+{ "description": "One policy to rule them all.", "subjects": ["users:", "users:maria", "groups:admins"], "actions" : ["delete", ""], "effect": "allow", "resources": [ "resources:articles:<.*>", "resources:printer" ], "conditions": { "remoteIP": { "type": "CIDRCondition", "options": { "cidr": "192.168.0.1/16" } } }}
+```
+
+策略（Policy）由若干元素构成，用来描述授权的具体信息，你可以把它们看成一组规则。核心元素包括主题（Subject）、操作（Action）、效力（Effect）、资源（Resource）以及生效条件（Condition）。元素保留字仅支持小写，它们在描述上没有顺序要求。对于没有特定约束条件的策略，Condition 元素是可选项。一条策略包含下面 6 个元素：
+
++ 主题（Subject），主题名是唯一的，代表一个授权主题。例如，“ken” or “printer-service.mydomain.com”。
++ 操作（Action），描述允许或拒绝的操作。效力（Effect），描述策略产生的结果是“允许”还是“拒绝”，包括 allow（允许）和 deny（拒绝）。
++ 资源（Resource），描述授权的具体数据。
++ 生效条件（Condition），描述策略生效的约束条件。描述（Description），策略的描述。有了授权策略，我们就可以传入请求上下文，由 Ladon 来决定请求是否能通过授权。
+
 https://github.com/ory/ladon
+
 ### OPA（Open Policy Agent）
 
 #### 参考

@@ -25,6 +25,10 @@ draft: false
   ```
 
 ## 安装相关工具
+### 进程工具
+
+[goreman ](https://github.com/mattn/goreman)`go install github.com/mattn/goreman@latest`
+
 ### 框架Cli
 
 - kratos `go install github.com/go-kratos/kratos/cmd/kratos/v2@latest`
@@ -73,7 +77,12 @@ draft: false
 - [betteralign](https://github.com/dkorunic/betteralign)
 > **betteralign**  is a tool to detect structs that would use less memory if their fields were sorted and optionally sort such fields.
 
++ nilaway
+
+  安装 `go install go.uber.org/nilaway/cmd/nilaway@latest`
+
 ### buf
+
   需要使用格式化功能，windows环境需要安装[diff工具](https://gnuwin32.sourceforge.net/packages/diffutils.htm),goland则需要安装插件`Buf for Protocol Buffers`
 
 buf 首页: https://github.com/bufbuild/buf

@@ -15,6 +15,7 @@ draft: false
 ```bash
 go get -u github.com/antonmedv/expr
 ```
+> 新版已经变为组织，官网为 https://expr-lang.org 对应的仓库变为 github.com/expr-lang/expr
 
 如果是gomod模式，则需要定义为
 

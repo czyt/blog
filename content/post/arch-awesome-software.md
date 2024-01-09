@@ -1084,6 +1084,13 @@ thinkpad 充电阀值软件 `paru -S tlp tp_smapi acpi_call  threshy threshy-gui
 - 指纹识别 [https://wiki.archlinux.org/index.php/Fprint](https://wiki.archlinux.org/index.php/Fprint)
 - [Fix Intel CPU Throttling on Linux](https://github.com/erpalma/throttled)
 
+dell充电阀值设置 
+安装 `paru -S dell-command-configure` 可用于修改设置，而无需重新启动进入 UEFI 菜单。例如，配置电池在 75% 时停止充电，只有在耗尽至 60% 时才重新开始充电：
+
+```bash
+cctk --PrimaryBattChargeCfg=Custom:60-75 
+```
+
 ## 网卡
 
 8811cu `paru -S rtl8821cu-dkms-git `
@@ -1157,3 +1164,4 @@ sudo pacman-key --populate archlinuxcn
 - [Manjaro 字体调优](https://wiki.manjaro.org/index.php/Improve_Font_Rendering)
 - [Jetbrains License Server](https://github.com/Nasller/LicenseServer)
 - [xps13(9370) Linux之路](https://github.com/kevinhwang91/xps-13-conf)
+- https://wiki.archlinux.org/title/Dell_XPS_13_(9370)

@@ -1068,9 +1068,6 @@ thinkpad thinkfan 安装`paru -S thinkfan`
 > /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp2_input
 > /sys/devices/virtual/thermal/thermal_zone0/hwmon1/temp1_input
 
-
-
-
 thinkpad 充电阀值软件 `paru -S tlp tp_smapi acpi_call  threshy threshy-gui` （ 需要 `systemctl enable tlp`）
 
 参考
@@ -1155,7 +1152,9 @@ sudo pacman-key --populate archlinuxcn
 + KDE重建图标缓存
  `rm ~/.cache/icon-cache.kcache`
 
-  
++ 高分辨率屏幕登录界面如何放大
+
+  修改 /etc/sddm.conf 配置文件， 在 `ServerArguments=-nolisten tcp` 行后面增加 `-dpi 196`， 放大登录界面的分辨率为2倍
 
 ## 参考连接
 
@@ -1164,4 +1163,5 @@ sudo pacman-key --populate archlinuxcn
 - [Manjaro 字体调优](https://wiki.manjaro.org/index.php/Improve_Font_Rendering)
 - [Jetbrains License Server](https://github.com/Nasller/LicenseServer)
 - [xps13(9370) Linux之路](https://github.com/kevinhwang91/xps-13-conf)
+- https://www.imwxz.com/posts/fc1dd509.html
 - https://wiki.archlinux.org/title/Dell_XPS_13_(9370)

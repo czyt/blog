@@ -339,3 +339,4 @@ draft: false
 ## 参考阅读
 
 + [云风《游戏数据包的补丁和更新》](https://blog.codingnow.com/2023/11/vfs_patch.html)
++ [tailscale的更新相关代码](https://github.com/tailscale/tailscale/tree/main/clientupdate)

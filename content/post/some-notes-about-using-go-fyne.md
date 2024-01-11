@@ -184,3 +184,5 @@ fyne 项目分为多个软件包，每个软件包提供不同类型的功能。
 - fyne.io/fyne/v2/storage storage包提供存储访问和管理功能。
 - fyne.io/fyne/v2/test 使用test包可以更轻松地测试应用程序包装
 - fyne.io/fyne/v2/widget 大多数图形应用程序都是使用部件集合创建的。Fyne 中的所有小工具和互动元素都在这个软件包中。
+> https://github.com/fyne-io/fyne-x 包含了社区的fyne一些扩展，如响应式布局(Responsive Layout)、gif动画显示图标、日历、流程图、树状文件夹、自动完成组件、分段十六进制(Segment ("Hex") Display)、地图、以及一个Adwaita的主题等
+

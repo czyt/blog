@@ -2655,4 +2655,9 @@ Service Weaver 试图鼓励模块化整体模型，其中应用程序被编写�
 
 + https://atoo.hashnode.dev/gingonic-service-weaver
 
-  
+### 使用模板创建项目
+可以使用官方的模板仓库创建项目
+```bash
+$ go install golang.org/x/tools/cmd/gonew@latest
+$ gonew github.com/ServiceWeaver/template example.com/foo
+```

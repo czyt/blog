@@ -11,7 +11,7 @@ draft: false
 
 Service Weaver 是一个用于编写、部署和管理分布式应用程序的编程框架。您可以在计算机上本地运行、测试和调试 Service Weaver 应用程序，然后使用单个命令将该应用程序部署到云。
 
-```
+```bash
 $ go run .                       # Run locally.
 $ weaver ssh deploy weaver.toml  # Run on multiple machines.
 $ weaver gke deploy weaver.toml  # Run on Google Cloud.
@@ -28,19 +28,19 @@ Service Weaver 应用程序由许多组件组成。组件被表示为常规的 G
 
 确保您已安装 Go 版本 1.21 或更高版本。然后，运行以下命令安装 `weaver` 命令：
 
-```
-$ go install github.com/ServiceWeaver/weaver/cmd/weaver@latest
+``` bash
+go install github.com/ServiceWeaver/weaver/cmd/weaver@latest
 ```
 
 `go install` 将 `weaver` 命令安装到 `$GOBIN` ，默认为 `$HOME/go/bin` 。确保此目录包含在您的 `PATH` 中。例如，您可以通过将以下内容添加到 `.bashrc` 并运行 `source ~/.bashrc` 来实现此目的：
 
-```
+```bash
 $ export PATH="$PATH:$HOME/go/bin"
 ```
 
 如果安装成功，您应该能够运行 `weaver --help` ：
 
-```
+```bash
 $ weaver --help
 USAGE
 
@@ -54,15 +54,15 @@ USAGE
 
 注意：对于云部署，您还应该安装 `weaver gke` 或 `weaver kube` 命令（有关详细信息，请参阅 GKE、Kube 部分）：
 
-```
-$ go install github.com/ServiceWeaver/weaver-gke/cmd/weaver-gke@latest
-$ go install github.com/ServiceWeaver/weaver-kube/cmd/weaver-kube@latest
+``` bash
+ go install github.com/ServiceWeaver/weaver-gke/cmd/weaver-gke@latest
+ go install github.com/ServiceWeaver/weaver-kube/cmd/weaver-kube@latest
 ```
 
 注意：如果您在 macOS 上安装 `weaver` 、 `weaver gke` 或 `weaver kube` 命令时遇到问题，您可能需要在安装命令前加上 `export CGO_ENABLED=1; export CC=gcc` .例如：
 
-```
-$ export CGO_ENABLED=1; export CC=gcc; go install github.com/ServiceWeaver/weaver/cmd/weaver@latest
+``` bash
+ export CGO_ENABLED=1; export CC=gcc; go install github.com/ServiceWeaver/weaver/cmd/weaver@latest
 ```
 
 # 分步教程
@@ -75,7 +75,7 @@ Service Weaver 的核心抽象是组件。组件就像一个参与者，Service 
 
 在本节中，我们将定义一个简单的 `hello` 组件，它仅打印字符串并返回。首先，运行 `go mod init hello` 创建一个 go 模块。
 
-```
+``` bash
 $ mkdir hello/
 $ cd hello/
 $ go mod init hello
@@ -83,7 +83,7 @@ $ go mod init hello
 
 然后，创建一个名为 `main.go` 的文件，其中包含以下内容：
 
-```
+``` go
 package main
 
 import (
@@ -117,7 +117,7 @@ func serve(context.Context, *app) error {
 
 在构建和运行应用程序之前，我们需要运行 Service Weaver 的代码生成器，称为 `weaver generate` 。 `weaver generate` 写入一个 `weaver_gen.go` 文件，其中包含 Service Weaver 运行时所需的代码。我们稍后将详细说明 `weaver generate` 的具体用途以及为什么需要运行它。最后，运行应用程序！
 
-```
+``` bash
 $ go mod tidy
 $ weaver generate .
 $ go run .
@@ -134,7 +134,7 @@ Hello
 
 在 Service Weaver 应用程序中，任何组件都可以调用任何其他组件。为了演示这一点，我们引入第二个 `Reverser` 组件。创建一个包含以下内容的文件 `reverser.go` ：
 
-```
+``` go
 package main
 
 import (
@@ -167,7 +167,7 @@ func (r *reverser) Reverse(_ context.Context, s string) (string, error) {
 
 接下来，编辑 `main.go` 中的应用程序组件以使用 `Reverser` 组件：
 
-```
+``` go
 package main
 
 import (
@@ -205,7 +205,7 @@ func serve(ctx context.Context, app *app) error {
 
 一般来说，如果组件 X 使用组件 Y，则 X 的实现结构应包含 `weaver.Ref[Y]` 类型的字段。创建 X 组件实例时，Service Weaver 也会自动创建 Y 组件，并使用 Y 组件的句柄填充 `weaver.Ref[Y]` 字段。 X 的实现可以在 `weaver.Ref[Y]` 字段上调用  `Get()` 来获取 Y 分量，如前面示例中的以下几行所示：
 
-```
+``` go
     var r Reverser = app.reverser.Get()
     reversed, err := r.Reverse(ctx, "!dlroW ,olleH")
 ```
@@ -214,7 +214,7 @@ func serve(ctx context.Context, app *app) error {
 
 Service Weaver 专为编写服务系统而设计。在本节中，我们将增强我们的应用程序以使用网络侦听器提供 HTTP 流量。使用以下内容重写 `main.go` ：
 
-```
+``` go
 package main
 
 import (
@@ -268,14 +268,14 @@ func serve(ctx context.Context, app *app) error {
 
 默认情况下，所有应用程序侦听器侦听操作系统选择的随机端口。在这里，我们想要更改此默认行为并为 `hello` 侦听器分配固定的本地侦听器端口。为此，请创建一个名为 `weaver.toml` 的 TOML 配置文件，其中包含以下内容：
 
-```
+``` toml
 [single]
 listeners.hello = {address = "localhost:12345"}
 ```
 
 请注意，侦听器的名称（在本例中为 `hello` ）是从字段名称派生的。您可以覆盖此行为并使用 `"weaver"` 字段标记指定特定的侦听器名称，如下所示：
 
-```
+``` toml
 type app struct {
     weaver.Implements[weaver.Main]
     reverser weaver.Ref[Reverser]
@@ -287,7 +287,7 @@ type app struct {
 
 运行 `weaver generate` ，然后运行  `go mod tidy` ，然后运行  `SERVICEWEAVER_CONFIG=weaver.toml go run .` 。该程序应打印出应用程序的名称和唯一的部署 ID。然后它应该阻止在 `localhost:12345` 上提供 HTTP 请求。
 
-```
+``` bash
 $ weaver generate
 $ go mod tidy
 $ go run .
@@ -301,14 +301,14 @@ hello listener available on 127.0.0.1:12345
 
 在单独的终端中，curl 服务器以接收反向问候语：
 
-```
+``` bash
 $ curl "localhost:12345/hello?name=Weaver"
 Hello, revaeW!
 ```
 
 运行 `weaver single status` 以查看 Service Weaver 应用程序的状态。状态显示每个部署、组件和侦听器。
 
-```
+``` bash
 $ weaver single status
 ╭────────────────────────────────────────────────────╮
 │ DEPLOYMENTS                                        │
@@ -340,7 +340,7 @@ $ weaver single status
 
 我们已经了解了如何使用 `go run` 在单个进程中运行 Service Weaver 应用程序。现在，我们将在多个进程中运行应用程序，组件之间的方法调用作为 RPC 执行。首先，创建一个名为 `weaver.toml` 的 TOML 配置文件，其中包含以下内容：
 
-```
+``` toml
 [serviceweaver]
 binary = "./hello"
 
@@ -350,7 +350,7 @@ listeners.hello = {address = "localhost:12345"}
 
 此配置文件指定 Service Weaver 应用程序的二进制文件，以及 hello 侦听器的固定地址。接下来，使用 `weaver multi deploy` 构建并运行应用程序：
 
-```
+``` bash
 $ go build                        # build the ./hello binary
 $ weaver multi deploy weaver.toml # deploy the application
 ╭───────────────────────────────────────────────────╮
@@ -365,7 +365,7 @@ S1205 10:21:15.454387 stdout  88639bf8] hello listener available on 127.0.0.1:12
 
 在单独的终端中，curl 服务器：
 
-```
+``` bash
 $ curl "localhost:12345/hello?name=Weaver"
 Hello, revaeW!
 ```
@@ -374,7 +374,7 @@ Hello, revaeW!
 
 运行 `weaver multi status` 以查看 Service Weaver 应用程序的状态。请注意， `main` 和 `Reverser` 组件被复制两次，并且每个副本都在其自己的操作系统进程中运行。
 
-```
+``` bash
 $ weaver multi status
 ╭────────────────────────────────────────────────────╮
 │ DEPLOYMENTS                                        │
@@ -408,7 +408,7 @@ $ weaver multi status
 
 例如，我们可以将“Hello, World”应用程序部署到 Google Kubernetes Engine（Google Cloud 的托管 Kubernetes 产品），就像运行单个命令一样简单（有关详细信息，请参阅 GKE 部分）：
 
-```
+``` bash
 $ weaver gke deploy weaver.toml
 ```
 
@@ -440,7 +440,7 @@ Service Weaver 还将您的应用程序与现有的云工具集成。日志上�
 
 组件是 Service Weaver 的核心抽象。组件是一个长期存在的、可能存在复制的实体，它公开了一组方法。具体来说，组件表示为 Go 接口和该接口的相应实现。例如，考虑以下 `Adder` 组件：
 
-```
+``` go
 type Adder interface {
     Add(context.Context, int, int) (int, error)
 }
@@ -464,7 +464,7 @@ func (*adder) Add(_ context.Context, x, y int) (int, error) {
 
 组件接口中的每个方法都必须接收 `context.Context` 作为其第一个参数，并返回 `error` 作为其最终结果。所有其他参数必须是可序列化的。这些都是有效的组件方法：
 
-```
+``` go
 a(context.Context) error
 b(context.Context, int) error
 c(context.Context) (int, error)
@@ -473,7 +473,7 @@ d(context.Context, int) (int, error)
 
 这些都是无效的组件方法：
 
-```
+``` go
 a() error                          // no context.Context argument
 b(context.Context)                 // no error result
 c(int, context.Context) error      // first argument isn't context.Context
@@ -485,7 +485,7 @@ e(context.Context, chan int) error // chan int isn't serializable
 
 组件实现必须是一个如下所示的结构：
 
-```
+``` go
 type foo struct{
     weaver.Implements[Foo]
     // ...
@@ -497,7 +497,7 @@ type foo struct{
 
 如果组件实现实现了 `Init(context.Context) error` 方法，则在创建组件实例时将调用该方法。
 
-```
+``` go
 func (f *foo) Init(context.Context) error {
     // ...
 }
@@ -514,7 +514,7 @@ func (f *foo) Init(context.Context) error {
 
 以下面的 `Cache` 组件为例，它维护内存中的键值缓存。
 
-```
+``` go
 type Cache interface {
     Put(ctx context.Context, key, value string) error
     Get(ctx context.Context, key string) (string, error)
@@ -547,7 +547,7 @@ func (c *Cache) Get(_ context.Context, key string) (string, error) {
 
 如果远程方法调用无法正确执行（例如，由于机器崩溃或网络分区），它将返回一个带有嵌入式 `weaver.RemoteCallError` 的错误。这是一个说明性示例：
 
-```
+``` go
 // Call the cache.Get method.
 value, err := cache.Get(ctx, "key")
 if errors.Is(err, weaver.RemoteCallError) {
@@ -565,7 +565,7 @@ if errors.Is(err, weaver.RemoteCallError) {
 
 但是，某些方法不应自动重试。例如，如果我们的缓存使用将字符串附加到缓存值的方法进行了扩展，则自动重试可能会导致参数的多个副本附加到缓存值。可以对此类方法进行专门标记，以防止自动重试。
 
-```
+``` go
 type Cache interface{
     ...
     Append(context.Context, key, val string) error
@@ -579,7 +579,7 @@ var _ weaver.NotRetriable = Cache.Append
 
 组件实现可能希望使用一个或多个网络监听器，例如，为 HTTP 网络流量提供服务。为此，必须将命名的 `weaver.Listener` 字段添加到实现结构中。例如，以下组件实现创建两个网络侦听器：
 
-```
+``` go
 type impl struct{
     weaver.Implements[MyComponent]
     foo weaver.Listener
@@ -589,7 +589,7 @@ type impl struct{
 
 使用 Service Weaver，可以命名侦听器。默认情况下，侦听器以其相应的结构字段命名（例如上例中的 `"foo"` 和 `"bar"` ）。或者，可以将特殊的 `weaver:"name"` 结构标记添加到结构字段以显式指定侦听器名称：
 
-```
+``` go
 type impl struct{
     weaver.Implements[MyComponent]
     foo weaver.Listener
@@ -601,7 +601,7 @@ type impl struct{
 
 默认情况下，所有应用程序侦听器都将侦听操作系统选择的随机端口。可以在相应部署程序的配置文件中修改此行为以及其他自定义选项。例如，当使用以下命令部署应用程序时，以下配置文件将分别将地址 `"localhost:12345"` 和 `"localhost:12346"` 分配给 `"foo"` 和 `"bar"` 多进程部署器。
 
-```
+``` toml
 [multi]
 listeners.foo = {address = "localhost:12345"}
 listeners.bar = {address = "localhost:12346"}
@@ -611,21 +611,21 @@ listeners.bar = {address = "localhost:12346"}
 
 Service Weaver 使用以 TOML 编写的配置文件来配置应用程序的运行方式。例如，最小的配置文件仅列出应用程序二进制文件：
 
-```
+``` toml
 [serviceweaver]
 binary = "./hello"
 ```
 
 配置文件可能还包含特定于部署程序的配置部分，这些部分允许您在使用给定部署程序时配置执行。例如，当使用多进程部署器部署应用程序时，以下多进程配置将启用组件之间通过 `mTLS` 进行加密的安全通信：
 
-```
+``` toml
 [multi]
 mtls = true
 ```
 
 配置文件还可能包含特定于组件的配置部分，允许您在应用程序中配置组件。例如，请考虑以下 `Greeter` 组件。
 
-```
+``` go
 type Greeter interface {
     Greet(context.Context, string) (string, error)
 }
@@ -641,7 +641,7 @@ func (g *greeter) Greet(_ context.Context, name string) (string, error) {
 
 我们可以在配置文件中提供问候语，而不是对问候语 `"Hello"` 进行硬编码。首先，我们定义一个选项结构。
 
-```
+``` go
 type greeterOptions struct {
     Greeting string
 }
@@ -649,7 +649,7 @@ type greeterOptions struct {
 
 接下来，我们通过嵌入 `weaver.WithConfig[T]` 结构将选项结构与 `greeter` 实现关联起来。
 
-```
+``` go
 type greeter struct {
     weaver.Implements[Greeter]
     weaver.WithConfig[greeterOptions]
@@ -658,14 +658,14 @@ type greeter struct {
 
 现在，我们可以将 `Greeter` 部分添加到配置文件中。该部分由组件的完整路径前缀名称作为键控。
 
-```
+``` toml
 ["example.com/mypkg/Greeter"]
 Greeting = "Bonjour"
 ```
 
 当创建 `Greeter` 组件时，Service Weaver 会自动将配置文件的 `Greeter` 部分解析为 `greeterOptions` 结构体。您可以通过嵌入的 `WithConfig` 结构的 `Config` 方法访问填充的结构。例如：
 
-```
+```  go
 func (g *greeter) Greet(_ context.Context, name string) (string, error) {
     greeting := g.Config().Greeting
     if greeting == "" {
@@ -677,7 +677,7 @@ func (g *greeter) Greet(_ context.Context, name string) (string, error) {
 
 您可以使用 `toml` 结构标记来指定配置文件中字段的名称。例如，我们可以将 `greeterOptions` 结构更改为以下内容。
 
-```
+``` go
 type greeterOptions struct {
     Greeting string `toml:"my_custom_name"`
 }
@@ -685,20 +685,20 @@ type greeterOptions struct {
 
 并相应地更改配置文件：
 
-```
+``` toml
 ["example.com/mypkg/Greeter"]
 my_custom_name = "Bonjour"
 ```
 
 如果直接运行应用程序（即使用 `go run` ），则可以使用 `SERVICEWEAVER_CONFIG` 环境变量传递配置文件：
 
-```
+``` bash
 $ SERVICEWEAVER_CONFIG=weaver.toml go run .
 ```
 
  或者，使用 `weaver single deploy` ：
 
-```
+``` bash
 $ weaver single deploy weaver.toml
 ```
 
@@ -708,7 +708,7 @@ Service Weaver 提供日志日志 API `weaver.Logger` 。通过使用 Service We
 
 使用组件实现的 `Logger` 方法来获取范围仅限于该组件的日志器。例如：
 
-```
+``` go
 type Adder interface {
     Add(context.Context, int, int) (int, error)
 }
@@ -729,7 +729,7 @@ func (a *adder) Add(ctx context.Context, x, y int) (int, error) {
 
 日志看起来像这样：
 
-```
+``` bash
 D1103 08:55:15.650138 main.Adder 73ddcd04 adder.go:12 │ A debug log.
 I1103 08:55:15.650149 main.Adder 73ddcd04 adder.go:13 │ An info log.
 E1103 08:55:15.650158 main.Adder 73ddcd04 adder.go:14 │ An error log. err="an error"
@@ -739,20 +739,20 @@ E1103 08:55:15.650158 main.Adder 73ddcd04 adder.go:14 │ An error log. err="an 
 
 Service Weaver 还允许您将键值属性附加到日志条目。这些属性在搜索和过滤日志时非常有用。
 
-```
+``` go
 logger.Info("A log with attributes.", "foo", "bar")  // adds foo="bar"
 ```
 
 如果您发现自己重复添加同一组键值属性，则可以预先创建一个日志器，将这些属性添加到所有日志条目中：
 
-```
+``` go
 fooLogger = logger.With("foo", "bar")
 fooLogger.Info("A log with attributes.")  // adds foo="bar"
 ```
 
 注意：您还可以将普通的打印语句添加到代码中。这些打印将由 Service Weaver 捕获并日志，但它们不会与特定组件关联，它们不会有 `file:line` 信息，并且不会有任何属性，因此我们建议您尽可能使用 `weaver.Logger` 。
 
-```
+``` bash
 S1027 14:40:55.210541 stdout d772dcad] This was printed by fmt.Println
 ```
 
@@ -770,7 +770,7 @@ Service Weaver 将这些指标集成到部署应用程序的环境中。例如�
 
 下面是如何向简单的 `Adder` 组件添加指标的示例。
 
-```
+``` go
 var (
     addCount = metrics.NewCounter(
         "add_count",
@@ -810,7 +810,7 @@ func (*adder) Add(_ context.Context, x, y int) (int, error) {
 
 指标还可以有一组键值标签。 Service Weaver 使用结构体表示标签。下面是如何声明和使用带标签的计数器来计算 `Halve` 方法参数的奇偶校验的示例。
 
-```
+``` go
 type halveLabels struct {
     Parity string // "odd" or "even"
 }
@@ -844,7 +844,7 @@ func (halver) Halve(_ context.Context, val int) (int, error) {
 
 为了遵守流行的指标命名约定，Service Weaver 默认情况下会小写每个标签的首字母。例如， `Parity` 字段导出为 `parity` 。您可以覆盖此行为并使用 `weaver` 注释提供自定义标签名称。
 
-```
+``` go
 type labels struct {
     Foo string                           // exported as "foo"
     Bar string `weaver:"my_custom_name"` // exported as "my_custom_name"
@@ -873,7 +873,7 @@ Service Weaver 声明以下一组 HTTP 相关指标。
 
 如果您将 `http.Handler` 传递给 `weaver.InstrumentHandler` 函数，它将返回一个新的 `http.Handler` ，它会自动更新这些指标，并标有提供的标签。例如：
 
-```
+``` go
 // Metrics are recorded for fooHandler with label "foo".
 var mux http.ServeMux
 var fooHandler http.Handler = ...
@@ -886,7 +886,7 @@ Service Weaver 依靠 OpenTelemetry 来跟踪您的应用程序。 Service Weave
 
 如果将 `http.Handler` 传递给 `weaver.InstrumentHandler` 函数，它将返回一个新的 `http.Handler` ，每秒跟踪一次 HTTP 请求。
 
-```
+``` go
 // Tracing is enabled for one request every second.
 var mux http.ServeMux
 var fooHandler http.Handler = ...
@@ -895,7 +895,7 @@ mux.Handle("/foo", weaver.InstrumentHandler("foo", fooHandler))
 
 或者，您可以使用 OpenTelemetry 库手动启用跟踪：
 
-```
+``` go
 import (
     "context"
     "fmt"
@@ -935,7 +935,7 @@ func serve(ctx context.Context, app *app) error {
 
 上述步骤是开始追踪所需的全部步骤。如果要向跟踪添加更多特定于应用程序的详细信息，可以使用传递给已注册 HTTP 处理程序和组件方法的上下文来添加属性、事件和错误。例如，在我们的 `hello` 示例中，您可以按如下方式添加事件：
 
-```
+``` go
 http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Hello, %s!\n", r.URL.Query().Get("name"))
     trace.SpanFromContext(r.Context()).AddEvent("writing response",
@@ -956,7 +956,7 @@ Service Weaver 允许您分析整个 Service Weaver 应用程序，甚至是跨�
 
 默认情况下，当客户端调用远程组件的方法时，该方法调用将由任意选择的可能的多个组件副本之一执行。有时，根据提供给方法的参数将方法调用路由到特定副本是有益的。例如，考虑一个 `Cache` 组件，它在底层磁盘支持的键值存储前面维护内存中缓存：
 
-```
+``` go
 type Cache interface {
     Get(ctx context.Context, key string) (string, error)
     Put(ctx context.Context, key, value string) error
@@ -970,7 +970,7 @@ type cache struct {
 
 为了提高缓存命中率，我们可能希望将给定键的每个请求路由到同一个副本。 Service Weaver 通过允许应用程序指定与组件实现关联的路由器类型来支持这种基于关联的路由。例如：
 
-```
+``` go
 type cacheRouter struct{}
 func (cacheRouter) Get(_ context.Context, key string) string { return key }
 func (cacheRouter) Put(_ context.Context, key, value string) string { return key }
@@ -985,7 +985,7 @@ func (cacheRouter) Put(_ context.Context, key, value string) string { return key
 
 每个路由器方法必须返回相同的路由键类型。例如，以下内容是无效的：
 
-```
+``` go
 // ERROR: Get returns a string, but Put returns an int.
 func (cacheRouter) Get(_ context.Context, key string) string { return key }
 func (cacheRouter) Put(_ context.Context, key, value string) int { return 42 }
@@ -993,7 +993,7 @@ func (cacheRouter) Put(_ context.Context, key, value string) int { return 42 }
 
 要将路由器与其组件关联起来，请在组件实现中嵌入 `weaver.WithRouter[T]` 字段，其中 `T` 是路由器的类型。
 
-```
+``` go
 type cache struct {
     weaver.Implements[Cache]
     weaver.WithRouter[cacheRouter]
@@ -1013,7 +1013,7 @@ type cache struct {
 
 下面是如何使用配置文件将数据库信息传递到简单的 `Adder` 组件的示例。首先，配置文件：
 
-```
+``` toml
 ["example.com/mypkg/Adder"]
 Driver = "mysql"
 Source = "root:@tcp(localhost:3306)/"
@@ -1021,7 +1021,7 @@ Source = "root:@tcp(localhost:3306)/"
 
 以及使用它的应用程序：
 
-```
+``` go
 type Adder interface {
     Add(context.Context, int, int) (int, error)
 }
@@ -1065,7 +1065,7 @@ func (a *Adder) Add(ctx context.Context, x, y int) (int, error) {
 
 Service Weaver 包含一个 `weavertest` 包，您可以使用它来测试您的 Service Weaver 应用程序。该包提供了带有 `Test` 和 `Bench` 方法的 `Runner` 类型。测试使用 `Runner.Test` 而不是 `weaver.Run` 。例如，要使用 `Add` 方法测试 `Adder` 组件，请创建一个包含以下内容的 `adder_test.go` 文件。
 
-```
+``` go
 package main
 
 import (
@@ -1093,7 +1093,7 @@ func TestAdd(t *testing.T) {
 
 运行 `go test` 来运行测试。 `runner.Test` 将创建一个子测试，并在其中创建一个 `Adder` 组件并将其传递给提供的函数。如果要测试组件的实现而不是其接口，请指定指向实现结构的指针作为参数。例如，如果 `adderImpl` 结构实现了 `Adder` 接口，我们可以编写以下内容：
 
-```
+``` go
 runner.Test(t, func(t *testing.T, adder *adderImpl) {
     // Test adder...
 })
@@ -1101,7 +1101,7 @@ runner.Test(t, func(t *testing.T, adder *adderImpl) {
 
 想要运用多个组件的测试可以传递一个函数，每个组件都有一个单独的参数。每个组件都将被创建并传递给函数。每个参数可以是组件接口或指向组件实现的指针。
 
-```
+``` go
 func TestArithmetic(t *testing.T) {
     weavertest.Local.Test(t, func(t *testing.T, adder *adderImpl, multiplier Multiplier) {
         // ...
@@ -1119,7 +1119,7 @@ func TestArithmetic(t *testing.T) {
 
 使用 `weavertest.Local` 运行的测试更容易调试和排除故障，但不测试分布式执行。您应该使用不同的跑步者进行测试，以获得两全其美的效果（每个 Runner.Test 调用将创建一个新的子测试）：
 
-```
+``` go
 func TestAdd(t *testing.T) {
     for _, runner := range weavertest.AllRunners() {
         runner.Test(t, func(t *testing.T, adder Adder) {
@@ -1133,7 +1133,7 @@ func TestAdd(t *testing.T) {
 
 您可以使用 `weavertest.Fake` 在测试中用假实现替换组件实现。下面是一个示例，我们将 `Clock` 组件的真实实现替换为始终返回固定时间的虚假实现。
 
-```
+``` go
 // fakeClock is a fake implementation of the Clock component.
 type fakeClock struct {
     now int64
@@ -1179,7 +1179,7 @@ func TestClock(t *testing.T) {
 
 您还可以通过设置 `Runner.Config` 字段向运行器提供配置文件的内容：
 
-```
+``` go
 func TestArithmetic(t *testing.T) {
     runner := weavertest.Local()
     runner.Name = "Custom"
@@ -1208,25 +1208,25 @@ Service Weaver 采用不同的方法来部署并回避这些复杂的跨版本�
 
 部署 Service Weaver 应用程序的最简单方法是直接通过 `go run` 运行它。当您 `go run` Service Weaver 应用程序时，每个组件都位于单个进程中，并且组件之间的方法调用将作为常规 Go 方法调用执行。有关完整示例，请参阅分步教程部分。
 
-```
+``` bash
 $ go run .
 ```
 
 如果您使用 `go run` 运行应用程序，则可以使用 `SERVICEWEAVER_CONFIG` 环境变量提供配置文件：
 
-```
+``` bash
 $ SERVICEWEAVER_CONFIG=weaver.toml go run .
 ```
 
 或者，您可以使用 `weaver single deploy` 命令。 `weaver single deploy` 实际上与 `go run .` 相同，但它使提供配置文件变得更容易。
 
-```
+```bash
 $ weaver single deploy weaver.toml
 ```
 
 您可以运行 `weaver single status` 来查看使用 `go run` 部署的所有活动 Service Weaver 应用程序的状态。
 
-```
+``` bash
 $ weaver single status
 ╭────────────────────────────────────────────────────╮
 │ DEPLOYMENTS                                        │
@@ -1266,7 +1266,7 @@ $ weaver single status
 
 您可以将 `weaver.Listener` 字段添加到组件实现中以触发网络侦听器的创建（有关上下文，请参阅分步教程部分）。
 
-```
+``` go
 type app struct {
     weaver.Implements[weaver.Main]
     hello    weaver.Listener
@@ -1275,7 +1275,7 @@ type app struct {
 
 当您使用 `go run` 部署应用程序时，Service Weaver 运行时将自动创建网络侦听器。每个侦听器将侦听操作系统选择的随机端口，除非在配置文件的 singleprocess 部分中指定了具体地址，例如：
 
-```
+``` toml
 [single]
 listeners.hello = { address = "localhost:12345" }
 ```
@@ -1284,7 +1284,7 @@ listeners.hello = { address = "localhost:12345" }
 
 当您使用 `go run` 部署 Service Weaver 应用程序时，日志将打印到标准输出。这些日志不会被持久化。您可以选择保存日志以供以后使用基本 shell 结构进行分析：
 
-```
+``` bash
 $ go run . | tee mylogs.txt
 ```
 
@@ -1292,7 +1292,7 @@ $ go run . | tee mylogs.txt
 
 运行 `weaver single dashboard` 以在 Web 浏览器中打开仪表板。对于通过 `go run .` 部署的每个 Service Weaver 应用程序，仪表板都有一个页面。每个部署的页面都有一个指向部署指标的链接。指标以 Prometheus 格式导出，如下所示：
 
-```
+```yaml
 # Metrics in Prometheus text format [1].
 #
 # To visualize and query the metrics, make sure Prometheus is installed on
@@ -1329,7 +1329,7 @@ serviceweaver_method_count{caller="main",component="main.Example",serviceweaver_
 
 使用 `weaver single profile` 命令收集 Service Weaver 应用程序的配置文件。使用您的部署 ID 调用该命令。例如，假设您 `go run` Service Weaver 应用程序，它获得一个部署 ID `28807368-1101-41a3-bdcb-9625e0f02ca0` 。
 
-```
+``` bash
 $ go run .
 ╭───────────────────────────────────────────────────╮
 │ app        : hello                                │
@@ -1339,7 +1339,7 @@ $ go run .
 
 在单独的终端中，您可以运行 `weaver single profile` 命令。
 
-```
+``` bash
 $ weaver single profile 28807368               # Collect a CPU profile.
 $ weaver single profile --duration=1m 28807368 # Adjust the duration of the profile.
 $ weaver single profile --type=heap 28807368   # Collect a heap profile.
@@ -1347,7 +1347,7 @@ $ weaver single profile --type=heap 28807368   # Collect a heap profile.
 
 `weaver single profile` 打印出收集的配置文件的文件名。您可以使用 `go tool pprof` 命令来可视化和分析配置文件。例如：
 
-```
+``` bash
 $ profile=$(weaver single profile <deployment>) # Collect the profile.
 $ go tool pprof -http=localhost:9000 $profile   # Visualize the profile.
 ```
@@ -1368,14 +1368,14 @@ $ go tool pprof -http=localhost:9000 $profile   # Visualize the profile.
 
 您可以使用 `weaver multi` 在本地计算机上跨多个进程部署 Service Weaver 应用程序，每个组件副本都在单独的操作系统进程中运行。创建一个配置文件，例如 `weaver.toml` ，它指向已编译的 Service Weaver 应用程序。
 
-```
+``` toml
 [serviceweaver]
 binary = "./your_compiled_serviceweaver_binary"
 ```
 
 使用 `weaver multi deploy` 部署应用程序：
 
-```
+``` bash
 $ weaver multi deploy weaver.toml
 ```
 
@@ -1385,7 +1385,7 @@ $ weaver multi deploy weaver.toml
 
 您可以运行 `weaver multi status` 来查看使用 `weaver multi` 部署的所有活动 Service Weaver 应用程序的状态。
 
-```
+``` bash
 $ weaver multi status
 ╭────────────────────────────────────────────────────╮
 │ DEPLOYMENTS                                        │
@@ -1425,7 +1425,7 @@ $ weaver multi status
 
 您可以将 `weaver.Listener` 字段添加到组件实现中以触发网络侦听器的创建（有关上下文，请参阅分步教程部分）。
 
-```
+``` go
 type app struct {
     weaver.Implements[weaver.Main]
     hello    weaver.Listener
@@ -1439,7 +1439,7 @@ type app struct {
 
 代理地址默认为 `:0` ，除非在配置文件的多进程部分中指定了具体地址，例如：
 
-```
+``` toml
 [multi]
 listeners.hello = { address = "localhost:12345" }
 ```
@@ -1448,7 +1448,7 @@ listeners.hello = { address = "localhost:12345" }
 
 `weaver multi deploy` 日志到标准输出。它还将所有日志条目保存在 `/tmp/serviceweaver/logs/weaver-multi` 中的一组文件中。每个文件都包含编码为协议缓冲区的日志条目流。您可以使用 `weaver multi logs` 来分类、关注和过滤这些日志。例如：
 
-```
+``` bash
 # Display all of the application logs
 weaver multi logs
 
@@ -1488,7 +1488,7 @@ weaver multi logs --system
 
 运行 `weaver multi dashboard` 以在 Web 浏览器中打开仪表板。对于通过 `weaver muli deploy` 部署的每个 Service Weaver 应用程序，仪表板都有一个页面。每个部署的页面都有一个指向部署指标的链接。指标以 Prometheus 格式导出，如下所示：
 
-```
+``` yaml
 # Metrics in Prometheus text format [1].
 #
 # To visualize and query the metrics, make sure Prometheus is installed on
@@ -1526,7 +1526,7 @@ serviceweaver_method_count{caller="main",component="main.Example",serviceweaver_
 
 使用 `weaver multi profile` 命令收集 Service Weaver 应用程序的配置文件。使用您的部署 ID 调用该命令。例如，假设您 `weaver multi deploy` Service Weaver 应用程序，它获得一个部署 ID `28807368-1101-41a3-bdcb-9625e0f02ca0` 。
 
-```
+``` bash
 $ weaver multi deploy weaver.toml
 ╭───────────────────────────────────────────────────╮
 │ app        : hello                                │
@@ -1536,7 +1536,7 @@ $ weaver multi deploy weaver.toml
 
 在单独的终端中，您可以运行 `weaver multi profile` 命令。
 
-```
+``` bash
 $ weaver multi profile 28807368               # Collect a CPU profile.
 $ weaver multi profile --duration=1m 28807368 # Adjust the duration of the profile.
 $ weaver multi profile --type=heap 28807368   # Collect a heap profile.
@@ -1544,7 +1544,7 @@ $ weaver multi profile --type=heap 28807368   # Collect a heap profile.
 
 `weaver multi profile` 打印出收集的配置文件的文件名。您可以使用 `go tool pprof` 命令来可视化和分析配置文件。例如：
 
-```
+```bash
 $ profile=$(weaver multi profile <deployment>) # Collect the profile.
 $ go tool pprof -http=localhost:9000 $profile # Visualize the profile.
 ```
@@ -1579,7 +1579,7 @@ Kube 是一个部署程序，允许您在任何 Kubernetes 环境（即 GKE、EK
 
 最后，用户可以使用 kubectl 或 CI/CD 管道来部署应用程序。
 
-```
+``` bash
 $ kubectl apply -f deployment.yaml
 ```
 
@@ -1593,7 +1593,7 @@ $ kubectl apply -f deployment.yaml
 
 首先，确保您安装了 Service Weaver。接下来，安装 Docker 和 kubectl。最后，安装 `weaver-kube` 命令：
 
-```
+``` bash
 $ go install github.com/ServiceWeaver/weaver-kube/cmd/weaver-kube@latest
 ```
 
@@ -1603,7 +1603,7 @@ $ go install github.com/ServiceWeaver/weaver-kube/cmd/weaver-kube@latest
 
 再考虑一下“你好，世界！”分步教程部分中的 Service Weaver 应用程序。该应用程序在名为 `hello` 的侦听器上运行 HTTP 服务器，并使用返回 `Hello, <name>!` 问候语的 `/hello?name=<name>` 端点。要在 Kubernetes 上部署此应用程序，首先创建一个 Service Weaver 应用程序配置文件，例如 `weaver.toml` ，其中包含以下内容：
 
-```
+``` toml
 [serviceweaver]
 binary = "./hello"
 ```
@@ -1612,7 +1612,7 @@ binary = "./hello"
 
 然后，创建一个 `Kube` 配置文件，例如 `config.yaml` ，其中包含以下内容：
 
-```
+``` yaml
 appConfig: weaver.toml
 repo: docker.io/mydockerid
 
@@ -1625,7 +1625,7 @@ listeners:
 
 使用 `weaver kube deploy` 部署应用程序：
 
-```
+``` bash
 $ go build .
 $ weaver kube deploy config.yaml
 ...
@@ -1641,7 +1641,7 @@ kube deployment information successfully generated
 
 `/tmp/kube_ffa65856.yaml` 包含为“Hello, World!”生成的 Kubernetes 资源。应用。
 
-```
+``` yaml
 # Listener Service for group github.com/ServiceWeaver/weaver/Main
 apiVersion: v1
 kind: Service
@@ -1676,7 +1676,7 @@ kind: HorizontalPodAutoscaler
 
 您可以简单地部署 `/tmp/kube_ffa65856.yaml` ，如下所示：
 
-```
+``` bash
 $ kubectl apply -f /tmp/kube_ffa65856.yaml
 
 role.rbac.authorization.k8s.io/pods-getter created
@@ -1691,7 +1691,7 @@ horizontalpodautoscaler.autoscaling/hello-reverser-ffa65856-58d0b71e created
 
 要查看您的应用程序是否已部署，您可以运行 `kubectl get all` 。
 
-```
+``` bash
 $ kubectl get all
 
 NAME                                                   READY   STATUS    RESTARTS   AGE
@@ -1720,20 +1720,20 @@ horizontalpodautoscaler.autoscaling/weaver-main-ffa65856-acfd658f      Deploymen
 
 对于在生产中运行的应用程序，您可能需要配置 DNS 以将您的域名（例如 `hello.com` ）映射到负载均衡器的地址（例如 `http://10.103.133.111` ）。然而，在测试和调试应用程序时，我们也可以简单地卷曲负载均衡器。例如：
 
-```
+``` bash
 $ curl "http://10.103.133.111/hello?name=Weaver"
 Hello, Weaver!
 ```
 
 `/tmp/kube_ffa65856.yaml` 标头包含有关生成的 Kubernetes 资源以及如何查看/删除资源的更多详细信息。例如，要删除与此部署关联的资源，您可以运行：
 
-```
+``` bash
 $ kubectl delete all,configmaps --selector=serviceweaver/version=ffa65856
 ```
 
 要查看应用程序日志，您可以运行：
 
-```
+``` bash
 $ kubectl logs -l serviceweaver/app=hello --all-containers=true
 
 D1107 23:39:38.096525 weavelet             643fc8a3 remoteweavelet.go:231                │ 🧶 weavelet started addr="tcp://[::]:10000"
@@ -1776,7 +1776,7 @@ D1107 23:39:38.360337 weavelet             49c6e04e remoteweavelet.go:491       
 
 注意：诸如 `resourceSpec` 、 `scalingSpec` 、 `storageSpec` 之类的配置旋钮可以针对每个部署和每组共置组件进行配置。但是，如果某个字段同时具有每个部署和每个组的定义，则 `Kube` 部署程序将考虑该字段的每个组值（ `storageSpec` 除外，它考虑两者的串联）。例如，在下面的示例中， `Kube` 部署程序将运行两个托管组，其中运行 `Reverser` 组件的 pod 至少需要 `256Mi` 内存，而运行 `Reverser` 组件的 pod 至少需要 `256Mi` 内存运行 `Main` 组件至少需要 `64Mi` 内存。
 
-```
+``` toml
 appConfig: weaver.toml
 repo: docker.io/mydockerid
 
@@ -1807,13 +1807,13 @@ groups:
 
 1. 将 Jaeger 部署在 Kubernetes 集群中，作为典型的 Kubernetes 服务。这也是有人在实践中必须要做的事情。
 
-```
+``` bash
 $ kubectl apply -f jaeger.yaml
 ```
 
 1. 编写一个简单的二进制文件来实现将跟踪导出到 Jaeger 的插件。代码如下：
 
-```
+``` go
 // ./examples/customkube
 ...
 
@@ -1841,7 +1841,7 @@ func main() {
 
 1. 使用 `customkube` 部署程序构建并部署应用程序。
 
-```
+``` bash
 $ go build
 $ kubectl apply -f $(customkube deploy config.yaml)
 ```
@@ -1864,7 +1864,7 @@ $ kubectl apply -f $(customkube deploy config.yaml)
 
 例如，如果您想在“Hello, World!”的多个版本中进行原子部署。上面提到的应用程序，您可以按如下方式配置 `hello` 监听器：
 
-```
+``` toml
 appConfig: weaver.toml
 repo: docker.io/mydockerid
 
@@ -1886,31 +1886,31 @@ Google Kubernetes Engine (GKE) 是一项 Google Cloud 托管服务，实现了�
 
 首先，确保您安装了 Service Weaver。接下来，安装 `weaver-gke` 命令：
 
-```
+``` bash
 $ go install github.com/ServiceWeaver/weaver-gke/cmd/weaver-gke@latest
 ```
 
 将 `gcloud` 命令安装到本地计算机。为此，请按照以下说明操作，或运行以下命令并按照提示操作：
 
-```
+``` bash
 $ curl https://sdk.cloud.google.com | bash
 ```
 
 安装 `gcloud` 后，安装所需的 GKE 身份验证插件：
 
-```
+``` bash
 $ gcloud components install gke-gcloud-auth-plugin
 ```
 
 ，然后运行以下命令来初始化本地环境：
 
-```
+``` bash
 $ gcloud init
 ```
 
 上述命令将提示您选择要使用的 Google 帐户和云项目。如果您没有云项目，该命令将提示您创建一个。确保选择唯一的项目名称，否则命令将失败。如果发生这种情况，请按照以下说明创建一个新项目，或者只需运行：
 
-```
+``` bash
 $ gcloud projects create my-unique-project-name
 ```
 
@@ -1920,7 +1920,7 @@ $ gcloud projects create my-unique-project-name
 
 再考虑一下“你好，世界！”分步教程部分中的 Service Weaver 应用程序。该应用程序在名为 `hello` 的侦听器上运行 HTTP 服务器，并使用返回 `Hello, <name>!` 问候语的 `/hello?name=<name>` 端点。要将此应用程序部署到 GKE，首先创建一个 Service Weaver 配置文件，例如 `weaver.toml` ，其中包含以下内容：
 
-```
+``` toml
 [serviceweaver]
 binary = "./hello"
 
@@ -1935,7 +1935,7 @@ listeners.hello = {public_hostname = "hello.com"}
 
 使用 `weaver gke deploy` 部署应用程序：
 
-```
+``` bash
 $ GOOS=linux GOARCH=amd64 go build
 $ weaver gke deploy weaver.toml
 ...
@@ -1950,7 +1950,7 @@ Tailing the logs...
 
 当 `weaver gke` 部署您的应用程序时，它会创建一个全局的、外部可访问的负载均衡器，将流量转发到应用程序中的公共侦听器。 `weaver gke deploy` 打印出此负载均衡器的 IP 地址以及如何与之交互的说明：
 
-```
+``` bash
 NOTE: The applications' public listeners will be accessible via an
 L7 load-balancer managed by Service Weaver running at the public IP address:
 
@@ -1965,14 +1965,14 @@ achieved in one of two ways:
 
 对于在生产中运行的应用程序，您可能需要配置 DNS 以将您的域名（例如 `hello.com` ）映射到负载均衡器的地址（例如 `http://34.149.225.62` ）。然而，在测试和调试应用程序时，我们也可以简单地使用适当的主机名标头来卷曲负载均衡器。由于我们将应用程序配置为将主机名 `hello.com` 与 `hello` 侦听器关联，因此我们使用以下命令：
 
-```
+``` bash
 $ curl --header 'Host: hello.com' "http://34.149.225.63/hello?name=Weaver"
 Hello, Weaver!
 ```
 
 我们可以使用 `weaver gke status` 命令检查在 GKE 上运行的 Service Weaver 应用程序。
 
-```
+``` bash
 $ weaver gke status
 ╭───────────────────────────────────────────────────────────────╮
 │ Deployments                                                   │
@@ -2014,7 +2014,7 @@ $ weaver gke status
 
 您可以使用 `weaver gke kill` 命令来终止已部署的应用程序。
 
-```
+``` bash
 $ weaver gke kill hello
 WARNING: You are about to kill every active deployment of the "hello" app.
 The deployments will be killed immediately and irrevocably. Are you sure you
@@ -2027,7 +2027,7 @@ Enter (y)es to continue: y
 
 `weaver gke deploy` 日志到标准输出。它还会将所有日志条目导出到 Cloud Logging。您可以使用 `weaver gke logs` 从命令行捕获、关注和过滤这些日志。例如：
 
-```
+``` bash
 # Display all of the application logs
 weaver gke logs
 
@@ -2087,7 +2087,7 @@ weaver gke logs --system
 
 使用 `weaver gke profile` 命令收集 Service Weaver 应用程序的配置文件。使用您要分析的应用程序的名称（以及可选的版本）调用该命令。例如：
 
-```
+``` bash
 # Collect a CPU profile of the latest version of the hello app.
 $ weaver gke profile hello
 
@@ -2103,7 +2103,7 @@ $ weaver gke profile --type=heap hello
 
 `weaver gke profile` 打印出收集的配置文件的文件名。您可以使用 `go tool pprof` 命令来可视化和分析配置文件。例如：
 
-```
+``` bash
 $ profile=$(weaver gke profile <app>)         # Collect the profile.
 $ go tool pprof -http=localhost:9000 $profile # Visualize the profile.
 ```
@@ -2120,7 +2120,7 @@ $ go tool pprof -http=localhost:9000 $profile # Visualize the profile.
 
 `weaver gke` 允许您将 Service Weaver 应用程序部署到多个云区域。只需在配置文件中包含要部署的区域即可。例如：
 
-```
+``` toml
 [gke]
 regions = ["us-west1", "us-east1", "asia-east2", "europe-north1"]
 ```
@@ -2129,7 +2129,7 @@ regions = ["us-west1", "us-east1", "asia-east2", "europe-north1"]
 
 通过跨区域缓慢推出应用程序， `weaver gke` 使您可以及早发现有缺陷的版本并减轻它们可能造成的损害。配置文件中的 `rollout` 字段确定缓慢推出的长度。例如：
 
-```
+``` toml
 [serviceweaver]
 rollout = "1h" # Perform a one hour slow rollout.
 ...
@@ -2137,7 +2137,7 @@ rollout = "1h" # Perform a one hour slow rollout.
 
 您可以使用 `weaver gke status` 监视应用程序的推出。例如，以下是 `weaver gke status` 生成的部署计划，用于在 us-central1、us-west1、us-south1 和 us-east1 上部署 `hello` 应用程序一小时地区。
 
-```
+``` bash
 [ROLLOUT OF hello]
                  us-west1  us-central1  us-south1  us-east1
 TIME             a838cf1d  a838cf1d     a838cf1d   a838cf1d
@@ -2157,7 +2157,7 @@ Nov  8 22:47:30  1.00      0.00         0.00       0.00
 
 我们可以再次使用 `weaver gke status` 来监控新应用程序版本的推出。例如，以下是 `weaver gke status` 为 us-west1 和 us-east1 区域中 `hello` 应用程序的一小时更新生成的推出计划。新版本的应用 `45a521a3` 正在替换旧版本 `def1f485` 。
 
-```
+``` bash
 [ROLLOUT OF hello]
                  us-west1  us-west1  us-east1  us-east1
 TIME             def1f485  45a521a3  def1f485  45a521a3
@@ -2183,7 +2183,7 @@ Nov  9 00:54:59  0.45      0.05      0.50      0.00
 
 您可以使用配置文件的 `[gke]` 部分配置 `weaver gke` 。
 
-```
+``` toml
 [gke]
 project = "my-google-cloud-project"
 account = "my_account@gmail.com"
@@ -2207,15 +2207,15 @@ listeners.hat = {public_hostname = "hat.gg"}
 
 首先，确保您安装了 Service Weaver。接下来，安装 `weaver-gke-local` 命令：
 
-```
-$ go install github.com/ServiceWeaver/weaver-gke/cmd/weaver-gke-local@latest
+``` bash
+ go install github.com/ServiceWeaver/weaver-gke/cmd/weaver-gke-local@latest
 ```
 
 ###  入门
 
 在 `weaver gke` 部分中，我们部署了“Hello, World!”使用 `weaver gke deploy` 向 GKE 应用程序。我们可以使用 `weaver gke-local deploy` 在本地部署相同的应用程序：
 
-```
+``` bash
 $ cat weaver.toml
 [serviceweaver]
 binary = "./hello"
@@ -2234,7 +2234,7 @@ Tailing the logs...
 
 您可以运行 `weaver gke-local status` 来检查使用 `weaver gke-local` 部署的所有应用程序的状态。
 
-```
+``` bash
 $ weaver gke-local status
 ╭─────────────────────────────────────────────────────────────╮
 │ Deployments                                                 │
@@ -2273,14 +2273,14 @@ $ weaver gke-local status
 
 `weaver gke-local` 在端口 8000 上运行代理，模拟 `weaver gke` 使用的全局负载均衡器。我们可以像卷曲全局负载均衡器一样卷曲代理。由于我们将应用程序配置为将主机名 `hello.com` 与 `hello` 侦听器关联，因此我们使用以下命令：
 
-```
+``` bash
 $ curl --header 'Host: hello.com' "localhost:8000/hello?name=Weaver"
 Hello, Weaver!
 ```
 
 您可以使用 `weaver gke-local kill` 命令来终止已部署的应用程序。
 
-```
+``` bash
 $ weaver gke-local kill hello
 WARNING: You are about to kill every active deployment of the "hello" app.
 The deployments will be killed immediately and irrevocably. Are you sure you
@@ -2293,7 +2293,7 @@ Enter (y)es to continue: y
 
 `weaver gke-local deploy` 日志到标准输出。它还将所有日志条目保存在 `/tmp/serviceweaver/logs/weaver-gke-local` 中的一组文件中。每个文件都包含编码为协议缓冲区的日志条目流。您可以使用 `weaver gke-local logs` 来分类、关注和过滤这些日志。例如：
 
-```
+```bash
 # Display all of the application logs
 weaver gke-local logs
 
@@ -2333,7 +2333,7 @@ weaver gke-local logs --system
 
 除了在端口 8000 上运行代理（请参阅入门）之外， `weaver gke-local` 还在端口 8001 上运行状态服务器。此服务器的 `/metrics` 端点导出所有正在运行的 Service Weaver 的指标Prometheus 格式的应用程序，如下所示：
 
-```
+``` bash
 # HELP example_count An example counter.
 # TYPE example_count counter
 example_count{serviceweaver_node="bbc9beb5"} 42
@@ -2342,7 +2342,7 @@ example_count{serviceweaver_node="00555c38"} 9001
 
 要可视化和查询指标，请确保本地计算机上安装了 Prometheus，然后将以下节添加到 Prometheus yaml 配置文件中：
 
-```
+``` yaml
 scrape_configs:
 - job_name: 'prometheus-serviceweaver-scraper'
   scrape_interval: 5s
@@ -2355,7 +2355,7 @@ scrape_configs:
 
 使用 `weaver gke-local profile` 命令收集 Service Weaver 应用程序的配置文件。使用您要分析的应用程序的名称（以及可选的版本）调用该命令。例如：
 
-```
+``` bash
 # Collect a CPU profile of the latest version of the hello app.
 $ weaver gke-local profile hello
 
@@ -2371,7 +2371,7 @@ $ weaver gke-local profile --type=heap hello
 
 `weaver gke-local profile` 打印出收集的配置文件的文件名。您可以使用 `go tool pprof` 命令来可视化和分析配置文件。例如：
 
-```
+``` bash
 $ profile=$(weaver gke-local profile <app>)    # Collect the profile.
 $ go tool pprof -http=localhost:9000 $profile # Visualize the profile.
 ```
@@ -2403,7 +2403,7 @@ SSH 是一个部署程序，允许您在可通过 `ssh` 访问的一组计算机
 
 再考虑一下“你好，世界！”分步教程部分中的 Service Weaver 应用程序。该应用程序在名为 `hello` 的侦听器上运行 HTTP 服务器，并使用返回 `Hello, <name>!` 问候语的 `/hello?name=<name>` 端点。要使用 `SSH` 部署程序部署此应用程序，首先创建一个 Service Weaver 应用程序配置文件，例如 `weaver.toml` ，其中包含以下内容：
 
-```
+``` toml
 [serviceweaver]
 binary = "./hello"
 
@@ -2414,7 +2414,7 @@ locations = "./ssh_locations.txt"
 
 配置文件的 `[serviceweaver]` 部分指定已编译的 Service Weaver 二进制文件。 `[ssh]` 部分包含应部署应用程序的计算机集以及每个侦听器配置。机器集在 `ssh_locations.txt` 中指定如下：
 
-```
+``` bash
 10.100.12.31
 10.100.12.32
 10.100.12.33
@@ -2423,7 +2423,7 @@ locations = "./ssh_locations.txt"
 
 使用 `weaver ssh deploy` 部署应用程序：
 
-```
+``` bash
 $ weaver ssh deploy weaver.toml
 ```
 
@@ -2437,7 +2437,7 @@ $ weaver ssh deploy weaver.toml
 
 运行 `weaver ssh dashboard` 以在 Web 浏览器中打开仪表板。对于通过 `weaver ssh deploy` 部署的每个 Service Weaver 应用程序，仪表板都有一个页面。每个部署的页面都有一个指向部署指标的链接。指标以 Prometheus 格式导出，如下所示：
 
-```
+``` yaml
 # Metrics in Prometheus text format [1].
 #
 # To visualize and query the metrics, make sure Prometheus is installed on
@@ -2510,7 +2510,7 @@ serviceweaver_method_count{caller="main",component="main.Example",serviceweaver_
 
 注意：默认情况下，未实现 `proto.Message` 或 `BinaryMarshaler` 和 `BinaryUnmarshaler` 的命名结构类型不可序列化。但是，可以通过嵌入 `weaver.AutoMarshal` 轻松地使它们可序列化。
 
-```
+``` go
 type Pair struct {
     weaver.AutoMarshal
     x, y int
@@ -2519,7 +2519,7 @@ type Pair struct {
 
 `weaver.AutoMarshal` 嵌入指示 `weaver generate` 为结构生成序列化方法。但请注意， `weaver.AutoMarshal` 无法神奇地使任何类型可序列化。例如， `weaver generate` 将引发以下代码的错误，因为 `NotSerializable` 结构基本上不可序列化。
 
-```
+``` go
 // ERROR: NotSerializable cannot be made serializable.
 type NotSerializable struct {
     weaver.AutoMarshal
@@ -2530,7 +2530,7 @@ type NotSerializable struct {
 
 另请注意， `weaver.AutoMarshal` 不能嵌入通用结构中。
 
-```
+``` go
 // ERROR: Cannot embed weaver.AutoMarshal in a generic struct.
 type Pair[A any] struct {
     weaver.AutoMarshal
@@ -2555,7 +2555,7 @@ Service Weaver 要求每个组件方法都返回错误。如果返回非零错�
 
 虽然您可以直接调用 `weaver generate` ，但我们建议您将以下形式的行放在模块根目录的 `.go` 文件之一中：
 
-```
+``` go
 //go:generate weaver generate ./...
 ```
 
@@ -2565,7 +2565,7 @@ Service Weaver 要求每个组件方法都返回错误。如果返回非零错�
 
 Service Weaver 配置文件是用 TOML 编写的，如下所示：
 
-```
+``` toml
 [serviceweaver]
 name = "hello"
 binary = "./hello"
@@ -2658,6 +2658,6 @@ Service Weaver 试图鼓励模块化整体模型，其中应用程序被编写�
 ### 使用模板创建项目
 可以使用官方的模板仓库创建项目
 ```bash
-$ go install golang.org/x/tools/cmd/gonew@latest
-$ gonew github.com/ServiceWeaver/template example.com/foo
+ go install golang.org/x/tools/cmd/gonew@latest
+ gonew github.com/ServiceWeaver/template example.com/foo
 ```

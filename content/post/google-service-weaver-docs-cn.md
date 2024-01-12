@@ -481,9 +481,9 @@ d(context.Context) (error, int)    // final result isn't error
 e(context.Context, chan int) error // chan int isn't serializable
 ```
 
-##  实施
+##  组件的实现
 
-组件实现必须是一个如下所示的结构：
+组件的实现必须是一个如下所示的结构：
 
 ``` go
 type foo struct{

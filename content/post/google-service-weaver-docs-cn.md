@@ -1,8 +1,8 @@
 ---
 title: "Google Service Weaver中文文档[机翻]"
 date: 2024-01-12
-tags: ["golang", "grpc", "google"]
-draft: true
+tags: ["golang", "google"]
+draft: false
 ---
 
 > 本文为 [Service Weaver ](https://serviceweaver.dev/) 文档的机器翻译+细节微调。

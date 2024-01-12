@@ -20,10 +20,10 @@ draft: false
    go install fyne.io/fyne/v2/cmd/fyne@latest
    ```
 
-2. 准备好要使用的字体，我们这里使用[思源柔黑体](http://jikasei.me/font/)，使用下面命令
+2. 准备好要使用的字体，我们这里使用[miSans](https://hyperos.mi.com/font/zh/)，使用下面命令
 
    ```go
-   fyne bundle GenJyuuGothic-Normal.ttf > bundle.go
+   fyne bundle MiSans-Normal.ttf > bundle.go
    ```
 
 3. 然后创建一个theme
@@ -43,7 +43,7 @@ draft: false
    var _ fyne.Theme = (*ChineseTheme)(nil)
    
    func (m *ChineseTheme) Font(s fyne.TextStyle) fyne.Resource {
-   	return fontRes.ResourceGenJyuuGothicNormalTTF
+   	return fontRes.ResourceMiSansTTF
    }
    func (*ChineseTheme) Color(n fyne.ThemeColorName, v fyne.ThemeVariant) color.Color {
    	return theme.DefaultTheme().Color(n, v)
@@ -99,15 +99,15 @@ draft: false
 		"fyne.io/fyne/v2"
 	)
 	
-	//go:embed GenJyuuGothic-Normal.ttf
-	var genJyuuGothicNormalPayload []byte
-	var ResourceGenJyuuGothicNormalTTF = &fyne.StaticResource{
-		StaticName:    "GenJyuuGothic-Normal.ttf",
-		StaticContent: genJyuuGothicNormalPayload,
+	//go:embed MiSans-Normal.ttf
+	var miSans []byte
+	var ResourceMiSansTTF = &fyne.StaticResource{
+		StaticName:    "MiSans-Normal.ttf",
+		StaticContent: miSans,
 	}
 	```
 #### 使用go-findfont库
-参考代码如下
+网上的参考代码如下
 ```go
 ackage main
 

@@ -1133,6 +1133,204 @@ Build = 1
 
 > 文件的顶部部分是元数据，如果您将应用程序上传到 https://apps.fyne.io 列表页面，就会用到这些元数据，因此是可选的。`[Details]`部分包含有关您应用程序的数据，这些数据会被其他应用程序商店和操作系统用于发布程序。如果找到该文件，fyne 工具就会使用它，如果元数据存在，许多强制性命令参数就不是必需的。你仍然可以使用命令行参数覆盖这些值。每进行一次编译，`Build`都会自动递增，并在下一次编译时更新您的程序版本号。
 
+### 代码建议
+
+####  页面拆分设计
+
+当你使用 Fyne 这样的 GUI 库来开发应用程序时，将页面拆分为单独的包是一种很好的做法，因为它可以提高代码的模块性和可维护性。下面是一些建议以及一个简单的示例代码，展示如何实现这一点：
+
+##### 建议
+
+1. **模块化设计**：确保每个包都有清晰的职责。例如，一个包可以负责创建应用程序的主窗口，而另一个包则负责处理用户的输入。
+2. **接口使用**：定义接口以规范不同包之间的交互。这有助于保持代码的解耦。
+3. **共享资源**：对于跨多个包使用的资源，如图像或配置文件，可以创建一个单独的包或者使用全局变量。
+4. **错误处理**：确保每个包都有适当的错误处理机制。
+5. **测试**：为每个包编写单元测试，以确保独立性和功能性。
+
+##### 示例代码
+
+假设你有一个 Fyne 应用程序，你想将主界面和一个设置页面分别放在不同的包中。
+
+###### main.go
+
+```go
+goCopy codepackage main
+
+import (
+	"fyne-app/ui"  // 假设 'ui' 是主界面的包
+	"fyne-app/settings"  // 假设 'settings' 是设置页面的包
+	"fyne.io/fyne/v2/app"
+)
+
+func main() {
+	myApp := app.New()
+	myWindow := myApp.NewWindow("Fyne Demo")
+
+	mainUI := ui.NewMainUI()
+	settingsUI := settings.NewSettingsUI()
+
+	// 这里可以添加逻辑来切换不同的UI
+	myWindow.SetContent(mainUI)
+
+	myWindow.ShowAndRun()
+}
+```
+
+###### ui/main_ui.go
+
+```go
+goCopy codepackage ui
+
+import "fyne.io/fyne/v2/container"
+
+// NewMainUI 创建并返回主界面的UI组件
+func NewMainUI() *fyne.Container {
+	// 创建主UI组件
+	return container.NewVBox(
+		// 添加组件
+	)
+}
+```
+
+###### settings/settings_ui.go
+
+```go
+goCopy codepackage settings
+
+import "fyne.io/fyne/v2/container"
+
+// NewSettingsUI 创建并返回设置界面的UI组件
+func NewSettingsUI() *fyne.Container {
+	// 创建设置UI组件
+	return container.NewVBox(
+		// 添加组件
+	)
+}
+```
+
+这个结构允许你分别在 `ui` 和 `settings` 包中管理不同的UI部分，同时通过 `main.go` 来协调它们。记得根据你的实际需求调整包和代码结构。
+
+#### 逻辑拆分设计
+在拆分页面的过程中涉及到页面跳转时，遵循一些软件设计的最佳实践可以帮助你维护代码的清晰性和可维护性。以下是一些关键的实践和一个示例代码，展示如何在 Fyne 应用程序中实现页面跳转：
+
+##### 最佳实践
+
+1. **封装页面逻辑**：确保每个页面的逻辑都被封装在其各自的包中。这样，每个页面都是独立的，且可以轻松地从其他页面调用。
+2. **定义清晰的接口**：对于涉及多个页面之间交互的功能，定义清晰的接口。这有助于降低页面间的耦合度。
+3. **事件驱动的交互**：使用事件或回调函数来处理页面之间的交互，这样可以避免直接依赖于其他页面的内部实现。
+4. **统一的导航机制**：使用统一的机制来处理页面间的导航，例如通过主窗口或导航控制器来管理不同页面的显示。
+5. **避免全局状态**：尽量避免使用全局状态来管理页面间的交互，这样可以使得每个页面更加独立和可测试。
+
+##### 示例代码
+
+以下是一个简单的示例，展示了如何在 Fyne 应用程序中实现两个页面之间的跳转：
+
+###### main.go
+
+```go
+goCopy codepackage main
+
+import (
+	"fyne-app/ui"  // 主界面包
+	"fyne-app/settings"  // 设置页面包
+	"fyne.io/fyne/v2/app"
+)
+
+func main() {
+	myApp := app.New()
+	myWindow := myApp.NewWindow("Fyne Demo")
+
+	// 创建页面
+	mainUI := ui.NewMainUI()
+	settingsUI := settings.NewSettingsUI()
+
+	// 页面跳转逻辑
+	mainUI.OnSettingsButtonTapped(func() {
+		myWindow.SetContent(settingsUI)
+	})
+	settingsUI.OnBackButtonTapped(func() {
+		myWindow.SetContent(mainUI)
+	})
+
+	myWindow.SetContent(mainUI)
+	myWindow.ShowAndRun()
+}
+```
+
+###### ui/main_ui.go
+
+```go
+goCopy codepackage ui
+
+import (
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
+)
+
+// MainUI 代表主界面
+type MainUI struct {
+	onSettingsButtonTapped func()
+}
+
+// NewMainUI 创建并返回主界面的UI组件
+func NewMainUI() *MainUI {
+	ui := &MainUI{}
+	// 创建主UI组件
+	settingsButton := widget.NewButton("Settings", func() {
+		if ui.onSettingsButtonTapped != nil {
+			ui.onSettingsButtonTapped()
+		}
+	})
+	return container.NewVBox(
+		settingsButton,
+		// 其他组件
+	)
+}
+
+// OnSettingsButtonTapped 设置当设置按钮被点击时的回调
+func (ui *MainUI) OnSettingsButtonTapped(callback func()) {
+	ui.onSettingsButtonTapped = callback
+}
+```
+
+###### settings/settings_ui.go
+
+```go
+goCopy codepackage settings
+
+import (
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
+)
+
+// SettingsUI 代表设置页面
+type SettingsUI struct {
+	onBackButtonTapped func()
+}
+
+// NewSettingsUI 创建并返回设置界面的UI组件
+func NewSettingsUI() *SettingsUI {
+	ui := &SettingsUI{}
+	// 创建设置UI组件
+	backButton := widget.NewButton("Back", func() {
+		if ui.onBackButtonTapped != nil {
+			ui.onBackButtonTapped()
+		}
+	})
+	return container.NewVBox(
+		backButton,
+		// 其他组件
+	)
+}
+
+// OnBackButtonTapped 设置当返回按钮被点击时的回调
+func (ui *SettingsUI) OnBackButtonTapped(callback func()) {
+	ui.onBackButtonTapped = callback
+}
+```
+
+在这个示例中，`mainUI` 和 `settingsUI` 都提供了方法来设置它们按钮的回调。这种方法使得主函数可以控制页面之间的跳转，同时保持各个页面的独立性。
+
 ### 软件包列表
 
 fyne 项目分为多个软件包，每个软件包提供不同类型的功能。具体如下

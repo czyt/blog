@@ -221,6 +221,44 @@ func main() {
 }
 ```
 
+您可以使用 `container.NewGridWithRows` 或 `container.NewGridWithColumns` 函数来创建行或列的网格布局。如果您想要更复杂的布局，比如指定组件应该放在哪一行和哪一列，您可以使用 `container.NewGridLayout`。
+
+以下是一个示例，展示了如何在 Fyne 中创建一个网格布局，分为特定的行和列，并将组件放置在指定的位置：
+
+```go
+goCopy codepackage main
+
+import (
+    "fyne.io/fyne/v2/app"
+    "fyne.io/fyne/v2/container"
+    "fyne.io/fyne/v2/widget"
+)
+
+func main() {
+    myApp := app.New()
+    myWindow := myApp.NewWindow("Grid Layout")
+
+    // 创建组件
+    button1 := widget.NewButton("Button 1", nil)
+    button2 := widget.NewButton("Button 2", nil)
+    button3 := widget.NewButton("Button 3", nil)
+    button4 := widget.NewButton("Button 4", nil)
+
+    // 创建网格布局，这里我们创建一个 2x2 的网格
+    grid := container.NewGridWithColumns(2,
+        container.NewGridWithRows(2, button1, button2),
+        container.NewGridWithRows(2, button3, button4),
+    )
+
+    myWindow.SetContent(grid)
+    myWindow.ShowAndRun()
+}
+```
+
+在这个例子中，我们创建了一个 2x2 的网格布局。每一列都是用 `container.NewGridWithRows` 创建的，它们包含两个按钮。这样，按钮1和按钮2放在第一列的两行中，按钮3和按钮4放在第二列的两行中。
+
+您可以根据需要调整行和列的数量，以及在其中放置的组件。
+
 #### GridWrap
 
 与前面的Grid布局一样，GridWrap布局以网格模式创建元素的排列。但是，此网格没有固定的列数，而是对每个单元格使用固定大小，然后将内容流向显示项目所需的任意数量的行。
@@ -229,7 +267,7 @@ func main() {
 
 最初，GridWrap布局将具有一列，如果调整其大小（如右侧代码注释所示），它将重新排列子元素以填充空间。
 
-```
+```go
 package main
 
 import (
@@ -260,7 +298,7 @@ func main() {
 
 #### Border
 
-边框布局可能是构建用户界面最广泛使用的布局，因为它允许将项目放置在中心元素周围，该元素将扩展以填充空间。若要创建边框容器，需要将应位于边框位置的 `fyne.CanvasObject` s 传递给构造函数的前四个参数。此语法基本上与 `container.NewBorder(top, bottom, left, right, center)` 示例中所示相同。
+边框布局可能是构建用户界面最广泛使用的布局，因为它允许将项目放置在中心元素周围，该元素将扩展以填充空间。若要创建边框容器，需要将应位于边框位置的 `fyne.CanvasObject` 传递给构造函数的前四个参数。此语法基本上与 `container.NewBorder(top, bottom, left, right, center)` 示例中所示相同。
 
 在前四个项目之后传递到容器的任何项目都将定位到中心区域，并将扩展以填充可用空间。您还可以将要留空的边框参数传递给 `nil` 边框参数。
 
@@ -542,6 +580,52 @@ anim.RepeatCount = fyne.AnimationRepeatForever
 ```
 
 如果上面的例子我们给动画加上这个属性，动画就会一直循环下去。
+
+### 支持拖放
+
+在Fyne框架中，支持文件拖放的功能可以通过实现`fyne.Draggable` 和 `fyne.URIReadCloser` 接口来完成，具体步骤如下：
+
+首先，引入fyne包：
+```go
+import "fyne.io/fyne/v2"
+```
+
+然后创建一个自定义的类型，实现 `fyne.Draggable` 和 `fyne.URIReadCloser`接口。如下是一个简单的例子：
+
+```go
+type fileDragger struct {
+ widget.BaseWidget
+}
+
+func newFileDragger() *fileDragger {
+ d := &fileDragger{}
+ d.ExtendBaseWidget(d)
+ return d
+}
+
+func (d *fileDragger) Dragged(e *fyne.DragEvent) {
+ //你可以在这里处理拖动事件
+}
+
+func (d *fileDragger) DragEnd() {
+ //你可以在这里处理拖动结束事件
+}
+
+func (d *fileDragger) CreateRenderer() fyne.WidgetRenderer {
+ return widget.NewSimpleRenderer(widget.NewLabel("Drag and drop a file"))
+}
+
+func (d *fileDragger) DraggedURI(uri fyne.URIReadCloser) {
+ //处理文件拖放的业务逻辑
+ //通过 uri.Read() 方法可以读取拖放的文件数据
+}
+```
+
+其中，`Dragged(e *fyne.DragEvent)`方法是处理拖动事件的方法，`DragEnd()`方法是处理拖动结束事件的方法，`CreateRenderer() fyne.WidgetRenderer`方法用于创建渲染器（在此例中，我们创建了一个简单的label作为渲染器），`DraggedURI(uri fyne.URIReadCloser)`方法是处理文件拖放的方法。
+
+创建好上述自定义的类型后，就可以在窗口中添加这个自定义的widget，并且这个widget可以接受文件的拖放了。
+
+以上只是一个简单的例子，你可能需要根据实际需求来修改和完善这个例子。
 
 ### 界面缩放
 

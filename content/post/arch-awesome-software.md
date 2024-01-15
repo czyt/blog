@@ -169,6 +169,8 @@ goldendict 安装 `paru -S goldendict` [词库](https://github.com/czytcn/golden
 
  [微信Spark Store版本](https://aur.archlinux.org/packages/com.qq.weixin.spark) `paru -S com.qq.weixin.spark`
 
+> 这各版本的微信新版本会安装deepin-wine8,如果出现中文字体方框，需要安装文泉驿微米黑字体 `paru -S wqy-microhei`
+
 QQ 安装 `paru -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`
 
 新版LinuxQQ `paru -S linuxqq`

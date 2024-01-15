@@ -773,6 +773,8 @@ bun `paru -S bun-bin`
 
 ## 开发工具
 
+[vfox SDK管理工具](https://github.com/version-fox/vfox) 安装 `curl -sSL https://raw.githubusercontent.com/version-fox/vfox/main/install.sh | bash`
+
 [Homebrew](https://brew.sh) 安装 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` ([设置镜像源](https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/) [使用指南](https://sspai.com/post/56009))
 
 >国内安装

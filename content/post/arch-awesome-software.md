@@ -7,6 +7,118 @@ weight: 9
 ---
 
 > 本文部分内容基于manjaro，另外如果喜欢苹果界面，可以试下[pearos](https://pearos.xyz)
+## Arch 安装后必装的软件
+
+通过archinstall 安装以后，是没图形界面的。需要安装下面的一些软件和配置
+
+>安装时，声音后端的选择：
+>
+>- PulseAudio，历史悠久、最为常用；
+>- PipeWire，新生代，采用全新架构，整合多种音频后端（PulseAudio、ALSA和JACK），提供低延迟的音频体验
+
+### 启用网络
+
+```bash
+systemctl enable dhcpcd
+systemctl enable wpa_supplicant
+systemctl enable NetworkManager
+```
+
+### 蓝牙
+
+```bash
+sudo systemctl enable --now bluetooth
+```
+
+>如果没这个服务，可能需要通过 `paru -S bluetooth`进行安装。
+>
+>如果需要启用蓝牙音频支持，请安装 `paru -S pulseaudio-bluetooth`
+>
+>蓝牙高级管理工具 `paru -S blueman`
+
+### 打印机
+
+```bash
+paru -S cups ghostscript gsfont
+```
+
+然后启动服务
+
+```bash
+sudo systemctl enable --now cups
+// 可能需要启动
+sudo systemctl enable --now cups-browsed
+```
+
+打印机驱动
+
+```bash
+paru -S foomatic-db foomatic-db-ppds   # 基本驱动
+paru -S foomatic-db-nonfree foomatic-db-nonfree-ppds # 非自由软件驱动
+```
+
+### 启用MTP/PTP支持
+
+和Windows一样，Linux也支持MTP、PTP设备，这样就可以方便地与安卓手机、数码相机等外设连接，管理文件。不过对这类设备的支持并非与生俱来，而是有赖于GVFS（Gnome Virtual File System），它把对其他设备或网络环境的访问抽象成一系列I/O接口，意味着可以像平时读写磁盘那样访问它们。
+
+安装以下组件，分别启用GVFS本体，以及MTP、PTP支持。安装之后，无需额外设置，直接插入你的相关设备，即可识别。
+
+```
+sudo pacman -S gvfs gvfs-mtp gvfs-gphoto2
+```
+
+### NTFS支持
+
+```bash
+paru -S ntfs-3g ntfs-3g-fuse
+```
+
+### 安装桌面
+
+#### KDE
+
+安装KDE软件
+
+```bash
+paru -S plasma-meta sddm
+```
+
+启用登录
+
+```bash
+sudo systemctl enable --now sddm
+```
+
+其他KDE软件
+
+```bash
+paru -S konsole kde-utilities 
+```
+
+>KDE提供了全家桶套装。可以按需选用：
+>
+>| kde-utilities  | 系统工具，包含了KDE桌面环境所需的基本应用，如文件管理器Dolphin、终端工具Konsole。**应当安装。** |
+>| -------------- | ------------------------------------------------------------ |
+>| kde-multimedia | 多媒体工具，包含几款多媒体播放器（如Dragon）和编辑器等。     |
+>| kde-graphics   | 图形工具，包含图片查看器Gwenview、PDF查看器Okular、截图工具Spectacle等。**建议安装。** |
+>| kde-education  | 教育工具，包括虚拟地球仪Marble、日语学习工具Kiten、海龟绘图工具KTurtle等。 |
+>| kde-network    | 网络应用程序，包含全功能浏览器Konqueror、即时通讯工具Telepathy、远程桌面工具KRDC等。 |
+>| kde-games      | KDE团队开发的一系列游戏，不妨一试。                          |
+
+### XFCE
+
+```bash
+paru --needed xfce4-goodies
+```
+
+### 中文字体
+
+```bash
+paru -S adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts noto-fonts-cjk wqy-microhei wqy-microhei-lite wqy-bitmapfont wqy-zenhei ttf-arphic-ukai ttf-arphic-uming
+```
+
+其他配置选项参考 [Arch wiki 简体中文本地化](https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96)
+
 ## 更换软件源
 
 使用中国的镜像排名
@@ -21,20 +133,8 @@ sudo pacman-mirrors -g //排列数据源
 
 ```bash
 [archlinuxcn]
- 
-SigLevel = Optional TrustedOnly
-
-#中科大源
-
+Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
-
-#清华源
-
-# Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
-
-# 163源
-
-# Server = http://mirrors.163.com/archlinux-cn/$arch
 ```
 
 然后再更新软件数据源
@@ -355,6 +455,24 @@ clash https://aur.archlinux.org/packages?K=clash [福利](https://neko-warp.nlol
 [nekoray-bin ](https://github.com/MatsuriDayo/nekoray)Qt based cross-platform GUI proxy configuration manager  安装 `paru -S nekoray-bin`( 可能需要安装相关插件 `paru -S sing-geosite sing-geoip  `)
 
 cloudflare Warp 安装 `paru -S cloudflare-warp-bin`  [基于wiregurd](https://www.ianbashford.net/post/setupcloudflarewarplinuxarch/) [自选ip脚本](https://gitlab.com/rwkgyg/CFwarp) [自选ip脚本2](https://gitlab.com/ProjectWARP/warp-script)
+
+>如报错： DNS connectivity check failed with reason DNSLookupFailed，请尝试
+>
+>1. 在 `/etc/systemd/resolved.conf`中加入下面这一行内容
+>
+>```
+>ResolveUnicastSingleLabel=yes
+>```
+>
+>2. 重启服务
+>
+>```
+>$ sudo systemctl restart systemd-resolved.service
+>```
+>
+>更多问题解决，请参考 [Cloudflare Troubleshooting](https://github.com/cloudflare/cloudflare-docs/blob/production/content/cloudflare-one/faq/teams-troubleshooting.md)
+
+
 
 n2n [VPN软件](https://www.meirenji.info/2018/02/03/N2N%E7%BB%84%E7%BD%91-%E5%AE%9E%E7%8E%B0%E5%AE%B6%E9%87%8C%E8%AE%BF%E4%B8%8E%E5%85%AC%E5%8F%B8%E7%BD%91%E7%BB%9C%E4%BA%92%E8%AE%BF-%E7%B2%BE%E7%BC%96%E7%89%88/) `paru -S n2n` 
 

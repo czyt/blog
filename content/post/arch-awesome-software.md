@@ -92,7 +92,7 @@ sudo systemctl enable --now sddm
 其他KDE软件
 
 ```bash
-paru -S konsole kde-utilities 
+paru -S konsole kde-utilities ark
 ```
 
 >KDE提供了全家桶套装。可以按需选用：

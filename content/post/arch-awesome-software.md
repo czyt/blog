@@ -527,6 +527,8 @@ n2n [VPN软件](https://www.meirenji.info/2018/02/03/N2N%E7%BB%84%E7%BD%91-%E5%A
 
 proxychains-ng 安装 `paru -S proxychains-ng`
 
+tsockets 安装 `paru -S tsocks-tools`
+
 evernote 开源版本 nixnote2 安装 `paru -S nixnote2` 
 
 joplin 安装 `paru -S joplin` or `paru -S joplin-desktop`
@@ -1059,6 +1061,8 @@ tmux 终端工具 安装 `paru -S tmux`
 [pre-commit](https://github.com/pre-commit/pre-commit) 安装 `paru -S python-pre-commit` (管理和维护 pre-commit hooks的工具. [官网](https://pre-commit.com/) )
 
 byobu 终端工具 安装 `paru -S byobu`
+
+kitty 漂亮的终端 安装 `paru -S kitty-git` 或者 `paru -S kitty `
 
 API文档工具 zeal 安装 `paru -S zeal` 
 

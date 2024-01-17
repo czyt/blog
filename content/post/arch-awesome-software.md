@@ -6,7 +6,7 @@ draft: false
 weight: 9
 ---
 
-> 本文部分内容基于manjaro，另外如果喜欢苹果界面，可以试下[pearos](https://pearos.xyz)
+> 本文部分内容基于manjaro，另外如果喜欢苹果界面，可以试下[pearos](https://pearos.xyz)。理论上基于Arch的发行版都可以使用本文进行安装。
 ## Arch 安装后必装的软件
 
 通过archinstall 安装以后，是没图形界面的。需要安装下面的一些软件和配置
@@ -121,18 +121,31 @@ paru -S adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts noto-font
 
 ## 更换软件源
 
-使用中国的镜像排名
+Manjaro可以使用中国的镜像排名
 
 ```bash
 sudo pacman-mirrors -i -c China -m rank //更新镜像排名
-sudo pacman -Syy //更新数据源
 sudo pacman-mirrors -g //排列数据源
+```
+
+然后更新下
+
+```bash
+sudo pacman -Syy //更新数据源
 ```
 
 添加archlinuxcn源编辑命令 `sudo nano /etc/pacman.conf` 添加下面的内容
 
 ```bash
 [archlinuxcn]
+Server = https://repo.archlinuxcn.org/$arch
+```
+
+如果使用镜像源，可以使用下面的配置
+
+```bash
+[archlinuxcn]
+SigLevel = Optional TrustAll
 Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
 ```

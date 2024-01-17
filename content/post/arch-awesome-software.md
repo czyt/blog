@@ -134,14 +134,14 @@ sudo pacman-mirrors -g //排列数据源
 sudo pacman -Syy //更新数据源
 ```
 
-添加archlinuxcn源编辑命令 `sudo nano /etc/pacman.conf` 添加下面的内容
+添加[archlinuxcn](https://www.archlinuxcn.org/archlinux-cn-repo-and-mirror/)源 ,修改 `sudo nano /etc/pacman.conf` 添加下面的内容
 
 ```bash
 [archlinuxcn]
 Server = https://repo.archlinuxcn.org/$arch
 ```
 
-如果使用镜像源，可以使用下面的配置
+如果使用镜像源，可以使用下面清华和中科大的镜像配置
 
 ```bash
 [archlinuxcn]

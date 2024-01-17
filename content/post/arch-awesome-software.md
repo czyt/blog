@@ -731,6 +731,8 @@ KDE
 
 KDE whitesur主题 安装 `paru -S plasma5-themes-whitesur-git `（推荐）或者`paru -S plasma5-themes-macsonoma-git`
 
+>另外还可以使用https://github.com/vinceliuice/MacSonoma-kde
+
 XFCE whitesur主题 
 
 + https://github.com/vinceliuice/WhiteSur-gtk-theme

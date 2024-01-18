@@ -350,7 +350,7 @@ FormatDuration(time.Hour * 24 * 3 + time.Hour * 4 + time.Minute * 15 + time.Seco
 
 该功能可将持续时间细分为天、小时、分钟和秒，显示更加方便。
 
-完整源代码请访问 - Golang：日期时间实用工具
+完整源代码请访问 - [Golang: Date Time Utilities](https://github.com/cp-dharti-r/golang-date-time-utils)
 
 今天就到这里。继续编码！👋
 

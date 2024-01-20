@@ -1056,6 +1056,8 @@ Typora markdown编辑器 安装 `paru -S typora`
 
 >也可以试下 remarkable `paru -S remarkable `
 
+[picgo](https://github.com/Molunerfinn/PicGo) 安装 `paru -S picgo-appimage`
+
 dnspy 安装 `paru -S dnspy` (需要使用blackarch源)
 
 tmux 终端工具 安装 `paru -S tmux`

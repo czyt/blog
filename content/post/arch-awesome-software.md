@@ -1093,7 +1093,7 @@ neovim `paru -S neovim` (插件 [lazyvim](https://www.lazyvim.org))
 >下面是其他的一些nvim的资料：
 >
 >+ [nvim配置rust编程环境](https://rsdlt.github.io/posts/rust-nvim-ide-guide-walkthrough-development-debug/)
->+ [巢鹏大佬的nvim配置](https://github.com/chaopeng/nvim-config)
+>+ [巢鹏大佬的nvim配置](https://github.com/chaopeng/nvim-config) 需要安装nerd fonts `paru -S nerd-fonts-sf-mono`
 >+ [NeoVim setup for golang programming](https://medium.com/@yanglyu5201/neovim-setup-for-golang-programming-68ebf59336d9)
 
 [sublime-text-4](https://aur.archlinux.org/packages/sublime-text-4)  `paru -S sublime-text-4 `
@@ -1207,8 +1207,6 @@ ventoy U盘启动制作 `paru -S ventoy-bin`
  sudo rm /var/lib/systemd/coredump/*
  ```
 
-
-
 参考
 
 - 使用 Stow 管理多台机器配置[https://blog.csdn.net/F8qG7f9YD02Pe/article/details/104046845](https://blog.csdn.net/F8qG7f9YD02Pe/article/details/104046845)
@@ -1216,7 +1214,7 @@ ventoy U盘启动制作 `paru -S ventoy-bin`
 - 在Arch Linux/Manjaro上安装Snap [https://ywnz.com/linuxjc/4635.html](https://ywnz.com/linuxjc/4635.html)
 - 修改主目录为英文 [原文](https://www.jianshu.com/p/73299b8e3f58)
 
-```go
+```bash
 $ sudo pacman -S xdg-user-dirs-gtk
 $ export LANG=en_US
 $ xdg-user-dirs-gtk-update

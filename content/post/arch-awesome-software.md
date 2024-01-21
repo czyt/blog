@@ -73,6 +73,13 @@ sudo pacman -S gvfs gvfs-mtp gvfs-gphoto2
 paru -S ntfs-3g ntfs-3g-fuse
 ```
 
+> 注意：根据[Arch linux的wiki的说明](https://wiki.archlinuxcn.org/wiki/NTFS)
+>
+> >所有 5.15 及更新版本的[官方支持的内核](https://wiki.archlinuxcn.org/wiki/内核#官方支持的内核)都默认使用了 `CONFIG_NTFS3_FS=m` 参数，因此支持该驱动。在 5.15 版本前，NTFS 读写支持由 [NTFS-3G](https://wiki.archlinuxcn.org/wiki/NTFS-3G) FUSE 文件系统提供。或者也可以通过 [ntfs3-dkms](https://aur.archlinux.org/packages/ntfs3-dkms/)AUR 使用向后移植的 NTFS3。
+> >
+> 
+> 新版本的都不需要安装上述组件.挂载失败后，可以通过`dmesg`查看失败原因，一般比较常遇到的是`sda1: volume is dirty and "force" flag is not set!`这个错误，可以通过 `ntfsfix -d /dev/sdx`进行修复就可以正常挂载了。
+
 ### 安装桌面
 
 #### KDE

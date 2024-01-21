@@ -402,7 +402,7 @@ OneDive 安装 `paru -S onedrive` 或者 `paru -S onedrive-abraunegg` (GUI `paru
 
 百度云 安装 `paru -S baidunetdisk-bin` 或者 安装深度的版本 `paru -S deepin-baidu-pan`
 
-坚果云 安装 `paru -S nutstore` 或者 坚果云实验版 `paru -S nutstore-experimental `
+坚果云 安装 `paru -S nutstore` 或者 坚果云实验版 `paru -S nutstore-experimental `(推荐)
 
 [^坚果云窗口太小，看不到输入框。]: 可以用 `sudo pacman -S gvfs libappindicator-gtk3`
 

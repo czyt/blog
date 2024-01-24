@@ -768,6 +768,13 @@ xfconf-query -c xsettings -p /Gtk/ShellShowsMenubar -n -t bool -s true
 
 [conky](https://github.com/brndnmtthws/conky) 性能显示组件 安装 `paru -S conky conky-manager`
 
+### Kitty
+
+使用命令安装 `paru -S kitty` 或者 `paru -S kitty-git`
+
+配置文件使用 [荒野无灯的配置文件](https://github.com/ttys3/my-kitty-config) 及 [文章](https://ttys3.dev/blog/kitty)
+
+更多请参考官网 https://sw.kovidgoyal.net/kitty/
 
 ### ohmyzh 安装
 

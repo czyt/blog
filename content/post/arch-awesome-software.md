@@ -774,7 +774,93 @@ xfconf-query -c xsettings -p /Gtk/ShellShowsMenubar -n -t bool -s true
 
 配置文件使用 [荒野无灯的配置文件](https://github.com/ttys3/my-kitty-config) 及 [文章](https://ttys3.dev/blog/kitty)
 
-更多请参考官网 https://sw.kovidgoyal.net/kitty/
+这个配置的按键映射
+
+#### config
+
+keybindings explain:
+
+ctrl+a>R means: press `ctrl` + `a` in the same time, release and then, press R (`shift`+`r`)
+
+| key      | description   |
+| -------- | ------------- |
+| ctrl+a>R | reload config |
+| ctrl+a>E | edit config   |
+| ctrl+a>D | debug config  |
+
+
+
+#### session
+
+| key      | description                         |
+| -------- | ----------------------------------- |
+| ctrl+a>s | save current layout to session file |
+
+#### tab
+
+| key          | description        |
+| ------------ | ------------------ |
+| ctrl+shift+← | goto previus tab   |
+| ctrl+shift+→ | goto next tab      |
+| ctrl+shift+, | move tab backward  |
+| ctrl+shift+. | move tab forward   |
+| ctrl+a>,     | change tab title   |
+| ctrl+a>c     | create new tab     |
+| ctrl+a>x     | close window / tab |
+
+#### os window
+
+| key    | description       |
+| ------ | ----------------- |
+| ctrl+q | quit kitty        |
+| f11    | toggle fullscreen |
+
+#### window
+
+| key            | description                  |
+| -------------- | ---------------------------- |
+| ctrl+a>-       | horizontal split with cwd    |
+| ctrl+a>shift+- | horizontal split             |
+| ctrl+a>\       | vertial split with cwd       |
+| ctrl+a>shift+\ | vertial split                |
+| ctrl+a>x       | close window                 |
+| ctrl+a>z       | zoom (maxmize) window        |
+| ctrl+shift+r   | resize window                |
+| ctrl+←         | goto left window             |
+| ctrl+→         | goto right window            |
+| ctrl+↑         | goto up window               |
+| ctrl+↓         | goto down window             |
+| ctrl+a>h       | goto left window             |
+| ctrl+a>l       | goto right window            |
+| ctrl+a>k       | goto up window               |
+| ctrl+a>j       | goto down window             |
+| shift+←        | move current window to left  |
+| shift+→        | move current window to right |
+| shift+↑        | move current window to up    |
+| shift+↓        | move current window to down  |
+| alt+n          | resize window narrower       |
+| alt+w          | resize window wider          |
+| alt+u          | resize window taller         |
+| alt+d          | resize window shorter        |
+| ctrl+home      | resize window reset          |
+
+#### font
+
+| key    | description     |
+| ------ | --------------- |
+| ctrl+= | font size +     |
+| ctrl+- | font size -     |
+| ctrl+0 | font size reset |
+
+#### misc
+
+| key           | description                                                  |
+| ------------- | ------------------------------------------------------------ |
+| ctrl+a>t      | kitten theme                                                 |
+| ctrl+a>space  | copy pasting with hints like [tmux-thumbs](https://github.com/fcsonline/tmux-thumbs) |
+| ctrl+a>ctrl+a | send real ctrl+a (emacs shortcut Home                        |
+
+更多请参考官网 https://sw.kovidgoyal.net/kitty/ 的[快捷键](https://sw.kovidgoyal.net/kitty/conf/#keyboard-shortcuts)章节
 
 ### ohmyzh 安装
 

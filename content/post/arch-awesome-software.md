@@ -504,6 +504,14 @@ parsec 远程工具 安装 `paru -S parsec-bin `
 
 v2ray 安装 `paru -S v2ray`  （安装配置工具`paru -S qv2ray ` qv2ray 插件 `paru -S qv2ray-plugin` ，[福利订阅](https://jiang.netlify.app) 新版已经使用AppImage格式发布，下载AppImage格式即可 或者 v2rayDesktop `paru -S v2ray-desktop` ）
 
+gost 安装 `paru -S gost` 
+
+>我们一般当客户端使用，连接服务器：
+>
+>```bash
+> `sudo gost -L=:1080 -F=quic://xx.xxx.tech:11111`
+>```
+
 clash-verge-bin `paru -S clash-verge-bin`
 
 clash https://aur.archlinux.org/packages?K=clash [福利](https://neko-warp.nloli.xyz)

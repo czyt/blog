@@ -1,6 +1,6 @@
 ---
 title: "在 Rust 中使用 Serde"
-date: 2024-1-25
+date: 2024-01-25
 tags: ["rust"]
 draft: false
 ---

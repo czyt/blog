@@ -5,6 +5,8 @@ tags: ["rust", "go"]
 draft: false
 ---
 
+>根据[微软官方文档](https://support.microsoft.com/en-gb/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3)，excel最大支持1,048,576 行， 16,384 列。下面的代码并未处理这一限制。
+
 ## Rust
 
 实现代码：

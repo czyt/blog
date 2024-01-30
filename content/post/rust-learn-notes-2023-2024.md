@@ -7,6 +7,33 @@ draft: false
 
 ## 基础
 
+### Lib支持多个平台
+
+在lib中使用属性指定操作系统平台及对应文件
+
+```rust
+#[cfg(target_os = "windows")]
+#[path = "win/mod.rs"]
+mod platform;
+
+#[cfg(target_os = "linux")]
+#[path = "nix/mod.rs"]
+mod platform;
+
+#[cfg(target_os = "macos")]
+#[path = "mac/mod.rs"]
+mod platform;
+```
+
+可以使用not进行取反
+
+```rust
+#[cfg(not(target_os = "linux"))]
+mod version;
+#[cfg(not(target_os = "linux"))]
+pub(crate) use self::version::Version;
+```
+
 ### Cargo使用github仓库依赖
 
 在cargo.toml中的一个示例如下：

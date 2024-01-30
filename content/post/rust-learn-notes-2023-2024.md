@@ -7,6 +7,15 @@ draft: false
 
 ## 基础
 
+### Cargo使用github仓库依赖
+
+在cargo.toml中的一个示例如下：
+
+```toml
+[dependencies]
+systeminfo = { git = "https://github.com/marirs/systeminfo-rs", branch = "main" }
+```
+
 ###  原生字符串 `r""`和`r##""##`的异同
 
 在Rust中,`r""`和`r##""##`都是原生字符串字面量(raw string literals)。它们的主要区别是:

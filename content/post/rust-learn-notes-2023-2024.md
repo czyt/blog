@@ -34,6 +34,63 @@ mod version;
 pub(crate) use self::version::Version;
 ```
 
+### 默认值
+
+#### 属性的默认值
+
+在 Rust 当中，相对于其他语言如 Python，JavaScript 等，没有内建的对默认值的支持。但是你可以通过为结构体实现 `Default` trait 来定义默认值。`Default` trait 是一种约定，它用于为类型创建一个 "默认" 值。 这里给出一个例子展示如何在 Rust 中实现默认值：
+
+```rust
+#[derive(Debug, Default)]
+struct User {
+    name: String,
+    age: u8,
+    email: Option<String>,
+}
+fn main() {
+    let user1: User = Default::default();
+    println!("{:?}", user1);
+}
+```
+
+`Default::default()` 会对每个字段调用 `default`，对于内建类型，如 `String`, `u8` 和 `Option<T>` 等，Rust 已经帮你实现了 `Default` trait。 对于`String`类型，`default()`返回空字符串，对于 `u8`，返回 `0`，对于 `Option<T>` 返回 `None`。 如果你想要为自定义类型提供默认值，你可以自行实现 `Default` trait：
+
+```rust
+use std::path::PathBuf;
+#[derive(Debug)]
+struct Config {
+    output: PathBuf,
+    //其他字段
+}
+impl Default for Config {
+    fn default() -> Self {
+        Self {
+            output: PathBuf::from("./"),
+            //其他字段的默认值实现
+        }
+    }
+}
+```
+
+这种方式能非常方便地为字段设置默认值，并且可以根据实际的业务需求灵活定制。
+
+#### 方法的默认值
+
+在 Rust 中，函数参数不能像某些语言（如 Python）那样直接设定默认值。然而，可以通过一些其他方式达到类似的目的。 一种常用的策略是使用 `Option<T>` 来处理可能的默认参数，然后在函数体内提供默认值。例如：
+
+```rust
+fn say_hello(name: Option<&str>) {
+    let name = name.unwrap_or("World");
+    println!("Hello, {}!", name);
+}
+fn main() {
+    say_hello(None);                 // Prints: Hello, World!
+    say_hello(Some("BackendCoderAssist")); // Prints: Hello, BackendCoderAssist!
+}
+```
+
+在 `say_hello` 函数中，我们接受一个 `Option<&str>` 参数，如果调用者没有提供值（即 `None`），我们就使用 "World" 作为默认值。 然而，这种方式当参数多时，调用这类带多个Option参数的函数可能会有点繁琐。另外一种方法是使用 Builder Pattern 或者使用更复杂的方法如别的 crate 提供方法（例如 `getopts` 或 `structopt`），这在处理复杂命令行参数或者构造函数时会很有用。
+
 ### Cargo使用github仓库依赖
 
 在cargo.toml中的一个示例如下：

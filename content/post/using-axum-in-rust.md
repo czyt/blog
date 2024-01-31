@@ -264,7 +264,7 @@ async fn my_function(
 
 在 HTML 方面，当您向 API 发送 HTTP 请求时，您当然还需要确保发送正确的内容类型。
 
-标头也可以以相同的方式处理，只是标头不消耗请求正文 - 这意味着您可以使用任意数量的标头！我们可以使用 `TypedHeader` 类型来做到这一点。对于 Axum 0.6，您需要启用 `headers` 功能，但在 0.7 中，此功能已移至 `axum-extra` 箱，您需要添加 `typed-header` 功能，像这样：
+标头也可以以相同的方式处理，只是标头不消耗请求正文 - 这意味着您可以使用任意数量的标头！我们可以使用 `TypedHeader` 类型来做到这一点。对于 Axum 0.6，您需要启用 `headers` 功能，但在 0.7 中，此功能已移至 `axum-extra` crate，您需要添加 `typed-header` 功能，像这样：
 
 ```bash
 cargo add axum-extra -F typed-header
@@ -378,7 +378,7 @@ where
 
 ##  Axum的中间件
 
-如前所述，Axum 相对于其他框架的一大优势是它与 `tower` 箱超兼容，这意味着我们可以有效地使用 Rust API 所需的任何 Tower 中间件！例如，我们可以添加一个 Tower 中间件来压缩响应：
+如前所述，Axum 相对于其他框架的一大优势是它与 `tower` crate超兼容，这意味着我们可以有效地使用 Rust API 所需的任何 Tower 中间件！例如，我们可以添加一个 Tower 中间件来压缩响应：
 
 ```rust
 use tower_http::compression::CompressionLayer;

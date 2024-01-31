@@ -322,8 +322,28 @@ Discord  安装 `paru -S discord`
 >
 >### Discord设置代理
 >
+>编辑`/usr/share/applications`下的discord.desktop文件
+>
+>修改Exec部分为下面内容
+>
+>```ini
+>Exec=http_proxy=socks5://127.0.0.1:10808 https_proxy=socks5://127.0.0.1:10808 ALL_PROXY=socks5://127.0.0.1:10808 /usr/bin/discord --proxy-server="socks5://127.0.0.1:10808"
+>```
+>
+>完整的文件内容如下：
+>
 >```bash
->http_proxy=socks5://127.0.0.1:1080 https_proxy=socks5://127.0.0.1:1080 /opt/Discord/Discord --proxy-server="socks5://127.0.0.1:1080"
+>[Desktop Entry]
+>Name=Discord
+>StartupWMClass=discord
+>Comment=All-in-one voice and text chat for gamers that's free, secure, and works on both your desktop and phone.
+>GenericName=Internet Messenger
+>Exec=http_proxy=socks5://127.0.0.1:10808 https_proxy=socks5://127.0.0.1:10808 ALL_PROXY=socks5://127.0.0.1:10808 /usr/bin/discord --proxy-server="socks5://127.0.0.1:10808"
+>Icon=discord
+>Type=Application
+>Categories=Network;InstantMessaging;
+>Path=/usr/bin
+>
 >```
 >
 >参考 https://gist.github.com/mzpqnxow/ca4b4ae0accf2d3b275537332ccbe86e

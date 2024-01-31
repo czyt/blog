@@ -319,6 +319,14 @@ Discord  安装 `paru -S discord`
 >然后在discord文件夹找到`./resources/build_info.json`，修改里头的版本号即可。
 >
 >参考文章：[Discord won’t open on Linux when an update is available](https://support.discord.com/hc/en-us/community/posts/360057789311-Discord-won-t-open-on-Linux-when-an-update-is-available)
+>
+>### Discord设置代理
+>
+>```bash
+>http_proxy=socks5://127.0.0.1:1080 https_proxy=socks5://127.0.0.1:1080 /opt/Discord/Discord --proxy-server="socks5://127.0.0.1:1080"
+>```
+>
+>参考 https://gist.github.com/mzpqnxow/ca4b4ae0accf2d3b275537332ccbe86e
 
 Telegram `paru -S telegram-desktop` 
 

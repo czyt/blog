@@ -141,6 +141,22 @@ Rust is installed now. Great!
 
 - [https://erasin.wang/rustup/](https://erasin.wang/rustup/)
 
+## 其他实用工具
+
+### generate
+
+cargo generate,这个工具可利用预先存在的 git 存储库作为模板，帮助您快速启动并运行新的 Rust 项目。官方[github](https://github.com/cargo-generate/cargo-generate)仓库，[帮助文档](https://cargo-generate.github.io/cargo-generate/index.html)
+
+安装命令
+
+```bash
+cargo install cargo-generate
+```
+
+>陈天的两个模板库
+>
+>+ [smithy](https://www.smithy.rs) https://github.com/tyrchen/smithy-template
+>+ [rust template](https://github.com/tyrchen/rust-template)
 
 ## 跨平台编译
 

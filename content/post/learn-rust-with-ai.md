@@ -9,6 +9,12 @@ draft: false
 
 ## 基础
 
+### 迭代器
+
+#### fuse
+
+
+
 ### Cow
 
 在 Rust 中，`Cow` 是 "Clone on Write" 的缩写，它是一个智能指针类型，属于标准库的 `std::borrow` 模块。`Cow` 可以用来封装一个可能是借用（borrowed）也可能是拥有（owned）的值。`Cow`类型实际上是一个枚举类型，定义如下：

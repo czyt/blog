@@ -23,13 +23,14 @@ draft: false
 + [Writing an OS in Rust ](https://os.phil-opp.com/zh-CN/)
 + [清华大学程序设计训练（Rust）](https://lab.cs.tsinghua.edu.cn/rust/)
 + [Rust 异步编程指南](https://github.com/rustlang-cn/async-book)
++ [rust ffi guide](https://www.michaelfbryan.com/rust-ffi-guide/)
 + [Rust基础教程](http://docs.os2edu.cn)
 + [rCore-Tutorial-Book 第三版](https://rcore-os.cn/rCore-Tutorial-Book-v3/index.html)
 + [OffensiveRust](https://github.com/0xTriboulet/OffensiveRust#offensiverust)
 + [RustPrimer](https://rustcc.gitbooks.io/rustprimer/content/)
 + [Rust Atomics and Locks 中文版](https://github.com/rustcc/Rust_Atomics_and_Locks)
 + [Rust 程序设计语言 2021版 中文](https://github.com/KaiserY/trpl-zh-cn)
-+ [ust 教程资料收集 - fkysly](https://graceful-direction-b61.notion.site/Rust-fkysly-7e1a57dd614b4a2d9173b09ab9506895)
++ [rust 教程资料收集 - fkysly](https://graceful-direction-b61.notion.site/Rust-fkysly-7e1a57dd614b4a2d9173b09ab9506895)
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
 

@@ -5,7 +5,7 @@ tags: ["rust"]
 draft: false
 ---
 
-> 本文为学习rust过程中，向ai提问的内容汇总
+> 本文为学习rust过程中，向ai提问的内容汇总。配套图书为《Rust程序设计 第2版》
 
 ## 基础
 

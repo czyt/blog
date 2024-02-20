@@ -52,7 +52,7 @@ git-fetch-with-cli = true
 ```
 
 ## 安装Rust
-安装rust即可。可以参考我的步骤，如果安装的是vs的cpp build tools，可以跳过。
+安装rust即可。可以参考我的步骤，如果安装的是[vs的cpp build tools](https://visualstudio.microsoft.com/downloads/?cid=learn-navbar-download-cta)，可以跳过。
 
 ``` bash
 Current installation options:

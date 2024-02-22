@@ -1,5 +1,5 @@
 ---
-title: "go swith的6种用法【译】"
+title: "go switch的6种用法【译】"
 date: 2024-02-17
 tags: ["golang"]
 draft: false

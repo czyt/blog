@@ -167,6 +167,51 @@ mod version;
 pub(crate) use self::version::Version;
 ```
 
+下面以一个获取指定程序位置的库为例。如果您想要实现的功能是跨平台的并且能在不同操作系统下运行（例如，定位可执行文件的路径），Rust 代码的结构应该考虑以下几点：
+
+1. **抽象层**：定义一个通用接口（trait）以抽象出查找可执行文件路径的行为。这样可以为不同操作系统实现具体的功能。
+2. **平台特定实现**：针对每个操作系统实现上述接口。可能需要利用条件编译属性（比如 `#[cfg(target_os = "windows")]`），来确保只在特定平台编译特定代码。
+3. **错误处理**：确保跨平台功能能够适当地处理错误，因为不同操作系统可能会以不同方式响应相同的操作。
+4. **单元和集成测试**：为跨平台代码编写测试，确保功能在所有目标平台上都正常工作。
+
+具体到代码结构，您可能会有下列结构：
+
+```rust
+// 定义一个名为 ExecutableFinder 的 trait，其有一个查找可执行文件路径的方法
+pub trait ExecutableFinder {
+    fn find_executable(&self, executable_name: &str) -> Option<PathBuf>;
+}
+// 针对 Unix-like 系统的平台特定实现
+#[cfg(unix)]
+pub struct UnixFinder;
+#[cfg(unix)]
+impl ExecutableFinder for UnixFinder {
+    fn find_executable(&self, executable_name: &str) -> Option<PathBuf> {
+        // Unix-like 系统的查找逻辑
+    }
+}
+// 针对 Windows 系统的平台特定实现
+#[cfg(windows)]
+pub struct WindowsFinder;
+#[cfg(windows)]
+impl ExecutableFinder for WindowsFinder {
+    fn find_executable(&self, executable_name: &str) -> Option<PathBuf> {
+        // Windows 系统的查找逻辑
+    }
+}
+// 一个通用的函数，它使用特定于平台的实现来查找可执行文件
+pub fn find_executable_in_path(executable_name: &str) -> Option<PathBuf> {
+    let finder: Box<dyn ExecutableFinder> = if cfg!(unix) {
+        Box::new(UnixFinder)
+    } else if cfg!(windows) {
+        Box::new(WindowsFinder)
+    } else {
+        unimplemented!() // 对于其他系统，您可能需要实现额外的逻辑或者返回 None
+    };
+    finder.find_executable(executable_name)
+}
+```
+
 ### 默认值
 
 #### 属性的默认值

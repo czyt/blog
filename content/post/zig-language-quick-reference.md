@@ -38,7 +38,7 @@ https://ziglang.org/download/
 
      将 Zig 二进制文件的位置添加到 PATH 环境变量中。对于安装，请添加 export PATH=$PATH:~/zig 或类似于 /etc/profile（系统范围）或 $HOME/.profile。如果这些更改没有立即应用，请从 shell 运行该行。
 
-   - 视窗
+   - windows
 
      a) 系统范围（admin powershell）
 

@@ -52,6 +52,9 @@ git-fetch-with-cli = true
 ```
 
 ## 安装Rust
+
+### Windows
+
 安装rust即可。可以参考我的步骤，如果安装的是[vs的cpp build tools](https://visualstudio.microsoft.com/downloads/?cid=learn-navbar-download-cta)，可以跳过。
 
 ``` bash
@@ -133,6 +136,28 @@ info: default toolchain set to 'stable'
 Rust is installed now. Great!
 
 ```
+### 其他Linux
+
+可以使用脚本进行安装:
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+### Arch
+
+使用包安装工具安装
+
+```bash
+paru -S rustup
+```
+
+然后安装rust
+
+```bash
+rustup install stable
+```
+
 ## 配置cargo镜像
 
 参考 
@@ -157,6 +182,34 @@ cargo install cargo-generate
 >
 >+ [smithy](https://www.smithy.rs) https://github.com/tyrchen/smithy-template
 >+ [rust template](https://github.com/tyrchen/rust-template)
+
+### cargo-make
+
+使用cargo安装
+
+```bash
+cargo install --force cargo-make
+```
+
+如果是Arch Linux，可以使用下面的命令安装：
+
+```bash
+paru -S cargo-make
+```
+
+还可以在github下载编译好的二进制文件 [地址](https://github.com/sagiegurari/cargo-make/releases)。目前有下面几种平台的二进制文件。
+
+- x86_64-unknown-linux-gnu
+
+- x86_64-unknown-linux-musl
+
+- x86_64-apple-darwin
+
+- x86_64-pc-windows-msvc
+
+- aarch64-apple-darwin
+
+具体使用方法，请参考 https://crates.io/crates/cargo-make
 
 ## 跨平台编译
 

@@ -1170,9 +1170,9 @@ clion 安装 `paru -S clion clion-jre`
 
 > 可选下面这些包
 >
-> clion-cmake	JetBrains packaged CMake tools for CLion
-> clion-gdb	JetBrains packaged GNU Debugger for CLion
-> clion-lldb	JetBrains packaged LLVM Debugger for CLion
+> + clion-cmake （JetBrains packaged CMake tools for CLion）
+> + clion-gdb	(JetBrains packaged GNU Debugger for CLion)
+> + clion-lldb	(JetBrains packaged LLVM Debugger for CLion)
 
 pycharm 安装 `paru -S pycharm-professional` 
 

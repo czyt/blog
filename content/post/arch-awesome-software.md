@@ -763,6 +763,8 @@ smPlayer `paru -S smplayer`
 
 [kdenlive](https://kdenlive.org)非线性视频编辑器 `paru -S kdenlive`
 
+[yt-dlp](https://github.com/yt-dlp/yt-dlp) youtube 下载软件 `paru -S yt-dlp`
+
 ## 美化
 
 ### docky 安装

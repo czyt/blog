@@ -126,13 +126,13 @@ Rust 是一种静态类型语言，这意味着它必须在编译时知道所有
 
 默认情况下，Rust 中的变量是不可变的，这意味着它们的值在声明后就无法更改。如果您希望变量可变，可以使用 `mut` 关键字。
 
-###  不可变变量：
+###  不可变变量
 
 ```rust
 let x = 5;
 ```
 
-###  可变变量：
+###  可变变量
 
 ```rust
 let mut y = 5;
@@ -148,25 +148,25 @@ Rust 语言内置了多种数据类型，可分为：
 
  **标量类型**
 
-###  整数：
+###  整数
 
 ```rust
 let a: i32 = 5;  // i32 is the type for a 32-bit integer
 ```
 
-###  浮点数：
+###  浮点数
 
 ```rust
 let b: f64 = 3.14;  // f64 is the type for a 64-bit floating point number
 ```
 
-###  布尔值：
+###  布尔值
 
 ```rust
 let c: bool = true;  // bool is the type for a boolean
 ```
 
-###  char：
+###  char
 
 ```rust
 let d: char = 'R';  // char is the type for a character. Note that it's declared using single quotes
@@ -174,13 +174,13 @@ let d: char = 'R';  // char is the type for a character. Note that it's declared
 
 ###  **复合类型**
 
-###  元组：
+###  元组
 
 ```rust
 let e: (i32, f64, char) = (500, 6.4, 'J');  // A tuple with three elements
 ```
 
-###  数组：
+###  数组
 
 ```rust
 let f: [i32; 5] = [1, 2, 3, 4, 5];  // An array of i32s with 5 elements

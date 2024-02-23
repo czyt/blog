@@ -5,7 +5,7 @@ tags: ["rust"]
 draft: false
 ---
 
->原文 https://katib.moe/the-completesh-rust-cheat-sheet 本文大部分通过机器翻译进行翻译，小部分进行了微调。
+>原文 https://katib.moe/the-completesh-rust-cheat-sheet 本文大部分通过机器翻译进行翻译，小部分进行了微调。官方有个更全的 https://cheats.rs
 
 这个“完整的 Rust 备忘单”提供了 Rust 编程语言的全面指南，涵盖了它的所有主要功能。涵盖的主题范围从非常基础的知识（例如语法和基本概念）到更复杂的方面（例如并发和错误处理）。该备忘单还深入研究了 Rust 的独特功能，例如所有权、借用和生命周期，以及其强大的类型系统和健壮的宏系统。对于每个主题，都提供了清晰的示例来阐明解释。对于刚刚开始使用 Rust 的初学者和想要快速回顾特定 Rust 概念的经验丰富的开发人员来说，这是一个理想的资源。
 

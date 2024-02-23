@@ -554,7 +554,7 @@ impl From<std::num::ParseIntError> for MyError {
 
 #  高级错误处理
 
-对于更高级的错误处理，我们可以利用 `thiserror` 包来简化流程。 `thiserror` 箱自动执行了创建自定义错误类型并为其实现 `Error` trait的大部分过程。
+对于更高级的错误处理，我们可以利用 `thiserror` 包来简化流程。 `thiserror` 包自动执行了创建自定义错误类型并为其实现 `Error` trait的大部分过程。
 
 首先，将 `thiserror` 添加到 `Cargo.toml` 依赖项中：
 
@@ -1096,7 +1096,7 @@ fn main() {
 
 请注意，创建过程宏所涉及的复杂性比此示例所示的要复杂得多。定义 `HelloMacro` 过程宏需要创建一个 `proc-macro` 类型的单独包，并实现一个生成所需代码的函数。 `syn` 和 `quote` 包通常用于在过程宏中解析和生成 Rust 代码。
 
-#  Rust 的内置特性
+#  Rust 的内置Trait
 
 Rust 有几个对 Rust 编译器具有特殊含义的内置trait，例如 `Copy` 、 `Drop` 、 `Deref` 等。
 

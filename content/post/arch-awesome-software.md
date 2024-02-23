@@ -156,6 +156,10 @@ SigLevel = Optional TrustAll
 Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
 ```
+安装 [archlinuxcn-mirrorlist-git](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/archlinuxcn-mirrorlist-git) 包可以获得一份镜像列表，以便在 pacman.conf 中直接引入
+```bash
+sudo pacman -S archlinuxcn-mirrorlist-git
+```
 
 然后再更新软件数据源
 
@@ -163,6 +167,12 @@ Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
 sudo pacman -Syy
 sudo pacman -S archlinux-keyring archlinuxcn-keyring
 ```
+
+>由于开发者退休，导致新安装的系统中，farseerfc 的 GPG key 是勉强信任的，如遇“error: archlinuxcn-keyring: Signature from "Jiachen YANG (Arch Linux Packager Signing Key) " is marginal trust”报错，请手动信任一下该 key：[[1\]](https://wiki.archlinuxcn.org/wiki/Arch_Linux_中文社区仓库#cite_note-1)
+>
+>```
+>sudo pacman-key --lsign-key "farseerfc@archlinux.org
+>```
 
 如何证书有问题，可以使用下面的命令进行修复,参考[官方wiki](https://wiki.archlinux.org/title/Pacman/Package_signing)
 

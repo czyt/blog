@@ -1045,7 +1045,7 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 
 安装 `paru -S nushell` 
 
-[Warp Terminal](https://www.warp.dev) （有Linux版本的计划，暂未发布）
+[Warp Terminal](https://www.warp.dev)  `paru -S warp-terminal`
 
 ### 自定义主题
 

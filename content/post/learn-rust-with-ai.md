@@ -504,7 +504,31 @@ rustCopy codefn main() {
 ```
 
 在这个例子中，`while let` 用于迭代 `stack` 同时检查是否存在值，如果存在，将值绑定给 `value` 并执行相应的代码块。
+
+#### **for 循环**
+
+可以在 for 循环中使用模式来解构元组、结构体和枚举。
+
+```rust
+let pairs = vec![(1, 'a'), (2, 'b'), (3, 'c')];
+for (num, letter) in pairs {
+    println!("{}: {}", num, letter);
+}
+```
+
+#### **忽略模式**
+
+有时你可能不关心某个值或某些值，可以使用 `_` 或 `..` 来忽略它们。
+
+```rust
+match some_value {
+    Value::A { x, .. } => println!("x is {}", x),
+    _ => (),
+}
+```
+
 #### `ref`关键字
+
 在Rust中，模式匹配通常会涉及所有权的转移。但是，如果你想避免转移所有权，可以使用引用或者`ref`关键字。下面是一个示例，展示了如何在模式匹配中避免所有权的转移：
 
 ```rust
@@ -536,7 +560,29 @@ fn main() {
 ```
 
 在这个例子中，使用`&`来创建结构体`Person`的引用，然后使用`ref`来创建对`name`和`city`的引用，从而避免了对这些字段的所有权转移。这允许你在`match`块内使用这些字段，而在匹配之后仍然可以继续使用`person`，因为它的所有权并没有被转移。
+
+#### **@ 绑定**
+
+允许你在测试一个值的模式的同时创建一个变量来保存这个值。
+
+```rust
+enum Message {
+    ChangeColor(i32, i32, i32),
+}
+let msg = Message::ChangeColor(0, 160, 255);
+match msg {
+    Message::ChangeColor(r, g, b) => println!("Change color to: {}, {}, {}", r, g, b),
+}
+match msg {
+    Message::ChangeColor(r @ 0..=255, g @ 0..=255, b @ 0..=255) => {
+        println!("Change color to RGB ({}, {}, {})", r, g, b)
+    }
+    _ => ()
+}
+```
+
 #### 元组解构
+
 在Rust中，你可以在函数参数中使用模式匹配来解构元组。以下是一个简单的示例，演示了如何在函数中使用模式匹配处理元组：
 
 ```rust

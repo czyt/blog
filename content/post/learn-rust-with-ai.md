@@ -322,7 +322,7 @@ let s = r##"Hello, "world"!"##;
 - `..=`表示一个闭区间,包含范围的起始和结束值。
 - `..`表示一个开区间,包含范围的起始值但不包含结束值。
 
-例如:
+ CancellationTokenSource cts = new CancellationTokenSource();CancellationToken token = cts.Token;​Parallel.ForEach(list, new ParallelOptions { CancellationToken = token }, item =>{    // do something});c#
 
 ```rust
 let a = 1..=3; 

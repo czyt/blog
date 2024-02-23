@@ -22,7 +22,7 @@ Span<char> span = str.AsSpan(6, 5); // 从第6个字符开始，截取长度为5
 
 2. IO操作：Span可以用于将IO操作映射到内存中，以提高性能。下面是一个例子：
 
-```
+```c#
 using (FileStream stream = File.OpenRead("file.txt"))
 {
     byte[] buffer = new byte[1024 * 1024];
@@ -36,7 +36,7 @@ using (FileStream stream = File.OpenRead("file.txt"))
 
 3. 序列化/反序列化：Span可以用于快速地序列化和反序列化数据，尤其是在网络传输等场景中。下面是一个例子：
 
-```
+```c#
 public static void Serialize<T>(T value, Span<byte> buffer) where T : struct
 {
     unsafe
@@ -72,7 +72,7 @@ SynchronizationContext通常用于以下情况：
 
 例如：
 
-```
+```c#
 textBox1.Invoke(new Action(() => {
     textBox1.Text = "Hello World";
 }));
@@ -84,7 +84,7 @@ textBox1.Invoke(new Action(() => {
 
 例如：
 
-```
+```c#
 var syncContext = HttpContext.Current != null ?
     HttpContext.Current.SyncronizationContext : null;
 syncContext?.Post(() => {
@@ -97,7 +97,7 @@ syncContext?.Post(() => {
 
 例如：
 
-```
+```c#
 var uiContext = SynchronizationContext.Current;
 var t = new Thread(() => {
     // Do some work...
@@ -124,7 +124,7 @@ CancellationToken是在多线程编程中非常有用的一个类，它能够实
 具体例子：
 1. 在使用Task.Run方法时，可以传入CancellationToken，如下所示：
 
-```
+```c#
 CancellationTokenSource cts = new CancellationTokenSource();
 CancellationToken token = cts.Token;
 
@@ -143,7 +143,7 @@ Task.Run(() =>
 
 2. 在使用async/await时，可以使用CancellationToken来取消异步操作，如下所示：
 
-```
+```c#
 CancellationTokenSource cts = new CancellationTokenSource();
 CancellationToken token = cts.Token;
 
@@ -162,7 +162,7 @@ await DownloadFileAsync(url, token);
 
 3. 在使用Parallel.ForEach方法时，可以使用CancellationToken来取消并行操作，如下所示：
 
-```
+```c#
 CancellationTokenSource cts = new CancellationTokenSource();
 CancellationToken token = cts.Token;
 

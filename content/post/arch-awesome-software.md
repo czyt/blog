@@ -203,6 +203,10 @@ sudo pacman-key --init && sudo pacman-key --populate
 >
 >`paru -Bi .` -- Build and install a PKGBUILD in the current directory.
 
+## AI工具
+
+[ollama](https://ollama.com) 在本地启动并运行大型语言模型`paru -S ollama `
+
 ## SSH管理工具
 
 Remmina 安装 `paru -S remmina`
@@ -756,6 +760,8 @@ OBS推流工具 `paru -S obs-studio`
 bilibili `paru -S bilibili-bin`
 
 smPlayer `paru -S smplayer`
+
+[kdenlive](https://kdenlive.org)非线性视频编辑器 `paru -S kdenlive`
 
 ## 美化
 

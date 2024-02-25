@@ -112,6 +112,13 @@ paru -S konsole kde-utilities ark dolphin
 >| kde-network    | 网络应用程序，包含全功能浏览器Konqueror、即时通讯工具Telepathy、远程桌面工具KRDC等。 |
 >| kde-games      | KDE团队开发的一系列游戏，不妨一试。                          |
 
+由于 KDE 自带的文件索引程序 baloo 可能严重拖慢计算机性能，建议您关闭 baloo。具体命令为
+
+```bash
+$ balooctl suspend
+$ balooctl disable
+```
+
 ### XFCE
 
 ```bash
@@ -186,8 +193,6 @@ sudo pacman-key --init && sudo pacman-key --populate
 # pacman -S pacman-contrib
 # systemctl enable paccache.timer
 ```
-
-
 
 因为本文的软件使用paru进行安装，故需要使用命令进行安装，命令为  ` sudo pacman -S paru`
 

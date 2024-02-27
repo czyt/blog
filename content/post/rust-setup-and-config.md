@@ -168,6 +168,19 @@ rustup install stable
 
 ## 其他实用工具
 
+### rust-analyzer
+
+安装 `rustup component add rust-analyzer`
+
+### flamegraph
+
+火焰图工具，安装
+
+```bash
+cargo install flamegraph
+cargo install cargo-flamegraph
+```
+
 ### cross
 
 cross是一个跨平台编译的工具，github仓库地址为 https://github.com/cross-rs/cross
@@ -194,6 +207,48 @@ cargo install cargo-generate
 >
 >+ [smithy](https://www.smithy.rs) https://github.com/tyrchen/smithy-template
 >+ [rust template](https://github.com/tyrchen/rust-template)
+
+
+
+###  cargo-audit
+
+cargo-audit是一个简单的Cargo工具，可以运行`cargo audit`用于检测项目中存在安全问题。安装命令
+
+```bash
+cargo install cargo-audit
+```
+
+除了检查安全漏洞，cargo-audit还支持支持自动更新（实验性功能），用来修复存在问题的依赖项。
+
+可通过
+
+```
+cargo install cargo-audit --features=fix
+```
+
+要启用安装后，然后运行
+
+```
+cargo audit fix
+```
+
+即可以自动修复Cargo.toml中存在安全问题的依赖项。
+
+### cargo-nextest
+
+nextest自诩为“下一代Rust测试运行程序”。
+
+安装
+
+```bash
+cargo install cargo-nextest
+```
+
+安装，安装后在项目目录（或工作区），可以使用以下命令运行测试
+
+```bash
+cargo nextest run
+```
 
 ### cargo-make
 

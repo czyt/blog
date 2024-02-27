@@ -946,9 +946,13 @@ wget -nv -O - https://raw.githubusercontent.com/zimfw/install/master/install.zsh
 zmodule asciiship
 zmodule zsh-users/zsh-completions --fpath src
 zmodule completion
-zmodule zsh-users/zsh-syntax-highlighting
 zmodule zsh-users/zsh-autosuggestions
 zmodule sindresorhus/pure --source async.zsh
+zmodule romkatv/powerlevel10k --use degit
+zmodule Aloxaf/fzf-tab
+zmodule zdharma-continuum/fast-syntax-highlighting
+zmodule skywind3000/z.lua --cmd 'eval "$(lua {}/z.lua --init zsh enhanced once)"'
+zmodule ohmyzsh/ohmyzsh --root plugins/extract
 ```
 
 ~/.zshrc

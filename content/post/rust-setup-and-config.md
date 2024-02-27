@@ -168,6 +168,18 @@ rustup install stable
 
 ## 其他实用工具
 
+### cross
+
+cross是一个跨平台编译的工具，github仓库地址为 https://github.com/cross-rs/cross
+
+安装命令
+
+```bash
+cargo install cross
+```
+
+> ⚠️ 这个工具需要安装docker或者podman
+
 ### generate
 
 cargo generate,这个工具可利用预先存在的 git 存储库作为模板，帮助您快速启动并运行新的 Rust 项目。官方[github](https://github.com/cargo-generate/cargo-generate)仓库，[帮助文档](https://cargo-generate.github.io/cargo-generate/index.html)
@@ -213,7 +225,9 @@ paru -S cargo-make
 
 ## 跨平台编译
 
-  rust支持的Target列表 `rustup target list`
+  可以使用上面的cross工具，下面是原生的方式。
+
+ rust支持的Target列表 `rustup target list`
 
   ```tex
   aarch64-apple-darwin
@@ -443,6 +457,8 @@ jobs:
           generate_release_notes: true
           draft: true
 ```
+
+
 
 参考
 

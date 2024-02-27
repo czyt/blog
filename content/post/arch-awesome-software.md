@@ -922,6 +922,24 @@ ctrl+a>R means: press `ctrl` + `a` in the same time, release and then, press R (
 
 更多请参考官网 https://sw.kovidgoyal.net/kitty/ 的[快捷键](https://sw.kovidgoyal.net/kitty/conf/#keyboard-shortcuts)章节
 
+### zim 安装
+
+>Modular, customizable, and blazing fast Zsh framework
+
+安装
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+```
+
+或者
+
+```bash
+wget -nv -O - https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
+```
+
+更多，请参考 [github ](https://github.com/zimfw/zimfw#manual-installation)或者  https://zimfw.sh
+
 ### ohmyzh 安装
 
 `paru -S zsh && sh -c "$(curl -fsSL https://fastgit.czyt.tech/https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`

@@ -938,7 +938,41 @@ curl -fsSL https://raw.githubusercontent.com/zimfw/install/master/install.zsh | 
 wget -nv -O - https://raw.githubusercontent.com/zimfw/install/master/install.zsh | zsh
 ```
 
-更多，请参考 [github ](https://github.com/zimfw/zimfw#manual-installation)或者  https://zimfw.sh
+更多，请参考 [github ](https://github.com/zimfw/zimfw#manual-installation)或者  https://zimfw.sh 下面是我自己的配置：
+
+~/.zimrc
+
+```
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions
+zmodule asciiship
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-autosuggestions
+```
+
+~/.zshrc
+
+```
+export PATH=$HOME/bin:/usr/local/bin:$HOME/go/bin:$PATH
+# eval "$(atuin init zsh)"
+# eval "$(starship init zsh)"
+
+zstyle ':zim:zmodule' use 'degit'
+ZIM_HOME=~/.zim
+
+# Download zimfw plugin manager if missing.
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+      https://fastgit.czyt.tech/https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+fi
+
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
+# Initialize modules.
+source ${ZIM_HOME}/init.zsh
+```
 
 ### ohmyzh 安装
 

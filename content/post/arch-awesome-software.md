@@ -943,11 +943,12 @@ wget -nv -O - https://raw.githubusercontent.com/zimfw/install/master/install.zsh
 ~/.zimrc
 
 ```
-zmodule zsh-users/zsh-syntax-highlighting
-zmodule zsh-users/zsh-autosuggestions
 zmodule asciiship
+zmodule zsh-users/zsh-completions --fpath src
+zmodule completion
 zmodule zsh-users/zsh-syntax-highlighting
 zmodule zsh-users/zsh-autosuggestions
+zmodule sindresorhus/pure --source async.zsh
 ```
 
 ~/.zshrc

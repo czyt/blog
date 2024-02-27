@@ -119,7 +119,7 @@ $ balooctl suspend
 $ balooctl disable
 ```
 
-### XFCE
+#### XFCE
 
 ```bash
 paru --needed xfce4-goodies

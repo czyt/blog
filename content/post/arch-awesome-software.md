@@ -540,7 +540,7 @@ xmind-2020 安装 `paru -S xmind-2020` ([福利链接](https://mega.nz/folder/Mx
 
 drawio  安装` paru -S drawio-desktop-bin` 或者 ` paru -S drawio-desktop`
 
-
+在线流程图工具 [https://excalidraw.com](https://excalidraw.com)
 
 ### 截图及录屏工具
 
@@ -669,12 +669,7 @@ windows11 字体 `paru -S ttf-ms-win11-auto `
 >ttf-ms-win11-auto-zh_tw	Microsoft Windows 11 Traditional Chinese TrueType fonts
 >ttf-ms-win11-auto-other
 
-[macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `paru -S 
-macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
 
-
-
-在线流程图工具 [https://excalidraw.com](https://excalidraw.com)
 参考
 
 - proxychains-ng 使用 [https://wsgzao.github.io/post/proxychains/](https://wsgzao.github.io/post/proxychains/)
@@ -805,6 +800,9 @@ smPlayer `paru -S smplayer`
 [kdenlive](https://kdenlive.org)非线性视频编辑器 `paru -S kdenlive`
 
 [yt-dlp](https://github.com/yt-dlp/yt-dlp) youtube 下载软件 `paru -S yt-dlp`
+
+[macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `paru -S 
+macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
 
 ## 美化
 

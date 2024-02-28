@@ -510,7 +510,14 @@ moose 支持边下边播的BT工具 `paru -S moose `
 
 ## 办公软件
 
-[看雪安全接入](https://ksa.kanxue.com)ksa 安装 `paru -S ksa` 
+钉钉 安装 `paru -S  dingtalk-electron ` 
+
+企业微信 `paru -S deepin-wine-wxwork` 
+
+腾讯会议 `paru -S wemeet-bin`
+
+飞书 `paru -S feishu-bin`
+
 
 Android屏幕共享[Scrcpy](https://github.com/Genymobile/scrcpy) 安装 `paru -S scrcpy`
 
@@ -527,6 +534,16 @@ handbrake 视频格式转换工具 `paru -S handbrake-full`
 Wps 安装 `paru -S wps-office ttf-wps-fonts wps-office-mui-zh-cn  wps-office-mime`
 
 libreoffice 安装  `paru -S libreoffice` 
+geogebra 几何绘图软件 `paru -S geogebra  `
+
+labplot科学绘图 `paru -S labplot ` 
+xmind-2020 安装 `paru -S xmind-2020` ([福利链接](https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g))
+
+drawio  安装` paru -S drawio-desktop-bin` 或者 ` paru -S drawio-desktop`
+
+[crow-translate](https://github.com/crow-translate/crow-translate) 翻译工具`paru -S crow-translate`
+
+### 截图及录屏工具
 
 flameshot 截图工具 安装 `paru -S flameshot` 
 
@@ -538,13 +555,20 @@ kazam录屏软件 安装 `paru -S kazam `
 
 > 这个工具已经停止维护
 
-geogebra 几何绘图软件 `paru -S geogebra  `
-
-labplot科学绘图 `paru -S labplot ` 
+### 阅读工具
 
 福昕pdf阅读器 `paru -S foxitreader` 
 
-masterpdfeditor 对linux用户免费的PDF浏览及编辑器,支持实时预览 `paru -S masterpdfeditor  ` 
+masterpdfeditor 对linux用户免费的PDF浏览及编辑器,支持实时预览 `paru -S masterpdfeditor  `
+
+Okular （[KDE上的通用文档阅读器](https://www.appinn.com/okular/)）` paru -S okular` 
+
+Foliate [简单、现代的电子书阅读器](https://www.appinn.com/foliate-for-linux/) 安装 `paru -S foliate` 
+
+pdf合并工具 `paru -S pdfmerger`
+
+
+### 远程工具
 
 Teamviewer `paru -S teamviewer`如果一直显示未连接，则请退出teamviewer，执行`sudo teamviewer --daemon enable` 再打开试试
 
@@ -557,7 +581,13 @@ rustdesk `paru -S rustdesk-bin`
 toDesk远程工具 安装 `paru -S todesk-bin` (设置服务 `systemctl start\enable todeskd` 才能正常运行)
 
 parsec 远程工具 安装 `paru -S parsec-bin ` 
+realvnc-server `paru -S realvnc-vnc-server ` (安装完毕后需要注册`sudo vnclicense -add 3TH6P-DV5AE-BLHY6-PNENS-B3AQA`,启动服务 `systemctl enable vncserver-x11-serviced`)
 
+realvnc-viewer `paru -S realvnc-vnc-viewer`
+
+### 网络代理工具
+
+[看雪安全接入](https://ksa.kanxue.com)ksa 安装 `paru -S ksa` 
 v2ray 安装 `paru -S v2ray`  （安装配置工具`paru -S qv2ray ` qv2ray 插件 `paru -S qv2ray-plugin` ，[福利订阅](https://jiang.netlify.app) 新版已经使用AppImage格式发布，下载AppImage格式即可 或者 v2rayDesktop `paru -S v2ray-desktop` ）
 
 gost 安装 `paru -S gost` 
@@ -593,22 +623,26 @@ cloudflare Warp 安装 `paru -S cloudflare-warp-bin`  [基于wiregurd](https://w
 >更多问题解决，请参考 [Cloudflare Troubleshooting](https://github.com/cloudflare/cloudflare-docs/blob/production/content/cloudflare-one/faq/teams-troubleshooting.md)
 
 
-
 n2n [VPN软件](https://www.meirenji.info/2018/02/03/N2N%E7%BB%84%E7%BD%91-%E5%AE%9E%E7%8E%B0%E5%AE%B6%E9%87%8C%E8%AE%BF%E4%B8%8E%E5%85%AC%E5%8F%B8%E7%BD%91%E7%BB%9C%E4%BA%92%E8%AE%BF-%E7%B2%BE%E7%BC%96%E7%89%88/) `paru -S n2n` 
 
 proxychains-ng 安装 `paru -S proxychains-ng`
 
 tsockets 安装 `paru -S tsocks-tools`
 
+### 笔记软件
+
 evernote 开源版本 nixnote2 安装 `paru -S nixnote2` 
 
 joplin 安装 `paru -S joplin` or `paru -S joplin-desktop`
 
-Okular （[KDE上的通用文档阅读器](https://www.appinn.com/okular/)）` paru -S okular` 
+onenote `paru -S p3x-onenote` 
 
-Foliate [简单、现代的电子书阅读器](https://www.appinn.com/foliate-for-linux/) 安装 `paru -S foliate` 
+Zotero  `paru -S zotero-bin`
 
-Screen屏幕共享软件 安装 `paru -S screen-desktop ` 
+AFFiNE `paru -S affine-bin` or  `paru -S affine-latest-bin`
+
+### U盘启动制作
+
 
 U盘启动制作[etcher](https://github.com/balena-io/etcher) `paru -S etcher-bin` 
 
@@ -616,29 +650,13 @@ U盘启动制作[etcher](https://github.com/balena-io/etcher) `paru -S etcher-bi
 
 [rpi-imager](https://aur.archlinux.org/packages/rpi-imager) 树莓派的镜像写入工具 `paru -S rpi-imager `
 
-xmind-2020 安装 `paru -S xmind-2020` ([福利链接](https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g))
-
-drawio  安装` paru -S drawio-desktop-bin` 或者 ` paru -S drawio-desktop`
-
-钉钉 安装 `paru -S  dingtalk-electron ` 
-
-企业微信 `paru -S deepin-wine-wxwork` 
-
-腾讯会议 `paru -S wemeet-bin`
-
-飞书 `paru -S feishu-bin`
+### 其他
 
 剪切板工具 [uniclip](https://github.com/quackduck/uniclip) `paru -S uniclip`
 
-onenote `paru -S p3x-onenote` 
+Screen屏幕共享软件 安装 `paru -S screen-desktop ` 
 
-[crow-translate](https://github.com/crow-translate/crow-translate) 翻译工具`paru -S crow-translate`
-
-realvnc-server `paru -S realvnc-vnc-server ` (安装完毕后需要注册`sudo vnclicense -add 3TH6P-DV5AE-BLHY6-PNENS-B3AQA`,启动服务 `systemctl enable vncserver-x11-serviced`)
-
-realvnc-viewer `paru -S realvnc-vnc-viewer`
-
-Zotero  `paru -S zotero-bin`
+### 字体
 
 windows11 字体 `paru -S ttf-ms-win11-auto `
 
@@ -655,7 +673,7 @@ windows11 字体 `paru -S ttf-ms-win11-auto `
 [macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `paru -S 
 macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
 
-pdf合并工具 `paru -S pdfmerger`
+
 
 在线流程图工具 [https://excalidraw.com](https://excalidraw.com)
 参考

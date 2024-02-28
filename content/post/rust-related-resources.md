@@ -43,8 +43,6 @@ draft: false
 + https://auth0.com/blog/build-an-api-in-rust-with-jwt-authentication-using-nickelrs/
 
 ### 跨语言调用
-+ [Calling Rust code from Go - the Gambiarra way](https://dev.to/grubba/calling-rust-code-from-golang-the-gambiarra-way-13h6)
-
 + https://words.filippo.io/rustgo/
 
 + https://belski.me/blog/foreign-function-interface-in-rust-and-go/

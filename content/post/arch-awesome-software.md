@@ -233,17 +233,12 @@ sudo pacman-key --init && sudo pacman-key --populate
 
 ## SSH管理工具
 
-Remmina 安装 `paru -S remmina`
-可以选装这些插件
+### 终端工具
 
-
-```bash
-freerdp remmina-plugin-teamviewer remmina-plugin-webkit remmina-plugin-rdesktop remmina-plugin-anydesk-git remmina-plugin-rustdesk
-```
-
-终端：
 深度终端 安装 `paru -S deepin-terminal` 
+
 alacritty 安装 `paru -S alacritty ` 
+
 终端渐变色工具lolcat `paru -S lolcat` 
 
 ssh设置如果只是修改客户端选项,创建`~/.ssh/config`或者修改`/etc/ssh/ssh_config`(需要root权限),文件输入下面内容：
@@ -566,8 +561,15 @@ Foliate [简单、现代的电子书阅读器](https://www.appinn.com/foliate-fo
 
 pdf合并工具 `paru -S pdfmerger`
 
-
 ### 远程工具
+
+Remmina 安装 `paru -S remmina`
+可以选装这些插件
+
+
+```bash
+freerdp remmina-plugin-teamviewer remmina-plugin-webkit remmina-plugin-rdesktop remmina-plugin-anydesk-git remmina-plugin-rustdesk
+```
 
 Teamviewer `paru -S teamviewer`如果一直显示未连接，则请退出teamviewer，执行`sudo teamviewer --daemon enable` 再打开试试
 

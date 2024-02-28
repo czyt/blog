@@ -310,6 +310,8 @@ tor `paru -S tor-browser-bin `
 
 goldendict 安装 `paru -S goldendict` [词库](https://github.com/czytcn/goldendict)
 
+[crow-translate](https://github.com/crow-translate/crow-translate) 翻译工具`paru -S crow-translate`
+
 
 ## 聊天软件
 
@@ -518,9 +520,6 @@ moose 支持边下边播的BT工具 `paru -S moose `
 
 飞书 `paru -S feishu-bin`
 
-
-Android屏幕共享[Scrcpy](https://github.com/Genymobile/scrcpy) 安装 `paru -S scrcpy`
-
 [tailscale](https://tailscale.com) 安装 `paru -S tailscale` 
 
 [达芬奇视频剪辑](http://www.blackmagicdesign.com/products/davinciresolve/) 安装 `paru -S davinci-resolve` 
@@ -541,7 +540,7 @@ xmind-2020 安装 `paru -S xmind-2020` ([福利链接](https://mega.nz/folder/Mx
 
 drawio  安装` paru -S drawio-desktop-bin` 或者 ` paru -S drawio-desktop`
 
-[crow-translate](https://github.com/crow-translate/crow-translate) 翻译工具`paru -S crow-translate`
+
 
 ### 截图及录屏工具
 
@@ -1210,6 +1209,8 @@ bun `paru -S bun-bin`
 [fleek ]( https://getfleek.dev) "Home as Code" for Humans
 
 wireshark    GUI `paru -S  wireshark-qt `  Cli `paru -S wireshark-cli`
+
+Android屏幕共享[Scrcpy](https://github.com/Genymobile/scrcpy) 安装 `paru -S scrcpy`
 
 [Tiny RDM](https://github.com/tiny-craft/tiny-rdm)(**a modern lightweight cross-platform Redis desktop manager** ) `paru -S tiny-rdm-bin`
 

@@ -1,5 +1,5 @@
 ---
-title: "RustFace demo程序"
+title: "一个RustFace demo程序"
 date: 2024-02-27
 tags: ["rust"]
 draft: false
@@ -7,7 +7,7 @@ draft: false
 
 > 下面是一个基于[RustFace](https://github.com/atomashpolskiy/rustface)这个库的demo程序。基于[原项目](https://github.com/andyquinterom/shiny-rs-faceapp) 整理。image随便下载一张，model.bin从原项目进行下载即可。
 
-Cargo.toml
+Cargo.toml配置
 
 ```toml
 [package]

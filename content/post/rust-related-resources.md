@@ -8,6 +8,7 @@ draft: false
 + [concurrency programming via rust](https://github.com/smallnest/concurrency-programming-via-rust)
 + https://blog.fudenglong.site/Programming-Rust/
 + [jetbrains出品的rust教程](https://github.com/jetbrains-academy/rustlings-course)
++ [Rust Book experiment](https://rust-book.cs.brown.edu)
 + [微软出品：写给.net开发人员的Rust教程](https://microsoft.github.io/rust-for-dotnet-devs/latest/)
 + [Google Android团队写的Rust教程](https://github.com/google/comprehensive-rust)
 + [通过例子学rust](https://rustwiki.org/zh-CN/rust-by-example/)

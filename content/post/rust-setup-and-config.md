@@ -172,6 +172,21 @@ rustup install stable
 
 安装 `rustup component add rust-analyzer`
 
+### cargo-expand
+
+cargo expand 来查看 derive macro 展开后的代码，你首先需要在你的 Rust 项目中安装 cargo-expand：
+
+```bash
+cargo install cargo-expand
+```
+
+之后，你可以在你的项目目录中运行以下命令来查看 derive macro 展开后的代码：
+```bash
+cargo expand
+```
+
+这会编译你的项目，并输出所有宏展开后的代码，
+
 ### flamegraph
 
 火焰图工具，安装

@@ -623,7 +623,84 @@ rustCopy codefn process_person_info(person: (String, u32, String)) {
 
 ## 进阶
 
-### 宏
+### 宏和元编程
+
+Rust 元编程主要是通过它的宏系统实现的。Rust 宏系统中的 "过程宏" (procedural macros) 是一种功能强大的工具，允许你在编译时生成，修改或消费 Rust 代码。过程宏通常用于自动生成代码（例如，实现特定特征/trait），从而减少重复代码，或者是根据标记/注解 (annotations) 以特定的方式扩展代码。
+在 Rust 中，过程宏可以被分为三种：
+
++ 派生宏 (derive macros)：自动为结构体和枚举实现特定的 trait。
+
++ 属性宏 (attribute macros)：将宏绑定到结构体、函数或模块上，以添加新的功能或提供编译时指令。
+
++ 函数宏 (function-like macros)：看似调用函数一样的宏，但在调用点扩展为一些代码。
+
+darling, syn 和 quote 是三个常用的库，用于创建过程宏：
+
+- syn：用于解析 Rust 代码成为一个可操作的语法树（抽象语法树，AST）。这样你就可以分析和处理 Rust 源代码中的结构和表达式。     
+- quote：用于将 Rust 代码的语法树转换回 Rust 代码。它提供了一种方式，可以很方便的写 Rust 代码的 "引用"，然后扩展为实际的代码片段。
+- darling：这是一个用于解析宏输入的库，建立在 syn 之上，提供了更加方便的 API 来处理宏属性和数据。
+
+现在让我们来看一个基本的例子，用这些库来展示如何实现一个简单的派生宏：
+```rust
+extern crate proc_macro;
+use proc_macro::TokenStream;
+use quote::quote;
+use syn::{parse_macro_input, DeriveInput};
+#[proc_macro_derive(MyTrait)]
+pub fn my_trait_derive(input: TokenStream) -> TokenStream {
+    // 使用 syn 解析 TokenStream 成为一个数据结构。
+    let ast = parse_macro_input!(input as DeriveInput);
+    // 获取我们要实现的 trait 的结构体或枚举的名字。
+    let name = &ast.ident;
+    // 使用 quote 来构建输出的 TokenStream。
+    let expanded = quote! {
+        // 这里生成 Rust 代码，此例子中为目标类型实现一个 MyTrait。
+        impl MyTrait for #name {
+            fn my_function(&self) -> String {
+                String::from(concat!("MyTrait is implemented for ", stringify!(#name)))
+            }
+        }
+    };
+    // 将生成的代码转换为 TokenStream 发送给编译器。
+    TokenStream::from(expanded)
+}
+```
+
+这个宏当被添加到一个结构体或枚举上时，会自动为其实现 MyTrait，提供一个叫做 my_function 的方法。
+请注意，这里使用的是非常简单的例子来演示过程宏的基本概念。实际应用中，你可能需要解析宏的输入来获取更详细的信息，如字段类型、传递的参数等，并且可能要处理各种错误情况。darling 可以提供辅助功能，简化这个处理过程。
+
+下面这个例子展示了使用 `syn` 库来解析 Rust 代码。以下是一个基本的示例：
+
+```rust
+extern crate proc_macro;
+use proc_macro::TokenStream;
+use syn::{parse_macro_input, DeriveInput};
+#[proc_macro_derive(MyDerive)]
+pub fn my_derive(input: TokenStream) -> TokenStream {
+   // 将传入的 TokenStream 转化为 Rust AST。
+    let ast = parse_macro_input!(input as DeriveInput);
+    // 现在你可以访问 AST 中的所有信息
+    // 例如，我们可以获取正在派生的结构体的名字
+    let struct_name = ast.ident;
+    // ...在这里根据 struct_name 和其他 AST 组件做进一步的处理...
+    // 接下来你将使用 quote 生成代码并返回 TokenStream
+    TokenStream::new()
+}
+```
+
+在这段代码中，`parse_macro_input!` 宏接收一个 `TokenStream` 并使用 `syn` 的解析器将其转化为 `DeriveInput` 结构。`DeriveInput` 是 `syn` 提供的一个 AST 节点，它代表正在被派生的结构体、枚举或联合体。一旦你有了 AST 的 `DeriveInput` 结构，你就可以使用它来访问结构体的名字、字段、属性、泛型参数等。 例如，如果你想要检查所有的字段并打印它们的名字，你可以这样做：
+
+```rust
+if let syn::Data::Struct(ref data_struct) = ast.data {
+    for field in data_struct.fields.iter() {
+        if let Some(ident) = &field.ident {
+            println!("Field name: {}", ident);
+        }
+    }
+}
+```
+
+在操作完 AST 后，接着使用 `quote` 衍生宏生成所需的代码。
 
 ### 生命周期
 

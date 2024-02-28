@@ -625,6 +625,63 @@ rustCopy codefn process_person_info(person: (String, u32, String)) {
 
 ### 宏和元编程
 
+#### 声明宏
+
+`macro_rules! `是 Rust 中定义宏的一种方式。这种宏称为 "声明宏"（declarative macros），它允许你编写模式匹配规则，它们指定如何根据宏的参数替换代码。宏定义看起来像这样：
+
+```rust
+macro_rules! macro_name {
+    // pattern => expansion
+    (pattern) => (expansion);
+    // 你可以有多个模式/展开规则
+}
+```
+
+你可以按照以下步骤来使用 macro_rules! 定义和使用宏：
+定义宏： 你需要使用 macro_rules! 开始宏定义，后面跟上宏的名称：
+
+```rust
+macro_rules! say_hello {
+    // patterns
+}
+```
+
+创建模式和展开规则： 在大括号中，写下一个或多个模式和对应的展开代码。这决定了你的宏如何响应不同的输入：
+```rust
+// 宏接收一个表达式作为参数，并打印出 "Hello, …!"
+($name:expr) => {
+    println!("Hello, {}!", $name);
+};
+```
+
+宏调用： 这样，宏就定义好了，你可以在代码的任何地方调用它，就像这样：
+```rust
+say_hello!("World");
+// 每个宏调用都会被宏定义中的展开规则所替换。
+```
+
+它将展开为：
+```rust
+println!("Hello, World!");
+```
+
+这是一个完整的简单宏的例子：
+```rust
+macro_rules! say_hello {
+    ($name:expr) => {
+        println!("Hello, {}!", $name);
+    };
+}
+fn main() {
+    // 宏调用
+    say_hello!("World");
+}
+```
+
+运行这个程序，输出会是 "Hello, World!"。这就是 macro_rules! 宏在 Rust 中的基本用法。你可以定义更复杂的模式和展开，包括重复模式、匹配不同类型的输入等，这样的宏非常灵活而强大。 
+
+#### 过程宏
+
 Rust 元编程主要是通过它的宏系统实现的。Rust 宏系统中的 "过程宏" (procedural macros) 是一种功能强大的工具，允许你在编译时生成，修改或消费 Rust 代码。过程宏通常用于自动生成代码（例如，实现特定特征/trait），从而减少重复代码，或者是根据标记/注解 (annotations) 以特定的方式扩展代码。
 在 Rust 中，过程宏可以被分为三种：
 

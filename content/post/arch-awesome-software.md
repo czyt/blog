@@ -80,6 +80,32 @@ paru -S ntfs-3g ntfs-3g-fuse
 > 
 > 新版本的都不需要安装上述组件.挂载失败后，可以通过`dmesg`查看失败原因，一般比较常遇到的是`sda1: volume is dirty and "force" flag is not set!`这个错误，可以通过 `ntfsfix -d /dev/sdx`进行修复就可以正常挂载了。
 
+### deb包
+
+在 Arch Linux 安装 .deb 包不是直接支持的，因为 Arch 使用的是 .pkg.tar.xz 作为其包格式。不过，你可以使用 debtap 这个工具来转换 .deb 包到 Arch Linux 可以识别的格式，之后再进行安装。这里是如何做到这点的步骤：
+首先，你需要从 AUR 安装 debtap 工具。你可以使用 yay 或任何其他 AUR 帮助器来安装它，如果你没有安装 AUR 帮助器，可以手动克隆 debtap 的 AUR 仓库并构建它：
+
+```bash
+paru -S debtap
+```
+
+然后，你需要更新 debtap 的数据库：
+```bash
+sudo debtap -u
+```
+
+注意，你可能需要多次运行此命令，直到不再显示有新的更新。
+接下来，将 .deb 包转换为 Arch Linux 包格式：
+
+```bash
+debtap <package-name>.deb
+```
+
+转换之后，生成的 PKG 文件可以使用 pacman 进行安装：
+```bash
+sudo pacman -U <package-name>.pkg.tar.xz
+```
+
 ### 安装桌面
 
 #### KDE

@@ -13,6 +13,7 @@ draft: false
 + [Google Android团队写的Rust教程](https://github.com/google/comprehensive-rust)
 + [通过例子学rust](https://rustwiki.org/zh-CN/rust-by-example/)
 + https://cheats.rs/
++ https://course.rs
 + [learn how to write macros in Rust](https://tfpk.github.io/macrokata/)
 + [Operating System development tutorials in Rust on the Raspberry Pi](https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials)
 + [Rust语言实战](https://zh.practice.rs)
@@ -29,7 +30,7 @@ draft: false
 + [rCore-Tutorial-Book 第三版](https://rcore-os.cn/rCore-Tutorial-Book-v3/index.html)
 + [OffensiveRust](https://github.com/0xTriboulet/OffensiveRust#offensiverust)
 + [RustPrimer](https://rustcc.gitbooks.io/rustprimer/content/)
-+ [Rust Atomics and Locks 中文版](https://github.com/rustcc/Rust_Atomics_and_Locks)
++ [Rust Atomics and Locks中文版 ](https://atomics.rs)
 + [Rust 程序设计语言 2021版 中文](https://github.com/KaiserY/trpl-zh-cn)
 + [rust 教程资料收集 - fkysly](https://graceful-direction-b61.notion.site/Rust-fkysly-7e1a57dd614b4a2d9173b09ab9506895)
 + [case studies](https://github.com/dtolnay/case-studies)
@@ -60,3 +61,7 @@ draft: false
 
  + 杨旭Rust Web 全栈开发教程
 {{< bilibili BV1RP4y1G7KF >}}  
+
++ [Crust of Rust系列视频]( https://www.youtube.com/watch?v=rMGWeSjctlY)
+
++ [FCC的rust入门视频](https://www.youtube.com/watch?v=BpPEoZW5IiY)

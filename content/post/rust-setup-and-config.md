@@ -168,6 +168,38 @@ rustup install stable
 
 ## 其他实用工具
 
+### 代码覆盖率工具
+
+#### **cargo-tarpaulin**
+
+```bash
+cargo install cargo-tarpaulin
+```
+
+或者
+
+```bash
+cargo binstall cargo-tarpaulin
+```
+
+[使用帮助](https://crates.io/crates/cargo-tarpaulin)参考
+
+#### **grcov**
+
+```bash
+cargo install grcov
+```
+
+[使用说明](https://crates.io/crates/grcov)
+
+#### **cargo-llvm-cov**
+
+```bash
+cargo +stable install cargo-llvm-cov --locked
+```
+
+[使用说明](https://crates.io/crates/cargo-llvm-cov)
+
 ### rust-analyzer
 
 安装 `rustup component add rust-analyzer`

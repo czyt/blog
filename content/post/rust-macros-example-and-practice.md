@@ -117,6 +117,43 @@ macro_rules! add {
 
 请记住，声明宏时，不能在宏名称后面写感叹号（ `!` ），但在调用宏时必须写感叹号。
 
+>注：下面例子来自陈天《rust第一课》
+>
+>```rust
+>#[macro_export]
+>macro_rules! my_vec {
+>    // 没带任何参数的 my_vec，我们创建一个空的 vec
+>    () => {
+>        std::vec::Vec::new()
+>    };
+>    // 处理 my_vec![1, 2, 3, 4]
+>    ($($el:expr),*) => ({
+>        let mut v = std::vec::Vec::new();
+>        $(v.push($el);)*
+>        v
+>    });
+>    // 处理 my_vec![0; 10]
+>    ($el:expr; $n:expr) => {
+>        std::vec::from_elem($el, $n)
+>    }
+>}
+>
+>fn main() {
+>    let mut v = my_vec![];
+>    v.push(1);
+>    // 调用时可以使用 [], (), {}
+>    let _v = my_vec!(1, 2, 3, 4);
+>    let _v = my_vec![1, 2, 3, 4];
+>    let v = my_vec! {1, 2, 3, 4};
+>    println!("{:?}", v);
+>
+>    println!("{:?}", v);
+>    //
+>    let v = my_vec![1; 10];
+>    println!("{:?}", v);
+>}
+>```
+
 ###  程序宏
 
 过程宏是声明性宏的一大进步。与它们的声明式表兄弟一样，它们可以访问 Rust 代码，但过程宏可以对代码进行操作（类似于函数）并生成新代码。

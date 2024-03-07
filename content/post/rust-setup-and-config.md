@@ -228,6 +228,46 @@ cargo install flamegraph
 cargo install cargo-flamegraph
 ```
 
+### cargo-zigbuild
+
+[官方仓库](https://github.com/rust-cross/cargo-zigbuild)
+
+#### 安装
+
+使用 zig 作为链接器编译 Cargo 项目，以便于交叉编译。
+
+```bash
+cargo install cargo-zigbuild
+```
+
+您也可以使用 pip 安装它，它也会自动安装 `ziglang` ：
+
+```bash
+pip install cargo-zigbuild
+```
+
+#### 使用
+
+1. 按照官方文档安装 zig，在 macOS、Windows 和 Linux 上，您还可以通过以下方式 `pip3 install ziglang` 从 PyPI 安装 zig
+
+2. 通过 rustup 安装 Rust 目标，例如， `rustup target add aarch64-unknown-linux-gnu`
+
+3. 运行 `cargo zigbuild` ，例如， `cargo zigbuild --target aarch64-unknown-linux-gnu`
+
+   > **其他选项**
+   >
+   > + `cargo zigbuild` 支持在选项中 --target 传递 glibc 版本，例如，使用 aarch64-unknown-linux-gnu 目标编译 glibc 2.17：`cargo zigbuild --target aarch64-unknown-linux-gnu.2.17`
+   >
+   > + `cargo zigbuild` 支持在 Rust 1.64.0 及更高版本上构建 macOS universal2 二进制文件/库的特殊 `universal2-apple-darwin` 目标。
+   >
+   > ```bash
+   > rustup target add x86_64-apple-darwin
+   > rustup target add aarch64-apple-darwin
+   > cargo zigbuild --target universal2-apple-darwin
+   > ```
+   >
+   > 请注意，Cargo `--message-format` 选项目前不适用于 universal2 目标。
+
 ### cross
 
 cross是一个跨平台编译的工具，github仓库地址为 https://github.com/cross-rs/cross

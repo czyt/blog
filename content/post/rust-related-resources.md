@@ -46,6 +46,8 @@ draft: false
 ### 跨语言调用
 + https://words.filippo.io/rustgo/
 
++ https://amirmalik.net/2023/02/15/embedding-go-in-rust
+
 + https://belski.me/blog/foreign-function-interface-in-rust-and-go/
 
 + [Calling Rust from C#](https://dev.to/living_syn/calling-rust-from-c-6hk)

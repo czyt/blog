@@ -1322,7 +1322,13 @@ postman 安装 `paru -S postman-bin` [汉化文件](https://github.com/hlmd/Post
 
 apifox 安装 `paru -S apifox`
 
+[Yaak](https://yaak.app/) api调试工具
+
+[hoppscotch](https://hoppscotch.io)安装 `yay -S  hoppscotch-bin`
+
 [insomnia](https://insomnia.rest) API调试客户端 安装 `paru -S insomnia-bin`
+
+insomnium api调试工具 `paru -S insomnium-bin`
 
 Typora markdown编辑器 安装 `paru -S typora`
 

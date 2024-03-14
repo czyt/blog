@@ -200,6 +200,14 @@ cargo +stable install cargo-llvm-cov --locked
 
 [使用说明](https://crates.io/crates/cargo-llvm-cov)
 
+### cargo-wizard
+
+该工具可以将配置文件和配置模板应用于您的 Cargo 项目，以将其配置为最大性能、快速编译时间或最小二进制大小。[github](https://github.com/kobzol/cargo-wizard)
+
+```bash
+cargo install cargo-wizard
+```
+
 ### rust-analyzer
 
 安装 `rustup component add rust-analyzer`

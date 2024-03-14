@@ -621,6 +621,64 @@ rustCopy codefn process_person_info(person: (String, u32, String)) {
 
 这样，只有 `age` 被解构并使用，而其他的元素被忽略。
 
+### 日志
+
+在 Rust 中正确使用日志记录的方法是使用 log crate，这是 Rust 生态系统中的一个通用日志记录接口，它允许库作者输出日志信息，而无需考虑最终用户选择的日志记录框架。
+
+要在 Rust 项目中使用 log crate 进行日志记录，请按照以下步骤操作：
+
+#### 添加依赖项
+
+在你的 Cargo.toml 文件中添加 log crate 作为依赖项：
+```toml
+[dependencies]
+log = "0.4"
+```
+
+这里 "0.4" 表示 log crate 的版本号，请使用最新的版本号。
+
+#### 选择日志后端
+
+除了 log crate 外，你还需要一个具体的日志后端（如 env_logger）来实现实际的日志记录功能。添加后端如下：
+```toml
+env_logger = "0.9"
+```
+#### 初始化日志后端
+
+在程序的入口点（如 main 函数）初始化日志后端：
+```rust
+fn main() {
+    env_logger::init();
+    // ... 你的程序逻辑
+}
+```
+#### 记录日志
+
+使用 log crate 提供的宏（error!, warn!, info!, debug!, trace!）来记录日志：
+
+```rust
+use log::{info, warn, error, debug, trace};
+
+fn main() {
+    env_logger::builder().filter_level(log::LevelFilter::Trace).init();
+    info!("Hello, world!");
+    warn!("This is a warning");
+    error!("This is an error");
+    debug!("This is a debug message");
+    trace!("This is a trace message {:?}","sss")
+}
+```
+
+#### 运行程序
+
+运行你的程序时，你可以通过设置环境变量 RUST_LOG 来控制日志的详细程度。例如，使用以下命令运行程序：
+
+```bash
+RUST_LOG=info cargo run
+```
+这会显示所有的 “info” 级别和更高级别（如 “warn” 和 “error”）的日志。
+请注意，以上步骤是一个基础的入门指南。在生产环境中，你可能需要对日志记录进行更复杂的配置，包括日志格式的定制、记录到文件、集成错误报告服务等。但出于功能演示的目的，env_logger 是一个简单且常见的选择。记得阅读你选择的日志后端的文档，以了解所有可用的配置选项。
+
 ## 进阶
 
 ### 宏和元编程

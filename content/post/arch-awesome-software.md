@@ -342,6 +342,8 @@ goldendict 安装 `paru -S goldendict` [词库](https://github.com/czytcn/golden
 
 > 这各版本的微信新版本会安装deepin-wine8,如果出现中文字体方框，需要安装文泉驿微米黑字体 `paru -S wqy-microhei`
 
+微信Linux原生版本  `paru -S wechat-uos-bwrap`
+
 QQ 安装 `paru -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`
 
 新版LinuxQQ `paru -S linuxqq`
@@ -1324,7 +1326,13 @@ postman 安装 `paru -S postman-bin` [汉化文件](https://github.com/hlmd/Post
 
 apifox 安装 `paru -S apifox`
 
+[Yaak](https://yaak.app/) api调试工具
+
+[hoppscotch](https://hoppscotch.io)安装 `yay -S  hoppscotch-bin`
+
 [insomnia](https://insomnia.rest) API调试客户端 安装 `paru -S insomnia-bin`
+
+insomnium api调试工具 `paru -S insomnium-bin`
 
 Typora markdown编辑器 安装 `paru -S typora`
 

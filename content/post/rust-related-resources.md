@@ -34,6 +34,7 @@ draft: false
 + [Rust 程序设计语言 2021版 中文](https://github.com/KaiserY/trpl-zh-cn)
 + [rust 教程资料收集 - fkysly](https://graceful-direction-b61.notion.site/Rust-fkysly-7e1a57dd614b4a2d9173b09ab9506895)
 + [case studies](https://github.com/dtolnay/case-studies)
++ [Rust 101](https://www.ralfj.de/projects/rust-101/main.html)
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
 

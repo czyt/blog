@@ -90,10 +90,10 @@ draft: false
 ```
 后期如果需要调整角色，可以使用语句`db.grantRolesToUser("otherRole",["userAdminAnyDatabase"])`
 修改配置文件`/etc/mongodb.conf`，启用授权连接。
-      ```yaml
-      security:
-          authorization: enabled
-      ```
+```yaml
+security:
+  authorization: enabled
+```
 重启mongodb服务 `systemctl restart mongodb` 使配置生效。
  修改用户密码
 ```shell
@@ -101,6 +101,21 @@ draft: false
       db.changeUserPassword("czyt", "dbpassword");
 ```
  > 最新的MongoDB4.4版本已经不能在树莓派3b上安装，最后可安装的版本为4.4.18。可以下载版本的[存档](https://aur.archlinux.org/cgit/aur.git/snapshot/aur-754d0709ee78271915f24163cb914aca2f27d758.tar.gz)，解压后`makepkg -si`安装即可。
+
+然后就可以`mongosh` （MongoDB Shell）并且带上密码登录 MongoDB，你可以使用以下格式的命令：
+
+```bash
+mongosh "mongodb://yourUsername:yourPassword@hostname:port/database?authSource=admin"
+```
+
+以下是命令参数的解释：
+
+- `yourUsername`：你的 MongoDB 用户名。
+- `yourPassword`：你的 MongoDB 密码。
+- `hostname`：MongoDB 服务器的主机名或者 IP 地址。
+- `port`：MongoDB 服务的端口（如果是默认端口 27017 可以省略）。
+- `database`：你想要登录的数据库名称。
+- `authSource=admin`：用于指定认证数据库，通常默认为 `admin`。
 
 ### 连接字符串
 

@@ -89,7 +89,47 @@ draft: false
       db.grantRolesToUser('czyt',[{ role: "root", db: "admin" }])
 ```
 后期如果需要调整角色，可以使用语句`db.grantRolesToUser("otherRole",["userAdminAnyDatabase"])`
+
+>在 MongoDB 中，内置角色用于授予数据库用户一系列预定义的权限。下面是一些内置角色，它们允许用户连接到数据库：
+>
+>1. read: 允许用户读取指定数据库的非系统集合和视图。
+>
+>2. readWrite: 允许用户读写指定数据库的非系统集合和视图。
+>
+>3. dbAdmin: 允许用户执行管理函数，如索引创建、删除、查看统计信息和系统集合的读取。
+>
+>4. userAdmin: 允许用户创建和修改用户和角色。
+>
+>5. dbOwner: 此角色结合了 readWrite、dbAdmin 和 userAdmin 的权限，允许用户对数据库执行任何操作。
+>
+>对于那些需要跨多个数据库操作的角色：
+>
+>1. readAnyDatabase: 授予连接到并读取所有数据库权限（不包括 config 和 local 数据库）。这个角色通常在 admin 数据库中授予。
+>
+>2. readWriteAnyDatabase: 授予在所有数据库上读写的权限（不包括 config 和 local 数据库）。这个角色通常在 admin 数据库中授予。
+>
+>3. userAdminAnyDatabase: 授予创建和管理所有数据库中用户账户的权限。这个角色通常在 admin 数据库中授予。
+>
+>4. dbAdminAnyDatabase: 授予在所有数据库上执行管理任务的权限。这个角色通常在 admin 数据库中授予。
+>
+>还有更高级别的角色，如:
+>
+>1. clusterAdmin: 授予管理集群的权限。
+>
+>2. clusterManager: 允许用户管理和监控集群。
+>
+>3. clusterMonitor: 允许用户监控集群但不管理它。
+>
+>4. hostManager: 允许用户管理服务器。
+>
+>最高权限的角色:
+>
+>1. root: 几乎拥有所有权限，包括服务器管理和用户管理权限。
+>
+>请记住，创建用户并分配角色需要具备相应的权限，通常由已有 userAdmin 或 userAdminAnyDatabase 角色的用户来执行。再次强调，分配具有广泛权限的角色（如 root 或任何 *AnyDatabase 角色）应该十分谨慎，因为它们会授予用户对数据库的广泛访问能力。常见的做法是仅根据用户需要完成其工作的最小权限集来分配角色。
+
 修改配置文件`/etc/mongodb.conf`，启用授权连接。
+
 ```yaml
 security:
   authorization: enabled

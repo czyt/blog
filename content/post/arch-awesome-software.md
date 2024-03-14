@@ -791,6 +791,8 @@ paru -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sar
 
 ### rime
 
+详细介绍[wiki](https://wiki.archlinuxcn.org/wiki/Rime)
+
 参考官网 [传送门](https://rime.im)
 基本库 `paru -S ibus ibus-qt ibus-rime` 
 配置文件内容
@@ -807,7 +809,9 @@ ibus-daemon -d -x
 
 #### 有用的仓库
 
-+ 雾凇拼音 https://github.com/iDvel/rime-ice
++ [雾凇拼音]( https://github.com/iDvel/rime-ice)  可以通过 `paru -S  rime-ice-git `进行安装
+
++ [oh-my-rime](https://github.com/Mintimate/oh-my-rime)
 
 + [Rime auto deploy](https://github.com/Mark24Code/rime-auto-deploy)
 

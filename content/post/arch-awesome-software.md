@@ -813,7 +813,7 @@ ibus-daemon -d -x
 
 + [雾凇拼音]( https://github.com/iDvel/rime-ice)  可以通过 `paru -S  rime-ice-git `进行安装
 
-+ [oh-my-rime](https://github.com/Mintimate/oh-my-rime)
++ [oh-my-rime薄荷输入法](https://github.com/Mintimate/oh-my-rime)
 
 + [Rime auto deploy](https://github.com/Mark24Code/rime-auto-deploy)
 

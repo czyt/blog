@@ -797,7 +797,7 @@ paru -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sar
 
 参考官网 [传送门](https://rime.im)
 基本库 `paru -S ibus ibus-qt ibus-rime` 
-配置文件内容
+在`$HOME/.bashrc`加入下面的配置内容
 
 ```json
 export GTK_IM_MODULE=ibus
@@ -805,6 +805,8 @@ export XMODIFIERS=@im=ibus
 export QT_IM_MODULE=ibus
 ibus-daemon -d -x
 ```
+
+> ⚠️执行 `ibus-setup`进行配置。在*setting*->*Region & Language*下的*input sources*中加入Other->Chinese(Rime)。重启即可。
 
 [四叶草输入法](https://github.com/fkxxyz/rime-cloverpinyin) `paru -S rime-cloverpinyin` 
 参考 https://wiki.archlinux.org/index.php/Fcitx

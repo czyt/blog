@@ -1185,6 +1185,16 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 
 [Warp Terminal](https://www.warp.dev)  `paru -S warp-terminal`
 
+>安装之前需要执行下面的脚本
+>
+>```bash
+>sudo sh -c "echo -e '\n[warpdotdev]\nServer = https://releases.warp.dev/linux/pacman/\$repo/\$arch' >> /etc/pacman.conf"
+>sudo pacman-key -r "linux-maintainers@warp.dev"
+>sudo pacman-key --lsign-key "linux-maintainers@warp.dev"
+>```
+>
+>[官网说明](https://docs.warp.dev/getting-started/getting-started-with-warp#installing-and-running-warp)
+
 ### 自定义主题
 
 需要事先安装软件 `paru -S gnome-tweaks chrome-gnome-shell`

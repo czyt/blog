@@ -168,6 +168,22 @@ rustup install stable
 
 ## 其他实用工具
 
+### WASM
+
+需要安装Target
+
+```bash
+rustup target add wasm32-unknown-unknown
+```
+
+可以使用这几个库
+
++ wasm-bindgen-cli
++ wasm-pack
++ napi-rs
+
+参考文章 https://mp.weixin.qq.com/s/ULErveNYlnyHFdoH8-3peA
+
 ### 代码覆盖率工具
 
 #### **cargo-tarpaulin**

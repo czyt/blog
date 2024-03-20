@@ -316,10 +316,38 @@ cargo install cargo-generate
 
 >陈天的两个模板库
 >
->+ [smithy](https://www.smithy.rs) https://github.com/tyrchen/smithy-template
+>+ [smithy]( https://github.com/tyrchen/smithy-template)
+> > smithy是一个用来编写WebAssembly的框架，官网网站 https://www.smithy.rs
+>
 >+ [rust template](https://github.com/tyrchen/rust-template)
+>
+>我的generate仓库
+>
+>+ [axum模板](https://github.com/tpl-x/axump)
 
+### Cargo deny
 
+Cargo deny 是一个 Cargo 插件，可以用于检查依赖的安全性。
+
+```
+cargo install --locked cargo-deny
+```
+
+### typos
+
+typos 是一个拼写检查工具。
+
+```
+cargo install typos-cli
+```
+
+### git cliff
+
+git cliff 是一个生成 changelog 的工具。
+
+```
+cargo install git-cliff
+```
 
 ###  cargo-audit
 

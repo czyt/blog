@@ -166,6 +166,20 @@ rustup install stable
 
 - [https://erasin.wang/rustup/](https://erasin.wang/rustup/)
 
+## 其他参数设置
+### 设置统一Target目录
+为所有Rust项目设置一个共享的target目录，请按下步骤：
+
+1. 打开或创建位于全局的Cargo配置文件`~/.cargo/config`
+
+2. 在文件中添加以下两行配置：
+```toml
+[build]
+target-dir = "/target/directory"
+```
+
+>替换`/target/directory`为你自己的共享target目录。
+
 ## 其他实用工具
 
 ### WASM
@@ -373,6 +387,29 @@ cargo audit fix
 
 即可以自动修复Cargo.toml中存在安全问题的依赖项。
 
+### cargo watch
+
+Cargo watch是一个Cargo插件，用于监视项目源文件中的更改。
+
+在项目根目录下，运行如下命令安装cargo watch：
+
+```bash
+cargo add cargo-watch
+```
+
+然后运行以下命令来运行cargo watch：
+
+```bash
+cargo watch -q -c -w src/ -X 'run -q'
+```
+
+- -q 代表安静，它会抑制cargo watch的输出
+- -c 将清除屏幕，
+- -w 允许我们指定要监视的文件和文件夹，在这个例子中，只监视src目录
+- -x 允许我们指定要执行的cargo命令，在本例中我们执行“cargo run -q”，如果我们执行这个命令，那么将阻止打印cargo日志消息。
+
+如果代码发生变化，程序将自动重新编译。
+
 ### cargo-nextest
 
 nextest自诩为“下一代Rust测试运行程序”。
@@ -387,6 +424,38 @@ cargo install cargo-nextest
 
 ```bash
 cargo nextest run
+```
+
+同时也可以使用Github Action来进行自动化可持续集成，下面是一个简单的Action例子
+
+```yaml
+name: Rust CI
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Rust
+        uses: actions/checkout@v2
+      - name: Install cargo-audit
+        uses: cargo install cargo-audit
+      - name: Build
+        uses: cargo build --verbose
+      - name: Test
+        uses: cargo test --verbose
+      - names: Clippy
+        uses: cargo clippy --verbose -- -D warnings
+      - names: Audit
+        uses: cargo audit
 ```
 
 ### cargo-make
@@ -659,6 +728,8 @@ jobs:
 + [Cross-compilation](https://rust-lang.github.io/rustup/cross-compilation.html#cross-compilation)
 
 + [compiling-rust-for-raspberry-pi-arm](https://medium.com/swlh/compiling-rust-for-raspberry-pi-arm-922b55dbb050)
+
++ [Rust开发环境最佳设置](https://mp.weixin.qq.com/s/cQxIxKYjumH21ZV1yEwVfw)
 
   
   

@@ -35,6 +35,7 @@ draft: false
 + [rust 教程资料收集 - fkysly](https://graceful-direction-b61.notion.site/Rust-fkysly-7e1a57dd614b4a2d9173b09ab9506895)
 + [case studies](https://github.com/dtolnay/case-studies)
 + [Rust 101](https://www.ralfj.de/projects/rust-101/main.html)
++ [Rust Design Patterns](https://rust-unofficial.github.io/patterns/)  [中文版](https://fomalhauthmj.github.io/patterns/intro.html) / [pdf](https://rust-unofficial.github.io/patterns/rust-design-patterns.pdf)
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
 

@@ -731,6 +731,8 @@ jobs:
 
 + [Rust开发环境最佳设置](https://mp.weixin.qq.com/s/cQxIxKYjumH21ZV1yEwVfw)
 
++ [必看！2024 Rust精选库清单，值得收藏](https://zhuanlan.zhihu.com/p/688906139)
+
   
   
   

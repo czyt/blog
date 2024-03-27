@@ -410,6 +410,32 @@ cargo watch -q -c -w src/ -X 'run -q'
 
 如果代码发生变化，程序将自动重新编译。
 
+### cargo-fuzz
+
+cargo-fuzz是一款模糊测试工具，它使用一种称为模糊测试的技术来进行自动化软件测试。通过向程序提供许多有效的、几乎有效的或无效的输入，模糊测试可以帮助开发人员找到不希望看到的行为或漏洞。
+
+安装
+
+```bash
+cargo install cargo-fuzz
+```
+
+下面是一个如何使用cargo-fuzz对Rust函数进行模糊测试的例子：
+
+```rust
+#![no_main]
+#[macro_use]
+extern crate libfuzzer_sys;
+fuzz_target!(|data: &[u8]| {
+
+    let json_string = std::str::from_utf8(data).unwrap();
+    let _ = serde_json::from_str::<serde_json::Value>(&json_string).unwrap();
+
+});
+```
+
+上面的代码通过向JSON解析器提供随机输入来测试它。fuzz_target将持续被调用，直到遇到触发panic并导致崩溃的输入。
+
 ### cargo-nextest
 
 nextest自诩为“下一代Rust测试运行程序”。

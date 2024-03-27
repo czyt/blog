@@ -484,6 +484,33 @@ jobs:
         uses: cargo audit
 ```
 
+### cargo-dist
+
+该工具用来分发您的二进制文件，使用该工具将生成自己的 CI 脚本。例如，使用 `cargo dist init` 启用 GitHub CI 将生成release.yml，它实现了计划、构建、托管、发布、宣布的完整管道：
+
+-  计划
+  - 等待您推送新版本的 git 标签（v1.0.0、my-app-v1.0.0、my-app/1.0.0，...）
+  - 根据该标签选择工作区中要发布新版本的应用程序
+  - 生成包含变更日志和构建计划的机器可读清单
+-  建造
+  - 为您支持的每个平台启动机器
+  - 构建您的二进制文件和 tarball
+  - 为您的二进制文件构建安装程序
+-  发布：
+  - 上传到包管理器
+-  托管+发布changelog：
+  - 创建（或编辑）GitHub 版本
+  - 将构建工件上传到发行版
+  - 添加发布/变更日志中的相关发行说明
+
+安装 
+
+```bash
+cargo install cargo-dist
+```
+
+详细使用，请参考  [cargo-dist book](https://axodotdev.github.io/cargo-dist/book/)
+
 ### cargo-make
 
 使用cargo安装

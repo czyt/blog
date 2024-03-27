@@ -1352,6 +1352,8 @@ Typora markdown编辑器 安装 `paru -S typora`
 
 [picgo](https://github.com/Molunerfinn/PicGo) 安装 `paru -S picgo-appimage`
 
+[freeze](https://github.com/charmbracelet/freeze)(将代码或终端输出转换为图片) 安装 `paru -S freeze`
+
 dnspy 安装 `paru -S dnspy` (需要使用blackarch源)
 
 tmux 终端工具 安装 `paru -S tmux`

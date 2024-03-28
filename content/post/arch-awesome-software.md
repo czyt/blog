@@ -189,7 +189,21 @@ SigLevel = Optional TrustAll
 Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
 Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch
 ```
+强烈建议开启 pacman 的颜色和多线程下载功能，编辑 **`/etc/pacman.conf`** 文件，将对应位置前 **#** 删除即可：
+
+```shell
+...
+#UseSyslog
+Color
+#NoProgressBar
+CheckSpace
+#VerbosePkgLists
+ParallelDownloads = 4
+...
+```
+
 安装 [archlinuxcn-mirrorlist-git](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/archlinuxcn-mirrorlist-git) 包可以获得一份镜像列表，以便在 pacman.conf 中直接引入
+
 ```bash
 sudo pacman -S archlinuxcn-mirrorlist-git
 ```
@@ -252,6 +266,203 @@ sudo pacman-key --init && sudo pacman-key --populate
 >`paru --gendb` -- Generate the devel database for tracking `*-git` packages. This is only needed when you initially start using paru.
 >
 >`paru -Bi .` -- Build and install a PKGBUILD in the current directory.
+
+## 窗口管理Wayland
+
+> 这部分取自文章 [ArchLinux下Hyprland配置指北](https://www.bilibili.com/read/cv22707313/)
+
+# 安装Wayland
+
+首先使用以下命令安装Wayland所需环境，如果需要兼容 xorg 软件记得加上 **xorg-xwayland** 软件包：
+
+```shell
+sudo pacman -S xorg-xwayland qt5-wayland qt6-wayland glfw-wayland
+```
+
+要查看当前有哪些客户端是使用 xorg 的，可以安装 **xorg-xlsclients** 然后查看：
+
+```shell
+sudo pacman -S xorg-xlsclients
+ # 查看
+ xlsclients
+```
+
+# 安装 Hyprland
+
+Hyprland 是 Wayland 环境下的一个很棒的合成器，支持窗口透明、模糊、圆角、插件和动画效果等，不过目前还没有发布正式稳定版，所以很多发行版都没有上架，目前支持的发行版在官方安装教程里面列出了：Hyprland Installation 。虽然没有发布稳定版，但是日常使用已经没有什么问题了。
+
+如果安装了 AUR 工具，那么可以直接进行安装，不用自己配置：**`paru -S hyprland-bin`** 。这里演示一下源码安装：
+
+1. 安装依赖
+
+```shell
+paru -S gdb ninja gcc cmake meson libxcb xcb-proto xcb-util xcb-util-keysyms libxfixes libx11 libxcomposite xorg-xinput libxrender pixman wayland-protocols cairo pango seatd libxkbcommon xcb-util-wm xorg-xwayland libinput
+```
+
+1. 下载源码
+
+```shell
+git clone --recursive https://github.com/hyprwm/Hyprland
+```
+
+1. 编译安装
+
+```shell
+cd Hyprland
+meson _build
+ninja -C _build
+ninja -C _build install
+```
+
+
+
+# 复制配置文件
+
+安装好 Hyprland 后记得复制配置文件到用户文件夹：
+
+```shell
+mkdir -pv ~/.config/hypr
+ # 如果是 AUR 安装
+ sudo cp /usr/share/hyprland/hyprland.conf ~/.config/hypr/
+ # 如果是源码安装
+ sudo cp /usr/local/share/hyprland/hyprland.conf ~/.config/hypr
+ # 配置文件内都有详细注释，虽然全是英文～
+```
+
+# 配置登录启动
+
+此处配置适用于不使用登录服务器的，如果使用登录服务器请参考 登录服务器启动Hyprland 。
+
+由于使用 Wayland ，所以就不能像 Xorg 下使用 startx 快速启动桌面环境了，我一般手动登录后，输入 **start_hyprland** 进行桌面环境，首先编辑 **`~/.bash_profile`** 文件，如果使用 **fish 、zsh** 等请参考其配置文件名称：
+
+```shell
+# 启动 wayland 桌面前设置一些环境变量
+ function set_wayland_env
+ {
+  cd ${HOME}
+  # 设置语言环境为中文
+  export LANG=zh_CN.UTF-8
+  # 解决QT程序缩放问题
+  export QT_AUTO_SCREEN_SCALE_FACTOR=1
+  # QT使用wayland和gtk
+  export QT_QPA_PLATFORM="wayland;xcb"
+  export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+  # 使用qt5ct软件配置QT程序外观
+  export QT_QPA_PLATFORMTHEME=qt5ct
+
+  # 一些游戏使用wayland
+  export SDL_VIDEODRIVER=wayland
+  # 解决java程序启动黑屏错误
+  export _JAVA_AWT_WM_NONEREPARENTING=1
+  # GTK后端为 wayland和x11,优先wayland
+  export GDK_BACKEND="wayland,x11"
+
+ }
+
+ # 命令行输入这个命令启动hyprland,可以自定义
+ function start_hyprland
+ {
+  set_wayland_env
+
+  export XDG_SESSION_TYPE=wayland
+  export XDG_SESSION_DESKTOP=Hyprland
+  export XDG_CURRENT_DESKTOP=Hyprland
+  # 启动 Hyprland程序
+  exec Hyprland
+
+ }
+```
+
+
+
+# 常用软件安装和启用
+
+现在直接进入 Hyprland 环境你会发现什么东西都没有，不用着急，下面的内容就是补全这些内容，让你使用起来更方便。
+
+# 配置壁纸
+
+进入桌面最先看到的应该是壁纸才对，**Sway** 是个很好的窗口管理器，不仅是它好用，还有它提供的一套好用的类似 i3 的软件包，比如配置壁纸就可以使用 **swaybg** 。
+
+使用命令行安装 swaybg 然后在 Hyprland 配置文件中启动（窗口管理器不像桌面环境，很多软件都需要我们手动启动，好在 Hyprland提供了启动这些软件的方法）：
+
+```shell
+# 安装 swaybg
+ sudo pacman -S swaybg
+ # 编辑 ~/.config/hypr/hyprland.conf 文件
+ #---------------------------------------
+ $wallpaper_path=<你放壁纸的完整路径>
+ exec-once=swaybg -i $wallpaper_path -m fill
+ #---------------------------------------
+
+exec-once 表示我们只需要在 Hyprland 启动的时候执行，在每次保存配置文件后，Hyprland 会自动读取配置，如果要每次配置完都执行，可以使用 exec 。如果要配置随机壁纸，请将壁纸放在一个文件夹下，然后替换上面的配置为：
+
+ $wallpaper_dir=<你存放壁纸的目录>
+ exec-once=swaybg -i $(find $wallpaper_dir -type f | shuf -n 1) -m fill
+```
+
+# 配置顶栏
+
+这个顶栏很好理解，用来显示系统的一些信息，比如工作区、网络、声音、亮度、电量、系统托盘等。wayland 下可以使用 **waybar** ，支持很多模块显示，不过官方版本对 Hyprland 的工作区有点问题，建议安装 AUR 上对工作区进行修复的版本：
+
+```shell
+# 安装官方版本
+ sudo pacman -S waybar
+ # 安装 Hyprland 工作区修复版本
+ paru -S waybar-hyprland
+```
+
+waybar 配置文件在 **`~/.config/waybar`** 目录下的 **config.json** 和 **style.css** 文件，如果自己不会配置可以在 Github 上搜索 **waybar theme** 使用别人配置好的，篇幅原因这里不进行介绍。
+
+配置文件弄好后还需要在 Hypeland 配置文件中启动：**`exec-once=waybar`** 。
+
+# 软件启动器
+
+桌面环境下，我们可以点击桌面图标和软件菜单启动程序，wayland 窗口管理器下一般使用 bmenu 或者 rofi，**rofi** 更加美观，推荐使用，不过需要使用经过修复的 rofi ，否则无法正常工作，使用 AUR 安装：**`paru -S rofi-lbonn-wayland-only-git`** 。其配置文件位于 **`~/.config/rofi/`** 目录下，美化不进行介绍，可以参考 waybar 方法在 Github 上查找。
+
+在 hyprland 配置文件中绑定快捷键即可：
+
+```shell
+$menu=rofi -show drun
+bind = SUPER, R, exec, $menu
+```
+
+# 通知守护程序
+
+平时使用，接收通知是必须的，wayland 下可以使用 **dunst、mako** 等守护程序：
+
+```shell
+# 安装 mako
+ sudo pacman -S mako
+ # hyprland 配置
+ #--------------------
+ exec-once=mako
+ #--------------------
+```
+
+如果需要使用命令行发送通知，可以安装 **`toastify`** ，之后使用 `notify-send "通知内容"` 可以发送通知。
+
+# 复制与粘贴
+
+剪切板管理工具也经常用到，wayland 下可以使用 **clipman(只能管理文字) 或 cliphist(文字加图片)** ：
+
+```shell
+paru -S cliphist wl-clipboard
+ # 基本使用方法
+ # 拷贝
+ echo "Hello World" | wl-copy
+ # 粘贴
+ wl-paste
+
+在配置文件里启用：
+
+ # 这个会自动监控剪切板，然后将复制的内容保存到本地数据库中。
+ exec-once=wl-paste --type text --watch cliphist store
+ exec-once=wl-paste --type image --watch cliphist store
+ # 在一个软件内复制，这软件关闭后无法进行粘贴，需要配置快捷键显示剪切板历史
+ bind=SUPER_SHIFT, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
+ # 内容太多记得手动删除哟，cliphist每提供一键删除，必须差评！
+ for i in $(cliphist list | awk -F. '{ print $2 }'); do cliphist delete-query "$i"; done
+```
 
 ## AI工具
 

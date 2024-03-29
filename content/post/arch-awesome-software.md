@@ -1465,6 +1465,8 @@ bun `paru -S bun-bin`
 
 wireshark    GUI `paru -S  wireshark-qt `  Cli `paru -S wireshark-cli`
 
+> wireshark的一篇好文章 https://www.ilikejobs.com/posts/wireshark/
+
 Android屏幕共享[Scrcpy](https://github.com/Genymobile/scrcpy) 安装 `paru -S scrcpy`
 
 [Tiny RDM](https://github.com/tiny-craft/tiny-rdm)(**a modern lightweight cross-platform Redis desktop manager** ) `paru -S tiny-rdm-bin`

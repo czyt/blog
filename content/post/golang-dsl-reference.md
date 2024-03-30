@@ -19,6 +19,7 @@ draft: false
 + go-zero [link](https://github.com/zeromicro/go-zero/tree/master/tools/goctl/api/parser)
 + [grule-rule-engine](https://github.com/hyperjumptech/grule-rule-engine)
 + https://github.com/kulics-works/feel-go
++ [monkey.go](https://github.com/andydude/monkey.go)
 ## windows 环境配置
 
 配置好Java环境，然后将下面的批处理加入系统环境变量：

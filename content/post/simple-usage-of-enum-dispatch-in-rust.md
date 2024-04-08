@@ -1,6 +1,6 @@
 ---
 title: "enum_dispatch在rust中的简单使用"
-date: 2024-04-8
+date: 2024-04-08
 tags: ["rust"]
 draft: false
 ---

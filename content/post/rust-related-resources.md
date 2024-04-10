@@ -13,7 +13,7 @@ draft: false
 + [Google Android团队写的Rust教程](https://github.com/google/comprehensive-rust)
 + [通过例子学rust](https://rustwiki.org/zh-CN/rust-by-example/)
 + https://cheats.rs/
-+ https://course.rs
++ [Rust语言圣经](https://course.rs)
 + [learn how to write macros in Rust](https://tfpk.github.io/macrokata/)
 + [Operating System development tutorials in Rust on the Raspberry Pi](https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials)
 + [Rust语言实战](https://zh.practice.rs)

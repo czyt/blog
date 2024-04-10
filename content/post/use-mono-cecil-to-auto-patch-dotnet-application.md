@@ -4,7 +4,12 @@ date: 2024-04-04
 tags: ["dotnet"]
 draft: false
 ---
-坚果云是我常用的一个工具，但是我一般喜欢使用绿色版，不喜欢程序到处写文件，也不喜欢重装以后还要各种登录。所以要折腾“绿色版”来使用。
+坚果云是我常用的一个工具，但是我一般喜欢使用绿色版，不喜欢程序到处写文件，也不喜欢重装以后还要各种登录。所以要折腾“绿色版”来使用。坚果云的完整版下载链接为
+
+```bash
+https://pkg-cdn.jianguoyun.com/static/exe/installer/NutstoreWindowsWPF_Full.exe
+```
+
 ## 手动IL处理
 
 一般手动处理坚果云的个人用户资料目录。需要使用dnspyEx，然后修改`NutstoreLib.dll`中的`Utils.DirectoryUtils`下的`APPDATA_NUTSTORE_DIR`,下面是我的一个手动IL修改列表：

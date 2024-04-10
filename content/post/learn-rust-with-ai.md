@@ -456,7 +456,37 @@ fn main() {
 }
 ```
 
-在这个例子中，`match` 语句根据结构体 `Point` 的不同情况执行不同的代码块。
+在这个例子中，`match` 语句根据结构体 `Point` 的不同情况执行不同的代码块。除了match，你可能还会遇到`matches!`。在 Rust 中，`matches!` 是一个宏，用于快速检查一个值是否匹配给定的模式。与 `match` 表达式不同，`matches!` 宏用于产生一个布尔值，表示模式是否匹配，而不是用来执行匹配后的代码分支。这在条件表达式或断言中非常有用。
+
+下面是使用 `matches!` 宏的一个简单例子：
+
+```rust
+enum TrafficLight {
+    Red,
+    Yellow,
+    Green,
+}
+
+fn main() {
+    let light = TrafficLight::Red;
+
+    let is_red = matches!(light, TrafficLight::Red);
+    println!("Is light red? {}", is_red); // 输出: Is light red? true
+
+    let is_yellow = matches!(light, TrafficLight::Yellow);
+    println!("Is light yellow? {}", is_yellow); // 输出: Is light yellow? false
+
+    // 对于带有数据的枚举变体，也可以使用 matches! 进行匹配
+    let number = Some(5);
+
+    let is_bigger_than_seven = matches!(number, Some(x) if x >7 );
+    println!("Is number bigger than seven? {}", is_seven); // 输出: Is number seven? false
+}
+```
+
+在这个例子中，我们定义了一个 `TrafficLight` 枚举，我们通过 `matches!` 宏去检查变量 `light` 是否是 `TrafficLight::Red` 或 `TrafficLight::Yellow`。该宏返回一个布尔值，该值表明是否匹配成功，我们再将其打印出来。
+
+同时，在 `number` 变量的匹配中，`matches!` 还可以用于带数据的枚举变体，这里我们检查 `Some(7)` 是否包含的是数字7。
 
 #### `if let` 示例：
 

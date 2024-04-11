@@ -847,6 +847,16 @@ if let syn::Data::Struct(ref data_struct) = ast.data {
 
 在操作完 AST 后，接着使用 `quote` 衍生宏生成所需的代码。
 
+### 异步和多线程
+
+#### 多线程
+
+todo
+
+#### 异步
+
+todo
+
 ### 生命周期
 
 ### FFI

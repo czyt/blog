@@ -69,3 +69,6 @@ draft: false
 + [Crust of Rust系列视频]( https://www.youtube.com/watch?v=rMGWeSjctlY)
 
 + [FCC的rust入门视频](https://www.youtube.com/watch?v=BpPEoZW5IiY)
+
+### 其他
++ https://github.com/rust-boom/rust-boom

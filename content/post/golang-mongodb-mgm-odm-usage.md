@@ -74,6 +74,10 @@ coll:=mgm.Coll(&Book{})
 4. 如果指针非 nil，Go Driver 将指针字段编组为基础类型。如果指针为 nil，则驱动程序将其编组为 BSON 空值。
 5. 解组时，Go Driver 跟随[这些 D/M 类型映射](https://pkg.go.dev/go.mongodb.org/mongo-driver@v1.9.0/bson#hdr-Native_Go_Types) 对于类型的字段`interface{}`。驱动程序将未编组的 BSON 文档`interface{}`作为`D`类型解组到字段中。
 
+> ⚠️ 在MongoDB中，并没有直接对应于 Go 语言中 `float32` 类型的浮点数。在 MongoDB 的 BSON 数据格式中，所有浮点数默认都是以 `double`（双精度浮点数，对应于 Go 中的 `float64`）的形式存储，它是一个 64 位的 IEEE 754 浮点数。
+>
+> 当你使用 Go 语言与 MongoDB 进行交互时，如使用官方的 `mongo-go-driver`，你可以直接插入 `float64` 类型的数据到 MongoDB 中，数据库会将它储存为 `double` 类型。如果你的类型不慎写成`float32`类型，那么很可能会出现精度上的差异问题。
+
 #### 模型默认字段
 
 每个模型的都包含`mgm.DefaultModel`,包含下面三个字段:
@@ -151,8 +155,6 @@ func init() {
    err := mgm.SetDefaultConfig(nil, "test",        	options.Client().ApplyURI("mongodb://root:12345@localhost:27017"))
 }
 ```
-
-
 
 ### 新增
 

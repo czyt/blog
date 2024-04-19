@@ -1,7 +1,7 @@
 ---
 title: "一些rust clap库的笔记"
 date: 2024-04-19
-tags: ["rust","cli","rust-lib]
+tags: ["rust","cli","rust-lib"]
 draft: false
 ---
 

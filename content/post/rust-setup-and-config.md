@@ -318,6 +318,55 @@ cargo install cross
 
 > ⚠️ 这个工具需要安装docker或者podman
 
+### cargo-zigbuild
+
+借助[cargo-zigbuild](https://github.com/rust-cross/cargo-zigbuild)也可以实现跨平台编译。
+
+使用cargo安装 
+
+```bash
+cargo install cargo-zigbuild
+```
+
+或者使用pip进行安装(会自动安装zig)
+
+```bash
+pip install cargo-zigbuild
+```
+
+或者使用docker
+
+```bash
+docker run --rm -it -v $(pwd):/io -w /io messense/cargo-zigbuild \
+  cargo zigbuild --release --target x86_64-apple-darwin
+```
+
+使用前确保zig已经安装，可以参考[zig官方的文档](https://ziglang.org/learn/getting-started/#installing-zig),然后确认通过rustup已经安装了对应的target，例如
+
+```
+rustup target add aarch64-unknown-linux-gnu
+```
+
+运行`cargo zigbuild`, 例如, 
+
+```
+cargo zigbuild --target aarch64-unknown-linux-gnu
+```
+
+cargo zigbuild 支持在 --target 选项中传递 glibc 版本，例如，使用 aarch64-unknown-linux-gnu 目标编译 glibc 2.17：
+
+``` cargo zigbuild --target aarch64-unknown-linux-gnu.2.17```
+
+>glibc 版本定位功能有多种注意事项：
+>
+>如果您不提供 --target ，则不会使用 Zig 并且该命令有效地运行常规 cargo build 。
+>如果您指定无效的 glibc 版本， cargo zigbuild 将不会转发 zig cc 发出的有关所选后备版本的警告。
+>此功能不一定与动态链接到构建主机上特定版本的 glibc 的行为相匹配。
+>可以指定版本 2.32，但在只有 2.31 可用的主机上运行时，它应该因错误而中止。
+>同时，在使用 glibc 2.31 的主机上运行时，指定 2.33 将被正确检测为不兼容。
+>某些 RUSTFLAGS 如 -C linker 选择退出使用 Zig，而 -L path/to/files 将使 Zig 忽略 -C target-feature=+crt-static 。
+>不支持静态链接到 glibc 版本的 -C target-feature=+crt-static （上游 zig cc 缺乏支持）
+
 ### generate
 
 cargo generate,这个工具可利用预先存在的 git 存储库作为模板，帮助您快速启动并运行新的 Rust 项目。官方[github](https://github.com/cargo-generate/cargo-generate)仓库，[帮助文档](https://cargo-generate.github.io/cargo-generate/index.html)
@@ -776,6 +825,8 @@ jobs:
 
 
 
+
+
 参考
 
 + [Cross-compilation](https://rust-lang.github.io/rustup/cross-compilation.html#cross-compilation)
@@ -783,6 +834,8 @@ jobs:
 + [compiling-rust-for-raspberry-pi-arm](https://medium.com/swlh/compiling-rust-for-raspberry-pi-arm-922b55dbb050)
 
 + [Rust开发环境最佳设置](https://mp.weixin.qq.com/s/cQxIxKYjumH21ZV1yEwVfw)
+
++ https://github.com/rust-cross/cargo-zigbuild
 
 + [必看！2024 Rust精选库清单，值得收藏](https://zhuanlan.zhihu.com/p/688906139)
 

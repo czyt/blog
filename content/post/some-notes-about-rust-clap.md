@@ -313,6 +313,53 @@ fn main() {
 }
 ```
 
+下面是一个使用derive的例子
+
+```rust
+use clap::{ArgEnum, Parser, ValueEnum};
+use std::str::FromStr;
+
+/// 支持的颜色枚举
+#[derive(Debug, PartialEq, ArgEnum, Clone)]
+enum Color {
+    Red,
+    Green,
+    Blue,
+}
+
+/// 自定义的value_parser函数
+fn parse_color(s: &str) -> Result<Color, &'static str> {
+    Color::from_str(s).map_err(|_| "invalid color")
+}
+
+/// MyProgram 的命令行参数
+#[derive(Parser, Debug)]
+#[clap(author, version, about, long_about = None)]
+struct Args {
+    /// 一个整数参数
+    #[clap(short, long, value_parser = clap::value_parser!(i32))]
+    num: i32,
+
+    /// 一个颜色参数，使用自定义解析器
+    #[clap(short, long, value_parser = parse_color)]
+    color: Color,
+}
+
+fn main() {
+    let args = Args::parse();
+
+    println!("The number is: {}", args.num);
+    println!("The chosen color is: {:?}", args.color);
+}
+```
+
+- 我们定义了一个 `Color` 枚举，其派生了 `ArgEnum` 特性和 `ValueEnum` 特性，这允许 `clap` 解析字符串到这个枚举类型。
+- `parse_color` 函数是一个自定义 `value_parser`，它尝试从字符串解析 `Color` 枚举。这个函数符合 `clap` 所期望的解析器签名。它返回一个 `Result<Color, &'static str>` 类型，其中 `Ok` 分支包含成功解析的 `Color` 值，而 `Err` 分支则含有一个错误信息。
+- 在 `Args` 结构体中，`num` 字段使用了内置的 `value_parser` 来解析整数类型，通过 `clap::value_parser!(i32)` 宏来实现。
+- `color` 字段使用了我们定义的 `parse_color` 函数作为自定义的 `value_parser` 来解析颜色参数。
+
+用户可以通过 `-n <整数>` 或 `--num <整数>` 设置数字，通过 `-c <颜色>` 或 `--color <颜色>` 来设置颜色。如果输入了无效的颜色，会触发 `parse_color` 函数中定义的错误。
+
 ### 编写测试
 
 clap 将大多数开发错误报告为 `debug_assert!` 。您应该进行一个调用 `Command::debug_assert` 的测试，而不是检查每个子命令：

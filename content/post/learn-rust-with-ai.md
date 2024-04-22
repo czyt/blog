@@ -711,6 +711,109 @@ RUST_LOG=info cargo run
 
 ## 进阶
 
+### type state
+
+在 Rust 中，Type State 设计模式是一种编码风格，它充分利用 Rust 的强类型系统来编码和保证特定的状态和行为，从而在编译时期而不是运行时对状态进行检查。这种模式通过类型变化来表示对象的状态转换，确保了对象的方法调用总是在合适的状态下发生。
+
+#### 问题解决
+
+Type State 模式主要解决了跟对象状态相关的安全性和正确性问题，例如：
+
+- 保证在对资源执行操作之前，资源已经被正确地初始化。
+- 防止在对象不在某个特定状态时调用某些方法。
+- 在不同的状态下，为同一对象提供不同的方法集合。
+
+这些通常需要在运行时通过逻辑判断来实现，但 Type State 模式允许在编译时就强制这些约束，这减少了运行时错误的可能性，并提高了代码的稳定性。
+
+#### Type State 模式的特征
+
+- **状态作为类型**：每个状态都有一个对应的 Rust 类型，这样状态的改变实际上就是类型的变化。
+- **归属权和生命周期**：结合 Rust 的归属权和生命周期特性，可以在类型转换时传递或借用资源，保证在任何时间点资源都不会被不合规地访问或释放。
+- **零成本抽象**：由于状态的转换和检查都发生在编译时，运行时没有额外的开销。
+
+#### 一个简单的例子
+
+下面是一个简化的 Type State 设计模式的例子，它展示了如何使用此模式来编码一个只能顺序初始化、启动和停止的服务：
+
+```rust
+struct Service;
+
+struct InitializedService(Service);
+struct StartedService(InitializedService);
+
+// Service 本身没有任何方法
+impl Service {
+    fn new() -> Service {
+        Service
+    }
+}
+
+// 只有 InitializedService 才有 start 方法
+impl InitializedService {
+    fn start(self) -> StartedService {
+        StartedService(self)
+    }
+}
+
+// 只有 StartedService 才有 stop 方法
+impl StartedService {
+    fn stop(self) -> Service {
+        self.0 .0
+    }
+}
+
+fn main() {
+    let service = Service::new(); // 创建服务
+    let init_service = InitializedService(service); // 初始化服务
+    let started_service = init_service.start(); // 启动服务
+    let service = started_service.stop(); // 停止服务
+}
+```
+
+在这个例子中，原始的 `Service` 类型没有任何行为。一旦它转换为 `InitializedService`，就可以调用 `start` 方法，然后它又转换为 `StartedService`，在这个状态下可以调用 `stop` 方法。
+
+#### 结论
+
+Type State 模式通过编译时检查来确保代码的安全性和正确性，它可以在各种场景下帮助我们避免运行时错误，特别是在需要精确管理对象状态生命周期的系统和资源约束性强的应用程序中。它是 Rust 类型系统提供的显著优势之一，允许开发者将更多的逻辑和保证编码为类型本身。
+
+### GAT
+
+在 Rust 中，GAT 指的是“泛型关联类型”（Generic Associated Types）。这是 Rust 类型系统的一个高级特性，随 Rust 2021 版本稳定化。GAT 允许在 trait 中定义的关联类型拥有自己的泛型参数。这解决了 Rust 在表示某些类型关系时的限制，特别是在涉及到生命周期和泛型时，为 Rust 的类型系统提供了更高的灵活性和表达能力。
+
+#### 解决的问题
+
+在 GAT 出现之前，Rust 的 trait 无法在其关联类型上指定泛型参数。这限制了一些模式的表达，特别是在涉及到异步编程和迭代器模式时。举个例子，考虑以下试图定义一个异步迭代器 trait 的尝试：
+
+```rust
+trait AsyncIterator {
+    type Item;
+    async fn next(&mut self) -> Option<Self::Item>;
+}
+```
+
+在这个例子中，`next` 方法是异步的，返回一个 `Future`。但在 Rust 没有 GAT 支持的时候，我们无法直接在 trait 中表达这种方法签名，因为关联类型 `Item` 不可以携带自己的生命周期或泛型参数。
+
+#### GAT 的使用
+
+GAT 的引入允许我们在关联类型上使用泛型参数，这意味着我们现在可以这样定义上述的 `AsyncIterator` trait：
+
+```rust
+trait AsyncIterator {
+    type Item<'a>;
+    async fn next<'a>(&'a mut self) -> Option<Self::Item<'a>>;
+}
+```
+
+通过使用 GAT，`Item` 关联类型现在可以接受一个生命周期 `'a` 作为参数，使其能够适应异步和生命周期的需求。
+
+#### GAT 的优势
+
+GAT 引入了更多的灵活性，允许开发者以更自然的方式定义复杂的类型关系，从而在 Rust 中实现更高级的抽象模式。它特别适用于那些需要关联类型依赖特定生命周期或其他类型参数的场景。GAT 使得 Rust 的类型系统更加强大和灵活，提升了 Rust 编程中的表达能力。
+
+#### 结论
+
+GAT 是 Rust 语言中一个强大的特性，它解决了在泛型和生命周期应用上的限制问题，为 Rust 开发者提供了一种在 trait 定义中应用复杂类型关系的方法。通过允许关联类型拥有自己的泛型参数，GAT 为 Rust 编程带来了新的可能性，尤其是在构建高层次的类型抽象和复杂 API 设计时。
+
 ### 宏和元编程
 
 #### 声明宏

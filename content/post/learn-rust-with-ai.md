@@ -776,6 +776,10 @@ fn main() {
 
 Type State 模式通过编译时检查来确保代码的安全性和正确性，它可以在各种场景下帮助我们避免运行时错误，特别是在需要精确管理对象状态生命周期的系统和资源约束性强的应用程序中。它是 Rust 类型系统提供的显著优势之一，允许开发者将更多的逻辑和保证编码为类型本身。
 
+#### 附加阅读
+
++ [How To Use The Typestate Pattern In Rust](https://zerotomastery.io/blog/rust-typestate-patterns/)
+
 ### GAT
 
 在 Rust 中，GAT 指的是“泛型关联类型”（Generic Associated Types）。这是 Rust 类型系统的一个高级特性，随 Rust 2021 版本稳定化。GAT 允许在 trait 中定义的关联类型拥有自己的泛型参数。这解决了 Rust 在表示某些类型关系时的限制，特别是在涉及到生命周期和泛型时，为 Rust 的类型系统提供了更高的灵活性和表达能力。

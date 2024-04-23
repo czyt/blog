@@ -780,6 +780,7 @@ Type State 模式通过编译时检查来确保代码的安全性和正确性，
 
 + [How To Use The Typestate Pattern In Rust](https://zerotomastery.io/blog/rust-typestate-patterns/)
 + [Type-Driven API Design in Rust](https://willcrichton.net/rust-api-type-patterns/typestate.html)
++ [Typestates in Rust](https://yoric.github.io/post/rust-typestate/)
 
 ### GAT
 

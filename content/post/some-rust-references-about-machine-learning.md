@@ -13,6 +13,9 @@ draft: false
 + Client/server face detection from your webcam with [`tokio`](https://tokio.rs/), [`axum`](https://github.com/tokio-rs/axum), [`tract-onnx`](https://crates.io/crates/tract) and the lightweight [ultraface network](https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB). [仓库地址](https://github.com/sgasse/infercam_onnx)
 + [Segment anything inference using Rust](https://github.com/AndreyGermanov/sam_onnx_rust)
 
+### llm
++ https://github.com/jondot/awesome-rust-llm
+
 ## 文章
 
 

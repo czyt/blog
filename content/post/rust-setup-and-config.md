@@ -388,6 +388,36 @@ cargo install cargo-generate
 >
 >+ [axum模板](https://github.com/tpl-x/axump)
 
+### cargo-update
+
+cargo-update是一个用于检查已安装的可执行文件并将更新应用到的 `cargo` 子命令
+
+```bash
+cargo install cargo-update
+```
+
+### cargo binstall 
+
+[binstall](https://github.com/cargo-bins/cargo-binstall) 提供了一种低复杂度的机制来安装 Rust 二进制文件，作为从源代码构建（通过 `cargo install` ）或手动下载包的替代方案。其目的是与现有的 CI 工件和基础设施一起使用，并为包维护人员提供最小的开销。
+
+#### Linux and macOS
+
+```bash
+curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+```
+
+#### Windows
+
+```bash
+Set-ExecutionPolicy Unrestricted -Scope Process; iex (iwr "https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.ps1").Content
+```
+
+或者使用源码安装
+
+```bash
+cargo install cargo-binstall
+```
+
 ### Cargo deny
 
 Cargo deny 是一个 Cargo 插件，可以用于检查依赖的安全性。

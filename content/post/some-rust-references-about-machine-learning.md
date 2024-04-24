@@ -1,7 +1,7 @@
 ---
 title: "一些Rust的机器学习资料"
-date: 2023-04-24
-tags: ["rust", "ml"]
+date: 2024-04-24
+tags: ["rust","ml"]
 draft: false
 ---
 

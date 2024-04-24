@@ -16,6 +16,9 @@ draft: false
 ### llm
 + https://github.com/jondot/awesome-rust-llm
 
+### 其他
++ https://github.com/rustai-solutions
+
 ## 文章
 
 

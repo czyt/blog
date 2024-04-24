@@ -485,6 +485,30 @@ fuzz_target!(|data: &[u8]| {
 
 上面的代码通过向JSON解析器提供随机输入来测试它。fuzz_target将持续被调用，直到遇到触发panic并导致崩溃的输入。
 
+### cargo-shuttle
+
+[shuttle](https://www.shuttle.rs)可以将你的网站作为serverless进行托管
+
+安装
+
+```bash
+cargo install cargo-shuttle
+```
+
+创建项目
+
+```bash
+cargo shuttle init
+```
+
+部署
+
+```bash
+cargo shuttle deploy
+```
+
+更多请参考[文档](https://docs.shuttle.rs/)
+
 ### cargo-nextest
 
 nextest自诩为“下一代Rust测试运行程序”。

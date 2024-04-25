@@ -1,5 +1,5 @@
 ---
-title: "在你的Rust程序中使用deref宏"
+title: "在你的Rust程序中使用Deref宏"
 date: 2024-04-25
 tags: ["rust"]
 draft: false

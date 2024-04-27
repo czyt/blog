@@ -1737,6 +1737,10 @@ $ sudo pacman -Rs xdg-user-dirs-gtk
 
 ## 品牌笔记本支持
 
+[howdy](https://wiki.archlinuxcn.org/wiki/Howdy) 安装 `paru -S howdy`
+
+>  Howdy是Linux 上一个类似 Windows Hello，通过电脑的红外传感器识别人脸，解锁电脑的程序
+
 thinkpad thinkfan 安装`paru -S thinkfan`
 
 > 获取温度传感器 `find /sys/devices -type f -name "temp*_input"`,Thinkpad T430 显示如下：

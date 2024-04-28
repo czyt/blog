@@ -22,6 +22,7 @@ draft: false
 + https://learning-rust.github.io
 + https://github.com/CleanCut/ultimate_rust_crash_course
 + [Writing a JVM in Rust](https://andreabergia.com/series/writing-a-jvm-in-rust/)
++ [Rust 宏小册](https://zjp-cn.github.io/tlborm/)
 + [Writing an OS in Rust ](https://os.phil-opp.com/zh-CN/)
 + [清华大学程序设计训练（Rust）](https://lab.cs.tsinghua.edu.cn/rust/)
 + [Rust 异步编程指南](https://github.com/rustlang-cn/async-book)
@@ -32,6 +33,7 @@ draft: false
 + [RustPrimer](https://rustcc.gitbooks.io/rustprimer/content/)
 + [Rust Atomics and Locks中文版 ](https://atomics.rs)
 + [Rust 程序设计语言 2021版 中文](https://github.com/KaiserY/trpl-zh-cn)
++ [The Rust on ESP Book中文版](https://narukara.github.io/rust-on-esp-book-zh-cn/)
 + [rust 教程资料收集 - fkysly](https://graceful-direction-b61.notion.site/Rust-fkysly-7e1a57dd614b4a2d9173b09ab9506895)
 + [case studies](https://github.com/dtolnay/case-studies)
 + [Y分钟速成X=Rust](https://learnxinyminutes.com/docs/zh-cn/rust-cn/)

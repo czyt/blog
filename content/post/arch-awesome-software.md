@@ -834,6 +834,8 @@ qbittorrent 安装  `paru -S qbittorrent`([增强版](https://github.com/c0re100
 
 moose 支持边下边播的BT工具 `paru -S moose ` 
 
+youtube视频下载器 `paru -S yt-dlp `或者 `paru -S yt-dlp-git `
+
 [Spacedrive](https://www.spacedrive.com/) 安装 `paru -S spacedrive-bin`
 
 参考

@@ -16,6 +16,28 @@ weight: 9
 >- PulseAudio，历史悠久、最为常用；
 >- PipeWire，新生代，采用全新架构，整合多种音频后端（PulseAudio、ALSA和JACK），提供低延迟的音频体验
 
+### 连接无线网
+
+```bash
+iwctl 
+# 进入交互式命令行
+
+device list 
+# 列出无线网卡设备名，比如无线网卡看到叫 wlan0
+
+station wlan0 scan 
+# 扫描网络
+
+station wlan0 get-networks 
+# 列出所有 wifi 网络
+
+station wlan0 connect wifi-name 
+# 进行连接，注意这里无法输入中文。回车后输入密码即可
+
+exit 
+# 连接成功后退出
+```
+
 ### 启用网络
 
 ```bash
@@ -35,6 +57,17 @@ sudo systemctl enable --now bluetooth
 >如果需要启用蓝牙音频支持，请安装 `paru -S pulseaudio-bluetooth`
 >
 >蓝牙高级管理工具 `paru -S blueman`
+>
+>蓝牙协议支持与管理`paru -S bluez bluez-utils blueman `
+
+### 微码
+
+```bash
+pacman -S intel-ucode 
+# Intel
+pacman -S amd-ucode 
+# AMD
+```
 
 ### 打印机
 
@@ -79,6 +112,44 @@ paru -S ntfs-3g ntfs-3g-fuse
 > >
 > 
 > 新版本的都不需要安装上述组件.挂载失败后，可以通过`dmesg`查看失败原因，一般比较常遇到的是`sda1: volume is dirty and "force" flag is not set!`这个错误，可以通过 `ntfsfix -d /dev/sdx`进行修复就可以正常挂载了。
+
+### 语言编码配置
+
+在某些时候进入系统以后，发现编码没配置好，中文乱码，可以编辑 /etc/locale.gen，去掉 en_US.UTF-8 UTF-8 以及 zh_CN.UTF-8 UTF-8 行前的注释。
+
+```bash
+vim /etc/locale.gen
+```
+
+然后生成 locale-gen：
+
+```bash
+locale-gen
+```
+
+在/etc/locale.conf 输入内容：
+
+```bash
+echo 'LANG=en_US.UTF-8'  > /etc/locale.conf
+```
+
+### 更改时区
+
+可以使用`timedatectl`命令来进行时区等信息的调整。常见命令如下：
+
++ `timedatectl set-time YYYY-MM-DD` 更改日期
+
++ `timedatectl set-time HH:MM:SS` 更改时间
+
++ `timedatectl list-timezones `列出所有时区
+
++ `timedatectl set-timezone time-zone` 设置时区
+
++ `timedatectl set-ntp boolean` 设置NTP服务器
+
+也可以通过下面的命令设置时区
+`ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime`
+同步时间到硬件：`hwclock --systohc`
 
 ### deb包
 
@@ -159,7 +230,33 @@ paru -S adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts noto-font
 
 其他配置选项参考 [Arch wiki 简体中文本地化](https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96)
 
+### cinnamon 
+
+```bash
+sudo pacman -S cinnamon gnome-terminal xorg lightdm lightdm-gtk-greeter
+```
+
+添加 lightdm 守护进程并进入桌面环境：
+
+```bash
+sudo systemctl enable --now lightdm
+```
+
+
+
 ## 更换软件源
+
+Arch可以使用 reflector 来选择速度比较好的源：
+
+```bash
+reflector -p https -c China --delay 3 --completion-percent 95 --sort score 
+```
+
+> 2020 年，archlinux 安装镜像中加入了 reflector 服务，它会自己更新 mirrorlist。在特定情况下，它会误删某些有用的源信息。这里进入安装环境后的第一件事就是将其禁用。也许它是一个好用的工具，但是很明显，因为地理上造成的特殊网络环境，这项服务并不适合加入到守护进程。使用下列命令禁用：
+>
+> ```bash
+> systemctl disable reflector.service
+> ```
 
 Manjaro可以使用中国的镜像排名
 
@@ -765,6 +862,8 @@ handbrake 视频格式转换工具 `paru -S handbrake-full`
 [vnode](https://tamlok.github.io/vnote/zh_cn/#!index.md) markdown编辑器 安装 `paru -S vnote` 
 
 Wps 安装 `paru -S wps-office ttf-wps-fonts wps-office-mui-zh-cn  wps-office-mime`
+
+> 安装wps国内版可以使用 `paru -S wps-office-cn wps-office-mui-zh-cn ttf-wps-fonts`
 
 libreoffice 安装  `paru -S libreoffice` 
 geogebra 几何绘图软件 `paru -S geogebra  `
@@ -1475,6 +1574,8 @@ Android屏幕共享[Scrcpy](https://github.com/Genymobile/scrcpy) 安装 `paru -
 
 >配合switchHost更好用.使用 `paru -S switchhosts`或者 `paru -S switchhosts-bin`进行安装
 
+ Rstudio `paru -S rstudio-desktop-bin`
+
 docker-image-extract  https://github.com/jjlin/docker-image-extract
 
 [lapce](https://github.com/lapce/lapce) `paru -S lapce`
@@ -1775,6 +1876,10 @@ dell充电阀值设置
 ```bash
 cctk --PrimaryBattChargeCfg=Custom:60-75 
 ```
+
+## 显卡
+
+英伟达显卡驱动 `paru -S nvidia nvidia-settings lib32-nvidia-utils`
 
 ## 网卡
 

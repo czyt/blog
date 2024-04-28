@@ -23,4 +23,4 @@ git commit -m "update"
 echo "Pushing to remote..."
 git push
 
-echo "Done!"
+timeout 3s  echo "Done!"

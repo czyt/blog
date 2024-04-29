@@ -523,3 +523,11 @@ fn main() {
 ## 特别说明
 
 - 使用 `map_res` 函数特别有用。它允许您将外部错误转换为名义错误。有关示例，请参阅首页上的 Nom 示例。
+
+
+
+> 这个文档原版暂时未完成。下面是一些相关的文档作为参阅：
+>
+> + https://blog.logrocket.com/parsing-in-rust-with-nom/
+> + https://developerlife.com/2023/02/20/guide-to-nom-parsing/
+> + https://github.com/benkay86/nom-tutorial

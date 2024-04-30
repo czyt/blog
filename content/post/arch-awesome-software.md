@@ -943,7 +943,7 @@ clash-verge-bin `paru -S clash-verge-bin`
 
 clash https://aur.archlinux.org/packages?K=clash [福利](https://neko-warp.nloli.xyz)
 
-[nekoray-bin ](https://github.com/MatsuriDayo/nekoray)Qt based cross-platform GUI proxy configuration manager  安装 `paru -S nekoray-bin`( 可能需要安装相关插件 `paru -S sing-geosite sing-geoip  `)
+[nekoray-bin ](https://github.com/MatsuriDayo/nekoray)Qt based cross-platform GUI proxy configuration manager  安装 `paru -S nekoray-bin`( 可能需要安装相关插件 `paru -S sing-geosite sing-geoip sing-geoip-common sing-geoip-db sing-geoip-rule-set sing-geosite-common sing-geosite-db sing-geosite-rule-set `然后核心位置填写`/usr/share/sing-box`)
 
 cloudflare Warp 安装 `paru -S cloudflare-warp-bin`  [基于wiregurd](https://www.ianbashford.net/post/setupcloudflarewarplinuxarch/) [自选ip脚本](https://gitlab.com/rwkgyg/CFwarp) [自选ip脚本2](https://gitlab.com/ProjectWARP/warp-script)
 

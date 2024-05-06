@@ -26,6 +26,7 @@ draft: false
 + https://github.com/aclements/go-perf
 + https://github.com/256dpi/god
 + https://github.com/divan/expvarmon
++ https://github.com/go-perf/awesome-go-perf
 
 ## 文章
 

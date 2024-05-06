@@ -1780,7 +1780,9 @@ clickhouse `paru -S clickhouse` ([官方文档](https://clickhouse.com/docs/en/g
 
 screenfetch (终端打印出你的系统信息) 安装 `paru -S screenfetch`
 
-neofetch `paru -S neofetch`
+neofetch `paru -S neofetch` 
+
+> neofetch 已经停止维护，后续更新版本为hyfetch 安装命令为`paru -S hyfetch`
 
 easystroke 鼠标手势 `paru -S easystroke`
 

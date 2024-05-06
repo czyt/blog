@@ -1654,6 +1654,8 @@ postman 安装 `paru -S postman-bin` [汉化文件](https://github.com/hlmd/Post
 
 apifox 安装 `paru -S apifox`
 
+[HTTPie Desktop](https://httpie.io/download) `paru -S httpie-desktop-bin`
+
 [Yaak](https://yaak.app/) api调试工具
 
 [hoppscotch](https://hoppscotch.io)安装 `yay -S  hoppscotch-bin`

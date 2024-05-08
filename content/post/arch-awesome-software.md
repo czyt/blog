@@ -1802,6 +1802,8 @@ snap 安装 `paru -S --noconfirm --needed snapd`
 
 figlet 字符串logo生成工具 `paru -S figlet` 
 
+libnewt （包含whiptail等实用工具 text mode windowing with slang） `paru -S libnewt `
+
 软件包降级工具 downgrade `paru -S downgrade` 
 
 thefuck输错命令更正工具 `paru -S thefuck` 

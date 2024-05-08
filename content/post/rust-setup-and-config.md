@@ -136,6 +136,9 @@ info: default toolchain set to 'stable'
 Rust is installed now. Great!
 
 ```
+> 注:可以通过 `rustup toolchain install version` 和 `rustup default version`来安装和设置默认的toolchain的版本。
+>
+> rust的nightly 版本，rustc 已经增加了对 `x86_64-win7-windows-msvc` 的 target 的支持 编译方式修改为： `cargo build --release -Z build-std --target x86_64-win7-windows-msvc` 或者 `i686-win7-windows-msvc`
 ### 其他Linux
 
 可以使用脚本进行安装:
@@ -157,6 +160,7 @@ paru -S rustup
 ```bash
 rustup install stable
 ```
+
 
 ## 配置cargo镜像
 

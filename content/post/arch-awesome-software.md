@@ -1802,7 +1802,7 @@ snap 安装 `paru -S --noconfirm --needed snapd`
 
 figlet 字符串logo生成工具 `paru -S figlet` 
 
-libnewt （包含whiptail等实用工具 text mode windowing with slang） `paru -S libnewt `
+libnewt （包含[whiptail](https://whiptail.readthedocs.io/en/latest/)等实用工具 text mode windowing with slang） `paru -S libnewt `
 
 软件包降级工具 downgrade `paru -S downgrade` 
 

@@ -26,8 +26,8 @@ timeout 5
 ```cmd
 @echo off
 echo start ollama...
-start /B  %~dp0ollama.exe serve
+start  %~dp0ollama.exe serve
 echo boot model
-%~dp0ollama.exe run phi3
+start %~dp0ollama.exe run phi3
 ```
 

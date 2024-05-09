@@ -1,7 +1,7 @@
 ---
 title: "Windows ollama一些有用的批处理脚本"
-date: 2023-10-24
-tags: ["desgin",  "tricks"]
+date: 2024-05-09
+tags: ["ollama",  "tricks"]
 draft: false
 ---
 

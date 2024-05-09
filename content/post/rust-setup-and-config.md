@@ -15,8 +15,15 @@ draft: false
 export RUSTUP_DIST_SERVER="https://rsproxy.cn"
 export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
 ```
-设置两个环境变量即可
+设置两个环境变量即可。windows可以使用下面的命令进行设置：
+
+```cmd
+setx RUSTUP_DIST_SERVER "https://rsproxy.cn"
+setx RUSTUP_UPDATE_ROOT "https://rsproxy.cn/rustup"
+```
+
 设置环境变量 `RUSTUP_DIST_SERVER` (用于更新 toolchain)
+
 ```bash
 export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 ```

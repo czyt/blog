@@ -411,8 +411,6 @@ ninja -C _build
 ninja -C _build install
 ```
 
-
-
 # 复制配置文件
 
 安装好 Hyprland 后记得复制配置文件到用户文件夹：
@@ -470,7 +468,14 @@ mkdir -pv ~/.config/hypr
  }
 ```
 
+可以参考下https://github.com/JaKooLit/Arch-Hyprland 安装脚本如下：
 
+```bash
+git clone --depth=1 https://github.com/JaKooLit/Arch-Hyprland.git ~/Arch-Hyprland
+cd ~/Arch-Hyprland
+chmod +x install.sh
+./install.sh
+```
 
 # 常用软件安装和启用
 

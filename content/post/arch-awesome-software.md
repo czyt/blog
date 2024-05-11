@@ -1755,6 +1755,14 @@ cloudflare Argo tunnel `paru -S cloudflared` （使用[教程](https://www.blues
 
 nmon `paru -S nmon` 
 
+[nmap](https://nmap.org/man/zh/) `paru -S nmap`
+
+>示例:扫描局域网的22端口
+>
+>```bash
+>nmap -p 22  --open 192.168.1.0/24 
+>```
+
 nload `paru -S nload` 
 
 tcpflow `paru -S tcpflow` 

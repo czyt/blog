@@ -8,9 +8,9 @@ draft: false
 从[此处](https://www.rust-lang.org/tools/install)下载，如果你需要安装vs的cpp生成工具，可以在[这个页面](https://visualstudio.microsoft.com/downloads/)进行下载。
 ## 设置rustup镜像
 
-
-字节提供的镜像
+### 字节提供的镜像
 [https://rsproxy.cn](https://rsproxy.cn)
+
 ```bash
 export RUSTUP_DIST_SERVER="https://rsproxy.cn"
 export RUSTUP_UPDATE_ROOT="https://rsproxy.cn/rustup"
@@ -22,6 +22,8 @@ setx RUSTUP_DIST_SERVER "https://rsproxy.cn"
 setx RUSTUP_UPDATE_ROOT "https://rsproxy.cn/rustup"
 ```
 
+### 中科大
+
 设置环境变量 `RUSTUP_DIST_SERVER` (用于更新 toolchain)
 
 ```bash
@@ -31,12 +33,26 @@ export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
 ```bash
 export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 ```
-设置`RUSTUP_HOME`和`CARGO_HOME`可以实现自定义安装路径
+### 华中科技大学
+
+**方法一：**在“系统-高级系统设置-环境变量” 中增加环境变量。
+
+- 变量名为 `RUSTUP_DIST_SERVER`，值为`https://mirrors.hust.edu.cn/rustup`。
+- 变量名为 `RUSTUP_UPDATE_ROOT`，值为`https://mirrors.hust.edu.cn/rustup/rustup`。
+
+**方法二（推荐）：**直接执行下面的Powershell脚本：
+
+```powershell
+[System.Environment]::SetEnvironmentVariable("RUSTUP_DIST_SERVER", "https://mirrors.hust.edu.cn/rustup", "User")
+[System.Environment]::SetEnvironmentVariable("RUSTUP_UPDATE_ROOT", "https://mirrors.hust.edu.cn/rustup/rustup", "User")
+```
+
+> 设置`RUSTUP_HOME`和`CARGO_HOME`可以实现自定义安装路径
 
 ## crates.io 镜像
 编辑 `~/.cargo/config `，这里使用的是中科大的镜像。
 
-```
+```toml
 [source.crates-io]
 replace-with = 'ustc'
 
@@ -45,7 +61,7 @@ registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 
 ```
 或者使用字节的,参考[官网文档](https://rsproxy.cn/#getStarted)
-```
+```toml
 [source.crates-io]
 replace-with = 'rsproxy-sparse'
 [source.rsproxy]
@@ -57,6 +73,30 @@ index = "https://rsproxy.cn/crates.io-index"
 [net]
 git-fetch-with-cli = true
 ```
+
+华中科技大学的镜像 [文档](https://mirrors.hust.edu.cn/docs/crates)
+
+```toml
+[source.crates-io]
+replace-with = 'hustmirror'
+
+[source.hustmirror]
+registry = "https://mirrors.hust.edu.cn/crates.io-index/"
+```
+
+>cargo 1.68 版本开始支持稀疏索引：不再需要完整克隆 crates.io-index 仓库，可以加快获取包的速度。
+>
+>如果您的 cargo 版本小于 1.68，可以通过 cargo +nightly -Z sparse-registry update 使用稀疏索引。
+>
+>华中科技大学的使用稀疏索引的镜像为
+>
+>```toml
+>[source.crates-io]
+>replace-with = 'hustmirror'
+>
+>[source.hustmirror]
+>registry = "sparse+https://mirrors.hust.edu.cn/crates.io-index/"
+>```
 
 ## 安装Rust
 

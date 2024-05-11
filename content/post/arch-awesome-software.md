@@ -1344,7 +1344,25 @@ source ${ZIM_HOME}/init.zsh
 
 ### ohmyzh 安装
 
-`paru -S zsh && sh -c "$(curl -fsSL https://fastgit.czyt.tech/https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
+使用命令一键安装
+
+```bash
+paru -S zsh && sh -c "$(curl -fsSL https://fastgit.czyt.tech/https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+或者使用华中科技大学的国内镜像
+
+```bash
+REMOTE=https://mirrors.hust.edu.cn/git/ohmyzsh.git sh -c "$(curl -fsSL https://mirrors.hust.edu.cn/ohmyzsh.git/install.sh)"
+```
+
+>如果已经安装了 Oh My Zsh，可以将 git 仓库的 remote 设置为华中科技大学的镜像站点地址，使用如下命令：
+>
+>```bash
+>git -C $ZSH remote set-url origin https://mirrors.hust.edu.cn/git/ohmyzsh.git
+>git -C $ZSH pull
+>```
+
 安装插件
 
 ```

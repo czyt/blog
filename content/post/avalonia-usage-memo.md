@@ -843,4 +843,6 @@ class Program
 + [Avalonia Community](https://github.com/AvaloniaCommunity)
 + [AvaloniaUtils](https://github.com/AvaloniaUtils)
 + https://dev.to/t/avalonia
++ https://github.com/quamotion/dotnet-packaging
++ [.net 跨平台桌面程序 avalonia：从项目创建到打包部署linux-64系统deepin 或 ubuntu。](https://www.cnblogs.com/Fengyinyong/p/13346642.html)
 + [Avalonia中用FluentAvalonia+DialogHost.Avalonia实现界面弹窗和对话框](https://www.raokun.top/archives/avalonia-zhong-yong-fluentavaloniadialoghostavalonia-shi-xian-jie-mian-dan-chuang-he-dui-hua-kuang)

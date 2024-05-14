@@ -561,6 +561,46 @@ db.collection.find( { a: { $bitsAllClear: [ 1, 5 ] } } )
 { "_id" : 3, "a" : 
 ```
 
+#### 数组运算符
+
+`$[]`运算符。所有位置运算符 `$[]` 指示更新运算符应修改指定数组字段中的所有元素。
+
+```rust
+let filter = doc! { "_id": ObjectId("5e835f3000415b720028b0ad") };
+let update = doc! { "$set": { "cast.$[]": "New Actor" } };
+
+let result = movie_collection.update_one(filter, update, None).await?;
+println!("Updated {} document", result.modified_count);
+```
+
+`$addToSet` 运算符将一个值添加到数组中，除非该值已经存在，在这种情况下 `$addToSet` 不会对该数组执行任何操作。
+
+```rust
+use mongodb::{
+    bson::{doc, Bson},
+    error::Result,
+    options::UpdateOptions,
+    Client,
+};
+#[tokio::main]
+async fn main() -> Result<()> {
+    // Connect to MongoDB
+    let client = Client::with_uri_str("mongodb://localhost:27017").await?;
+    let db = client.database("mydb");
+    let collection = db.collection("mycollection");
+    // Update a document using $addToSet
+    let filter = doc! { "name": "John" };
+    let update = doc! { "$addToSet": { "hobbies": "reading" } };
+    let options = UpdateOptions::builder().upsert(true).build();
+    collection.update_one(filter, update, options).await?;
+    Ok(())
+}
+```
+
+`$pop` 运算符删除数组的第一个或最后一个元素。传递 `$pop` 值 `-1` 以删除数组中的第一个元素，传递 `1` 值以删除数组中的最后一个元素。
+
+todo!
+
 ## 高级主题
 
 ### 聚合

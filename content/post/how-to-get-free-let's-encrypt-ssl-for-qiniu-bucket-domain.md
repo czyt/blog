@@ -545,3 +545,4 @@ type HTTPSConf struct {
 ## 有用的链接
 
 + [七牛证书管理API](https://developer.qiniu.com/dcdn/10749/dcdn-certificate-of-relevant)
++ [Deploy your certificate to Qiniu.com](https://github.com/acmesh-official/acme.sh/blob/693d692a472e9298c3bf3ee71ffc7d3328451887/deploy/README.md#13-deploy-your-certificate-to-qiniucom)

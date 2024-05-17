@@ -570,6 +570,8 @@ paru -S cliphist wl-clipboard
 
 [ollama](https://ollama.com) 在本地启动并运行大型语言模型`paru -S ollama `
 
+chatbox 聚合聊天工具 `paru -S chatbox-appimage`
+
 ## SSH管理工具
 
 ### 终端工具

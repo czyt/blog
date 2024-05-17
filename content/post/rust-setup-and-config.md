@@ -52,6 +52,8 @@ export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 ## crates.io 镜像
 编辑 `~/.cargo/config `，这里使用的是中科大的镜像。
 
+> cargo版本 1.39 中添加了对 `.toml` 扩展的支持，并且是首选形式。如果两个文件都存在，Cargo 将使用不带扩展名的文件。
+
 ```toml
 [source.crates-io]
 replace-with = 'ustc'

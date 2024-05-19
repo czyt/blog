@@ -880,6 +880,8 @@ geogebra 几何绘图软件 `paru -S geogebra  `
 labplot科学绘图 `paru -S labplot ` 
 xmind-2020 安装 `paru -S xmind-2020` ([福利链接](https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g))
 
+yed 安装 `paru -S yed`
+
 drawio  安装` paru -S drawio-desktop-bin` 或者 ` paru -S drawio-desktop`
 
 在线流程图工具 [https://excalidraw.com](https://excalidraw.com)

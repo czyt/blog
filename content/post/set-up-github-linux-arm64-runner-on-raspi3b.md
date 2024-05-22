@@ -68,7 +68,7 @@ sudo usermod -aG docker $USER
 其他软件
 
 ```bash
-sudo apt-get install curl zip unzip tar gcc cmake ninja-build  build-essential
+sudo apt-get install curl zip unzip tar gcc cmake ninja-build  build-essential nasm
 ```
 
 ### 权限确认
@@ -127,3 +127,15 @@ jobs:
 >- 考虑为自托管Runner设置适当的安全措施，如防火墙规则和访问控制。
 >- 根据需要调整Runner的标签，以便能在工作流中精准地引用。
 >- 通过利用Runner的标签，你可以灵活地管理和分配不同配置和能力的Runner。
+
+## 常见问题
+
+### Ubuntu报错GnuTLS recv error (-110)
+
+```bash
+apt-get install gnutls-bin
+git config --global http.sslVerify false
+git config --global http.postBuffer 1048576000
+```
+
+解决方案来自https://github.com/argoproj/argo-cd/issues/3994

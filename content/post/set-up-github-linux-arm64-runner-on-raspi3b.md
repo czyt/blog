@@ -6,8 +6,8 @@ draft: false
 ---
 最近需要在GitHub Action上自动构建一些软件，但是Github 不提供Arm64的runner，自能自建。
 ## 树莓派设置
-### 安装基本软件
-#### 编译相关的软件
+### Arch系统
+#### 安装基本软件
 安装下面的这些软件，不同的构建可能有所区别：
 ```bash
 sudo pacman -S curl zip unzip tar cmake ninja
@@ -24,6 +24,33 @@ sudo usermod -aG docker $USER
 查看和确认:
 ```bash
 grep docker /etc/group 
+```
+
+### Ubuntu系统
+
+#### 安装基本软件
+
+docker 安装
+
+```bash
+sudo apt-get install ca-certificates curl
+
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+
+sudo install -m 0755 -d /etc/apt/keyrings
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+其他软件
+
+```bash
+sudo apt-get install curl zip unzip tar gcc cmake ninja-build  build-essential
 ```
 
 ### 权限确认

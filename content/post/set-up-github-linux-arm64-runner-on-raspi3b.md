@@ -60,8 +60,10 @@ sudo apt-get update
 ```bash
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
-
-
+然后将当前用户添加到docker的组
+```bash
+sudo usermod -aG docker $USER
+```
 
 其他软件
 

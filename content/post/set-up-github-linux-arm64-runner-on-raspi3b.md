@@ -95,7 +95,11 @@ https_proxy=http://proxy.local:8080
 http_proxy=http://proxy.local:8080
 ```
 
-这样启动runner之后，runner就会使用代理进行通信。
+这样启动runner之后，runner就会使用代理进行通信。也可以尝试下GitHub的hosts加速方式：
+
+```bash
+sudo sh -c 'sed -i "/# GitHub520 Host Start/Q" /etc/hosts && curl https://raw.hellogithub.com/hosts >> /etc/hosts'
+```
 
 ## 运行Runner
 

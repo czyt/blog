@@ -30,7 +30,7 @@ grep docker /etc/group
 
 #### 安装基本软件
 
-docker 安装
+docker 安装前的配置
 
 ```bash
 # Add Docker's official GPG key:
@@ -47,6 +47,21 @@ echo \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 ```
+
+>禁用https证书验证：
+>
+>```bash
+>touch /etc/apt/apt.conf.d/99verify-peer.conf \
+>&& echo >>/etc/apt/apt.conf.d/99verify-peer.conf "Acquire { https::Verify-Peer false }"
+>```
+
+安装docker
+
+```bash
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+
 
 其他软件
 

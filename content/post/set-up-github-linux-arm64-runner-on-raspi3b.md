@@ -82,9 +82,14 @@ sudo apt-get install curl zip unzip tar gcc cmake ninja-build  build-essential n
 ### 安装Runner
 
 1. **访问你的GitHub仓库或组织的设置**：在GitHub的UI中，前往你希望添加自托管runner的仓库或组织的"Settings"。
+
 2. **添加Runner**：在"Actions" > "Runners"部分，点击"Add runner"。
+
 3. **选择操作系统与架构**：选择"Linux"作为操作系统，"ARM64"作为架构。
+
 4. **按照GitHub给出的指示操作**：GitHub会提供一系列命令，帮助你在你的ARM64设备上设置runner。这包括下载runner软件，解压，配置并启动。
+
+   >如果想把runner安装为服务。可以查看runner目录下是否有svc.sh,然后通过 ` sudo ./svc.sh  install`即可。
 
 ### 设置Runner代理
 

@@ -11,11 +11,17 @@ draft: false
 
 参考官方 https://rustdesk.com/docs/en/self-host/rustdesk-server-oss/install/
 
+一些有用的链接：
+
++ https://github.com/infiniteremote/installer/blob/main/install.sh
+
 ### 搭建api server
 
 api server是高级版的功能，但是我们可以通过自建api server实现设备id同步等部分操作。推荐使用：
 
 + https://github.com/kingmo888/rustdesk-api-server
+
++ https://github.com/sctg-development/sctgdesk-server
 
 + https://github.com/v5star/rustdesk-api
 

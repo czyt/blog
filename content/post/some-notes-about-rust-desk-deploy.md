@@ -15,7 +15,11 @@ draft: false
 
 api server是高级版的功能，但是我们可以通过自建api server实现设备id同步等部分操作。推荐使用：
 
-https://github.com/kingmo888/rustdesk-api-server
++ https://github.com/kingmo888/rustdesk-api-server
+
++ https://github.com/v5star/rustdesk-api
+
+更多的实现，可以去Github 搜一搜 https://github.getafreenode.com/topics/rustdesk-api-server
 
 ## 客户端自定义部署
 

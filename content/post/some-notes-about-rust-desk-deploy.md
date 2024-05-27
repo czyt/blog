@@ -1,0 +1,58 @@
+---
+title: "一些RustDesk部署的笔记"
+date: 2024-05-17
+tags: ["tricks", "rust"]
+draft: false
+---
+
+##  自建 Server
+
+### 搭建中转服务器
+
+参考官方 https://rustdesk.com/docs/en/self-host/rustdesk-server-oss/install/
+
+### 搭建api server
+
+api server是高级版的功能，但是我们可以通过自建api server实现设备id同步等部分操作。推荐使用：
+
+https://github.com/kingmo888/rustdesk-api-server
+
+## 客户端自定义部署
+
+### 基于Github Action
+
+参考官方 https://rustdesk.com/docs/en/dev/build/all/
+
+> 对于arm版本的自动化构建，Github Action暂时不提供arm64的runner
+
+### 基于配置文件和命令行
+
+#### RustDesk有用的命令行参数
+
+```bash
+--password 可用于设置永久密码。
+--get-id 可用于检索 ID。
+--set-id 可用于设置ID，请注意ID应以字母开头。
+--silent-install 可用于在 Windows 上静默安装 RustDesk。
+```
+
+#### RustDesk 配置文件
+
+RustDesk的配置文件，windows为`"%appdata%\RustDesk\config\RustDesk2.toml"`linux则为`~/.config/rustdesk/RustDesk2.toml`,下面是一个完整的配置文件示例：
+
+```toml
+rendezvous_server = 'rustdesk.xxxx.tech:21116'
+nat_type = 1
+serial = 0
+
+[options]
+stop-service = 'Y'
+key = 'KEY'
+relay-server = 'IPADDRESS'
+api-server = 'https://IPADDRESS'
+custom-rendezvous-server = 'rustdesk.xxxx.tech'
+verification-method = 'use-permanent-password'
+```
+
+这样可以结合命令行参数和配置文件进行rustdesk的自动化配置，然后通过`--import-config`导入配置。对于key配置项，需要服务器也开启key认证。
+

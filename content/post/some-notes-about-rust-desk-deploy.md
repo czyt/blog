@@ -58,6 +58,8 @@ nat_type = 1
 serial = 0
 
 [options]
+# 对应安全选项->权限中的完全访问
+access-mode = 'full'
 stop-service = 'Y'
 key = 'KEY'
 relay-server = 'IPADDRESS'

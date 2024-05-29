@@ -60,6 +60,10 @@ serial = 0
 [options]
 # 对应安全选项->权限中的完全访问
 access-mode = 'full'
+# 对应安全选项->安全->允许IP直接访问
+direct-server = 'Y'
+# 对应安全选项->安全->自动关闭不活跃的会话
+allow-auto-disconnect = 'Y'
 stop-service = 'Y'
 key = 'KEY'
 relay-server = 'IPADDRESS'

@@ -23,6 +23,8 @@ api server是高级版的功能，但是我们可以通过自建api server实现
 
 + https://github.com/sctg-development/sctgdesk-server
 
+  > 这个是带web console的用户名和密码分别是`admin`和`Hello,world!`
+
 + https://github.com/lantongxue/rustdesk-api-server
 
 + https://github.com/v5star/rustdesk-api

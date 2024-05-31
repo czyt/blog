@@ -1142,6 +1142,8 @@ ibus-daemon -d -x
 
 + [Rime auto deploy](https://github.com/Mark24Code/rime-auto-deploy)
 
++ https://github.com/yanhuacuo/rimetool
+
 ## 媒体软件
 
 网易云音乐 安装 `paru -S netease-cloud-music` 

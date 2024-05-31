@@ -15,6 +15,7 @@ draft: false
 
 ### llm
 + https://github.com/jondot/awesome-rust-llm
++ https://github.com/gabotechs/MusicGPT
 
 ### 其他
 + https://github.com/rustai-solutions

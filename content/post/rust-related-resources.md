@@ -58,6 +58,8 @@ draft: false
 
 + [Calling Rust from C#](https://dev.to/living_syn/calling-rust-from-c-6hk)
 
++ [How to build a plugin system in Rust](https://www.arroyo.dev/blog/rust-plugin-systems)
+
 ### 视频
 + 杨旭 Rust编程语言入门教程
 

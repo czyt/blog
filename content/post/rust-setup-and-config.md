@@ -946,6 +946,8 @@ jobs:
 
 + [必看！2024 Rust精选库清单，值得收藏](https://zhuanlan.zhihu.com/p/688906139)
 
++ https://blessed.rs/crates
+
   
   
   

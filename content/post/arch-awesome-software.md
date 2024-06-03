@@ -1144,6 +1144,10 @@ ibus-daemon -d -x
 
 + https://github.com/yanhuacuo/rimetool
 
+## 模拟器
+
+Vita3K PlayStation Vita emulator 安装 `paru -S vita3k-bin`
+
 ## 媒体软件
 
 网易云音乐 安装 `paru -S netease-cloud-music` 

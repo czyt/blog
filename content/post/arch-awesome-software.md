@@ -574,7 +574,6 @@ chatbox 聚合聊天工具 `paru -S chatbox-appimage`
 
 [mods](https://github.com/charmbracelet/mods) `paru -S mods`
 
-> Mods is AI for the command line, built for pipeline
 
 ## SSH管理工具
 

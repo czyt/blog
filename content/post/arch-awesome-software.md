@@ -364,6 +364,8 @@ sudo pacman-key --init && sudo pacman-key --populate
 >
 >`paru -Bi .` -- Build and install a PKGBUILD in the current directory.
 
+一些基础命令，如hostname的包 `paru -S inetutils `
+
 ## 窗口管理Wayland
 
 > 这部分取自文章 [ArchLinux下Hyprland配置指北](https://www.bilibili.com/read/cv22707313/)

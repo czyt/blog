@@ -341,6 +341,8 @@ sudo pacman-key --init && sudo pacman-key --populate
 > ```
 > yay的配置文件路径为 `$XDG_CONFIG_HOME/yay/` 如果使用有问题，可以删除config.json实现重置。
 
+可以使用[chsrc](https://github.com/RubyMetric/chsrc)来配置软件源
+
 可选安装 编译包 `paru -S base-devel` 
 
 

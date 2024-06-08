@@ -583,6 +583,8 @@ chatbox 聚合聊天工具 `paru -S chatbox-appimage`
 
 ### 终端工具
 
+[rio terminal](https://raphamorim.io/rio/) `paru -S rio`
+
 深度终端 安装 `paru -S deepin-terminal` 
 
 alacritty 安装 `paru -S alacritty ` 

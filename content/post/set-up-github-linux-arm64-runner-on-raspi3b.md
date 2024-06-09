@@ -5,6 +5,9 @@ tags: ["github", "linux"]
 draft: false
 ---
 最近需要在GitHub Action上自动构建一些软件，但是Github 不提供Arm64的runner，自能自建。
+
+> github 官方准备在2024年底开始为开源项目提供arm的runner
+
 ## 树莓派设置
 ### Arch系统
 #### 安装基本软件

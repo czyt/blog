@@ -49,7 +49,7 @@ cd /usr/share/cockpit/rustdesk
 
 > cockpit支持从下面两个位置获取配置
 >  - `~/.local/share/cockpit` 在您的主目录中。它用于用户特定的包和您正在开发的包。您可以即时编辑这些内容并刷新浏览器以查看更改。
-> - `/usr/share/cockpit` 是可供系统所有用户使用的已安装软件包的位置。更改此路径中的文件需要管理员（“root”）权限。在 Cockpit 运行时，不应更改这些内容。
+> - `/usr/share/cockpit` 和 `/usr/share/local/cockpit`是可供系统所有用户使用的已安装软件包的位置。更改此路径中的文件需要管理员（“root”）权限。在 Cockpit 运行时，不应更改这些内容。
 > 因为涉及一些js库，我想复用原来的，所以我这里使用的是第二个位置。
 
 可以通过`cockpit-bridge --packages` 查看已经安装的包：
@@ -185,8 +185,22 @@ sudo systemctl try-restart cockpit
 ```
 然后通过http://主机ip:9090 登录即可看到页面。
 
-
 ## 参考
+
+### 文档
 
 - https://cockpit-project.org/blog/creating-plugins-for-the-cockpit-user-interface.html
 - https://cockpit-project.org/guide/latest/
+### 开源插件和主题
+- https://github.com/MRsagi/cockpit-temperature-plugin 温度插件
+- https://github.com/45Drives/cockpit-hardware 硬件展示
+- https://github.com/cyberorg/apsetup-cockpit wifi设置
+- https://github.com/SecureRoam/WifiManager
+- https://github.com/Viessel/cockpit-wifi-client 基于nmcli的wifi设置工具
+- https://github.com/spotsnel/cockpit-cloudflared 
+- https://github.com/IntelStudios/cockpit-fail2ban
+- https://github.com/spotsnel/cockpit-headscale
+- https://github.com/cyberorg/assist-cockpit xvnc远程控制
+- https://github.com/tobiasvogel/cockpit-wol-sender wake on lan
+- https://github.com/Helly1206/cockpit-smartfancontrol smartfan风扇控制
+- https://github.com/retronas/cockpit-retronas 一个NAS主题

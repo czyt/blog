@@ -209,14 +209,6 @@ paru -S konsole kde-utilities ark dolphin
 >| kde-network    | 网络应用程序，包含全功能浏览器Konqueror、即时通讯工具Telepathy、远程桌面工具KRDC等。 |
 >| kde-games      | KDE团队开发的一系列游戏，不妨一试。                          |
 
-可能还需要安装这些包，当安装了第三方主题不可用的时候，可以安装了试试
-
-```bash
-paru -S kcoreaddons kdbusaddons kwindowsystem kcodecs kconfig kirigami2 kquickimageeditor knotifications ki18n kcontacts
-```
-
-
-
 由于 KDE 自带的文件索引程序 baloo 可能严重拖慢计算机性能，建议您关闭 baloo。具体命令为
 
 ```bash
@@ -1907,6 +1899,8 @@ $ sudo pacman -Rs xdg-user-dirs-gtk
 ```
 
 ## 品牌笔记本支持
+
+电源选项 `paru -S power-profiles-daemon`
 
 [howdy](https://wiki.archlinuxcn.org/wiki/Howdy) 安装 `paru -S howdy`
 

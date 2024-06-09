@@ -1,5 +1,5 @@
 ---
-title: "定制你自己的cockpit页面"
+title: "定制你自己的cockpit"
 date: 2024-06-09
 tags: ["linux"]
 draft: false

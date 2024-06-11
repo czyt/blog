@@ -1537,6 +1537,25 @@ curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fi
 
 参考[知乎](https://zhuanlan.zhihu.com/p/35448750)这篇文章
 
+tide
+
+[仓库](https://github.com/IlanCosman/tide)
+
+```bash
+fisher install IlanCosman/tide@v6
+```
+
+或者手动安装
+
+```bash
+set -l _tide_tmp_dir (command mktemp -d)
+curl https://codeload.github.com/ilancosman/tide/tar.gz/v6 | tar -xzC $_tide_tmp_dir
+command cp -R $_tide_tmp_dir/*/{completions,conf.d,functions} $__fish_config_dir
+fish_path=(status fish-path) exec $fish_path -C "emit _tide_init_install"
+```
+
+
+
 ### nushell
 
 安装 `paru -S nushell` 

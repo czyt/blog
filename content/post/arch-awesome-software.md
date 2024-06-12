@@ -2015,6 +2015,33 @@ SystemMaxUse=50M
 - 字体渲染 [http://www.badwolfbay.cn/2020/03/17/manjaro-setting/](http://www.badwolfbay.cn/2020/03/17/manjaro-setting/)
 
 ## 常见问题
+
++ 删除缓存及孤立包
+
+  ```bash
+  sudo pacman -Rns $(pacman -Qtdq) # 如上文所述，删除孤立软件包（常用）
+  sudo pacman -Sc # 删除当前未安装的所有缓存包和未使用的同步数据库（可选）
+  sudo pacman -Scc # 从缓存中删除所有文件，这是最激进的方法，不会在缓存文件夹中留下任何内容（一般不使用）
+  paccache -r # 删除已安装和未安装包的所有缓存版本，但最近 3 个版本除外
+  ```
+  还可以在 /etc/pacman.d/hooks 文件夹下创建 clean_package_cache.hook 文件来在使用 pacman 时自动执行 paccache。
+
+  ```nginx
+  [Trigger]
+  Operation = Upgrade
+  Operation = Install
+  Operation = Remove
+  Type = Package
+  Target = *
+  
+  [Action]
+  Description = Cleaning pacman cache...
+  When = PostTransaction
+  Exec = /usr/bin/paccache -rk 2
+  ```
+
+  
+
 + swappinessinvalid or corrupted package (PGP signature)
 
 ```bash

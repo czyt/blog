@@ -1097,6 +1097,8 @@ paru -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sar
 - [fcitx5-material-color](https://archlinux.org/packages/?name=fcitx5-material-color)：提供了类似微软拼音的外观。
 - [fcitx5-solarized](https://aur.archlinux.org/packages/fcitx5-solarized/)：[Solarized颜色](https://ethanschoonover.com/solarized/) 主题
 - [fcitx5-skin-fluentdark-git](https://aur.archlinux.org/packages/fcitx5-skin-fluentdark-git/)：具有模糊效果和阴影的 Fluent-Design 深色主题
+- https://github.com/thep0y/fcitx5-themes-candlelight
+- https://github.com/catppuccin/fcitx5
 
 > 编辑 `/etc/environment` 并添加以下几行，然后重新登录
 >

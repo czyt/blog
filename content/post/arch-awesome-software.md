@@ -1123,6 +1123,23 @@ paru -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sar
 
 更多内容 参考 [wiki](https://wiki.archlinux.org/title/Fcitx5_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
 
+此外，还可以安装`fcitx5-rime`然后在输入法中选中州韵，然后安装后面连接中的雾凇拼音，在`$HOME/.local/share/fcitx5/rime/`下创建文件`default.custom.yaml`：
+
+```yaml
+patch:
+  # 仅使用「雾凇拼音」的默认配置，配置此行即可
+  __include: rime_ice_suggestion:/
+  # 以下根据自己所需自行定义，仅做参考。
+  # 针对对应处方的定制条目，请使用 <recipe>.custom.yaml 中配置，例如 rime_ice.custom.yaml
+  __patch:
+    key_binder/bindings/+:
+      # 开启逗号句号翻页
+      - { when: paging, accept: comma, send: Page_Up }
+      - { when: has_menu, accept: period, send: Page_Down }
+```
+
+执行`fcitx5-remote -r`然后来打字也是一种不错的体验。
+
 ### rime
 
 详细介绍[wiki](https://wiki.archlinuxcn.org/wiki/Rime)
@@ -1139,6 +1156,8 @@ ibus-daemon -d -x
 ```
 
 > ⚠️执行 `ibus-setup`进行配置。在*setting*->*Region & Language*下的*input sources*中加入Other->Chinese(Rime)。重启即可。
+
+bus也可以使用雾凇拼音，不过目录位置在`$HOME/.config/ibus/rime/`，其他的步骤相同。
 
 [四叶草输入法](https://github.com/fkxxyz/rime-cloverpinyin) `paru -S rime-cloverpinyin` 
 参考 https://wiki.archlinux.org/index.php/Fcitx

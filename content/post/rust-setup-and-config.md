@@ -235,6 +235,24 @@ target-dir = "/target/directory"
 
 ## 其他实用工具
 
+### sccache
+
+官方仓库 https://github.com/mozilla/sccache
+
+安装 `cargo install sccache --locked`,然后修改 `$HOME/.cargo/config.toml`，添加下面的内容
+
+```toml
+[build]
+rustc-wrapper = "/path/to/sccache"
+```
+
+或者使用环境变量的方式
+
+```bash
+export RUSTC_WRAPPER=/path/to/sccache
+cargo build
+```
+
 ### WASM
 
 需要安装Target

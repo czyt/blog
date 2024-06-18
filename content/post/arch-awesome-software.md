@@ -869,6 +869,8 @@ youtube视频下载器 `paru -S yt-dlp `或者 `paru -S yt-dlp-git `
 
 腾讯会议 `paru -S wemeet-bin`
 
+planify todolist软件 `paru -s planify`
+
 飞书 `paru -S feishu-bin`
 
 [tailscale](https://tailscale.com) 安装 `paru -S tailscale` 

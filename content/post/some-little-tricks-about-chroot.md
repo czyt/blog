@@ -115,3 +115,6 @@ sudo dpkg -i my_packages.deb
 ### 总结
 
 通过上述步骤，你可以将多个软件包打包成一个 `.deb` 文件，以便于在离线环境中安装。这种方法不仅适用于安装多个软件包，还可以用于部署特定的配置和脚本，以实现更高级的自定义需求。
+
+## 相关链接
++ https://help.ubuntu.com/20.04/installation-guide/amd64/apbs02.html

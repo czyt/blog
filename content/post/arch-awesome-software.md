@@ -923,6 +923,8 @@ Foliate [简单、现代的电子书阅读器](https://www.appinn.com/foliate-fo
 
 pdf合并工具 `paru -S pdfmerger`
 
+zlibrary `paru -S z-library-bin`
+
 ### 远程工具
 
 Remmina 安装 `paru -S remmina`

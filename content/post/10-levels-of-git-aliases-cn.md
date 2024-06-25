@@ -42,7 +42,12 @@ $ git config --global alias.st status
 这将在全局配置文件的 [alias] 部分添加一个新行，并创建该部分（如果尚不存在）。我们来看一下：
 
 ```
-$ cat ~/.gitconfig[user]  name = Jan Krag  email = jan.krag@eficode.com[alias]  st = status
+$ cat ~/.gitconfig
+[user]
+   name = Jan Krag
+   email = jan.krag@eficode.com
+[alias]
+   st = status
 ```
 
 恭喜，您拥有了第一个别名，现在可以输入：
@@ -60,13 +65,21 @@ $ cat ~/.gitconfig[user]  name = Jan Krag  email = jan.krag@eficode.com[alias]  
 我们已经看到了上面的`st`建议，但这里有一些简单快捷方式的更常见示例：
 
 ```
-[alias]  s = status  st = status  c = commit  sw = switch  br = branch
+[alias]
+    s  = status
+    st = status
+    c = commit
+    sw = switch
+    br = branch
 ```
 
 对于“常见拼写错误”风格的别名，这些是个人偏好。为您的手指无法输入的命令创建别名。我个人的克星是`switch`，但我刚刚决定始终使用上面建议的短“`sw`”，而不是为我在该单词中可能出现的所有可能的拼写错误创建别名。但这里有一些灵感的例子：
 
 ```
-[alias]  comit = commit  swicht = switch  statut = status
+[alias]
+    comit = commit
+    swicht = switch
+    statut = status
 ```
 
 现在，您可能已经在考虑哪些 Git 命令最适合使用别名。几年前我想出了一个有趣的答案。就像 Git 一样，我的 shell（Bash、Zsh）也支持别名。因此，我在`.bashrc`和`.zshrc`配置文件中创建了以下 shell 别名：
@@ -90,15 +103,23 @@ $ cat ~/.gitconfig[user]  name = Jan Krag  email = jan.krag@eficode.com[alias]  
  例如。：
 
 ```
-[alias]  last = log -1  lo = log --oneline  l5 = log --oneline -5
+[alias]
+    last  = log -1
+    lo = log --oneline
+    l5 = log --oneline -5
 ```
 
 另一个很好的建议是使用此功能来创建那些令人讨厌的“缺失”Git 命令，您认为这些命令应该存在，并且您可能很难记住必须使用哪个确切命令和选项来完成该非常常见的任务。
 
-`amend = commit --amenduntrack = rm --cachedunadd = restore --staged`请记住，别名是个人喜好。您必须为您可能实际使用（和理解）的命令创建对您有意义的别名。此类别中更高级的示例可能是：
+`mend = commit --amend
+untrack = rm --cached
+unadd = restore --staged`请记住，别名是个人喜好。您必须为您可能实际使用（和理解）的命令创建对您有意义的别名。此类别中更高级的示例可能是：
 
 ```
-pleasepush = push --force-with-leasegg = grep -E --line-numbersoftadd = add --intent-to-addcatp = cat-file -p
+pleasepush = push --force-with-lease
+gg = grep -E --line-number
+softadd = add --intent-to-add
+catp = cat-file -p
 ```
 
 不可否认，许多 Git 用户可能从未听说过这些 Git 命令和选项，更不用说使用它们了。这使得这些别名要么毫无用处，要么成为一个很好的学习机会。
@@ -108,7 +129,8 @@ pleasepush = push --force-with-leasegg = grep -E --line-numbersoftadd = add --in
 我们旅程的下一个层次是研究对也采用复杂参数的命令使用别名。
 
 ```
-[alias]foo = <subcommand> <option> <arg...> <option> <arg...>   
+[alias]
+foo = <subcommand> <option> <arg...> <option> <arg...>    
 ```
 
 到目前为止，我们主要关注频繁或常用命令的别名，但由于我们现在可以缩短更复杂的命令，因此我们可能还会发现朝另一个方向使用别名很有用：
@@ -119,7 +141,24 @@ pleasepush = push --force-with-leasegg = grep -E --line-numbersoftadd = add --in
 总之，这允许您使用您可能不会费心的 Git 功能。
 
 ```
-# Diff of last commitdlc = diff --cached HEAD^ # list all defined aliasesaliases = config --get-regexp alias# Find very first commitfirst = rev-list --max-parents=0 HEAD# what would be mergedincoming = log HEAD..@{upstream}# what would be pushedoutgoing = log @{upstream}..HEADoutgoing = log @{u}..# List all commits (on this branch) made by memycommits = log --author=\".*[Jj]an\\s*[Kk]rag.*\"
+# Diff of last commit
+dlc = diff --cached HEAD^ 
+
+# list all defined aliases
+aliases = config --get-regexp alias
+
+# Find very first commit
+first = rev-list --max-parents=0 HEAD
+
+# what would be merged
+incoming = log HEAD..@{upstream}
+
+# what would be pushed
+outgoing = log @{upstream}..HEAD
+outgoing = log @{u}..
+
+# List all commits (on this branch) made by me
+mycommits = log --author=\".*[Jj]an\\s*[Kk]rag.*\"
 ```
 
 正如您所看到的，我在上面的示例中通过使用在配置文件中添加 # 注释的功能描述了“内联”别名。这不仅是为了使示例更容易，而且强烈建议您在实际配置中也这样做。我花了很多年的时间才学会了执行此操作的艰难方法，现在我收集了许多奇怪的别名和其他设置，但我不太记得它们的用途。
@@ -143,7 +182,8 @@ wdiff = diff -w --word-diff=color --ignore-space-at-eol
  让我们定义：
 
 ```
-[alias]structure = log --oneline --simplify-by-decoration --graph --all
+[alias]
+structure = log --oneline --simplify-by-decoration --graph --all
 ```
 
 然后在一个巨大的存储库上运行命令：
@@ -168,7 +208,15 @@ slog = log --pretty=format:'%C(auto)%h %C(red)%as %C(blue)%aN%C(auto)%d%C(green)
 对于这个级别，让我们冒险超越 Git 别名的直接领域，我将教您如何使用自定义漂亮格式的鲜为人知的功能来清理别名并极大地提高可重用性。
 
 我们在上面看到了如何利用自定义格式字段来精确制作我喜欢的日志输出，这一切都很好，直到您意识到我曾经拥有以下所有内容：
-`slog = log --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....#(For those lazy days).l = log --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....l1 = log -1 --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....l5 = log -5 --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....l10 = log -10 --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....l20 = log -20 --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....`
+```
+slog = log --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....
+#(For those lazy days).
+l = log --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....
+l1 = log -1 --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....
+l5 = log -5 --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....
+l10 = log -10 --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....
+l20 = log -20 --pretty=format:'%C(auto)%h %C(red)%as %C(blue).....
+```
 
 （实际别名要长得多，但格式字符串相同）。
 
@@ -183,7 +231,11 @@ l1 = slog -1l5 = slog -5
 但事实证明还有更好的选择。
 
 您可能知道 Git 有一些内置的“漂亮”格式，您可以在日志中使用它们，例如：
-`git log --pretty=onelinegit log --pretty=fullgit log --pretty=raw`
+```
+git log --pretty=oneline
+git log --pretty=full
+git log --pretty=raw
+```
 
 （有关更多内容，请参阅上面链接的文档）。
 
@@ -192,7 +244,9 @@ l1 = slog -1l5 = slog -5
 这些格式可以在配置的`[pretty]`部分（或`git config –global pretty.myformat …..`）中定义，如下所示：
 
 ```
-[pretty]  slog = format:%C(yellow)%h %Cred%as %Cblue%an%Cgreen%d %Creset%s  bw = format:%h | %as | %>(20,trunc)%d%x09%s
+[pretty]
+    slog = format:%C(yellow)%h %Cred%as %Cblue%an%Cgreen%d %Creset%s
+    bw = format:%h | %as | %>(20,trunc)%d%x09%s
 ```
 
 一旦定义了这些，我就可以在运行 Git log 命令时随时使用它们：
@@ -204,7 +258,13 @@ $ git log --pretty=slog
 这也意味着我可以重写所有奇怪的日志别名以使用我自己的漂亮格式，然后每当我的品味发生变化时我就有一个可以编辑的地方。
 
 ```
-[alias]  l1 = log -1 --pretty=slog  l5 = log -5 --pretty=slog   slog = log --pretty=slog  slogbw = log --pretty=bw  glog = log --graph --pretty=slog   outgoing = log --pretty=slog @{u}..
+[alias]
+    l1 = log -1 --pretty=slog
+    l5 = log -5 --pretty=slog 
+    slog = log --pretty=slog
+    slogbw = log --pretty=bw
+    glog = log --graph --pretty=slog 
+    outgoing = log --pretty=slog @{u}..
 ```
 
 定义这些漂亮格式的另一个好处是，即使在运行“即时”日志命令时，我也可以“按需”使用它们。
@@ -229,7 +289,8 @@ git –paginate git --no-pager
  例如。：
 
 ```
-pst = --paginate status # so that output doesn't stick around on your screen and scroll buffer when you quit lesslistconfig = --no-pager config --list # so that output stays on your screen and scroll buffer to allow copy/paste
+pst = --paginate status # so that output doesn't stick around on your screen and scroll buffer when you quit less
+listconfig = --no-pager config --list # so that output stays on your screen and scroll buffer to allow copy/paste
 ```
 
 此功能的另一个很好的用途是将其与 Git 临时覆盖配置设置的功能结合使用。
@@ -245,13 +306,25 @@ annoncommit = -c user.name="Anonymous" -c user.email="notme@localhost" commit
 注意：这与使用`git commit --author=`不同，因为它同时设置作者和提交者身份，如以下示例所示：
 
 ```
-$ git add .$ git annoncommit --message 'foo'$ git log --pretty=fullcommit 0ae65ffc6192b6a2561db906bfed5c45bac702db (HEAD -> master)Author: Anonymous Commit: Anonymous   foo
+$ git add .
+$ git annoncommit --message 'foo'
+$ git log --pretty=full
+commit 0ae65ffc6192b6a2561db906bfed5c45bac702db (HEAD -> master)
+Author: Anonymous 
+Commit: Anonymous 
+
+    foo
 ```
 
 让我们看一些更有用的例子：
 
 ```
-# Verbose commit (add diff to comments in commit text)vcommit = -c commit.verbose=true commit``# Use VSCode for editing, just this oncevscommit = -c core.editor="code --wait" commit``# Use VSCode for interactive rebaseriv = -c sequence.editor="code --wait" rebase -i
+# Verbose commit (add diff to comments in commit text)
+vcommit = -c commit.verbose=true commit
+# Use VSCode for editing, just this once
+vscommit = -c core.editor="code --wait" commit
+# Use VSCode for interactive rebase
+riv = -c sequence.editor="code --wait" rebase -i
 ```
 
 ## Git 博客文章系列的下一篇内容是什么？

@@ -790,3 +790,39 @@ async fn main() -> Result<()> {
     Ok(())
 }
 ```
+### 其他技巧
+
+#### RawDocumentBuf 转换为struct
+
+使用 `bson::from_slice()`
+```rust
+let docs: Vec<RawDocumentBuf> = coll.find(None, None).await?.try_collect().await?;
+
+let books: Vec<Book> = docs
+    .par_iter()
+    .map(|raw| bson::from_slice(raw.as_bytes()).unwrap())
+    .collect();
+```
+
+#### 并行处理
+使用https://docs.rs/rayon/latest/rayon/ 可以进行并行处理.只需将 iter() 更改为 `par_iter()` ，rayon 就会并行处理它，而不会发生数据冲突。
+```rust
+    pub use rayon::prelude::*;
+
+    let docs: Vec<RawDocumentBuf> = coll.find(None, None).await?.try_collect::<Vec<_>>().await?;
+
+    let _y: Vec<Document> = docs.par_iter().map(|x| x.to_document().unwrap()).collect();
+```
+
+### 超时处理
+在构建像Golang的 goroutine 这样的并发逻辑时，需要超时以避免内存泄漏。 Rust 创建一个线程并在该线程上等待超时。
+```rust
+    let handle = tokio::task::spawn(async move { collection.insert_many(books, None).await });
+
+    if let Err(_) = tokio::time::timeout(Duration::from_secs(3), handle).await {
+        println!("did not receive value within 3 ms");
+    }
+```
+
+## 参考
+ - https://zenn.dev/tfutada/articles/e5bf173edd541b

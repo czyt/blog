@@ -233,6 +233,21 @@ target-dir = "/target/directory"
 
 >替换`/target/directory`为你自己的共享target目录。
 
+### 减小程序编译体积
+
+> 原文 https://harrychen.xyz/2023/09/03/cross-compile-rust-to-mipsel/
+
+即使使用 release 模式，编译出的二进制文件体积也较大。通过调整编译 profile 可以进一步减少体积。在 `Cargo.toml` 中增加：
+
+```toml
+[profile.minsize]
+inherits = "release"
+strip = true
+lto = true
+opt-level = "z"
+panic = "abort"
+```
+
 ## 其他实用工具
 
 ### sccache

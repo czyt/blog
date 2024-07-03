@@ -7,6 +7,8 @@ draft: false
 
 > 本文为学习rust过程中，向ai提问的内容汇总。配套图书为《Rust程序设计 第2版》
 
+![GReMdJtb0AAGn53](https://assets.czyt.tech/img/rust-memory-container-cheet-sheet.jpg)
+
 ## 基础
 
 ### 迭代器

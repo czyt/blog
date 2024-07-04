@@ -657,6 +657,8 @@ goldendict 安装 `paru -S goldendict` [词库](https://github.com/czytcn/golden
 
 [crow-translate](https://github.com/crow-translate/crow-translate) 翻译工具`paru -S crow-translate`
 
+ [pot-desktop](https://github.com/pot-app/pot-desktop) `paru -S  pot-translation`
+
 
 ## 聊天软件
 

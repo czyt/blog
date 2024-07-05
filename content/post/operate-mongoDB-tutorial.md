@@ -434,6 +434,87 @@ pipeline = [
 `db.collectionName.aggregate(pipeline, { allowDiskUse : true })`
 请注意，此选项并不总是可用的共享服务。例如 Atlas M0、M2 和 M5 集群禁用此选项。聚合查询返回的文档（无论是作为游标还是通过 $out 存储在另一个集合中）的大小限制为 16MB。也就是说，它们不能大于 MongoDB 文档的最大大小。如果您可能会超出此限制，那么您应该指定聚合查询的输出将作为游标而不是文档。
 
+## 其他
+### 固定集合
+
+在 MongoDB 中，固定集合（capped collection）是一种特殊的集合，它有固定的大小和存储限制。固定集合在创建时就指定了最大大小或最大文档数量，当集合达到这些限制时，旧文档会自动被新的文档覆盖。
+
+### 创建固定集合
+
+你可以使用 `createCollection` 命令来创建固定集合，并指定集合的大小和可选的最大文档数量。
+
+以下是创建固定集合的步骤和示例：
+
+### 步骤 1: 连接到 MongoDB
+
+使用 `mongo` shell 连接到 MongoDB 实例：
+
+```bash
+mongo
+```
+
+### 步骤 2: 选择数据库
+
+选择你想要创建固定集合的数据库。如果数据库不存在，它会在插入文档时自动创建。
+
+```bash
+use mydatabase
+```
+
+### 步骤 3: 创建固定集合
+
+使用 `createCollection` 命令创建固定集合。你需要指定 `capped` 选项为 `true`，并且指定 `size` 选项来定义集合的最大大小（以字节为单位）。你也可以可选地指定 `max` 选项来限制集合的最大文档数量。
+
+#### 示例 1: 仅指定集合大小
+
+```javascript
+db.createCollection("mycappedcollection", { capped: true, size: 1024 })
+```
+
+这个命令创建了一个名为 `mycappedcollection` 的集合，其最大大小为 1024 字节。
+
+#### 示例 2: 指定集合大小和最大文档数量
+
+```javascript
+db.createCollection("mycappedcollection", { capped: true, size: 1024, max: 100 })
+```
+
+这个命令创建了一个名为 `mycappedcollection` 的集合，其最大大小为 1024 字节，并且最多可以包含 100 个文档。
+
+### 验证固定集合
+
+你可以使用 `isCapped` 方法来验证集合是否为固定集合：
+
+```javascript
+db.mycappedcollection.isCapped()
+```
+
+如果返回 `true`，则表示集合是固定集合。
+
+### 插入文档
+
+你可以向固定集合插入文档，插入方式与普通集合相同。当集合达到指定大小或文档数量限制时，旧文档会自动被新的文档覆盖。
+
+```javascript
+db.mycappedcollection.insert({ name: "Alice", age: 30 })
+db.mycappedcollection.insert({ name: "Bob", age: 25 })
+```
+
+### 使用固定集合的优势
+
+- **高效存储**：固定集合的存储空间是预先分配的，因此插入和更新操作非常高效。
+- **自动覆盖**：当集合达到指定大小时，旧文档会自动被新文档覆盖，无需手动删除旧文档。
+- **适用于日志和缓存**：固定集合非常适合用来存储日志、缓存或其他类似的数据，其中数据会频繁更新并且旧数据可以自动丢弃。
+
+### 注意事项
+
+- **无法删除文档**：在固定集合中，单独删除文档的操作是不允许的。
+- **无法改变大小**：创建后，固定集合的大小无法改变。如果需要更大的固定集合，需要重新创建一个新的固定集合。
+- **索引限制**：固定集合在某些情况下可能会对索引的创建和使用有一定限制。
+
+通过以上步骤和示例，你可以在 MongoDB 中成功创建和使用固定集合。
+
+
 ## 数据库定义与设计
 
 ![image-20220531090947932](https://assets.czyt.tech/img/mongoDB-with-patterns.png)

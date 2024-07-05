@@ -653,7 +653,7 @@ tor `paru -S tor-browser-bin `
 
 金山词霸 安装 `paru -S powerword-bin` 
 
-goldendict 安装 `paru -S goldendict` [词库](https://github.com/czytcn/goldendict)
+[goldendict ](https://github.com/goldendict/goldendict)安装 `paru -S goldendict` [Mdict词库](https://mdict.org) [DictionaryByGPT4](https://github.com/Ceelog/DictionaryByGPT4)
 
 [crow-translate](https://github.com/crow-translate/crow-translate) 翻译工具`paru -S crow-translate`
 

@@ -1772,6 +1772,8 @@ byobu 终端工具 安装 `paru -S byobu`
 
 kitty 漂亮的终端 安装 `paru -S kitty-git` 或者 `paru -S kitty `
 
+[onefetch](https://github.com/o2sh/onefetch)  一个命令行工具，可以显示 Git 仓库的详细统计信息，比如代码行数、体积、贡献者等等 `paru -S onefetch`
+
 API文档工具 zeal 安装 `paru -S zeal` 
 
 [windterm](https://github.com/kingToolbox/WindTerm) 安装 `paru -S windterm-bin `

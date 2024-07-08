@@ -225,7 +225,7 @@ paru --needed xfce4-goodies
 ### 中文字体
 
 ```bash
-paru -S adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts noto-fonts-cjk wqy-microhei wqy-microhei-lite wqy-bitmapfont wqy-zenhei ttf-arphic-ukai ttf-arphic-uming
+paru -S adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts noto-fonts-cjk wqy-microhei wqy-microhei-lite wqy-bitmapfont wqy-zenhei ttf-arphic-ukai ttf-arphic-uming nerd-fonts-jetbrains-mono ttf-material-design-icons ttf-joypixels  ttf-dejavu
 ```
 
 其他配置选项参考 [Arch wiki 简体中文本地化](https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96)
@@ -242,7 +242,7 @@ sudo pacman -S cinnamon gnome-terminal xorg lightdm lightdm-gtk-greeter
 sudo systemctl enable --now lightdm
 ```
 
-
+>picom是一个轻量级的Compositing Manager，它的主要任务是在X11环境下为你的桌面添加一些华丽的视觉效果。Picom 的目标是成为低资源消耗且高效的解决方案，让那些性能有限或者追求简洁流畅体验的用户也能享受到美观的桌面环境。可以使用下面命令进行安装 `paru -S picom`,wiki参考 https://wiki.archlinux.org/title/Picom
 
 ## 更换软件源
 
@@ -996,6 +996,105 @@ proxychains-ng 安装 `paru -S proxychains-ng`
 
 tsockets 安装 `paru -S tsocks-tools`
 
+dae `paru -S dae`
+
+daed  `paru -S daed` (自带 Web 操作界面的 dae)
+
+>`dae` 利用了 `Linux` 内核中的 `eBPF` 技术，采用了透明代理和流量分流套件，可以提升分流性能，具体工作原理请看 [dae 如何工作](https://github.com/daeuniverse/dae/blob/main/docs/zh/how-it-works.md)
+>
+>### 配置 daed
+>
+>```bash
+># 设置开机自启动 daed 且立刻启动
+>sudo systemctl enable --now daed
+>```
+>
+>`daed` 直接打开浏览器访问 [http://localhost:2023](http://localhost:2023/) 配置 `daed` 即可。
+>
+>### 配置 dae
+>
+>`dae` 需要自行配置 `/etc/dae/config.dae`：
+>
+>```bash
+>global {
+>  # 绑定到 LAN 和/或 WAN 接口
+>  # lan_interface: docker0
+>  wan_interface: auto # 使用 "auto" 自动侦测 WAN 接口
+>
+>  log_level: info
+>  allow_insecure: false
+>  auto_config_kernel_parameter: true
+>}
+>
+>subscription {
+>  # 在下面填入你的订阅链接
+>}
+>
+># 更多的 DNS 样例见 https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/dns.md
+>dns {
+>  upstream {
+>    googledns: 'tcp+udp://dns.google.com:53'
+>    alidns: 'udp://dns.alidns.com:53'
+>  }
+>  routing {
+>    request {
+>      fallback: alidns
+>    }
+>    response {
+>      upstream(googledns) -> accept
+>      ip(geoip:private) && !qname(geosite:cn) -> googledns
+>      fallback: accept
+>    }
+>  }
+>}
+>
+>group {
+>  proxy {
+>    policy: min_moving_avg
+>  }
+>}
+>
+># 更多的 Routing 样例见 https://github.com/daeuniverse/dae/blob/main/docs/en/configuration/routing.md
+>routing {
+>  pname(NetworkManager) -> direct
+>  dip(224.0.0.0/3, 'ff00::/8') -> direct
+>
+>  ### 以下为自定义规则
+>
+>  # 禁用 h3，因为它通常消耗很多 CPU 和内存资源
+>  l4proto(udp) && dport(443) -> block
+>  dip(geoip:private) -> direct
+>  dip(geoip:cn) -> direct
+>  domain(geosite:cn) -> direct
+>
+>  fallback: proxy
+>}
+>```
+>
+>如果你更注重隐私和 DNS 泄露，可以考虑使用以下配置替换上述的 dns 部分：
+>
+>```bash
+>dns {
+>  upstream {
+>    googledns: 'tcp+udp://dns.google.com:53'
+>    alidns: 'udp://dns.alidns.com:53'
+>  }
+>  routing {
+>    request {
+>      qname(geosite:cn) -> alidns
+>      fallback: googledns
+>    }
+>  }
+>}
+>```
+>
+>配置完毕后启动：
+>
+>```bash
+># 设置开机自启动 dae 且立刻启动
+>sudo systemctl enable --now dae
+>```
+
 ### 笔记软件
 
 evernote 开源版本 nixnote2 安装 `paru -S nixnote2` 
@@ -1018,6 +1117,8 @@ U盘启动制作[etcher](https://github.com/balena-io/etcher) `paru -S etcher-bi
 [rpi-imager](https://aur.archlinux.org/packages/rpi-imager) 树莓派的镜像写入工具 `paru -S rpi-imager `
 
 ### 其他
+
+[imwheel](https://archlinux.org/packages/?name=imwheel) `paru -S imwheel`
 
 剪切板工具 [uniclip](https://github.com/quackduck/uniclip) `paru -S uniclip`
 
@@ -1995,7 +2096,13 @@ cctk --PrimaryBattChargeCfg=Custom:60-75
 
 ## 显卡
 
-英伟达显卡驱动 `paru -S nvidia nvidia-settings lib32-nvidia-utils`
+Intel 核芯显卡 `paru -S mesa lib32-mesa vulkan-intel lib32-vulkan-intel `
+
+AMD 集成显卡`paru -S mesa lib32-mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon `
+
+独立显卡` paru -S nvidia nvidia-open nvidia-settings lib32-nvidia-utils`
+
+如果同时拥有集成显卡与独立显卡的笔记本电脑，可以使用 `optimus-manager` 等工具自动切换。
 
 ## 网卡
 

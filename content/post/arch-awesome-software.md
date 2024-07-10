@@ -656,6 +656,8 @@ tor `paru -S tor-browser-bin `
 [goldendict ](https://github.com/goldendict/goldendict)安装 `paru -S goldendict` [Mdict词库](https://mdict.org) [DictionaryByGPT4](https://github.com/Ceelog/DictionaryByGPT4) [skywind3000](https://github.com/skywind3000/ECDICT/wiki/%E7%AE%80%E6%98%8E%E8%8B%B1%E6%B1%89%E5%AD%97%E5%85%B8%E5%A2%9E%E5%BC%BA%E7%89%88) [GoldenDict++OCR](https://www.autoptr.top/gdocr/GoldenDict-OCR-Deployment/)
 
 > 其他版本 `paru -S goldendict-ng` 仓库 https://github.com/xiaoyifang/goldendict-ng
+>
+> 词典下载的论坛 https://forum.freemdict.com
 
 [crow-translate](https://github.com/crow-translate/crow-translate) 翻译工具`paru -S crow-translate`
 

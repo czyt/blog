@@ -1889,7 +1889,7 @@ tldr 简化版文档工具 ` paru -S tldr` （rust版本 `paru -S  tealdeer ` �
 
 vscode 安装 `paru -S visual-studio-code-bin` 
 
-[zed editor](https://zed.dev) 安装 `paru -S zed-editor`
+[zed editor](https://zed.dev) 安装 `paru -S zed-editor`或者 `paru -S zed`
 
 终端录屏幕[asciinema](https://asciinema.org/) 安装 `paru -S asciinema` 
 

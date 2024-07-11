@@ -248,6 +248,14 @@ opt-level = "z"
 panic = "abort"
 ```
 
+## IDE
+
+### rustrover
+### vscode
+###  neovim
+
+相关仓库 https://github.com/mrcjkb/rustaceanvim
+
 ## 其他实用工具
 
 ### sccache

@@ -1891,6 +1891,12 @@ vscode 安装 `paru -S visual-studio-code-bin`
 
 [zed editor](https://zed.dev) 安装 `paru -S zed-editor`或者 `paru -S zed`
 
+> zed编辑器可能需要你自己安装vulkan，参考[wiki](https://wiki.archlinux.org/title/Vulkan) 
+>
+> - intel`paru  -S vulkan-intel`
+> - NVIDIA `paru -S vulkan-nouveau`
+> - AMD `paru -S amdvlk`
+
 终端录屏幕[asciinema](https://asciinema.org/) 安装 `paru -S asciinema` 
 
 [zoxide](https://github.com/ajeetdsouza/zoxide) **smarter cd command** `paru -S zoxide`

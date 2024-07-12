@@ -31,7 +31,7 @@ draft: false
 + [rCore-Tutorial-Book 第三版](https://rcore-os.cn/rCore-Tutorial-Book-v3/index.html)
 + [OffensiveRust](https://github.com/0xTriboulet/OffensiveRust#offensiverust)
 + [RustPrimer](https://rustcc.gitbooks.io/rustprimer/content/)
-+ [Rust Atomics and Locks中文版 ](https://atomics.rs)
++ [Rust Atomics and Locks中文版 ](https://rustcc.github.io/Rust_Atomics_and_Locks/)
 + [Rust 程序设计语言 2021版 中文](https://github.com/KaiserY/trpl-zh-cn)
 + [The Rust on ESP Book中文版](https://narukara.github.io/rust-on-esp-book-zh-cn/)
 + [rust 教程资料收集 - fkysly](https://graceful-direction-b61.notion.site/Rust-fkysly-7e1a57dd614b4a2d9173b09ab9506895)

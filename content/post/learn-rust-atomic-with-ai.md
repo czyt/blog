@@ -225,3 +225,6 @@ if !flag1.load(Ordering::SeqCst) {
 4. 可移植性：考虑代码在不同硬件架构上的行为。
 
 在实际应用中，通常会组合使用不同的内存顺序。例如，使用Release-Acquire对来实现生产者-消费者模式，或者在关键路径上使用SeqCst而在非关键路径上使用Relaxed。
+
+## ref
++ https://forsworns.github.io/zh/blogs/20210822/

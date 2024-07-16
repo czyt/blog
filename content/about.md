@@ -33,7 +33,6 @@ mail: x-gopher@qq.com or go-x@qq.com
 - [github Speedup](https://fastgit.czyt.tech)
 - [libgen mirror](https://libgen.czyt.tech)
 
-[![赞赏](https://pic1.afdiancdn.com/static/img/welcome/button-sponsorme.jpg)](https://afdian.net/a/x-czyt)
 
 
 

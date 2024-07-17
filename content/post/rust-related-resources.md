@@ -42,6 +42,7 @@ draft: false
 + https://www.howtocodeit.com
 + [100个练习题学习Rust](https://colobu.com/rust100)
 + [Rust Design Patterns](https://rust-unofficial.github.io/patterns/)  [中文版](https://fomalhauthmj.github.io/patterns/intro.html) / [pdf](https://rust-unofficial.github.io/patterns/rust-design-patterns.pdf)
++ [学习 wgpu](https://jinleili.github.io/learn-wgpu-zh/)
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
 

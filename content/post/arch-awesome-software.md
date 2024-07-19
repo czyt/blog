@@ -244,6 +244,11 @@ sudo systemctl enable --now lightdm
 
 >picom是一个轻量级的Compositing Manager，它的主要任务是在X11环境下为你的桌面添加一些华丽的视觉效果。Picom 的目标是成为低资源消耗且高效的解决方案，让那些性能有限或者追求简洁流畅体验的用户也能享受到美观的桌面环境。可以使用下面命令进行安装 `paru -S picom`,wiki参考 https://wiki.archlinux.org/title/Picom
 
+### dwm
+
++ https://wiki.archlinux.org/title/Dwm
++ https://github.com/siduck/chadwm
+
 ## 更换软件源
 
 Arch可以使用 reflector 来选择速度比较好的源：

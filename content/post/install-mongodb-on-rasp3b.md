@@ -188,5 +188,6 @@ chown -R mongod:mongod /usr/mongodb/data
 -[MongoDB报错“not authorized on admin to execute command“](https://xiaoligege.blog.csdn.net/article/details/108749801)
 - https://dba.stackexchange.com/questions/283843/create-user-for-all-databases-in-mongodb
 - https://www.guru99.com/mongodb-create-user.html
+- https://github.com/themattman/mongodb-raspberrypi-binaries
   
   ​    

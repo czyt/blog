@@ -228,6 +228,7 @@ draft: false
 - DataGrid
 ### 其他
 - JD-GUI - Java反编译工具，字节码文件反编译为Java文件。
+- [chsrc ](https://github.com/RubyMetric/chsrc)软件换源，加速
 
 ## 参阅网站
 

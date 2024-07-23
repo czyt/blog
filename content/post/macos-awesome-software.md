@@ -36,7 +36,7 @@ draft: false
 
 ## 新闻及阅读
 
-- NetNewsWire  V2EX 站长搞的rss软件
+- NetNewsWire  rss阅读软件
 
 
 ## 浏览器
@@ -232,17 +232,11 @@ draft: false
 
 ### 软件下载
 - https://appstorrent.ru
-
 - https://xclient.info/
-
 - https://mac.macxz.com
-
 - https://www.imacso.com
-
 - https://github.com/serhii-londar/open-source-mac-os-apps
-
 - https://www.sqlsec.com/macsoft.html
-
 - https://github.com/SuJunming/mac-awesomeTools
 ### 指南技巧
 

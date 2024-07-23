@@ -132,8 +132,35 @@ draft: false
 - banzip - 以前用Windows的时候就必装的压缩软件。
 
 - Homebrew - Mac上的软件包管理器，可安装各类软件，各类库。必备神器。
+
+  >Homebrew可以通过设置环境变量进行加速.下面是一个.zshrc的例子
+  >
+  >```bash
+  >function proxy_off(){
+  >    unset http_proxy
+  >    unset https_proxy
+  >    echo  "proxy is off"
+  >}
+  >
+  >function proxy_on() {
+  >    export no_proxy="localhost,127.0.0.1"
+  >    export http_proxy="socks5://127.0.0.1:10808"
+  >    export https_proxy=$http_proxy
+  >    echo  "prxoy is on"
+  >}
+  >
+  >function proxy_status() {
+  >    echo $https_proxy
+  >    curl cip.cc
+  >}
+  >```
+  >
+  >
+
 - FastZip - Mac强大的解压缩工具。
+
 - Dr.Unarchiver
+
 - The Unarchiver
 ### 截图和录屏
 - iShot - 方便的截图软件，支持标记，长截图，OCR等功能。Pro版收费。
@@ -185,6 +212,7 @@ draft: false
 - [Thor](https://github.com/gbammc/Thor) 给你的任何软件设置启动快捷键
 - [Plash ](https://github.com/sindresorhus/Plash)将任意网站设置为可交互的 MacOS 桌面壁纸
 - KeyKey  macOS 上优雅好用的键盘打字练习。
+- Machina - 类似于neofetch的一个显示系统信息的命令行工具.
 
 
 ## 磁盘清理

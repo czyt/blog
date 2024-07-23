@@ -23,13 +23,19 @@ draft: false
 ## 输入法及扩展
 
 - AutoSwitchinput 当你在Mac上打开不同的软件的时候，它可以自动帮你切换中文和英文输入法
+- Input Source Pro，推友开发的一个输入法自动切换工具
 
 ## 翻译和外语学习工具
 
 + bob - 翻译神器
++ EasyDict
 + 有道词典
 + deepl
 + Eudic
+
+## 新闻及阅读
+
+- NetNewsWire  V2EX 站长搞的rss软件
 
 
 ## 浏览器
@@ -56,8 +62,12 @@ draft: false
 - nekoray
 - Shadowrocket - 代理工具，遨游世界。
 - Clash - 代理工具，遨游世界。由于不可抗力因素，原作者删库，推荐这个替代。
+- Stash，科学上网工具
+- Clash Verge
 
 ## 办公软件
+
+### Office
 
 - WPS - 国产强大的Office系列套件。
 - Word - 微软Office套件之Word。
@@ -66,6 +76,12 @@ draft: false
 - Pages - Apple出品文档编辑器，同Word。
 - Number - Apple出品表格编辑器，同Excel。
 - Keynote - Apple出品PPT编辑器，同PowerPoint，异常强大。
+
+### 流程图
+
+- Revezone
+- MindNode
+- OmniGraffle 
 
 ## 视频工具
 
@@ -92,6 +108,7 @@ draft: false
 ### 时间和任务管理
 - OmniFocus 
 - Fantastical
+- Things，很简洁的备忘 Todo 软件，正是由于太简单了，反而能够让你更加聚焦使用。
 
 ### 虚拟机
 - Parallels Desktop
@@ -111,8 +128,10 @@ draft: false
 ### 截图和录屏
 - iShot - 方便的截图软件，支持标记，长截图，OCR等功能。Pro版收费。
 - Kap - 录屏工具，简单方便，比系统自带录屏的视频体积小很多。
+- ScreenFlow 录制屏幕和编辑视频的软件,简单强大。
 - Camtasia
 - Snipaste
+- Shottr 一个截图软件，同时也支持滚动截图、标注等功能。
 
 ### 格式转换
 
@@ -120,6 +139,7 @@ draft: false
 
 ### 屏幕取色
 - Sip - 好用的屏幕取色软件。
+- Drop，取色软件，特别是UI开发过程中，假如想去配一个好看的颜色，可以借助这个工具看看做得好的软件的颜色是什么。
 
 ### 剪切板
 
@@ -136,14 +156,20 @@ draft: false
 - QLMarkdown - 空格预览Markdown文件，非常棒。
 - Syntax Highlight - 空格预览代码文件，支持高亮功能，非常好用。
 - iBar - Mac强大的菜单栏管理工具。
+- [BetterDisplay](https://github.com/waydabber/BetterDisplay) Mac 用外接显示器的必须要整一个这个软件.
 - 超级右键 - Mac强大的右键菜单工具。
 - Mos - 鼠标反转工具，可设置平滑滚动。
 - Scroll Reverser - 鼠标反转工具。
 - HandShaker - Mac连接安卓手机的工具，锤子科技出品。
 - TinyCal - 好用、方便的日历状态栏。
+- Top Calendar，一个菜单栏的日历软件，可以看到日历、节假日、农历，以及最近的日程，关键也是做得很美观。
 - CheatSheet 安装后在「系统偏好设置 - 安全性与隐私 - 隐私 - 辅助功能」中勾选 CheatSheet 一项，即可在大多数 App 界面中长按 Command-⌘ 直接呼出该软件的全部快捷键，可以说是非常的方便了。
 - Dropover  这是给 macOS 增加文件篮子的小工具，你只需要将文件、网页图片、文字拖拽至篮子里临时保存，然后再去目的地进行移动、复制操作，对于需要从多处文件夹移动文件到某一个文件夹的需求来说，极大的简化了操作。
 - Loopback  一款Mac平台上的可以创建虚拟音频设备的工具，从应用程序和音频的输入的设备创建虚拟音频设备的声音，然后将其发送给音频处理应用程序。
+- MessAuto，一个接收手机短信验证码并自动回填到 Mac 上的小工具，很好用，解决了每次从手机看然后手填的麻烦。
+- Raycast  直接替代掉原生的 Spotlight 搜索
+- Karabiner  把 HHKB 放在 mac 上的时候可以使用这款软件来禁用自带的键盘，非常方便。
+- DMG Canvas，用于编辑产生 Mac dmg 安装包的工具，做得很简单易于使用。
 
 
 ## 磁盘清理
@@ -187,10 +213,17 @@ draft: false
 - DataGrid
 ### 其他
 - JD-GUI - Java反编译工具，字节码文件反编译为Java文件。
+- [OrbStack](orbstack.dev ) 替换掉Docker 原生的应用
 
-## 常用mac软件网站
+## 参阅网站
 
+### 软件下载
 - https://appstorrent.ru
+
+- https://xclient.info/
+### 指南技巧
+
+- https://44maker.github.io/wiki/Mac/index.html#start
 
   
 

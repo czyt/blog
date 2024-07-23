@@ -1,5 +1,5 @@
 ---
-title: "macOs常用软件"
+title: "MacOS常用软件"
 date: 2024-07-22
 tags: ["mac", "awesome","tools"]
 draft: false

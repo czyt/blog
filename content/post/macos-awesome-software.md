@@ -128,6 +128,8 @@ draft: false
 
 - MacZip - 专为Mac打造的解压缩软件。
 
+- banzip - 以前用Windows的时候就必装的压缩软件。
+
 - Homebrew - Mac上的软件包管理器，可安装各类软件，各类库。必备神器。
 - FastZip - Mac强大的解压缩工具。
 - Dr.Unarchiver

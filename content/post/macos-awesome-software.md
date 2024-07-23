@@ -237,6 +237,8 @@ draft: false
 
 - https://mac.macxz.com
 
+- https://www.imacso.com
+
 - https://github.com/serhii-londar/open-source-mac-os-apps
 
 - https://www.sqlsec.com/macsoft.html

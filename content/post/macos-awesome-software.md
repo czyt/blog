@@ -115,11 +115,12 @@ draft: false
 - Things，很简洁的备忘 Todo 软件，正是由于太简单了，反而能够让你更加聚焦使用。
 - Vitamin-R 3 番茄计划定制工作任务
 
-### 虚拟机
+### 虚拟机及虚拟化
 - Parallels Desktop
 - [utm](https://mac.getutm.app)
 - vmware
 - [lima](https://lima-vm.io) mac的Linux虚拟机
+- [OrbStack](orbstack.dev ) 替换掉Docker 原生的应用
 
 ### 压缩和解压缩
 
@@ -224,7 +225,6 @@ draft: false
 - DataGrid
 ### 其他
 - JD-GUI - Java反编译工具，字节码文件反编译为Java文件。
-- [OrbStack](orbstack.dev ) 替换掉Docker 原生的应用
 
 ## 参阅网站
 

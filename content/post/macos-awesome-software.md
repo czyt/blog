@@ -29,6 +29,7 @@ draft: false
 
 + bob - 翻译神器
 + EasyDict
++ GoldenDict
 + 有道词典
 + deepl
 + Eudic
@@ -104,16 +105,21 @@ draft: false
 - 向日葵
 - SplashTop 
 - teamviewer
+- Parsec
+- Microsoft Remote Desktop
+- Jump Desktop
 ## 实用工具
 ### 时间和任务管理
 - OmniFocus 
 - Fantastical
 - Things，很简洁的备忘 Todo 软件，正是由于太简单了，反而能够让你更加聚焦使用。
+- Vitamin-R 3 番茄计划定制工作任务
 
 ### 虚拟机
 - Parallels Desktop
-- utm
+- [utm](https://mac.getutm.app)
 - vmware
+- [lima](https://lima-vm.io) mac的Linux虚拟机
 
 ### 压缩和解压缩
 
@@ -132,6 +138,7 @@ draft: false
 - Camtasia
 - Snipaste
 - Shottr 一个截图软件，同时也支持滚动截图、标注等功能。
+- Jietu 腾讯出品的截图软件
 
 ### 格式转换
 
@@ -170,6 +177,10 @@ draft: false
 - Raycast  直接替代掉原生的 Spotlight 搜索
 - Karabiner  把 HHKB 放在 mac 上的时候可以使用这款软件来禁用自带的键盘，非常方便。
 - DMG Canvas，用于编辑产生 Mac dmg 安装包的工具，做得很简单易于使用。
+- [KeyCastr](https://github.com/keycastr/keycastr)  在演示或录屏的时候显示快捷键
+- [Thor](https://github.com/gbammc/Thor) 给你的任何软件设置启动快捷键
+- [Plash ](https://github.com/sindresorhus/Plash)将任意网站设置为可交互的 MacOS 桌面壁纸
+- KeyKey  macOS 上优雅好用的键盘打字练习。
 
 
 ## 磁盘清理
@@ -221,6 +232,10 @@ draft: false
 - https://appstorrent.ru
 
 - https://xclient.info/
+
+- https://github.com/serhii-londar/open-source-mac-os-apps
+
+- https://www.sqlsec.com/macsoft.html
 ### 指南技巧
 
 - https://44maker.github.io/wiki/Mac/index.html#start

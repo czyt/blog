@@ -232,13 +232,15 @@ draft: false
 ## 参阅网站
 
 ### 软件下载
+
+- https://xmac.app
+
 - https://appstorrent.ru
 - https://xclient.info/
 - https://macwk.cn/
 - https://www.minorpatch.com
 - https://macapp.org.cn
 - https://www.macvk.com
-- https://xmac.app/
 - https://macked.app/
 - https://foxirj.com
 - https://mac.macxz.com

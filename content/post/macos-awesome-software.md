@@ -121,6 +121,7 @@ draft: false
 - vmware
 - [lima](https://lima-vm.io) mac的Linux虚拟机
 - [OrbStack](orbstack.dev ) 替换掉Docker 原生的应用
+- crossover 或者 wine
 
 ### 压缩和解压缩
 

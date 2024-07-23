@@ -236,6 +236,8 @@ draft: false
 - https://github.com/serhii-londar/open-source-mac-os-apps
 
 - https://www.sqlsec.com/macsoft.html
+
+- https://github.com/SuJunming/mac-awesomeTools
 ### 指南技巧
 
 - https://44maker.github.io/wiki/Mac/index.html#start

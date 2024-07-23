@@ -234,7 +234,15 @@ draft: false
 ### 软件下载
 - https://appstorrent.ru
 - https://xclient.info/
+- https://macwk.cn/
+- https://www.minorpatch.com
+- https://macapp.org.cn
+- https://www.macvk.com
+- https://xmac.app/
+- https://macked.app/
+- https://foxirj.com
 - https://mac.macxz.com
+- https://www.macserialjunkie.com/forum/viewforum.php?f=9
 - https://www.imacso.com
 - https://github.com/serhii-londar/open-source-mac-os-apps
 - https://www.sqlsec.com/macsoft.html

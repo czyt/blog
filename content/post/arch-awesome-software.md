@@ -1,7 +1,7 @@
 ---
 title: "Arch Linux 常用软件"
 date: 2022-02-23
-tags: ["linux", "Arch", "Manjaro", "tools"]
+tags: ["linux", "Arch", "Manjaro", "tools","awesome"]
 draft: false
 weight: 9
 ---

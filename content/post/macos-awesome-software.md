@@ -191,6 +191,7 @@ draft: false
 
 ### 增强插件
 - Bartender - Mac右上角的状态栏图标太多的时候，就可以使用这个软件优化
+- Amphetamine  一款防休眠的软件，可以让你的设备持续保持“兴奋”。如果你平时需要某些程序持续运行不被系统休眠所影响的话，这款软件非常适合。
 - [Bartender 3](https://www.macbartender.com/) 菜单栏管理应用, 支持隐藏所有菜单栏图标, 还您一个干净的菜单栏.
 - [Dozer](https://github.com/Mortennn/Dozer) 隐藏菜单栏项目,功能类似Bartender但是开源免费
 - [CDock](http://www.pc6.com/mac/161158.html) 任务栏定制应用, 可设置Dock全透明, 还您一个清爽的任务栏.

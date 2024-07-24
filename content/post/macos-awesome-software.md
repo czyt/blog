@@ -20,10 +20,13 @@ draft: false
 
 - Spark
 
-## 输入法及扩展
+## 输入法及键盘扩展
 
 - AutoSwitchinput 当你在Mac上打开不同的软件的时候，它可以自动帮你切换中文和英文输入法
 - Input Source Pro，推友开发的一个输入法自动切换工具
+- [Tickeys](http://www.yingdev.com/projects/tickeys) 键盘打字风格模拟应用, 支持 Cherry轴等多种风格.
+- [keycue](http://www.pc6.com/mac/116332.html) 快捷键辅助应用, 帮助记忆快捷键.
+- KeyKey  macOS 上优雅好用的键盘打字练习。
 
 ## 翻译和外语学习工具
 
@@ -37,6 +40,7 @@ draft: false
 ## 新闻及阅读
 
 - NetNewsWire  rss阅读软件
+- [Reeder](http://www.pc6.com/mac/158839.html) 界面优美的RSS订阅应用.
 
 
 ## 浏览器
@@ -105,7 +109,7 @@ draft: false
 - rustdesk
 - 向日葵
 - SplashTop 
-- teamviewer
+- [TeamViewer](http://www.pc6.com/mac/115425.html) 远程开发或协助必备应用.
 - Parsec
 - Microsoft Remote Desktop
 - Jump Desktop
@@ -187,12 +191,24 @@ draft: false
 
 ### 增强插件
 - Bartender - Mac右上角的状态栏图标太多的时候，就可以使用这个软件优化
+- [Bartender 3](https://www.macbartender.com/) 菜单栏管理应用, 支持隐藏所有菜单栏图标, 还您一个干净的菜单栏.
+- [Dozer](https://github.com/Mortennn/Dozer) 隐藏菜单栏项目,功能类似Bartender但是开源免费
+- [CDock](http://www.pc6.com/mac/161158.html) 任务栏定制应用, 可设置Dock全透明, 还您一个清爽的任务栏.
+- [TextBar](https://www.macstories.net/mac/textbar-puts-your-text-into-the-menu-bar/) 自定义菜单栏输出, 支持script运行, 支持H5渲染.
+- [Growl](http://growl.info/) 自定义通知样式, 支持多种主题以及颜色, 大小, 渐隐时间等各项参数的自定义.
+- [Keyboard Maestro](https://www.keyboardmaestro.com/main/) 键盘大师, mac下功能最为丰富的键盘增强应用.
+- [BetterTouchTool](https://www.boastr.net/) mac触摸板增强神器.
+- [Übersicht](http://sspai.com/28020) 华丽的桌面自定义应用, 类似于windows的 [`rainmeter`](http://rainmeter.cn/cms/). 支持H5.
+- [Today Scripts](http://www.waerfa.com/today-scripts-for-yosemite-today-view) 个性化通知栏插件, 支持bash脚本.
+- [Mountain Tweaks](http://tweaksapp.com/app/mountain-tweaks/) mac隐藏功能开启应用.
 - iStat Menus - 系统监控工具，可实时监控温度，网络，电池，CPU，内存等信息。
 - Stats - 系统监控工具，可实时监控温度，网络，电池，CPU，内存等信息。
 - AlDente - 充电限制软件，保护电池健康度。Pro版收费。
 - Alfred - Mac效率神器，没有之一，用了就离不开。
 - [Magnet](https://magnet.crowdcafe.com/)：窗口管理
 - Rectangle - 窗口管理工具，Magnet平替。
+- [Size up](http://www.irradiatedsoftware.com/sizeup/) 分屏应用, 类似Moon的一款应用, 支持上下左右居中、4个角落快速分屏及多屏幕切换.
+- [Divvy](http://www.pc6.com/mac/124992.html) 另一款分屏应用, 可将屏幕分成多宫格的形式, 然后为每个格子定义快捷键, 遗憾的是不支持多屏幕切换.
 - QLMarkdown - 空格预览Markdown文件，非常棒。
 - Syntax Highlight - 空格预览代码文件，支持高亮功能，非常好用。
 - iBar - Mac强大的菜单栏管理工具。
@@ -214,19 +230,26 @@ draft: false
 - [Thor](https://github.com/gbammc/Thor) 给你的任何软件设置启动快捷键
 - [Plash ](https://github.com/sindresorhus/Plash)将任意网站设置为可交互的 MacOS 桌面壁纸
 - OpenInTerminal：从 Finder 一键打开 Terminal
-- KeyKey  macOS 上优雅好用的键盘打字练习。
 - Machina - 类似于neofetch的一个显示系统信息的命令行工具.
 - [MonitorControl](https://github.com/MonitorControl/MonitorControl)：显示器亮度调节
 - [StandUp](https://apps.apple.com/jp/app/standup/id1439378680?l=en&mt=12)：提醒站立
 - [WiFriedX](https://medium.com/@mariociabarra/wifriedx-in-depth-look-at-yosemite-wifi-and-awdl-airdrop-41a93eb22e48)：关闭 AWDL/AirDrop，优化 M1 系列 Mac 的 Wifi 连接
 - [SmoothScroll](https://www.smoothscroll.net/mac/)：可以让外接鼠标滚动更自然、更顺滑
 - [AlDente](https://apphousekitchen.com/)：AlDente 最主要的功能就是调整电池充电阈值。在电池电量在达到指定值后，电脑会停止充电，转向电池供电，全过程无需手动插拔 MacBook 充电器。
+- [Caffeine](http://www.pc6.com/mac/121734.html) 点亮mac, 避免长时间演示ppt而进入到休眠状态.
+- [AirServer](http://www.airserver.com/) IOS连接mac必备.
+- [Beyond Compare](http://www.beyondcompare.cc/) 文件比较应用, 支持文件, 目录, FTP远程地址比较等.
+- [EasyFind](http://www.waerfa.com/easyfind) 小而强大的文件搜索应用, 媲美windows下的Everything.
+- [Kaleidoscope](http://www.pc6.com/mac/113361.html) 文件和图像比较应用, 支持图片比较, 能与 git, svn 等版本控制工具完美结合.
+- [HyperSwitch](https://bahoom.com/hyperswitch) 带有预览图的快速切换, 作用同Command+Tab.
+- [Fruit Juice](http://www.pc6.com/mac/119197.html) 电池管理应用, 帮助延迟电池的使用时间.
 
 
 ## 磁盘清理
 
 + [Pearcleaner](https://itsalin.com/appInfo/?id=pearcleaner) 开源的 Mac 软件卸载工具 
-+ AppCleaner - 强大的系统卸载工具，可以卸载关联的垃圾文件，卸得干净，卸的彻底。
++ [OmniDiskSweeper](http://newping.cn/322) 硬盘空间扫描应用, 帮助mac减肥.
++ [AppCleaner](http://freemacsoft.net/appcleaner/) mac应用卸载工具, 结合 [`AppCleaner`](https://github.com/Louiszhai/tool/blob/master/workflow/AppCleaner.alfredworkflow?raw=true) 的workflow, 使用效果更佳.
 + CleanMyMac X
 + 腾讯 Lemon 清理
 
@@ -257,14 +280,20 @@ draft: false
 - zed - 新出的ide。默认支持多种编程语言。
 - WebStorm - 强大的JavaScript开发IDE，JetBrains出品。
 - Android Studio - 安卓开发IDE。
+- [Script Debugger](http://www.pc6.com/mac/428096.html) 强大的AppleScript编辑器.
 - Xcode - iOS，iPadOS，macOS，watchOS开发IDE。
 - [GitUp](https://github.com/git-up/GitUp)：Git GUI 软件.比 SourceTree 等软件要简洁，日常开发中基本没有做不了 GUI 操作
 ### api调试
 
 - Postman
 - postwoman
-
 - Apifox - 接口管理神器。接口调试，压力测试工具，力压postman。
+### 抓包
+
+- [Debookee](http://www.pc6.com/mac/129593.html) 网络抓包及数据分析应用.
+- burp suite
+- [charless](https://www.charlesproxy.com)
+
 ### 数据库管理工具
 - Navicat - 宇宙最好用的数据库工具。
 - DataGrid
@@ -272,6 +301,11 @@ draft: false
 - JD-GUI - Java反编译工具，字节码文件反编译为Java文件。
 - [chsrc ](https://github.com/RubyMetric/chsrc)软件换源，加速
 - Dash：API 文档和代码片段管理.
+- [Charles](https://www.charlesproxy.com/) 网络抓包应用, mac必备.
+- [aText](http://www.trankynam.com/atext/) 输入增强应用, 比 [`TextExpander`](http://www.pc6.com/mac/146924.html) 要人性化许多，并且对中文和第三方输入法的支持都要更好.
+- [Dash](https://kapeli.com/dash) mac上api集合应用, 几乎包含各种语言的api文档.
+- [SnippetsLab](http://www.renfei.org/snippets-lab/) 优秀的代码片段管理工具, 轻量, 可基于菜单栏操作.
+- [CodeExpander](https://codeexpander.com/) 专为开发者开发的一个集输入增强、代码片段管理(支持 Markdown)为一体跨平台云同步的开发工具。
 
 ## 参阅网站
 

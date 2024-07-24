@@ -65,6 +65,7 @@ draft: false
 - Clash - 代理工具，遨游世界。由于不可抗力因素，原作者删库，推荐这个替代。
 - Stash，科学上网工具
 - Clash Verge
+- [ClashX Pro](https://github.com/yichengchen/clashX#install)
 
 ## 办公软件
 
@@ -155,7 +156,7 @@ draft: false
   >}
   >```
   >
-  >
+  >homebrew的配置可以使用https://sspai.com/post/32933中的mackup进行备份.`brew install mackup`
 
 - FastZip - Mac强大的解压缩工具。
 
@@ -168,6 +169,7 @@ draft: false
 - ScreenFlow 录制屏幕和编辑视频的软件,简单强大。
 - Camtasia
 - Snipaste
+- Xnip
 - Shottr 一个截图软件，同时也支持滚动截图、标注等功能。
 - Jietu 腾讯出品的截图软件
 
@@ -189,7 +191,7 @@ draft: false
 - Stats - 系统监控工具，可实时监控温度，网络，电池，CPU，内存等信息。
 - AlDente - 充电限制软件，保护电池健康度。Pro版收费。
 - Alfred - Mac效率神器，没有之一，用了就离不开。
-- Magnet - 窗口管理工具。
+- [Magnet](https://magnet.crowdcafe.com/)：窗口管理
 - Rectangle - 窗口管理工具，Magnet平替。
 - QLMarkdown - 空格预览Markdown文件，非常棒。
 - Syntax Highlight - 空格预览代码文件，支持高亮功能，非常好用。
@@ -211,8 +213,14 @@ draft: false
 - [KeyCastr](https://github.com/keycastr/keycastr)  在演示或录屏的时候显示快捷键
 - [Thor](https://github.com/gbammc/Thor) 给你的任何软件设置启动快捷键
 - [Plash ](https://github.com/sindresorhus/Plash)将任意网站设置为可交互的 MacOS 桌面壁纸
+- OpenInTerminal：从 Finder 一键打开 Terminal
 - KeyKey  macOS 上优雅好用的键盘打字练习。
 - Machina - 类似于neofetch的一个显示系统信息的命令行工具.
+- [MonitorControl](https://github.com/MonitorControl/MonitorControl)：显示器亮度调节
+- [StandUp](https://apps.apple.com/jp/app/standup/id1439378680?l=en&mt=12)：提醒站立
+- [WiFriedX](https://medium.com/@mariociabarra/wifriedx-in-depth-look-at-yosemite-wifi-and-awdl-airdrop-41a93eb22e48)：关闭 AWDL/AirDrop，优化 M1 系列 Mac 的 Wifi 连接
+- [SmoothScroll](https://www.smoothscroll.net/mac/)：可以让外接鼠标滚动更自然、更顺滑
+- [AlDente](https://apphousekitchen.com/)：AlDente 最主要的功能就是调整电池充电阈值。在电池电量在达到指定值后，电脑会停止充电，转向电池供电，全过程无需手动插拔 MacBook 充电器。
 
 
 ## 磁盘清理
@@ -224,8 +232,13 @@ draft: false
 
 ## 编程语言
 
-+ go
-+ rust
+### go
+
+- https://github.com/cortesi/modd
+
+### rust
+
+
 
 ## 软件开发
 ### Terminal
@@ -245,6 +258,7 @@ draft: false
 - WebStorm - 强大的JavaScript开发IDE，JetBrains出品。
 - Android Studio - 安卓开发IDE。
 - Xcode - iOS，iPadOS，macOS，watchOS开发IDE。
+- [GitUp](https://github.com/git-up/GitUp)：Git GUI 软件.比 SourceTree 等软件要简洁，日常开发中基本没有做不了 GUI 操作
 ### api调试
 
 - Postman
@@ -257,6 +271,7 @@ draft: false
 ### 其他
 - JD-GUI - Java反编译工具，字节码文件反编译为Java文件。
 - [chsrc ](https://github.com/RubyMetric/chsrc)软件换源，加速
+- Dash：API 文档和代码片段管理.
 
 ## 参阅网站
 
@@ -270,14 +285,17 @@ draft: false
 - https://www.minorpatch.com
 - https://macapp.org.cn
 - https://www.macvk.com
+- https://macbv.com
 - https://macked.app/
 - https://foxirj.com
 - https://mac.macxz.com
+- https://github.com/macdao/ocds-guide-to-setting-up-mac
 - https://www.macserialjunkie.com/forum/viewforum.php?f=9
 - https://www.imacso.com
 - https://github.com/serhii-londar/open-source-mac-os-apps
 - https://www.sqlsec.com/macsoft.html
 - https://github.com/SuJunming/mac-awesomeTools
+- https://ports.macports.org
 ### 指南技巧
 
 - https://44maker.github.io/wiki/Mac/index.html#start

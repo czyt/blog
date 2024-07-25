@@ -1901,6 +1901,8 @@ vscode 安装 `paru -S visual-studio-code-bin`
 > - intel`paru  -S vulkan-intel`
 > - NVIDIA `paru -S vulkan-nouveau`
 > - AMD `paru -S amdvlk`
+>
+> 我的zed配置文件 [gist](https://gist.github.com/czyt/cd01da0764a73d1d0c568f8c42987920)
 
 终端录屏幕[asciinema](https://asciinema.org/) 安装 `paru -S asciinema` 
 

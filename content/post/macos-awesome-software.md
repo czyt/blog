@@ -308,6 +308,13 @@ draft: false
 - [SnippetsLab](http://www.renfei.org/snippets-lab/) 优秀的代码片段管理工具, 轻量, 可基于菜单栏操作.
 - [CodeExpander](https://codeexpander.com/) 专为开发者开发的一个集输入增强、代码片段管理(支持 Markdown)为一体跨平台云同步的开发工具。
 
+## 黑苹果
+
+### 辅助工具
+
+- https://github.com/benbaker76/Hackintool
+- https://github.com/JeoJay127/RapidEFI-Tool
+
 ## 参阅网站
 
 ### 软件下载

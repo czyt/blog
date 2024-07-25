@@ -342,5 +342,7 @@ draft: false
 
 - https://44maker.github.io/wiki/Mac/index.html#start
 
+- https://sumingyd.github.io/OpenCore-Post-Install/
+
   
 

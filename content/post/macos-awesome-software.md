@@ -312,8 +312,14 @@ draft: false
 
 ### 辅助工具
 
-- https://github.com/benbaker76/Hackintool
-- https://github.com/JeoJay127/RapidEFI-Tool
+- [Hackintool](https://github.com/benbaker76/Hackintool)
+- [RapidEFI-Tool](https://github.com/JeoJay127/RapidEFI-Tool)
+- [OCAuxiliaryTools](https://github.com/ic005k/OCAuxiliaryTools)
+- [OpenCore Configurator](https://mackie100projects.altervista.org)
+
+### 参考文档
+
+- https://oc.skk.moe
 
 ## 参阅网站
 

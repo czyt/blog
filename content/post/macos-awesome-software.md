@@ -27,6 +27,7 @@ draft: false
 - [Tickeys](http://www.yingdev.com/projects/tickeys) 键盘打字风格模拟应用, 支持 Cherry轴等多种风格.
 - [keycue](http://www.pc6.com/mac/116332.html) 快捷键辅助应用, 帮助记忆快捷键.
 - KeyKey  macOS 上优雅好用的键盘打字练习。
+- [Karabiner-Elements](https://github.com/pqrs-org/Karabiner-Elements) 键盘映射工具
 
 ## 翻译和外语学习工具
 
@@ -317,6 +318,7 @@ draft: false
 - [RapidEFI-Tool](https://github.com/JeoJay127/RapidEFI-Tool)
 - [OCAuxiliaryTools](https://github.com/ic005k/OCAuxiliaryTools)
 - [OpenCore Configurator](https://mackie100projects.altervista.org)
+- [Macos小助手](https://macwk.com.cn/soft/macos-assistant)
 
 ### 参考文档
 

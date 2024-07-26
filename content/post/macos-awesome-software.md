@@ -345,6 +345,7 @@ draft: false
 - https://www.sqlsec.com/macsoft.html
 - https://github.com/SuJunming/mac-awesomeTools
 - https://ports.macports.org
+- https://happyhackingkb.com/download
 ### 指南技巧
 
 - https://44maker.github.io/wiki/Mac/index.html#start

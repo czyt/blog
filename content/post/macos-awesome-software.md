@@ -62,6 +62,7 @@ draft: false
 - 坚果云
 - Motrix 
 - Aria2GUI
+- [qBittorrent Enhanced Edition](https://github.com/c0re100/qBittorrent-Enhanced-Edition)
 
 ## 代理工具
 
@@ -93,7 +94,9 @@ draft: false
 
 ## 视频工具
 
+- [mpv](https://mpv.io)
 - IINA - 绝对好用且强大免费的视频播放器，支持99.99%格式。
+- [恒星播放器](https://www.stellarplayer.com/)：一款纯粹专注的播放器
 - Infuse - 支持海报墙的视频播放器，可以挂载云盘，体验接近完美，支持共享。
 - VidHub - 支持海报墙的视频播放器，可以挂载云盘，体验接近infuse。
 - Fileball - 文件夹式视频播放器，可以挂载云盘。
@@ -101,6 +104,11 @@ draft: false
 - Permute3 - Mac上简单好用的视频，音频转换工具。
 - 剪映 - 字节跳动出品的视频剪辑工具。（推荐国际版）。
 - Final Cut Pro - Apple出品的视频剪辑工具，功能无比强大，好莱坞大片御用。
+
+## 音乐工具
+
+- [网易云音乐](https://music.163.com/)
+-  [YesPlayMusic](https://github.com/qier222/YesPlayMusic) 第三方网易云播放器
 
 ## 文件传输
 
@@ -169,19 +177,23 @@ draft: false
 - Dr.Unarchiver
 
 - The Unarchiver
+
+- [ezip](https://ezip.awehunt.com/)：Mac 免费压缩软件
 ### 截图和录屏
 - iShot - 方便的截图软件，支持标记，长截图，OCR等功能。Pro版收费。
 - Kap - 录屏工具，简单方便，比系统自带录屏的视频体积小很多。
 - ScreenFlow 录制屏幕和编辑视频的软件,简单强大。
 - Camtasia
 - Snipaste
-- Xnip
+- [Xnip](https://zh.xnipapp.com)
+- [licecap](https://github.com/justinfrankel/licecap)：轻量小巧的录屏工具（开源）
 - Shottr 一个截图软件，同时也支持滚动截图、标注等功能。
 - Jietu 腾讯出品的截图软件
 
 ### 格式转换
 
 - Permute 3
+- [HandBrake for mac](https://handbrake.fr/) 视频压缩转换利器
 
 ### 屏幕取色
 - Sip - 好用的屏幕取色软件。
@@ -288,9 +300,14 @@ draft: false
 - [GitUp](https://github.com/git-up/GitUp)：Git GUI 软件.比 SourceTree 等软件要简洁，日常开发中基本没有做不了 GUI 操作
 ### api调试
 
-- Postman
 - postwoman
 - Apifox - 接口管理神器。接口调试，压力测试工具，力压postman。
+- [hoppscotch](https://github.com/hoppscotch/hoppscotch)：基于 `Web` 提供服务（开源）
+- [insomnia](https://github.com/Kong/insomnia)：跨平台 （开源）
+- [Postman](https://www.postman.com/)：比较老牌的 `API` 接口功能测试工具
+- [showdoc](https://github.com/star7th/showdoc)：一个非常适合 IT 团队的在线 `API` 文档、技术文档工具（开源）
+- [Thunder Client](https://marketplace.visualstudio.com/items?itemName=rangav.vscode-thunder-client)：如果使用[VSCode](https://code.visualstudio.com/)，推荐使用这款插件
+
 ### 抓包
 
 - [Debookee](http://www.pc6.com/mac/129593.html) 网络抓包及数据分析应用.
@@ -347,6 +364,7 @@ draft: false
 - https://github.com/serhii-londar/open-source-mac-os-apps
 - https://www.sqlsec.com/macsoft.html
 - https://github.com/SuJunming/mac-awesomeTools
+- https://github.com/jaywcjlove/awesome-mac
 - https://ports.macports.org
 - https://happyhackingkb.com/download
 ### 指南技巧

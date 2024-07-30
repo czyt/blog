@@ -1812,6 +1812,8 @@ nodejs 安装 ` paru -S nodejs npm` （安装cnpm `npm install -g cnpm --registr
 
 c/c++开发  安装 `paru -S make cmake gdb gcc` 
 
+jetbrains toolbox `paru -S`jetbrains-toolbox
+
 goland 安装 `paru -S goland goland-jre`
 
 lazarus 安装 `paru -S lazarus `

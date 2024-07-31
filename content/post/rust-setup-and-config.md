@@ -461,6 +461,19 @@ cargo zigbuild 支持在 --target 选项中传递 glibc 版本，例如，使用
 >某些 RUSTFLAGS 如 -C linker 选择退出使用 Zig，而 -L path/to/files 将使 Zig 忽略 -C target-feature=+crt-static 。
 >不支持静态链接到 glibc 版本的 -C target-feature=+crt-static （上游 zig cc 缺乏支持）
 
+### uniffi-rs
+
+这个是mozilla提供的工具，可以生成高效的ffi代码
+
+仓库：https://github.com/mozilla/uniffi-rs
+
+安装：`cargo install uniffi_bindgen`
+
+参考：
+
+- [Rust UniFFI 与 C# 交互实战：从入门到精通](https://mp.weixin.qq.com/s/o-OZlKJasFMnqI55FDQVAg)
+- [UniFFI 官方文档](https://mozilla.github.io/uniffi-rs/)
+
 ### generate
 
 cargo generate,这个工具可利用预先存在的 git 存储库作为模板，帮助您快速启动并运行新的 Rust 项目。官方[github](https://github.com/cargo-generate/cargo-generate)仓库，[帮助文档](https://cargo-generate.github.io/cargo-generate/index.html)

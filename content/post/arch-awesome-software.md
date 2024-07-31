@@ -677,9 +677,11 @@ tor `paru -S tor-browser-bin `
 
 > 这各版本的微信新版本会安装deepin-wine8,如果出现中文字体方框，需要安装文泉驿微米黑字体 `paru -S wqy-microhei`
 
-微信Linux原生版本  `paru -S wechat-universal-bwrap`
+微信Linux原生版本  `paru -S wechat-universal-bwrap` 或者 `paru -S wechat-uos-qt`
 
-> 更多请参考 https://wiki.archlinuxcn.org/zh/%E5%BE%AE%E4%BF%A1
+> wechat-uos-qt默认启用沙盒. 设置环境变量 trashAppUnsafe=1 来永久禁用沙盒, 或右击任务栏图标并选择临时禁用沙盒. (警告! 禁用沙盒将允许微信读取 / 修改所有数据)
+>
+> 更多请参考  https://wiki.archlinuxcn.org/wiki/%E5%BE%AE%E4%BF%A1
 
 QQ 安装 `paru -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`
 

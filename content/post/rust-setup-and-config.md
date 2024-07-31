@@ -473,6 +473,7 @@ cargo zigbuild 支持在 --target 选项中传递 glibc 版本，例如，使用
 
 - [Rust UniFFI 与 C# 交互实战：从入门到精通](https://mp.weixin.qq.com/s/o-OZlKJasFMnqI55FDQVAg)
 - [UniFFI 官方文档](https://mozilla.github.io/uniffi-rs/)
+- https://github.com/imWildCat/uniffi-rs-fullstack-examples
 
 ### generate
 

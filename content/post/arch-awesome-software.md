@@ -1915,6 +1915,18 @@ vscode 安装 `paru -S visual-studio-code-bin`
 
 [zoxide](https://github.com/ajeetdsouza/zoxide) **smarter cd command** `paru -S zoxide`
 
+> 安装好zoxide以后针对不同的shell还需要和shell进行集成。下面的几个shell的例子：
+>
+> zsh：
+>
+> 在~/.zshrc中加入
+>
+> ```bash
+> eval "$(zoxide init zsh)"
+> ```
+>
+> 其他可以参考 https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#installation
+
 证书生成工具 mkcert 安装 `paru -S mkcert` 
 
 netcat `paru -S  --noconfirm gnu-netcat` 或者 `paru -S --noconfirm openbsd-netcat ` 

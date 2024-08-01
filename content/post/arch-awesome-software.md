@@ -978,6 +978,8 @@ gost 安装 `paru -S gost`
 
 clash-verge-bin `paru -S clash-verge-bin`
 
+[clash-verge-rev-bin](https://github.com/clash-verge-rev/clash-verge-rev) `paru -S clash-verge-rev-bin`
+
 clash https://aur.archlinux.org/packages?K=clash [福利](https://neko-warp.nloli.xyz)
 
 [nekoray-bin ](https://github.com/MatsuriDayo/nekoray)Qt based cross-platform GUI proxy configuration manager  安装 `paru -S nekoray-bin`( 可能需要安装相关插件 `paru -S sing-geosite sing-geoip sing-geoip-common sing-geoip-db sing-geoip-rule-set sing-geosite-common sing-geosite-db sing-geosite-rule-set `然后核心位置填写`/usr/share/sing-box`)

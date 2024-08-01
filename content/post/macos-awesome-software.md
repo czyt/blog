@@ -202,6 +202,10 @@ draft: false
 ### 剪切板
 
 - CopyLess 2
+- [maccy](https://maccy.app)
+- [Clipy ](https://github.com/Clipy/Clipy)
+- [Dittostack](https://www.dittostack.com)
+- [PasteNow](https://appstorrent.ru/532-pastenow.html)
 
 ### 增强插件
 - Bartender - Mac右上角的状态栏图标太多的时候，就可以使用这个软件优化
@@ -347,6 +351,8 @@ draft: false
 ### 软件下载
 
 - https://xmac.app
+
+- https://www.digit77.com
 
 - https://appstorrent.ru
 - https://xclient.info/

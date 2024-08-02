@@ -202,6 +202,7 @@ draft: false
 ### 剪切板
 
 - CopyLess 2
+- [EcoPaste]( https://github.com/ayangweb/EcoPaste/)
 - [maccy](https://maccy.app)
 - [Clipy ](https://github.com/Clipy/Clipy)
 - [Dittostack](https://www.dittostack.com)

@@ -2245,5 +2245,6 @@ sudo pacman-key --populate archlinuxcn
 - [Jetbrains License Server](https://github.com/Nasller/LicenseServer)
 - [xps13(9370) Linux之路](https://github.com/kevinhwang91/xps-13-conf)
 - [Arch Linux 配置 -- 驱动和软件安装](https://xland.cyou/p/arch-linux-configuration-driver-and-software/)
+- https://wiki.archlinuxcn.org/wiki/ALSA
 - https://www.imwxz.com/posts/fc1dd509.html
 - https://wiki.archlinux.org/title/Dell_XPS_13_(9370)

@@ -71,6 +71,7 @@ draft: false
 - Clash - 代理工具，遨游世界。由于不可抗力因素，原作者删库，推荐这个替代。
 - Stash，科学上网工具
 - Clash Verge
+- [karing](https://github.com/KaringX/karing)
 - [hiddify](https://github.com/hiddify/hiddify-next)
 - [ClashX Pro](https://github.com/yichengchen/clashX#install)
 

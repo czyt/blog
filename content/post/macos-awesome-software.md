@@ -68,6 +68,7 @@ draft: false
 
 - [nekoray](https://github.com/abbasnaqdi/nekoray-macos/releases)
 - Shadowrocket - 代理工具，遨游世界。
+- [Fclash](https://github.com/chen08209/FlClash)
 - Clash - 代理工具，遨游世界。由于不可抗力因素，原作者删库，推荐这个替代。
 - Stash，科学上网工具
 - Clash Verge

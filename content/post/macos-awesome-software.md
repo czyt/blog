@@ -230,6 +230,7 @@ draft: false
 - Alfred - Mac效率神器，没有之一，用了就离不开。
 - [Magnet](https://magnet.crowdcafe.com/)：窗口管理
 - Rectangle - 窗口管理工具，Magnet平替。
+- [Loop](https://github.com/MrKai77/Loop) 窗口管理工具
 - [Size up](http://www.irradiatedsoftware.com/sizeup/) 分屏应用, 类似Moon的一款应用, 支持上下左右居中、4个角落快速分屏及多屏幕切换.
 - [Divvy](http://www.pc6.com/mac/124992.html) 另一款分屏应用, 可将屏幕分成多宫格的形式, 然后为每个格子定义快捷键, 遗憾的是不支持多屏幕切换.
 - QLMarkdown - 空格预览Markdown文件，非常棒。

@@ -353,6 +353,11 @@ draft: false
 
 ## 参阅网站
 
+### 破解补丁
+
++ https://github.com/QiuChenly/InjectLib
++ https://github.com/wibus-wee/InjectGUI
+
 ### 软件下载
 
 - https://xmac.app

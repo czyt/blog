@@ -206,6 +206,26 @@ CoAP本身是基于UDP的协议，但它提供了一些可靠性机制。以下�
        fmt.Printf("Response body: %s\n", body)
    }
    ```
+   >WithRetransmission的参数说明：
+   >
+   >+ MaxRetransmit: 3
+   >
+   >含义：最大重传次数
+   >
+   >解释：如果没有收到确认（ACK），消息最多会重传 3 次。这意味着，包括初始传输在内，消息最多会被发送 4 次。
+   >
+   >+ AckTimeout: 2 * time.Second
+   >
+   >含义：确认超时时间
+   >
+   >解释：在重传消息之前，发送方会等待 2 秒钟来接收确认。如果在这个时间内没有收到确认，就会触发重传。
+   >
+   >+ AckRandomFactor: 1.5
+   >
+   >含义：确认随机因子
+   >
+   >解释：这个因子用于计算实际的超时时间。实际超时时间会在 AckTimeout 和 (AckTimeout *AckRandomFactor) 之间随机选择。这种随机化有助于防止网络拥塞。*
+
 
 3. 使用观察者模式（Observe Option）：
 
@@ -398,7 +418,7 @@ CoAP本身是基于UDP的协议，但它提供了一些可靠性机制。以下�
        }
    }
    ```
-   
+
    
 
 ## 广播

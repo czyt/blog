@@ -51,29 +51,34 @@ server:
 package main
 
 import (
-	"fmt"
-	"log"
+    "fmt"
+    "log"
 
-	coap "github.com/plgd-dev/go-coap/v3"
+    "github.com/plgd-dev/go-coap/v3"
+    "github.com/plgd-dev/go-coap/v3/mux"
 )
 
 func main() {
-	// 创建一个新的 CoAP 服务器
-	mux := coap.NewServeMux()
+    // 创建一个新的 CoAP 服务器
+    r := mux.NewRouter()
 
-	// 注册一个处理函数，处理 "/echo" 路径的请求
-	mux.Handle("/echo", coap.HandlerFunc(func(w coap.ResponseWriter, r *coap.Request) {
-		// 将接收到的消息原样返回
-		fmt.Printf("Received: %s\n", r.Payload)
-		w.Write(r.Payload) // Echo the received payload
-	}))
+    // 注册一个处理函数，处理 "/echo" 路径的请求
+    r.Handle("/echo", mux.HandlerFunc(func(w mux.ResponseWriter, r *mux.Message) {
+        // 将接收到的消息原样返回
+        fmt.Printf("Received: %s\n", r.Body())
+        err := w.SetResponse(coap.Content, r.MediaType(), r.Body())
+        if err != nil {
+            log.Printf("Cannot set response: %v", err)
+        }
+    }))
 
-	// 启动服务器
-	addr := "localhost:5683"
-	log.Printf("Starting CoAP server on %s\n", addr)
-	if err := coap.ListenAndServe("udp", addr, mux); err != nil {
-		log.Fatal(err)
-	}
+    // 启动服务器
+    addr := ":5683"
+    log.Printf("Starting CoAP server on %s\n", addr)
+    err := coap.ListenAndServe("udp", addr, r)
+    if err != nil {
+        log.Fatal(err)
+    }
 }
 ```
 
@@ -83,32 +88,40 @@ Client:
 package main
 
 import (
-	"fmt"
-	"log"
+    "context"
+    "fmt"
+    "log"
+    "time"
 
-	coap "github.com/plgd-dev/go-coap/v3"
+    "github.com/plgd-dev/go-coap/v3/udp"
 )
 
 func main() {
-	// 创建一个 CoAP 客户端
-	client := coap.NewClient()
+    // 创建一个 CoAP 客户端
+    co, err := udp.Dial("localhost:5683")
+    if err != nil {
+        log.Fatalf("Error dialing: %v", err)
+    }
+    defer co.Close()
 
-	// 要发送的消息
-	message := []byte("Hello, CoAP!")
+    // 要发送的消息
+    message := []byte("Hello, CoAP!")
 
-	// 发送请求到服务端
-	resp, err := client.Post("coap://localhost:5683/echo", message)
-	if err != nil {
-		log.Fatalf("Error sending request: %v", err)
-	}
-	defer resp.Body.Close()
+    ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+    defer cancel()
 
-	// 读取并打印响应
-	body, err := coap.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatalf("Error reading response: %v", err)
-	}
-	fmt.Printf("Response: %s\n", body)
+    // 发送请求到服务端
+    resp, err := co.Post(ctx, "/echo", "text/plain", message)
+    if err != nil {
+        log.Fatalf("Error sending request: %v", err)
+    }
+
+    // 读取并打印响应
+    body, err := resp.ReadBody()
+    if err != nil {
+        log.Fatalf("Error reading response: %v", err)
+    }
+    fmt.Printf("Response: %s\n", body)
 }
 ```
 
@@ -144,14 +157,53 @@ CoAP本身是基于UDP的协议，但它提供了一些可靠性机制。以下�
    如果没有收到确认，可以实现重传逻辑。Go-CoAP库通常会自动处理重传，但您也可以自定义重传策略。
 
    ```go
-   // 自定义重传选项
-   client := coap.Client{
-       Net: "udp",
-       Handler: coap.HandlerFunc(func(w coap.ResponseWriter, r *coap.Request) {
-           // 处理响应
-       }),
-       RetryAttempts: 3,
-       RetryInterval: time.Second * 2,
+   package main
+   
+   import (
+       "context"
+       "fmt"
+       "log"
+       "time"
+   
+       "github.com/plgd-dev/go-coap/v3/udp"
+       "github.com/plgd-dev/go-coap/v3/udp/client"
+   )
+   
+   func main() {
+       // 创建自定义的客户端配置
+       opts := []udp.Option{
+           udp.WithRetransmission(udp.RetransmissionParams{
+               MaxRetransmit: 3,
+               AckTimeout:    2 * time.Second,
+               AckRandomFactor: 1.5,
+           }),
+           udp.WithHandlerFunc(func(w *client.ResponseWriter, r *pool.Message) {
+               log.Printf("Received response: %v", r)
+           }),
+       }
+   
+       // 创建客户端
+       co, err := udp.Dial("localhost:5683", opts...)
+       if err != nil {
+           log.Fatalf("Error creating client: %v", err)
+       }
+       defer co.Close()
+   
+       // 发送请求
+       ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+       defer cancel()
+   
+       resp, err := co.Get(ctx, "/test")
+       if err != nil {
+           log.Fatalf("Error sending request: %v", err)
+       }
+   
+       // 读取响应
+       body, err := resp.ReadBody()
+       if err != nil {
+           log.Fatalf("Error reading response: %v", err)
+       }
+       fmt.Printf("Response body: %s\n", body)
    }
    ```
 
@@ -160,13 +212,49 @@ CoAP本身是基于UDP的协议，但它提供了一些可靠性机制。以下�
    对于需要长期监控的资源，可以使用CoAP的观察者选项，这提供了一种可靠的方式来接收资源的更新。
 
    ```go
-   obs, err := client.Observe(context.Background(), "/sensor", func(req *coap.Request) {
-       fmt.Printf("观察到更新: %v\n", req.Message.Payload)
-   })
-   if err != nil {
-       // 处理错误
+   package main
+   
+   import (
+       "context"
+       "fmt"
+       "log"
+       "os"
+       "os/signal"
+       "syscall"
+   
+       "github.com/plgd-dev/go-coap/v3/udp"
+       "github.com/plgd-dev/go-coap/v3/message"
+   )
+   
+   func main() {
+       // 创建客户端连接
+       co, err := udp.Dial("localhost:5683")
+       if err != nil {
+           log.Fatalf("Error dialing: %v", err)
+       }
+       defer co.Close()
+   
+       // 创建观察请求
+       ctx, cancel := context.WithCancel(context.Background())
+       defer cancel()
+   
+       resp, err := co.Observe(ctx, "/sensor", func(req *message.Message) {
+           if req.Body() != nil {
+               fmt.Printf("观察到更新: %v\n", string(req.Body()))
+           }
+       })
+       if err != nil {
+           log.Fatalf("无法创建观察: %v", err)
+       }
+       defer resp.Cancel()
+   
+       // 等待中断信号以优雅地关闭客户端
+       sig := make(chan os.Signal, 1)
+       signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
+       <-sig
+   
+       fmt.Println("正在关闭客户端...")
    }
-   defer obs.Cancel()
    ```
 
 4. 使用块传输（Block-wise Transfer）：
@@ -174,11 +262,57 @@ CoAP本身是基于UDP的协议，但它提供了一些可靠性机制。以下�
    对于大型消息，CoAP支持块传输，这有助于提高可靠性和效率。
 
    ```go
-   msg := coap.Message{
-       Type:      coap.Confirmable,
-       Code:      coap.GET,
-       MessageID: 1234,
-       Options:   coap.Options{coap.Block2: []byte{0}}, // 启用块传输
+   package main
+   
+   import (
+       "context"
+       "fmt"
+       "log"
+   
+       "github.com/plgd-dev/go-coap/v3/message"
+       "github.com/plgd-dev/go-coap/v3/message/codes"
+       "github.com/plgd-dev/go-coap/v3/mux"
+       "github.com/plgd-dev/go-coap/v3/udp"
+   )
+   
+   func main() {
+       // 创建一个新的消息
+       req, err := message.NewMessage(message.MessageParams{
+           Type:      message.Confirmable,
+           Code:      codes.GET,
+           MessageID: 1234,
+       })
+       if err != nil {
+           log.Fatalf("Error creating message: %v", err)
+       }
+   
+       // 添加 Block2 选项以启用块传输
+       err = req.SetOptionUint32(message.Block2, 0)
+       if err != nil {
+           log.Fatalf("Error setting Block2 option: %v", err)
+       }
+   
+       // 创建客户端连接
+       co, err := udp.Dial("localhost:5683")
+       if err != nil {
+           log.Fatalf("Error dialing: %v", err)
+       }
+       defer co.Close()
+   
+       // 发送请求
+       ctx, cancel := context.WithCancel(context.Background())
+       defer cancel()
+   
+       resp, err := co.Do(req)
+       if err != nil {
+           log.Fatalf("Error sending request: %v", err)
+       }
+   
+       // 处理响应
+       fmt.Printf("Response Code: %v\n", resp.Code())
+       if resp.Body() != nil {
+           fmt.Printf("Response Body: %s\n", resp.Body())
+       }
    }
    ```
 
@@ -187,36 +321,84 @@ CoAP本身是基于UDP的协议，但它提供了一些可靠性机制。以下�
    在应用层实现额外的确认机制，特别是对于关键操作。
 
    ```go
-   func sendWithConfirmation(client *coap.Client, path string, payload []byte) error {
-       msg := coap.Message{
-           Type:      coap.Confirmable,
-           Code:      coap.POST,
+   package main
+   
+   import (
+       "context"
+       "fmt"
+   
+       "github.com/plgd-dev/go-coap/v3/message"
+       "github.com/plgd-dev/go-coap/v3/message/codes"
+       "github.com/plgd-dev/go-coap/v3/udp"
+   )
+   
+   func sendWithConfirmation(co *udp.ClientConn, path string, payload []byte) error {
+       // 创建主消息
+       req, err := message.NewMessage(message.MessageParams{
+           Type:      message.Confirmable,
+           Code:      codes.POST,
            MessageID: 1234,
            Payload:   payload,
-       }
-       
-       resp, err := client.Do(context.Background(), msg)
+       })
        if err != nil {
-           return err
+           return fmt.Errorf("error creating message: %v", err)
        }
-       
-       if resp.Code() != coap.Created {
+   
+       // 设置路径
+       req.SetPath(path)
+   
+       // 发送主消息
+       resp, err := co.Do(req)
+       if err != nil {
+           return fmt.Errorf("error sending message: %v", err)
+       }
+   
+       if resp.Code() != codes.Created {
            return fmt.Errorf("unexpected response: %v", resp.Code())
        }
-       
-       // 发送应用层确认
-       ackMsg := coap.Message{
-           Type:      coap.Confirmable,
-           Code:      coap.POST,
+   
+       // 创建确认消息
+       ackReq, err := message.NewMessage(message.MessageParams{
+           Type:      message.Confirmable,
+           Code:      codes.POST,
            MessageID: 1235,
            Payload:   []byte("ACK"),
+       })
+       if err != nil {
+           return fmt.Errorf("error creating ACK message: %v", err)
        }
-       
-       _, err = client.Do(context.Background(), ackMsg)
-       return err
+   
+       // 设置确认消息的路径
+       ackReq.SetPath(path)
+   
+       // 发送确认消息
+       _, err = co.Do(ackReq)
+       if err != nil {
+           return fmt.Errorf("error sending ACK message: %v", err)
+       }
+   
+       return nil
+   }
+   
+   func main() {
+       // 创建客户端连接
+       co, err := udp.Dial("localhost:5683")
+       if err != nil {
+           fmt.Printf("Error dialing: %v\n", err)
+           return
+       }
+       defer co.Close()
+   
+       // 使用函数
+       err = sendWithConfirmation(co, "/resource", []byte("Hello, CoAP!"))
+       if err != nil {
+           fmt.Printf("Error: %v\n", err)
+       } else {
+           fmt.Println("Message sent and confirmed successfully")
+       }
    }
    ```
-
+   
    
 
 ## 广播
@@ -243,8 +425,9 @@ import (
     "log"
     "time"
 
-    coap "github.com/plgd-dev/go-coap/v3"
-    "github.com/plgd-dev/go-coap/v3/udp/client"
+    "github.com/plgd-dev/go-coap/v3/udp"
+    "github.com/plgd-dev/go-coap/v3/message"
+    "github.com/plgd-dev/go-coap/v3/message/codes"
 )
 
 func main() {
@@ -252,7 +435,7 @@ func main() {
     multicastAddr := "224.0.1.187:5683"
 
     // 创建CoAP客户端
-    co, err := client.Dial(multicastAddr)
+    co, err := udp.Dial(multicastAddr)
     if err != nil {
         log.Fatalf("Error dialing: %v", err)
     }
@@ -261,18 +444,202 @@ func main() {
     // 构造广播消息
     ctx, cancel := context.WithTimeout(context.Background(), time.Second)
     defer cancel()
-    resp, err := co.Post(ctx, "/broadcast", coap.TextPlain, []byte("Hello, CoAP world!"))
+    
+    resp, err := co.Post(ctx, "/broadcast", message.TextPlain, []byte("Hello, CoAP world!"))
     if err != nil {
         log.Fatalf("Error sending broadcast: %v", err)
     }
 
     // 打印响应
-    log.Printf("Response: %+v", resp)
+    log.Printf("Response Code: %v", resp.Code())
+    if resp.Body() != nil {
+        log.Printf("Response Body: %s", resp.Body())
+    }
 
     // 等待一段时间以接收可能的响应
     time.Sleep(5 * time.Second)
 
     fmt.Println("Broadcast completed")
+}
+```
+
+## 文件上传
+
+### 服务端
+
+```go
+package main
+
+import (
+    "fmt"
+    "log"
+    "os"
+    "sync"
+
+    "github.com/plgd-dev/go-coap/v3/message"
+    "github.com/plgd-dev/go-coap/v3/message/codes"
+    "github.com/plgd-dev/go-coap/v3/mux"
+    "github.com/plgd-dev/go-coap/v3/udp"
+)
+
+type FileUpload struct {
+    file   *os.File
+    mutex  sync.Mutex
+    offset int64
+}
+
+var activeUploads = make(map[string]*FileUpload)
+var uploadsMutex sync.Mutex
+
+func handleFileUpload(w mux.ResponseWriter, r *mux.Message) {
+    log.Printf("Received file upload request")
+
+    filename, err := r.Options().GetString(message.URIQuery)
+    if err != nil {
+        log.Printf("Error getting filename: %v", err)
+        w.SetResponse(codes.BadRequest, message.TextPlain, nil)
+        return
+    }
+
+    block2, err := r.Options().GetUint32(message.Block2)
+    if err != nil {
+        log.Printf("Error getting Block2 option: %v", err)
+        w.SetResponse(codes.BadRequest, message.TextPlain, nil)
+        return
+    }
+
+    blockNum := block2 >> 4
+    blockSize := 1 << (block2 & 0xF)
+    moreBlocks := block2 & 0x8
+
+    uploadsMutex.Lock()
+    upload, exists := activeUploads[filename]
+    if !exists {
+        file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY, 0644)
+        if err != nil {
+            log.Printf("Error creating file: %v", err)
+            w.SetResponse(codes.InternalServerError, message.TextPlain, nil)
+            uploadsMutex.Unlock()
+            return
+        }
+        upload = &FileUpload{file: file}
+        activeUploads[filename] = upload
+    }
+    uploadsMutex.Unlock()
+
+    upload.mutex.Lock()
+    defer upload.mutex.Unlock()
+
+    expectedOffset := int64(blockNum) * int64(blockSize)
+    if upload.offset != expectedOffset {
+        log.Printf("Unexpected offset. Expected: %d, Got: %d", expectedOffset, upload.offset)
+        w.SetResponse(codes.BadRequest, message.TextPlain, nil)
+        return
+    }
+
+    _, err = upload.file.WriteAt(r.Body(), upload.offset)
+    if err != nil {
+        log.Printf("Error writing to file: %v", err)
+        w.SetResponse(codes.InternalServerError, message.TextPlain, nil)
+        return
+    }
+
+    upload.offset += int64(len(r.Body()))
+
+    if moreBlocks == 0 {
+        upload.file.Close()
+        delete(activeUploads, filename)
+        log.Printf("File %s uploaded successfully", filename)
+    }
+
+    w.SetResponse(codes.Changed, message.TextPlain, []byte(fmt.Sprintf("Received block %d", blockNum)))
+}
+
+func main() {
+    r := mux.NewRouter()
+    r.Handle("/upload", mux.HandlerFunc(handleFileUpload))
+
+    log.Printf("Starting CoAP server on :5683")
+    err := udp.ListenAndServe(":5683", r)
+    if err != nil {
+        log.Fatalf("Error starting server: %v", err)
+    }
+}
+```
+
+### 客户端
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "os"
+    "path/filepath"
+
+    "github.com/plgd-dev/go-coap/v3/message"
+    "github.com/plgd-dev/go-coap/v3/udp"
+)
+
+const blockSize = 1024
+
+func main() {
+    if len(os.Args) < 2 {
+        log.Fatalf("Usage: %s <filename>", os.Args[0])
+    }
+
+    filename := os.Args[1]
+
+    file, err := os.Open(filename)
+    if err != nil {
+        log.Fatalf("Error opening file: %v", err)
+    }
+    defer file.Close()
+
+    co, err := udp.Dial("localhost:5683")
+    if err != nil {
+        log.Fatalf("Error dialing: %v", err)
+    }
+    defer co.Close()
+
+    fileInfo, err := file.Stat()
+    if err != nil {
+        log.Fatalf("Error getting file info: %v", err)
+    }
+
+    totalBlocks := (fileInfo.Size() + int64(blockSize) - 1) / int64(blockSize)
+
+    for blockNum := uint32(0); blockNum < uint32(totalBlocks); blockNum++ {
+        buffer := make([]byte, blockSize)
+        n, err := file.Read(buffer)
+        if err != nil {
+            log.Fatalf("Error reading file: %v", err)
+        }
+
+        moreBlocks := uint32(8)
+        if blockNum == uint32(totalBlocks)-1 {
+            moreBlocks = 0
+        }
+
+        block2 := (blockNum << 4) | moreBlocks | 6 // 6 represents block size of 1024
+
+        ctx := context.Background()
+        resp, err := co.Post(ctx, "/upload", message.AppOctetStream, buffer[:n],
+            message.WithQuery(fmt.Sprintf("filename=%s", filepath.Base(filename))),
+            message.WithBlock2(block2))
+        if err != nil {
+            log.Fatalf("Error sending block %d: %v", blockNum, err)
+        }
+
+        log.Printf("Block %d sent. Response Code: %v", blockNum, resp.Code())
+        if resp.Body() != nil {
+            log.Printf("Response Body: %s", resp.Body())
+        }
+    }
+
+    fmt.Println("File upload completed")
 }
 ```
 

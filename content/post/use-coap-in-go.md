@@ -41,6 +41,8 @@ CoAP（Constrained Application Protocol）是一种专为物联网（IoT）和�
 - **物联网**：CoAP 广泛应用于物联网设备的通信，如智能家居、环境监测、工业自动化等。
 - **资源受限设备**：适合用于低功耗、低带宽的设备和网络环境。
 
+![img](https://miro.medium.com/v2/resize:fit:3260/format:webp/1*oMoSQV5Wd6J4tDTxT-PvBg.png)
+
 ## 在go中使用coap
 
 ### echo服务
@@ -231,51 +233,122 @@ CoAP本身是基于UDP的协议，但它提供了一些可靠性机制。以下�
 
    对于需要长期监控的资源，可以使用CoAP的观察者选项，这提供了一种可靠的方式来接收资源的更新。
 
+   server：
+
    ```go
    package main
    
    import (
-       "context"
-       "fmt"
        "log"
-       "os"
-       "os/signal"
-       "syscall"
+       "time"
    
-       "github.com/plgd-dev/go-coap/v3/udp"
+       coap "github.com/plgd-dev/go-coap/v3"
        "github.com/plgd-dev/go-coap/v3/message"
+       "github.com/plgd-dev/go-coap/v3/message/codes"
+       "github.com/plgd-dev/go-coap/v3/mux"
    )
    
    func main() {
-       // 创建客户端连接
-       co, err := udp.Dial("localhost:5683")
+       r := mux.NewRouter()
+       r.Handle("/temperature", mux.HandlerFunc(handleTemperature))
+   
+       log.Fatal(coap.ListenAndServe("udp", ":5683", r))
+   }
+   
+   func handleTemperature(w mux.ResponseWriter, r *mux.Message) {
+       log.Printf("Got message: %+v", r)
+       
+       // 检查是否是 Observe 请求
+       obs, err := r.Options().Observe()
        if err != nil {
-           log.Fatalf("Error dialing: %v", err)
+           log.Printf("Unable to get observe option: %v", err)
+           w.SetCode(codes.BadOption)
+           return
        }
-       defer co.Close()
    
-       // 创建观察请求
-       ctx, cancel := context.WithCancel(context.Background())
-       defer cancel()
-   
-       resp, err := co.Observe(ctx, "/sensor", func(req *message.Message) {
-           if req.Body() != nil {
-               fmt.Printf("观察到更新: %v\n", string(req.Body()))
-           }
-       })
-       if err != nil {
-           log.Fatalf("无法创建观察: %v", err)
+       if obs == 0 { // 0 表示这是一个订阅请求
+           go func() {
+               for i := 0; ; i++ {
+                   // 模拟温度变化
+                   temp := 20 + (i % 10)
+                   msg := w.NewMessage(codes.Content)
+                   msg.SetContentFormat(message.TextPlain)
+                   msg.SetBody([]byte(fmt.Sprintf("%d°C", temp)))
+                   msg.SetOption(message.Observe, uint32(i))
+                   err := w.WriteMessage(msg)
+                   if err != nil {
+                       log.Printf("Error on transmit: %v", err)
+                       return
+                   }
+                   time.Sleep(5 * time.Second)
+               }
+           }()
+       } else if obs == 1 { // 1 表示这是一个取消订阅请求
+           log.Println("Subscription cancelled")
+           w.SetCode(codes.Content)
        }
-       defer resp.Cancel()
-   
-       // 等待中断信号以优雅地关闭客户端
-       sig := make(chan os.Signal, 1)
-       signal.Notify(sig, os.Interrupt, syscall.SIGTERM)
-       <-sig
-   
-       fmt.Println("正在关闭客户端...")
    }
    ```
+client：
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "log"
+    "os"
+    "os/signal"
+    "time"
+
+    coap "github.com/plgd-dev/go-coap/v3"
+    "github.com/plgd-dev/go-coap/v3/message"
+    "github.com/plgd-dev/go-coap/v3/message/codes"
+)
+
+func main() {
+    co, err := coap.Dial("udp", "localhost:5683")
+    if err != nil {
+        log.Fatalf("Error dialing: %v", err)
+    }
+    defer co.Close()
+
+    ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+    defer cancel()
+
+    resp, err := co.Get(ctx, "/temperature")
+    if err != nil {
+        log.Fatalf("Error sending request: %v", err)
+    }
+
+    go func() {
+        for {
+            msg, err := resp.Observe()
+            if err != nil {
+                log.Printf("Error observing: %v", err)
+                return
+            }
+            if msg.Code() == codes.Content {
+                log.Printf("Received: %s", msg.Body())
+            }
+        }
+    }()
+
+    // 等待用户中断
+    c := make(chan os.Signal, 1)
+    signal.Notify(c, os.Interrupt)
+    <-c
+
+    // 取消订阅
+    ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+    defer cancel()
+    _, err = co.Delete(ctx, "/temperature")
+    if err != nil {
+        log.Fatalf("Error cancelling observation: %v", err)
+    }
+}
+```
+
 
 4. 使用块传输（Block-wise Transfer）：
 

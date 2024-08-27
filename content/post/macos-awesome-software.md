@@ -211,6 +211,7 @@ draft: false
 - [Dittostack](https://www.dittostack.com)
 - [PasteNow](https://appstorrent.ru/532-pastenow.html)
 - [copyQ](https://github.com/hluk/CopyQ/)
+- [Copycat Clipboard](https://github.com/raj457036/copycat_clipboard)
 
 ### 增强插件
 - Bartender - Mac右上角的状态栏图标太多的时候，就可以使用这个软件优化

@@ -49,7 +49,24 @@ export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
 
 > 设置`RUSTUP_HOME`和`CARGO_HOME`可以实现自定义安装路径
 
+对于使用buf的开发者，需要添加下面的内容：
+
+```toml
+[registries.buf]
+index = "sparse+https://buf.build/gen/cargo/"
+credential-provider = "cargo:token"
+```
+
+然后登陆,token可以从[这里](https://buf.build/docs/bsr/authentication#create-a-token)获取
+
+```bash
+cargo login --registry buf "Bearer {token}"
+```
+
+更多内容，请参考https://buf.build/docs/bsr/generated-sdks/cargo
+
 ## crates.io 镜像
+
 编辑 `~/.cargo/config `，这里使用的是中科大的镜像。
 
 > cargo版本 1.39 中添加了对 `.toml` 扩展的支持，并且是首选形式。如果两个文件都存在，Cargo 将使用不带扩展名的文件。

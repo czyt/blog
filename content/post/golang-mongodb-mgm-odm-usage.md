@@ -172,7 +172,8 @@ book:=NewBook("Pride and Prejudice", 345)
 model := mongo.IndexModel{
     Keys: bson.D{
         {"created_at", 1},
-        {"expireAfterSeconds", t.data.temporaryRecordExpireSeconds}},
+       },
+  Options:options.Index().SetExpireAfterSeconds(t.data.temporaryRecordExpireSeconds),
 }
 	_, err = mgm.Coll(book).Indexes().CreateOne(ctx, model)
 	if err != nil {

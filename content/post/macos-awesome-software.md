@@ -298,6 +298,7 @@ draft: false
 ### IDE
 
 - VSCode - 微软出品的宇宙最强编辑器。
+- cursor
 - HBuilderX - 专为VUE打造的编辑器，可开发HTML，VUE，各种小程序。
 - IDEA - 宇宙最好用的JAVA开发IDE，JetBrains出品。
 - PyCharm - 宇宙最好用的Python开发IDE，JetBrains出品。
@@ -337,6 +338,10 @@ draft: false
 - [Dash](https://kapeli.com/dash) mac上api集合应用, 几乎包含各种语言的api文档.
 - [SnippetsLab](http://www.renfei.org/snippets-lab/) 优秀的代码片段管理工具, 轻量, 可基于菜单栏操作.
 - [CodeExpander](https://codeexpander.com/) 专为开发者开发的一个集输入增强、代码片段管理(支持 Markdown)为一体跨平台云同步的开发工具。
+
+### AI
+
++ [chatMLX](https://github.com/maiqingqiang/ChatMLX)
 
 ## 黑苹果
 

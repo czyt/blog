@@ -1942,6 +1942,8 @@ neovim `paru -S neovim` (插件 [lazyvim](https://www.lazyvim.org))
 >+ [nvim配置rust编程环境](https://rsdlt.github.io/posts/rust-nvim-ide-guide-walkthrough-development-debug/)
 >+ [巢鹏大佬的nvim配置](https://github.com/chaopeng/nvim-config) 需要安装nerd fonts `paru -S nerd-fonts-sf-mono`
 >+ [NeoVim setup for golang programming](https://medium.com/@yanglyu5201/neovim-setup-for-golang-programming-68ebf59336d9)
+>+ https://nvchad.com
+>+ https://astronvim.com
 
 [sublime-text-4](https://aur.archlinux.org/packages/sublime-text-4)  `paru -S sublime-text-4 `
 

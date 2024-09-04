@@ -330,7 +330,9 @@ draft: false
 - Navicat - 宇宙最好用的数据库工具。
 - DataGrid
 ### 其他
+
 - JD-GUI - Java反编译工具，字节码文件反编译为Java文件。
+- [DBngin](https://dbngin.com) 快速启动数据库实例
 - [chsrc ](https://github.com/RubyMetric/chsrc)软件换源，加速
 - Dash：API 文档和代码片段管理.
 - [Charles](https://www.charlesproxy.com/) 网络抓包应用, mac必备.

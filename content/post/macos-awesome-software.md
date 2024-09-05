@@ -326,13 +326,14 @@ draft: false
 - burp suite
 - [charless](https://www.charlesproxy.com)
 
-### 数据库管理工具
+### 数据库相关工具
 - Navicat - 宇宙最好用的数据库工具。
 - DataGrid
+- [DBngin](https://dbngin.com) 快速启动MySQL, PostgreSQL 或者 Redis数据库实例
+- [Stackbricks](https://stackbricks.app) 开启MariaDB, MySQL, PostgreSQL 或者 Redis实例（不开源，但免费）
 ### 其他
 
 - JD-GUI - Java反编译工具，字节码文件反编译为Java文件。
-- [DBngin](https://dbngin.com) 快速启动数据库实例
 - [chsrc ](https://github.com/RubyMetric/chsrc)软件换源，加速
 - Dash：API 文档和代码片段管理.
 - [Charles](https://www.charlesproxy.com/) 网络抓包应用, mac必备.

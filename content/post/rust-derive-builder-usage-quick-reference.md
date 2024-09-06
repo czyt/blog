@@ -19,7 +19,7 @@ draft: false
 
 ```toml
 [dependencies]
-derive_builder = "0.12.0"
+derive_builder = "0.20.0"
 ```
 
 

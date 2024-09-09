@@ -14,6 +14,7 @@ draft: false
 + [通过例子学rust](https://rustwiki.org/zh-CN/rust-by-example/)
 + https://cheats.rs/
 + [Rust语言圣经](https://course.rs)
++ [Brown 大学版本rust程序设计实验版](https://rust-book.cs.brown.edu/)
 + [learn how to write macros in Rust](https://tfpk.github.io/macrokata/)
 + [Operating System development tutorials in Rust on the Raspberry Pi](https://github.com/rust-embedded/rust-raspberrypi-OS-tutorials)
 + [Rust语言实战](https://zh.practice.rs)

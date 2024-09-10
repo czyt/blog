@@ -155,25 +155,27 @@ draft: false
   >
   >```bash
   >function proxy_off(){
-  >    unset http_proxy
-  >    unset https_proxy
-  >    echo  "proxy is off"
+  >unset http_proxy
+  >unset https_proxy
+  >echo  "proxy is off"
   >}
   >
   >function proxy_on() {
-  >    export no_proxy="localhost,127.0.0.1"
-  >    export http_proxy="socks5://127.0.0.1:10808"
-  >    export https_proxy=$http_proxy
-  >    echo  "prxoy is on"
+  >export no_proxy="localhost,127.0.0.1"
+  >export http_proxy="socks5://127.0.0.1:10808"
+  >export https_proxy=$http_proxy
+  >echo  "prxoy is on"
   >}
   >
   >function proxy_status() {
-  >    echo $https_proxy
-  >    curl cip.cc
+  >echo $https_proxy
+  >curl cip.cc
   >}
   >```
   >
   >homebrew的配置可以使用https://sspai.com/post/32933中的mackup进行备份.`brew install mackup`
+  >
+  >全部更新 `brew upgrade -g`
 
 - FastZip - Mac强大的解压缩工具。
 
@@ -283,11 +285,39 @@ draft: false
 
 ### go
 
+安装go
+
+`brew install go`
+
+安装插件
+
+#### protoc
+
+buf
+
+`brew install buf `
+
+protoc
+
+`brew install protobuf`
+
+
+
 - https://github.com/cortesi/modd
 
 ### rust
 
+`brew install rustup`
 
+然后安装:
+
+```bash
+rustup install stable
+```
+
+### flutter
+
+`brew install --cask flutter`
 
 ## 软件开发
 ### Terminal

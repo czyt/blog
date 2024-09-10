@@ -64,6 +64,10 @@ draft: false
 
 + [How to build a plugin system in Rust](https://www.arroyo.dev/blog/rust-plugin-systems)
 
++ https://github.com/google/autocxx
+
++ https://github.com/mozilla/uniffi-rs
+
 ### 视频
 + 杨旭 Rust编程语言入门教程
 

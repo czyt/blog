@@ -295,7 +295,7 @@ draft: false
 
 buf
 
-`brew install buf `
+`brew install bufbuild/buf/buf `
 
 protoc
 

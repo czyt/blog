@@ -41,7 +41,7 @@ draft: false
 + [Rust 101](https://www.ralfj.de/projects/rust-101/main.html)
 + https://teach-rs.tweede.golf/index.html
 + https://www.howtocodeit.com
-+ [100个练习题学习Rust](https://colobu.com/rust100)
++ [100个练习题学习Rust](https://colobu.com/rust100) [英文版](https://github.com/mainmatter/100-exercises-to-learn-rust)
 + [Rust Design Patterns](https://rust-unofficial.github.io/patterns/)  [中文版](https://fomalhauthmj.github.io/patterns/intro.html) / [pdf](https://rust-unofficial.github.io/patterns/rust-design-patterns.pdf)
 + [学习 wgpu](https://jinleili.github.io/learn-wgpu-zh/)
 ### gRPC相关

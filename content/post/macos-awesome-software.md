@@ -14,6 +14,7 @@ draft: false
 - 飞书 - 字节跳动出品协同办公软件。
 - Telegram - 地下社交软件，通信加密。
 - X（原twitter） - 地下社交软件，了解国内外大事。
+- [XDeck](https://github.com/morishin/XDeck) 𝕏桌面客户端
 - Franz 多合一聊天工具
 
 ## 邮箱工具
@@ -41,7 +42,10 @@ draft: false
 ## 新闻及阅读
 
 - NetNewsWire  rss阅读软件
+
 - [Reeder](http://www.pc6.com/mac/158839.html) 界面优美的RSS订阅应用.
+
+  
 
 
 ## 浏览器
@@ -217,59 +221,117 @@ draft: false
 
 ### 增强插件
 - Bartender - Mac右上角的状态栏图标太多的时候，就可以使用这个软件优化
+
 - Amphetamine  一款防休眠的软件，可以让你的设备持续保持“兴奋”。如果你平时需要某些程序持续运行不被系统休眠所影响的话，这款软件非常适合。
+
 - [Bartender 3](https://www.macbartender.com/) 菜单栏管理应用, 支持隐藏所有菜单栏图标, 还您一个干净的菜单栏.
+
 - [Dozer](https://github.com/Mortennn/Dozer) 隐藏菜单栏项目,功能类似Bartender但是开源免费
+
 - [CDock](http://www.pc6.com/mac/161158.html) 任务栏定制应用, 可设置Dock全透明, 还您一个清爽的任务栏.
+
 - [TextBar](https://www.macstories.net/mac/textbar-puts-your-text-into-the-menu-bar/) 自定义菜单栏输出, 支持script运行, 支持H5渲染.
+
 - [Growl](http://growl.info/) 自定义通知样式, 支持多种主题以及颜色, 大小, 渐隐时间等各项参数的自定义.
+
 - [Keyboard Maestro](https://www.keyboardmaestro.com/main/) 键盘大师, mac下功能最为丰富的键盘增强应用.
+
 - [BetterTouchTool](https://www.boastr.net/) mac触摸板增强神器.
+
 - [Übersicht](http://sspai.com/28020) 华丽的桌面自定义应用, 类似于windows的 [`rainmeter`](http://rainmeter.cn/cms/). 支持H5.
+
 - [Today Scripts](http://www.waerfa.com/today-scripts-for-yosemite-today-view) 个性化通知栏插件, 支持bash脚本.
+
 - [Mountain Tweaks](http://tweaksapp.com/app/mountain-tweaks/) mac隐藏功能开启应用.
+
 - iStat Menus - 系统监控工具，可实时监控温度，网络，电池，CPU，内存等信息。
+
 - Stats - 系统监控工具，可实时监控温度，网络，电池，CPU，内存等信息。
+
 - AlDente - 充电限制软件，保护电池健康度。Pro版收费。
+
 - Alfred - Mac效率神器，没有之一，用了就离不开。
+
 - [Magnet](https://magnet.crowdcafe.com/)：窗口管理
+
 - Rectangle - 窗口管理工具，Magnet平替。
+
 - [Loop](https://github.com/MrKai77/Loop) 窗口管理工具
+
+- [aerospace](https://github.com/nikitabobko/AeroSpace)受i3启发的平铺窗口管理器
+
+  > 可以使用brew 进行安装 `brew install --cask nikitabobko/tap/aerospace`
+
 - [Size up](http://www.irradiatedsoftware.com/sizeup/) 分屏应用, 类似Moon的一款应用, 支持上下左右居中、4个角落快速分屏及多屏幕切换.
+
 - [Divvy](http://www.pc6.com/mac/124992.html) 另一款分屏应用, 可将屏幕分成多宫格的形式, 然后为每个格子定义快捷键, 遗憾的是不支持多屏幕切换.
+
 - QLMarkdown - 空格预览Markdown文件，非常棒。
+
 - Syntax Highlight - 空格预览代码文件，支持高亮功能，非常好用。
+
 - iBar - Mac强大的菜单栏管理工具。
+
 - [BetterDisplay](https://github.com/waydabber/BetterDisplay) Mac 用外接显示器的必须要整一个这个软件.
+
 - 超级右键 - Mac强大的右键菜单工具。
+
 - Mos - 鼠标反转工具，可设置平滑滚动。
+
 - Scroll Reverser - 鼠标反转工具。
+
 - HandShaker - Mac连接安卓手机的工具，锤子科技出品。
+
 - TinyCal - 好用、方便的日历状态栏。
+
 - Top Calendar，一个菜单栏的日历软件，可以看到日历、节假日、农历，以及最近的日程，关键也是做得很美观。
+
 - CheatSheet 安装后在「系统偏好设置 - 安全性与隐私 - 隐私 - 辅助功能」中勾选 CheatSheet 一项，即可在大多数 App 界面中长按 Command-⌘ 直接呼出该软件的全部快捷键，可以说是非常的方便了。
+
 - Dropover  这是给 macOS 增加文件篮子的小工具，你只需要将文件、网页图片、文字拖拽至篮子里临时保存，然后再去目的地进行移动、复制操作，对于需要从多处文件夹移动文件到某一个文件夹的需求来说，极大的简化了操作。
+
 - Loopback  一款Mac平台上的可以创建虚拟音频设备的工具，从应用程序和音频的输入的设备创建虚拟音频设备的声音，然后将其发送给音频处理应用程序。
+
 - MessAuto，一个接收手机短信验证码并自动回填到 Mac 上的小工具，很好用，解决了每次从手机看然后手填的麻烦。
+
 - Raycast  直接替代掉原生的 Spotlight 搜索
+
 - Karabiner  把 HHKB 放在 mac 上的时候可以使用这款软件来禁用自带的键盘，非常方便。
+
 - DMG Canvas，用于编辑产生 Mac dmg 安装包的工具，做得很简单易于使用。
+
 - [KeyCastr](https://github.com/keycastr/keycastr)  在演示或录屏的时候显示快捷键
+
 - [Thor](https://github.com/gbammc/Thor) 给你的任何软件设置启动快捷键
+
 - [Plash ](https://github.com/sindresorhus/Plash)将任意网站设置为可交互的 MacOS 桌面壁纸
+
 - OpenInTerminal：从 Finder 一键打开 Terminal
+
 - Machina - 类似于neofetch的一个显示系统信息的命令行工具.
+
 - [MonitorControl](https://github.com/MonitorControl/MonitorControl)：显示器亮度调节
+
 - [StandUp](https://apps.apple.com/jp/app/standup/id1439378680?l=en&mt=12)：提醒站立
+
 - [WiFriedX](https://medium.com/@mariociabarra/wifriedx-in-depth-look-at-yosemite-wifi-and-awdl-airdrop-41a93eb22e48)：关闭 AWDL/AirDrop，优化 M1 系列 Mac 的 Wifi 连接
+
 - [SmoothScroll](https://www.smoothscroll.net/mac/)：可以让外接鼠标滚动更自然、更顺滑
+
 - [AlDente](https://apphousekitchen.com/)：AlDente 最主要的功能就是调整电池充电阈值。在电池电量在达到指定值后，电脑会停止充电，转向电池供电，全过程无需手动插拔 MacBook 充电器。
+
 - [Caffeine](http://www.pc6.com/mac/121734.html) 点亮mac, 避免长时间演示ppt而进入到休眠状态.
+
 - [AirServer](http://www.airserver.com/) IOS连接mac必备.
+
 - [Beyond Compare](http://www.beyondcompare.cc/) 文件比较应用, 支持文件, 目录, FTP远程地址比较等.
+
 - [EasyFind](http://www.waerfa.com/easyfind) 小而强大的文件搜索应用, 媲美windows下的Everything.
+
 - [Kaleidoscope](http://www.pc6.com/mac/113361.html) 文件和图像比较应用, 支持图片比较, 能与 git, svn 等版本控制工具完美结合.
+
 - [HyperSwitch](https://bahoom.com/hyperswitch) 带有预览图的快速切换, 作用同Command+Tab.
+
 - [Fruit Juice](http://www.pc6.com/mac/119197.html) 电池管理应用, 帮助延迟电池的使用时间.
 
 
@@ -424,6 +486,7 @@ rustup install stable
 - https://github.com/jaywcjlove/awesome-mac
 - https://ports.macports.org
 - https://happyhackingkb.com/download
+- https://aerolite.dev/applite 第三方的苹果软件应用商店
 ### 指南技巧
 
 - https://44maker.github.io/wiki/Mac/index.html#start

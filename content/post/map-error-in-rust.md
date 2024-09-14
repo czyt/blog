@@ -9,7 +9,7 @@ Rust中的`map_err`方法是`Result`类型的一个方法，用于转换错误�
 
 以下是`map_err`的详细用法和一些例子：
 
-1. 基本用法
+## 基本用法
 
 ```rust
 fn main() -> Result<(), String> {
@@ -21,7 +21,7 @@ fn main() -> Result<(), String> {
 
 在这个例子中，我们将`&str`类型的错误转换为`String`类型。
 
-2. 链式调用
+##  链式调用
 
 ```rust
 use std::num::ParseIntError;
@@ -47,7 +47,7 @@ fn main() {
 
 这个例子展示了如何在解析字符串并进行计算的过程中使用`map_err`转换错误类型。
 
-3. 自定义错误类型
+## 自定义错误类型
 
 ```rust
 #[derive(Debug)]
@@ -77,7 +77,7 @@ fn main() {
 
 这个例子展示了如何使用`map_err`将标准库的错误类型转换为自定义错误类型。
 
-4. 在`?`运算符中使用
+##  在`?`运算符中使用
 
 ```rust
 use std::fs::File;
@@ -100,7 +100,7 @@ fn main() {
 
 这个例子展示了如何在使用`?`运算符的同时使用`map_err`来转换错误类型。
 
-5. 与`and_then`结合使用
+## 与`and_then`结合使用
 
 ```rust
 fn divide(a: i32, b: i32) -> Result<i32, String> {
@@ -131,3 +131,5 @@ fn main() {
 这个例子展示了如何将`map_err`与`and_then`结合使用，以处理多个可能的错误情况。
 
 通过这些例子，你可以看到`map_err`在错误处理和类型转换中的灵活性和强大功能。它允许你以一种清晰和类型安全的方式处理和转换错误。
+## 参考
++ https://bitfieldconsulting.com/posts/rust-errors-option-result

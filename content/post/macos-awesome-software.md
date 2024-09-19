@@ -405,6 +405,7 @@ rustup install stable
 ### api调试
 
 - postwoman
+- [bruno](https://www.usebruno.com/) 开源的接口调试工具 `brew install bruno`
 - Apifox - 接口管理神器。接口调试，压力测试工具，力压postman。
 - [hoppscotch](https://github.com/hoppscotch/hoppscotch)：基于 `Web` 提供服务（开源）
 - [insomnia](https://github.com/Kong/insomnia)：跨平台 （开源）

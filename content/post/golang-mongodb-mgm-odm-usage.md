@@ -338,6 +338,69 @@ indexes := []string{"ptype", "v0", "v1", "v2", "v3", "v4", "v5"}
 	}
 ```
 
+可以使用下面的函数来实现当索引不存的时候创建索引：
+
+```go
+import (
+    "context"
+    "fmt"
+    "github.com/kamva/mgm/v3"
+    "go.mongodb.org/mongo-driver/bson"
+    "go.mongodb.org/mongo-driver/mongo"
+    "go.mongodb.org/mongo-driver/mongo/options"
+)
+
+func CreateIndexIfNotExist(coll *mgm.Collection, indexModel mongo.IndexModel) error {
+    ctx := context.Background()
+    
+    // Get the index name
+    indexName, err := getIndexName(indexModel)
+    if err != nil {
+        return fmt.Errorf("failed to get index name: %w", err)
+    }
+
+    // List existing indexes
+    cursor, err := coll.Indexes().List(ctx)
+    if err != nil {
+        return fmt.Errorf("failed to list indexes: %w", err)
+    }
+    defer cursor.Close(ctx)
+
+    // Check if index exists
+    for cursor.Next(ctx) {
+        var index bson.M
+        if err := cursor.Decode(&index); err != nil {
+            return fmt.Errorf("failed to decode index: %w", err)
+        }
+        if index["name"] == indexName {
+            return nil // Index already exists
+        }
+    }
+
+    // Index doesn't exist, create it
+    _, err = coll.Indexes().CreateOne(ctx, indexModel)
+    if err != nil {
+        return fmt.Errorf("failed to create index: %w", err)
+    }
+
+    return nil
+}
+
+func getIndexName(indexModel mongo.IndexModel) (string, error) {
+    if indexModel.Options != nil && indexModel.Options.Name != nil {
+        return *indexModel.Options.Name, nil
+    }
+    // If name is not explicitly set, MongoDB generates a name based on the keys
+    keys, err := indexModel.Keys.MarshalBSON()
+    if err != nil {
+        return "", fmt.Errorf("failed to marshal index keys: %w", err)
+    }
+    return string(keys), nil
+}
+```
+
+
+
 ### 聚合
 
 尽管我们可以使用官方go驱动中的聚合操作，但mgm也提供了更简单的方法：

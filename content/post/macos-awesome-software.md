@@ -66,6 +66,7 @@ draft: false
 - 坚果云
 - Motrix 
 - Aria2GUI
+- [blip](https://blip.net/)
 - [qBittorrent Enhanced Edition](https://github.com/c0re100/qBittorrent-Enhanced-Edition)
 
 ## 代理工具
@@ -210,6 +211,7 @@ draft: false
 
 ### 剪切板
 
+- [cleanclip](https://cleanclip.cc/zh/)
 - CopyLess 2
 - [EcoPaste]( https://github.com/ayangweb/EcoPaste/)
 - [maccy](https://maccy.app)

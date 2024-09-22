@@ -340,6 +340,7 @@ draft: false
 ## 磁盘清理
 
 + [Pearcleaner](https://itsalin.com/appInfo/?id=pearcleaner) 开源的 Mac 软件卸载工具 
++ [PrettyClean](https://www.prettyclean.cc/) macOS 最佳磁盘清理工具 
 + [OmniDiskSweeper](http://newping.cn/322) 硬盘空间扫描应用, 帮助mac减肥.
 + [AppCleaner](http://freemacsoft.net/appcleaner/) mac应用卸载工具, 结合 [`AppCleaner`](https://github.com/Louiszhai/tool/blob/master/workflow/AppCleaner.alfredworkflow?raw=true) 的workflow, 使用效果更佳.
 + CleanMyMac X

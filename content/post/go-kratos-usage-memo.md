@@ -1104,6 +1104,64 @@ if httpCtx, ok := ctx.(http.Context); ok {
 }
 ```
 
+或者这样
+
+```go
+//todo:调用示例
+```
+
+如果你自定义过ResponseEncoder那么你还需要加入这两行，以我们之前的为例：
+
+```go
+if rd, ok := i.(http.Redirector); ok {
+	url, code := rd.Redirect()
+	stdHttp.Redirect(w, r, url, code)
+	return nil
+}
+```
+
+完整的就是
+
+```go
+import (
+	.......
+    stdHttp "net/http"
+	.......    
+   )
+func CustomResponseEncoder() http.ServerOption {
+	return http.ResponseEncoder(func(w http.ResponseWriter, r *http.Request, i interface{}) error {
+		reply := &v1.BaseResponse{
+			Code: 0,
+		}
+        if rd, ok := i.(http.Redirector); ok {
+			url, code := rd.Redirect()
+			stdHttp.Redirect(w, r, url, code)
+			return nil
+        }
+		if m, ok := i.(proto.Message); ok {
+			payload, err := anypb.New(m)
+			if err != nil {
+				return err
+			}
+			reply.Data = payload
+		}
+
+		//reply := &Response{
+		//	Code: 0,
+		//	Data: i,
+		//}
+		codec := encoding.GetCodec("json")
+		data, err := codec.Marshal(reply)
+		if err != nil {
+			return err
+		}
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(data)
+		return nil
+	})
+}
+```
+
 
 
 ## Service和Biz层的区分

@@ -5,7 +5,7 @@ tags: ["golang", "kratos"]
 weight: 10
 draft: false
 ---
-> 我搭建的一个kratos项目模板，欢迎使用，仓库https://github.com/tpl-x/kratos
+> 我搭建的一个kratos项目模板，欢迎使用，[仓库地址](https://github.com/tpl-x/kratos)
 
 ## 需要特别注意的一些建议
 
@@ -1092,11 +1092,16 @@ imports(
     	"github.com/go-kratos/kratos/v2/transport/http"
 	stdHttp "net/http"
 )
-......
+func (s xxService) Handlexxx(ctx context.Context, req *v1.HandlexxxRequest) (resp *v1.HandlexxxResponse, err error) {
 if httpCtx, ok := ctx.(http.Context); ok {
-		stdHttp.Redirect(httpCtx.Response(), httpCtx.Request(), targetUrl, stdHttp.StatusMovedPermanently)
+		stdHttp.Redirect(
+            httpCtx.Response(),
+            httpCtx.Request(),
+            targetUrl,
+            stdHttp.StatusMovedPermanently,
+        )
 	}
-......
+}
 ```
 
 

@@ -5,7 +5,10 @@ tags: ["golang", "kratos"]
 weight: 10
 draft: false
 ---
+> 我搭建的一个kratos项目模板，欢迎使用，仓库https://github.com/tpl-x/kratos
+
 ## 需要特别注意的一些建议
+
 ### API路由覆盖的问题
 比如有两个接口 A `get /v1/user/{user_id}`和 B `get /v1/user/profile`如果A定义在B之前，那么B可能会被A覆盖路由。需要将A放到B之前。
 

@@ -1106,13 +1106,34 @@ if httpCtx, ok := ctx.(http.Context); ok {
 
 > 这种方式并不是官方例子中的实现，使用kratos 2.6.1是正常工作的，新版的有网友反馈不能正常工作，可以看看下面这种方案。
 
-或者使用kratos的http Transport的[Redirector](https://github.com/go-kratos/kratos/blob/e1f5dc42b1e518ecfbc5e167002138736bd0a6db/transport/http/codec.go#L23)，给你的pb生成的结构体（需要指定**跳转地址** 、HTTP status Code可选），在service层实现这个接口，然后正常返回即可。Redirector允许我们自定义http的返回Code等信息，还是比较方便。
+或者使用kratos的http Transport的[Redirector](https://github.com/go-kratos/kratos/blob/e1f5dc42b1e518ecfbc5e167002138736bd0a6db/transport/http/codec.go#L23)，给你的pb生成的结构体（需要指定**跳转地址** 、HTTP status Code可选），在proto输出的路径同目录，新建一个go文件，为response结构体实现这个接口，然后正常返回即可。Redirector允许我们自定义http的返回Code等信息，还是比较方便。
 
-```go
-// todo
+示例proto
+
+```protobuf
+message LuckySearchResponse {
+  string redirect_to = 1;
+  int32 status_code = 2;
+}
 ```
 
-如果你自定义过ResponseEncoder那么你还需要加入这两行，以我们之前的为例：
+为生成的go结构体实现Redirector接口接口
+
+```go
+package v1
+
+import "github.com/go-kratos/kratos/v2/transport/http"
+
+var _ http.Redirector = (*LuckySearchResponse)(nil)
+
+func (s *LuckySearchResponse) Redirect() (string, int) {
+	return s.RedirectTo, int(s.StatusCode)
+}
+```
+
+然后在service层正常返回即可。
+
+如果你自定义过ResponseEncoder，那么你还需要在你的代码中加入下面这两行，这里以我们之前的为例：
 
 ```go
 if rd, ok := i.(http.Redirector); ok {

@@ -1085,7 +1085,7 @@ func main() {
 }
 ```
 
-在实际的service代码中，可以写成下面这样
+在实际的service代码中，可以写成下面这样：
 
 ```go
 imports(
@@ -1104,10 +1104,12 @@ if httpCtx, ok := ctx.(http.Context); ok {
 }
 ```
 
-或者这样
+> 这种方式并不是官方例子中的实现，使用kratos 2.6.1是正常工作的，新版的有网友反馈不能正常工作，可以看看下面这种方案。
+
+或者使用kratos的http Transport的[Redirector](https://github.com/go-kratos/kratos/blob/e1f5dc42b1e518ecfbc5e167002138736bd0a6db/transport/http/codec.go#L23)，给你的pb生成的结构体（需要指定**跳转地址** 、HTTP status Code可选），在service层实现这个接口，然后正常返回即可。Redirector允许我们自定义http的返回Code等信息，还是比较方便。
 
 ```go
-//todo:调用示例
+// todo
 ```
 
 如果你自定义过ResponseEncoder那么你还需要加入这两行，以我们之前的为例：
@@ -1120,7 +1122,7 @@ if rd, ok := i.(http.Redirector); ok {
 }
 ```
 
-完整的就是
+完整的ResponseEncoder就是下面这个样子
 
 ```go
 import (
@@ -1133,6 +1135,7 @@ func CustomResponseEncoder() http.ServerOption {
 		reply := &v1.BaseResponse{
 			Code: 0,
 		}
+        // 优先处理跳转
         if rd, ok := i.(http.Redirector); ok {
 			url, code := rd.Redirect()
 			stdHttp.Redirect(w, r, url, code)

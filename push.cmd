@@ -16,9 +16,7 @@ if "!diff_output!"=="" (
 )
 
 REM 生成提交消息
-set "commit_message=Auto-commit: Files changed and diffs^
-
-!diff_output!"
+set "commit_message=Auto-commit: Files changed and diffs^!diff_output!"
 
 git add .
 git commit -m "!commit_message!"

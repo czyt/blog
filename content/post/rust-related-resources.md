@@ -44,6 +44,7 @@ draft: false
 + [100个练习题学习Rust](https://colobu.com/rust100) [英文版](https://github.com/mainmatter/100-exercises-to-learn-rust)
 + [Rust Design Patterns](https://rust-unofficial.github.io/patterns/)  [中文版](https://fomalhauthmj.github.io/patterns/intro.html) / [pdf](https://rust-unofficial.github.io/patterns/rust-design-patterns.pdf)
 + [学习 wgpu](https://jinleili.github.io/learn-wgpu-zh/)
++ [Effective rust](https://www.lurklurk.org/effective-rust) [中文版](https://effective-rust.czyt.tech) [翻译的仓库](https://github.com/rustx-labs/effective-rust-cn)
 + https://www.howtocodeit.com
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/

@@ -765,8 +765,6 @@ func handleAttachment(w http.ResponseWriter, attach *attachment.Attachment) erro
 
 参考 [issue](https://github.com/go-kratos/kratos/issues/2073)
 
-
-
 ## 支持动态内容
 
 ### 实现json.RawMessage
@@ -804,8 +802,6 @@ message DeviceMsg{
 >| `fields`   | `map<string, Value>` | Map of dynamically typed values. |
 
 Todo
-
-
 
 参考链接：
 
@@ -1186,8 +1182,6 @@ func CustomResponseEncoder() http.ServerOption {
 }
 ```
 
-
-
 ## Service和Biz层的区分
 
 Service 层：协议转换，比如grpc转http 和一些简单的validate。
@@ -1267,8 +1261,6 @@ func CorsHandler() func(handler http.Handler) http.Handler {
 	}
 }
 ```
-
-
 
 ## 服务https监听开关
 在conf.proto 上的Http配置添加下面的内容
@@ -1645,8 +1637,6 @@ plugins:
       - paths=source_relative
 ```
 
-
-
 ## 系统初始化任务
 
 ### 逻辑抽象
@@ -1726,7 +1716,8 @@ type processor interface {
 
 ## Validate配置说明
 > 推荐切换到buf的https://github.com/bufbuild/protovalidate 这包括了github.com/envoyproxy/protoc-gen-validate的功能，还引入了cel表达式的支持。
-**240925 更新**：因为github.com/envoyproxy/protoc-gen-validate差不多转为维护状态，去掉了原来的validate语法部分，可以去[这里](https://github.com/bufbuild/protoc-gen-validate)查看。
+>
+> **240925 更新**：因为github.com/envoyproxy/protoc-gen-validate差不多转为维护状态，去掉了原来的validate语法部分，可以去[这里](https://github.com/bufbuild/protoc-gen-validate)查看。
 
 ### 工具安装配置
 

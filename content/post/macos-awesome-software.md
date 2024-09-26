@@ -250,6 +250,8 @@ draft: false
 
 - Stats - 系统监控工具，可实时监控温度，网络，电池，CPU，内存等信息。
 
+- [topnotch](https://topnotch.app) 一键隐藏刘海
+
 - AlDente - 充电限制软件，保护电池健康度。Pro版收费。
 
 - Alfred - Mac效率神器，没有之一，用了就离不开。

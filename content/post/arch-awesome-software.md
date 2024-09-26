@@ -14,7 +14,7 @@ weight: 9
 >安装时，声音后端的选择：
 >
 >- PulseAudio，历史悠久、最为常用；
->- PipeWire，新生代，采用全新架构，整合多种音频后端（PulseAudio、ALSA和JACK），提供低延迟的音频体验
+>- PipeWire，新生代，采用全新架构，整合多种音频后端（PulseAudio、ALSA和JACK），提供低延迟的音频体
 
 ### 连接无线网
 
@@ -1358,6 +1358,18 @@ xfconf-query -c xsettings -p /Gtk/ShellShowsMenubar -n -t bool -s true
 
 
 [conky](https://github.com/brndnmtthws/conky) 性能显示组件 安装 `paru -S conky conky-manager`
+
+### Zellij
+
+安装 `paru -S zellij`
+
+在zsh中集成 
+
+```bash
+echo 'eval "$(zellij setup --generate-auto-start zsh)"' >> ~/.zshrc
+```
+
+参考官网文档 https://zellij.dev
 
 ### Kitty
 

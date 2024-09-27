@@ -287,6 +287,8 @@ type app struct {
 
 运行 `weaver generate` ，然后运行  `go mod tidy` ，然后运行  `SERVICEWEAVER_CONFIG=weaver.toml go run .` 。该程序应打印出应用程序的名称和唯一的部署 ID。然后它应该阻止在 `localhost:12345` 上提供 HTTP 请求。
 
+>译者注：Windows设置了环境变量，是无效的，但是Linux的正常的。
+
 ``` bash
 $ weaver generate
 $ go mod tidy

@@ -537,7 +537,7 @@ h6:hover .anchor {
 
 .post-content code:not(pre code) {
     background-color: #2a2a2a;
-    color: #e06c75;
+    color: #40dfcb;
     padding: 2px 4px;
     border-radius: 3px;
     font-family: 'Menlo', 'Monaco', 'Courier New', monospace;

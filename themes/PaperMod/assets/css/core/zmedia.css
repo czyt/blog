@@ -27,13 +27,56 @@
     .footer {
         padding: calc((var(--footer-height) - var(--gap) - 10px) / 2) var(--gap);
     }
+
+    .main {
+        padding: var(--gap);
+    }
+
+    .post-content {
+        font-size: 16px;
+    }
+
+    .post-title {
+        font-size: 32px;
+    }
+
+    .post-content h1 {
+        font-size: 28px;
+    }
+
+    .post-content h2 {
+        font-size: 24px;
+    }
+
+    .post-content h3 {
+        font-size: 20px;
+    }
+
+    .post-content h4,
+    .post-content h5,
+    .post-content h6 {
+        font-size: 18px;
+    }
 }
 
 @media screen and (min-width: 768px) {
     /* reset */
     ::-webkit-scrollbar {
-        width: 19px;
-        height: 11px;
+        width: 10px;
+        height: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--tertiary);
+        border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary);
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--theme);
     }
 }
 

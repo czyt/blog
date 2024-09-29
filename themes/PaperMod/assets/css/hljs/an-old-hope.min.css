@@ -49,9 +49,9 @@
 .hljs {
     display: block;
     overflow-x: auto;
-    background: #1c1d21;
+    padding: 0.5em;
     color: #c0c5ce;
-    padding: .5em;
+    background: #1f2937;
 }
 
 .hljs-emphasis {

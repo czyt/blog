@@ -90,7 +90,7 @@
 
 .archive-entry:hover {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);  /* 添加悬停时的阴影 */
-  background-color: #f9f9f9;
+  background-color: var(--hover-bg);
   border-left-color: #e60000; /* 悬停时左边框变为红色 */
   transition: width 0.2s ease, height 0.2s ease;
 }

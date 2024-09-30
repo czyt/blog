@@ -62,8 +62,8 @@ CMD ["./main"]
 >
 >比如下面的这个 Dockerfile 中的 `apk` 命令：
 >
->1. ```
->   RUN apk add --no-cache git
+>  ```bash
+>     RUN apk add --no-cache git
 >   ```
 >
 >   这条命令在 Alpine Linux 容器中安装 git。
@@ -89,7 +89,7 @@ CMD ["./main"]
 >
 >需要注意的是，由于 Alpine 使用 musl libc 而不是更常见的 glibc，某些应用程序可能会遇到兼容性问题。但对于大多数 Go 应用程序来说，这通常不是问题，因为 Go 可以静态链接所有依赖。
 >
->**  Dockerfile 的指令每执行一次都会在 docker 上新建一层。所以过多无意义的层，会造成镜像膨胀过大**
+>** Dockerfile 的指令每执行一次都会在 docker 上新建一层。所以过多无意义的层，会造成镜像膨胀过大 **
 
 1. 构建 Docker 镜像：
 

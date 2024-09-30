@@ -19,7 +19,7 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 1px;
+  width: 2px;
   background-color: #e60000; /* 红色时间线 */
 }
 
@@ -81,16 +81,17 @@
   margin-bottom: 10px;
   padding: 5px 5px 5px 20px;  /* 增加内边距以容纳阴影 */
   position: relative;
-  transition: box-shadow 0.2s ease, background-color 0.2s ease;  /* 添加过渡效果 */
-  border-left: 3px solid transparent; /* 增加透明边框宽度 */
+  transition: box-shadow 0.2s ease, background-color 0.2s ease, border-left-color 0.2s ease;
+  border-left: 3px solid #e0e0e0; /* 默认灰色边框 */
+  border-bottom: 1px solid #e0e0e0; /* 添加底部灰色边框 */
 }
 
 
 
 .archive-entry:hover {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);  /* 添加悬停时的阴影 */
-  background-color: var(--hover-bg);  /* 可选：添加轻微的背景色变化 */
-  border-left: 2px solid #e60000; /* 悬停时显示红色边框 */
+  background-color: #f9f9f9;
+  border-left-color: #e60000; /* 悬停时左边框变为红色 */
   transition: width 0.2s ease, height 0.2s ease;
 }
 
@@ -123,4 +124,9 @@
 
 .archive-entry-author {
   margin-left: 10px;
+}
+
+/* 最后一个条目去掉底部边框 */
+.archive-entry:last-child {
+  border-bottom: none;
 }

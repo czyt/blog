@@ -37,14 +37,95 @@
         {{ $min := len (index $.Site.Taxonomies.tags.ByCount.Reverse 0).Pages }}
         {{ $spread := sub $max $min }}
         {{ $fontStep := div $fontSpread $spread }}
-        {{ $weigth := div (sub (math.Log $count) (math.Log $min)) (sub (math.Log $max) (math.Log $min)) }}
-        {{ $currentFontSize := (add $smallestFontSize (mul (sub $largestFontSize $smallestFontSize) $weigth)) }}
-        <a href="{{ .Permalink }}" style="font-size: {{ $currentFontSize }}rem; font-weight: {{ mul $currentFontSize 200 }};">
+        {{ $weight := div (sub (math.Log $count) (math.Log $min)) (sub (math.Log $max) (math.Log $min)) }}
+        {{ $currentFontSize := (add $smallestFontSize (mul (sub $largestFontSize $smallestFontSize) $weight)) }}
+        {{ $animationDelay := mul (math.Mod $key 10) 0.1 }}
+        <a href="{{ .Permalink }}" 
+           class="tag-cloud-item" 
+           data-color-index="{{ mod $key 15 }}"
+           style="font-size: {{ $currentFontSize }}rem; font-weight: {{ mul $currentFontSize 200 }}; animation-delay: {{ $animationDelay }}s;">
             {{ .Name }} <sup><strong><sup>{{ $count }}</sup></strong></sup>
         </a>
     </li>
     {{- end }}
     {{- end }}
 </ul>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const colors = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', 
+            '#98D8C8', '#7FDBFF', '#F7DC6F', '#B19CD9',
+            '#FF85A2', '#7FB800', '#FF8C00', '#00CED1',
+            '#9B59B6', '#3498DB', '#1ABC9C'
+        ];
+        const tags = document.querySelectorAll('.tag-cloud-item');
+        tags.forEach(tag => {
+            const colorIndex = parseInt(tag.getAttribute('data-color-index'));
+            tag.style.backgroundColor = colors[colorIndex];
+
+            // 随机初始位置
+            const randomX = Math.random() * 10 - 5; // -5px 到 5px
+            const randomY = Math.random() * 10 - 5; // -5px 到 5px
+            tag.style.transform = `translate(${randomX}px, ${randomY}px)`;
+
+            // 随机动画持续时间
+            const randomDuration = Math.random() * 2 + 2; // 2-4秒
+            tag.style.animationDuration = `${randomDuration}s`;
+
+            // 鼠标悬停时暂停动画并改变颜色
+            tag.addEventListener('mouseenter', () => {
+                tag.style.animationPlayState = 'paused';
+                tag.style.backgroundColor = '#e60000'; // 悬停时统一变为红色
+            });
+            tag.addEventListener('mouseleave', () => {
+                tag.style.animationPlayState = 'running';
+                tag.style.backgroundColor = colors[colorIndex]; // 恢复原来的颜色
+            });
+        });
+    });
+</script>
+
+<style>
+    .terms-tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        list-style: none;
+    }
+
+    .terms-tags li {
+        margin: 5px;
+    }
+
+    .tag-cloud-item {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        color: #fff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .tag-cloud-item:hover {
+        transform: scale(1.1);
+        animation-play-state: paused;
+    }
+
+    .tag-cloud-item sup {
+        font-size: 0.6em;
+        margin-left: 2px;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+</style>
 
 {{- end }}{{/* end main */ -}}

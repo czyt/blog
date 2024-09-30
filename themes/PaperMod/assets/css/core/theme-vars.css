@@ -8,13 +8,17 @@
     --radius: 8px;
     --theme: #fff;
     --entry: #fff;
-    --primary: #5a5a5a;
-    --secondary: #6b7280;
-    --tertiary: #f3f4f6;
-    --content: #1f2937;
-    --hljs-bg: #2e3440;
-    --code-bg: #f9fafb;
-    --border: #e5e7eb;
+    --primary: #1a1a1a;              /* 主要文字颜色，接近黑色 */
+    --secondary: #4a4a4a;            /* 次要文字颜色，深灰色 */
+    --tertiary: #6a6a6a;             /* 第三级文字颜色，中灰色 */
+    --content: #333333;              /* 内容文字颜色，深灰色 */
+    --hljs-bg: #2f442dd5;
+    --code-bg: #ffff;              /* 代码块背景色，浅灰色 */
+    --border: #e0e0e0;               /* 边框颜色，浅灰色 */
+    --pre-code-bg: #f4f4f4;          /* 预格式化代码块背景色 */
+    --pre-code-color: #333333;       /* 预格式化代码块文字颜色 */
+    --pre-code-border: #cccccc;      /* 预格式化代码块边框颜色 */
+    --pre-code-top-bar: #f8f6f6;    /* 预格式化代码块顶部栏颜色 */
     --link-background-color: #e8e3f7;
     --link-color: var(--primary);
     --link-hover-color: #573eaa;
@@ -38,13 +42,17 @@
 .dark {
     --theme: #1f2937;
     --entry: #2e3440;
-    --primary: #e5e7eb;
-    --secondary: #9ca3af;
-    --tertiary: #374151;
-    --content: #d1d5db;
+    --primary: #d1d1d1;              /* 暗模式主要文字颜色 */
+    --secondary: #b4b4b4;            /* 暗模式次要文字颜色 */
+    --tertiary: #9c9c9c;             /* 暗模式第三级文字颜色 */
+    --content: #eaeaea;              /* 暗模式内容文字颜色 */
     --hljs-bg: #1f2937;
-    --code-bg: #2e3440;
-    --border: #4b5563;
+    --code-bg: #2a2a2a;              /* 暗模式代码块背景色 */
+    --border: #4a4a4a;               /* 暗模式边框颜色 */
+    --pre-code-bg: #2a2a2a;          /* 暗模式预格式化代码块背景色 */
+    --pre-code-color: #eaeaea;       /* 暗模式预格式化代码块文字颜色 */
+    --pre-code-border: #555555;      /* 暗模式预格式化代码块边框颜色 */
+    --pre-code-top-bar: #555353;
     --link-background-color: #5242746d;
     --link-color: var(--primary);
     --link-hover-color: #876fd6;

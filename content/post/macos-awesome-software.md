@@ -258,6 +258,8 @@ draft: false
 
 - [Magnet](https://magnet.crowdcafe.com/)：窗口管理
 
+- [DockDoor](https://github.com/ejbills/DockDoor) 窗口peeking 
+
 - Rectangle - 窗口管理工具，Magnet平替。
 
 - [Loop](https://github.com/MrKai77/Loop) 窗口管理工具

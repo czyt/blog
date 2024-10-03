@@ -232,6 +232,8 @@ draft: false
 
 - [CDock](http://www.pc6.com/mac/161158.html) 任务栏定制应用, 可设置Dock全透明, 还您一个清爽的任务栏.
 
+- [DockDoor](https://github.com/ejbills/DockDoor) 给Dock添加预览窗口
+
 - [TextBar](https://www.macstories.net/mac/textbar-puts-your-text-into-the-menu-bar/) 自定义菜单栏输出, 支持script运行, 支持H5渲染.
 
 - [Growl](http://growl.info/) 自定义通知样式, 支持多种主题以及颜色, 大小, 渐隐时间等各项参数的自定义.
@@ -257,8 +259,6 @@ draft: false
 - Alfred - Mac效率神器，没有之一，用了就离不开。
 
 - [Magnet](https://magnet.crowdcafe.com/)：窗口管理
-
-- [DockDoor](https://github.com/ejbills/DockDoor) 窗口peeking 
 
 - Rectangle - 窗口管理工具，Magnet平替。
 

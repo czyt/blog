@@ -230,6 +230,8 @@ draft: false
 
 - [Dozer](https://github.com/Mortennn/Dozer) 隐藏菜单栏项目,功能类似Bartender但是开源免费
 
+- [one thing](https://sindresorhus.com/one-thing) 任务栏显示文字工具
+
 - [CDock](http://www.pc6.com/mac/161158.html) 任务栏定制应用, 可设置Dock全透明, 还您一个清爽的任务栏.
 
 - [DockDoor](https://github.com/ejbills/DockDoor) 给Dock添加预览窗口
@@ -435,6 +437,7 @@ rustup install stable
 ### 其他
 
 - JD-GUI - Java反编译工具，字节码文件反编译为Java文件。
+- Latest 软件升级工具
 - [CodemerxDecompile](https://decompiler.codemerx.com) 跨平台的.net反编译工具
 - [chsrc ](https://github.com/RubyMetric/chsrc)软件换源，加速
 - Dash：API 文档和代码片段管理.

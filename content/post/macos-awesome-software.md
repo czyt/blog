@@ -447,6 +447,7 @@ rustup install stable
 ### AI
 
 + [chatMLX](https://github.com/maiqingqiang/ChatMLX)
++ [Chital](https://github.com/sheshbabu/Chital)Ollama 客户端
 
 ## 黑苹果
 

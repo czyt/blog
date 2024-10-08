@@ -51,7 +51,7 @@
 }
 
 .top-link svg {
-    fill: var(--theme); /* 图标颜色使用主题色 */
+    fill: var(--top-link-color); /* 图标颜色使用主题色 */
     transition: fill 0.3s ease;
 }
 

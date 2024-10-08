@@ -27,6 +27,8 @@
     --link-hover-underline-shadow: 0 2px 0 var(--link-hover-underline-color);
     --link-transition: all 0.3s ease;
     --line-yellow: "";
+    --top-link-color: #eb4f4f;
+    --block-quote-clolor:#f83963;
 
     /* for type pages theming */
     --signature: var(--primary);
@@ -59,6 +61,8 @@
     --link-underline-shadow: 0 1px 0 var(--link-color);
     --link-hover-underline-color: var(--link-hover-color);
     --link-hover-underline-shadow: 0 2px 0 var(--link-hover-underline-color);
+    --top-link-color: #0faf3f;
+    --block-quote-clolor: #696363;
 }
 
 .list {

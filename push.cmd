@@ -1,13 +1,17 @@
 @echo off
+setlocal enabledelayedexpansion
+
 pushd %~dp0
-git pull origin  main
+git pull origin main
 
 REM 获取变更的文件列表和差异
-for /f "tokens=*" %%a in ('git diff --staged') do (
-    set "diff_output=!diff_output!%%a^
-
-"
+set "diff_output="
+for /f "tokens=*" %%a in ('git diff --name-only --staged') do (
+    set "diff_output=!diff_output!%%a, "
 )
+
+REM 移除最后的逗号和空格
+if defined diff_output set "diff_output=!diff_output:~0,-2!"
 
 REM 检查是否有变更
 if "!diff_output!"=="" (
@@ -16,9 +20,14 @@ if "!diff_output!"=="" (
 )
 
 REM 生成提交消息
-set "commit_message=Auto-commit: Files changed and diffs^!diff_output!"
+set "commit_message=Auto-commit: Files changed: !diff_output!"
 
 git add .
 git commit -m "!commit_message!"
 git push origin main
+
+echo Commit message: !commit_message!
 timeout 3
+
+popd
+endlocal

@@ -88,6 +88,7 @@ draft: false
 
 ### 其他
 + https://github.com/rust-boom/rust-boom
++ https://implrust.com/free-rust-books/
 + https://github.com/tyrchen/rust-training
 + https://github.com/drmingdrmer/tips/tree/main/tips/rust
 + https://github.com/Whitecat18/Rust-for-Malware-Development

@@ -275,6 +275,12 @@ panic = "abort"
 
 ## 其他实用工具
 
+### cacon
+
+[bacon](https://dystroy.org/bacon/)是一个后台的 rust 代码检查器.它专为最小化交互而设计，因此您可以让它与编辑器一起运行，并收到有关 Rust 代码中的警告、错误或测试失败的通知。
+
+安装 `cargo install --locked bacon`然后`bacon`启动
+
 ### sccache
 
 官方仓库 https://github.com/mozilla/sccache

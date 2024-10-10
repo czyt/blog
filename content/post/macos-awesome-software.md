@@ -194,6 +194,7 @@ draft: false
 - Kap - 录屏工具，简单方便，比系统自带录屏的视频体积小很多。
 - ScreenFlow 录制屏幕和编辑视频的软件,简单强大。
 - Camtasia
+- ScreenBrush
 - Snipaste
 - [Xnip](https://zh.xnipapp.com)
 - [licecap](https://github.com/justinfrankel/licecap)：轻量小巧的录屏工具（开源）

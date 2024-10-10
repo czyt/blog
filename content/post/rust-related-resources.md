@@ -46,6 +46,7 @@ draft: false
 + [学习 wgpu](https://jinleili.github.io/learn-wgpu-zh/)
 + [Effective rust](https://www.lurklurk.org/effective-rust) [中文版](https://effective-rust.czyt.tech) [翻译的仓库](https://github.com/rustx-labs/effective-rust-cn)
 + https://www.howtocodeit.com
++ https://speedsheet.io/s/rust
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
 

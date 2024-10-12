@@ -1,7 +1,12 @@
 ---
 title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
-tags: ["tts", "api"]
 draft: true
+tags: []
+categories: []
+author: "czyt"
+description: ""
+featured_image: ""
 ---
 
+在这里写你的文章内容...

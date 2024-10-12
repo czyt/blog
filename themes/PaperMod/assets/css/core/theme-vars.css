@@ -12,7 +12,7 @@
     --secondary: #4a4a4a;            /* 次要文字颜色，深灰色 */
     --tertiary: #6a6a6a;             /* 第三级文字颜色，中灰色 */
     --content: #333333;              /* 内容文字颜色，深灰色 */
-    --hljs-bg: #e5eaed29;
+    --hljs-bg: #582071a3;
     --code-bg: #ffff;              /* 代码块背景色，浅灰色 */
     --border: #e0e0e0;               /* 边框颜色，浅灰色 */
     --pre-code-bg: #f4f4f4;          /* 预格式化代码块背景色 */
@@ -48,7 +48,7 @@
     --secondary: #b4b4b4;            /* 暗模式次要文字颜色 */
     --tertiary: #9c9c9c;             /* 暗模式第三级文字颜色 */
     --content: #eaeaea;              /* 暗模式内容文字颜色 */
-    --hljs-bg: #1f2937;
+    --hljs-bg: #2f3946b8;
     --code-bg: #2a2a2a;              /* 暗模式代码块背景色 */
     --border: #4a4a4a;               /* 暗模式边框颜色 */
     --pre-code-bg: #2a2a2a;          /* 暗模式预格式化代码块背景色 */

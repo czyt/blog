@@ -267,6 +267,8 @@ draft: false
 
 - [Loop](https://github.com/MrKai77/Loop) 窗口管理工具
 
+- [MacsyZones ](https://github.com/rohanrhu/MacsyZones) 随心所欲在桌面创建布局和分区
+
 - [aerospace](https://github.com/nikitabobko/AeroSpace)受i3启发的平铺窗口管理器
 
   > 可以使用brew 进行安装 `brew install --cask nikitabobko/tap/aerospace`

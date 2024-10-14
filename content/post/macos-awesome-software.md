@@ -452,6 +452,8 @@ rustup install stable
 
 + [chatMLX](https://github.com/maiqingqiang/ChatMLX)
 + [Chital](https://github.com/sheshbabu/Chital)Ollama 客户端
++ [chatbox](https://chatboxai.app)
++ [cherryStudio](https://github.com/kangfenmao/cherry-studio)
 
 ## 黑苹果
 

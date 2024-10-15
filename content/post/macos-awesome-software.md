@@ -504,6 +504,7 @@ rustup install stable
 - https://github.com/jaywcjlove/awesome-mac
 - https://ports.macports.org
 - https://happyhackingkb.com/download
+- https://github.com/jaywcjlove/awesome-swift-macos-apps
 - https://aerolite.dev/applite 第三方的苹果软件应用商店
 ### 指南技巧
 

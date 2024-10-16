@@ -2262,3 +2262,4 @@ sudo pacman-key --populate archlinuxcn
 - https://wiki.archlinuxcn.org/wiki/ALSA
 - https://www.imwxz.com/posts/fc1dd509.html
 - https://wiki.archlinux.org/title/Dell_XPS_13_(9370)
+- https://terminaltrove.com/list/

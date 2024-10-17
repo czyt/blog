@@ -98,6 +98,8 @@ func (w *inviteCode) Email() hermes.Email {
 }
 ```
 
+
+
 ## 参考资料
 
 + https://taoshu.in/net/email-dns.html
@@ -107,3 +109,12 @@ func (w *inviteCode) Email() hermes.Email {
 + https://github.com/Shopify/gomail （[源仓库](https://github.com/go-gomail/gomail) 作者已经离开人世 这个是fork继续维护的版本）
 + https://github.com/wneessen/go-mail
 + https://github.com/inbucket/inbucket
+
+
+
+> 可以在 Google Postmaster Tools 认证一下你的域名 .主要有以下作用
+>
+> 1. 检查邮箱配置的正确性.
+> 2. 查询 Gmail 的邮件有多少被当作了 Spam
+>
+> 地址: https://postmaster.google.com/managedomains?pli=1

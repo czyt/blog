@@ -131,6 +131,12 @@ validator, err := protovalidate.New()
 if err != nil {
     panic(err)
 }
+
+// do the validation for config
+err = validator.Validate(&bc)
+if err != nil {
+    panic(err)
+}
 ```
 
 ### 多种格式配置文件的调整

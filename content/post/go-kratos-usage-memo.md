@@ -20,7 +20,186 @@ draft: false
 + 要注意限制 token 的更换次数，并定期刷新 token，比如用户的 access_token 每天只能更换 50 次，超过了就要求用户重新登陆，同时 token 每隔 15 分钟更换一次。这样可以降低 token 被盗取后给用户带来的影响。
 + Web 用户的 token 保存在 cookie 中时，建议加上 httponly、SameSite=Strict 限制，以防止 cookie 被一些特殊脚本偷走。
 
+## 配置文件
+
+### 配置文件校验
+
+配合buf的validate可以方便地进行配置文件的校验，在程序启动之前就对配置文件进行一次校验。下面是一个简单的proto配置定义
+
+```protobuf
+syntax = "proto3";
+package conf;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/duration.proto";
+
+option go_package = "github.com/tpl-x/kratos/internal/conf;conf";
+
+message Bootstrap {
+  Server server = 1;
+  Data data = 2;
+  Log log = 3;
+}
+
+message Server {
+  message HTTP {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3 [
+      // the field is required
+      (buf.validate.field).required = true,
+      // duration must be longer than 1 second but no longer than 10 min.
+      (buf.validate.field).duration = {
+        // Validates that duration is greater than 1 second
+        gt: {seconds: 1}
+        // Validates that duration is less than or equal to 10 min.
+        lte: {seconds: 600}
+      }
+    ];
+  }
+  message GRPC {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration timeout = 3 [
+      // the field is required
+      (buf.validate.field).required = true,
+      // duration must be longer than 1 second but no longer than 10 min.
+      (buf.validate.field).duration = {
+        // Validates that duration is greater than 1 second
+        gt: {seconds: 1}
+        // Validates that duration is less than or equal to 10 min.
+        lte: {seconds: 600}
+      }
+    ];
+  }
+  HTTP http = 1;
+  GRPC grpc = 2;
+}
+
+message Data {
+  message Database {
+    string driver = 1;
+    string source = 2;
+  }
+  message Redis {
+    string network = 1;
+    string addr = 2;
+    google.protobuf.Duration read_timeout = 3;
+    google.protobuf.Duration write_timeout = 4;
+  }
+  Database database = 1;
+  Redis redis = 2;
+}
+
+enum LogLevel {
+  Debug = 0;
+  Info = 1;
+  Warn = 2;
+  Error = 3;
+  Fatal = 4;
+}
+
+message Log {
+  string log_path = 1;
+  LogLevel log_level = 2 [(buf.validate.field).enum = {
+    defined_only: true
+    in: [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  }];
+  int32 max_size = 3;
+  int32 max_keep_days = 4;
+  int32 max_keep_files = 5;
+  bool compress = 6;
+}
+```
+
+生成proto对应的go文件中以后，就可以通过下面的方式进行校验：
+
+```go
+var bc conf.Bootstrap
+if err := c.Scan(&bc); err != nil {
+    panic(err)
+}
+
+// create  validator to apply validation rules before boot app
+validator, err := protovalidate.New()
+if err != nil {
+    panic(err)
+}
+```
+
+### 多种格式配置文件的调整
+
+kratos已经默认支持了下面的这些配置文件格式（不包含配置中心）：
+
+- json
+- proto
+- xml
+- yaml
+
+那么如果我们想扩展，支持其他的格式的配置文件选项，应该怎么做呢？按照[官方的文档](https://go-kratos.dev/docs/component/config),我们这里以toml为例，分步实现这个目的：
+
+1. 实现encoding，下面是一个简单的encoding的例子：
+
+```go
+package tomlencoding
+import (
+	"github.com/BurntSushi/toml"
+	"github.com/go-kratos/kratos/v2/encoding"
+)
+
+// Name is the name registered for the xml codec.
+const Name = "toml"
+
+func init() {
+	encoding.RegisterCodec(codec{})
+}
+
+// codec is a Codec implementation with xml.
+type codec struct{}
+
+func (codec) Marshal(v interface{}) ([]byte, error) {
+	return toml.Marshal(v)
+}
+
+func (codec) Unmarshal(data []byte, v interface{}) error {
+	return toml.Unmarshal(data, v)
+}
+
+func (codec) Name() string {
+	return Name
+}
+```
+
+然后在main主程序以`_`引入即可，例如我们这里是`_ "demo/internal/pkg/tomlencoding"`
+
+2. 实现resolver。Resolver用于对解析完毕后的map结构进行再次处理。比如toml的key是`MyTiltle`,yaml中的key是`my_tiltle`，就需要在这里进行统一。
+
+   ```go
+   func resolver(input map[string]interface{}) error {
+       // key: 文件中的key
+       // value：文件中的对应key值
+   	return nil
+   }
+   ```
+
+   然后再启用这个resolver
+
+   ```go
+   s := file.NewSource("configs")
+   	cfg := config.New(
+   		config.WithSource(s),
+   		config.WithResolver(resolver),
+   	)
+   ```
+
 ## 自定义接口返回内容
+
 + 正常的响应序列化逻辑通过[Response Encoder](https://go-kratos.dev/docs/component/transport/http#responseencoderen-encoderesponsefunc-serveroption)实现。
 
 + 错误的序列化逻辑通过[ErrorEncoder](https://go-kratos.dev/docs/component/transport/http#errorencoderen-encodeerrorfunc-serveroption)实现。

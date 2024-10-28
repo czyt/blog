@@ -1,7 +1,7 @@
 ---
 title: "一些RustDesk部署的笔记"
 date: 2024-05-17
-tags: ["tricks", "rustdesk","self-host]
+tags: ["tricks", "rustdesk","selfhost"]
 draft: false
 ---
 

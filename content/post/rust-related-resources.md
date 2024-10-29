@@ -47,6 +47,7 @@ draft: false
 + [Effective rust](https://www.lurklurk.org/effective-rust) [中文版](https://effective-rust.czyt.tech) [翻译的仓库](https://github.com/rustx-labs/effective-rust-cn)
 + https://www.howtocodeit.com
 + https://speedsheet.io/s/rust
++ https://roadmap.sh/rust
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
 

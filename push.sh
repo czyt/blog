@@ -15,16 +15,8 @@ if [ $? -ne 0 ]; then
     git config --global user.name "czyt"
 fi
 
-diff_output=$(git diff --staged)
 
-if [ -z "$diff_output" ]; then
-    echo "No changes to commit."
-    exit 0
-fi
-
-commit_message="Auto-commit: Files changed and diffs
-
-$diff_output"
+commit_message="update post"
 
 
 echo "Adding all changes..."

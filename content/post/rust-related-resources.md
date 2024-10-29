@@ -45,6 +45,7 @@ draft: false
 + [Rust Design Patterns](https://rust-unofficial.github.io/patterns/)  [中文版](https://fomalhauthmj.github.io/patterns/intro.html) / [pdf](https://rust-unofficial.github.io/patterns/rust-design-patterns.pdf)
 + [学习 wgpu](https://jinleili.github.io/learn-wgpu-zh/)
 + [Effective rust](https://www.lurklurk.org/effective-rust) [中文版](https://effective-rust.czyt.tech) [翻译的仓库](https://github.com/rustx-labs/effective-rust-cn)
++ [CS110L: Safety in Systems Programming](https://web.stanford.edu/class/cs110l/)
 + https://www.howtocodeit.com
 + https://speedsheet.io/s/rust
 + https://roadmap.sh/rust

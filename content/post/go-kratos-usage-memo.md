@@ -2144,7 +2144,384 @@ func ValidateStructCN(data interface{}) error {
 
 ## 插件化路由和Handler
 
-TODO
+> 使用claude ai实现的一个例子,暂未测试
+
+首先定义插件接口：
+
+```go
+// pkg/plugin/interfaces.go
+package plugin
+
+import (
+    "net/http"
+    "github.com/go-kratos/kratos/v2/transport/http/binding"
+)
+
+// HandlerPlugin 定义处理器插件接口
+type HandlerPlugin interface {
+    // GetRoutes 返回路由配置
+    GetRoutes() []Route
+    // Name 插件名称
+    Name() string
+}
+
+// Route 路由定义
+type Route struct {
+    Method      string
+    Path        string
+    Handler     func(ctx context.Context, req interface{}) (interface{}, error)
+    Request     interface{} // 请求结构体指针
+    Response    interface{} // 响应结构体指针
+    Middlewares []Middleware
+}
+
+// Middleware 中间件定义
+type Middleware func(handler HandlerFunc) HandlerFunc
+type HandlerFunc func(ctx context.Context, req interface{}) (interface{}, error)
+```
+
+实现插件管理器：
+
+```go
+// pkg/plugin/manager.go
+package plugin
+
+import (
+    "fmt"
+    "path/filepath"
+    "plugin"
+    "sync"
+
+    "github.com/hashicorp/go-plugin"
+)
+
+// PluginManager 插件管理器
+type PluginManager struct {
+    plugins     map[string]HandlerPlugin
+    pluginPaths []string
+    mu          sync.RWMutex
+}
+
+// HandlerPluginMap 插件映射
+var HandlerPluginMap = map[string]plugin.Plugin{
+    "handler": &HandlerPluginImpl{},
+}
+
+// NewPluginManager 创建插件管理器
+func NewPluginManager(pluginDir string) (*PluginManager, error) {
+    pm := &PluginManager{
+        plugins: make(map[string]HandlerPlugin),
+    }
+
+    // 加载插件目录下的所有.so文件
+    plugins, err := filepath.Glob(filepath.Join(pluginDir, "*.so"))
+    if err != nil {
+        return nil, err
+    }
+
+    for _, path := range plugins {
+        if err := pm.LoadPlugin(path); err != nil {
+            return nil, fmt.Errorf("failed to load plugin %s: %v", path, err)
+        }
+    }
+
+    return pm, nil
+}
+
+// LoadPlugin 加载单个插件
+func (pm *PluginManager) LoadPlugin(path string) error {
+    pm.mu.Lock()
+    defer pm.mu.Unlock()
+
+    // 创建插件客户端配置
+    client := plugin.NewClient(&plugin.ClientConfig{
+        HandshakeConfig: plugin.HandshakeConfig{
+            ProtocolVersion:  1,
+            MagicCookieKey:  "HANDLER_PLUGIN",
+            MagicCookieValue: "handler",
+        },
+        Plugins:    HandlerPluginMap,
+        Cmd:        exec.Command("plugin_binary_path"),
+        AllowedProtocols: []plugin.Protocol{
+            plugin.ProtocolGRPC,
+        },
+    })
+    defer client.Kill()
+
+    // 连接到插件
+    rpcClient, err := client.Client()
+    if err != nil {
+        return err
+    }
+
+    // 获取插件实例
+    raw, err := rpcClient.Dispense("handler")
+    if err != nil {
+        return err
+    }
+
+    handler := raw.(HandlerPlugin)
+    pm.plugins[handler.Name()] = handler
+
+    return nil
+}
+
+// GetPlugins 获取所有已加载的插件
+func (pm *PluginManager) GetPlugins() map[string]HandlerPlugin {
+    pm.mu.RLock()
+    defer pm.mu.RUnlock()
+
+    plugins := make(map[string]HandlerPlugin)
+    for k, v := range pm.plugins {
+        plugins[k] = v
+    }
+    return plugins
+}
+```
+
+实现示例插件：
+
+```go
+// plugins/example/main.go
+package main
+
+import (
+    "context"
+    "your/pkg/plugin"
+)
+
+type ExamplePlugin struct{}
+
+type ExampleRequest struct {
+    Name string `json:"name"`
+}
+
+type ExampleResponse struct {
+    Message string `json:"message"`
+}
+
+func (p *ExamplePlugin) Name() string {
+    return "example"
+}
+
+func (p *ExamplePlugin) GetRoutes() []plugin.Route {
+    return []plugin.Route{
+        {
+            Method:  "GET",
+            Path:    "/example/{name}",
+            Handler: p.HandleExample,
+            Request: &ExampleRequest{},
+            Response: &ExampleResponse{},
+            Middlewares: []plugin.Middleware{
+                LoggingMiddleware,
+            },
+        },
+    }
+}
+
+func (p *ExamplePlugin) HandleExample(ctx context.Context, req interface{}) (interface{}, error) {
+    request := req.(*ExampleRequest)
+    return &ExampleResponse{
+        Message: "Hello, " + request.Name,
+    }, nil
+}
+
+func LoggingMiddleware(next plugin.HandlerFunc) plugin.HandlerFunc {
+    return func(ctx context.Context, req interface{}) (interface{}, error) {
+        log.Printf("Request: %+v", req)
+        resp, err := next(ctx, req)
+        log.Printf("Response: %+v", resp)
+        return resp, err
+    }
+}
+
+// 插件入口
+func main() {
+    plugin.Serve(&plugin.ServeConfig{
+        HandshakeConfig: plugin.HandshakeConfig{
+            ProtocolVersion:  1,
+            MagicCookieKey:  "HANDLER_PLUGIN",
+            MagicCookieValue: "handler",
+        },
+        Plugins: map[string]plugin.Plugin{
+            "handler": &ExamplePlugin{},
+        },
+        GRPCServer: plugin.DefaultGRPCServer,
+    })
+}
+```
+
+在主应用中使用插件：
+
+```go
+// cmd/server/main.go
+package main
+
+import (
+    "context"
+    "log"
+
+    "github.com/go-kratos/kratos/v2"
+    "github.com/go-kratos/kratos/v2/transport/http"
+    "your/pkg/plugin"
+)
+
+func main() {
+    // 创建插件管理器
+    pm, err := plugin.NewPluginManager("./plugins")
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    // 创建 HTTP 服务器
+    httpSrv := http.NewServer(
+        http.Address(":8000"),
+    )
+
+    // 注册插件路由
+    for _, p := range pm.GetPlugins() {
+        routes := p.GetRoutes()
+        for _, route := range routes {
+            httpSrv.Handle(route.Method, route.Path, createHandler(route))
+        }
+    }
+
+    app := kratos.New(
+        kratos.Name("plugin-demo"),
+        kratos.Server(httpSrv),
+    )
+
+    if err := app.Run(); err != nil {
+        log.Fatal(err)
+    }
+}
+
+func createHandler(route plugin.Route) http.HandlerFunc {
+    return func(ctx http.Context) error {
+        req := route.Request
+        if err := ctx.BindQuery(req); err != nil {
+            return err
+        }
+
+        // 应用中间件
+        handler := route.Handler
+        for i := len(route.Middlewares) - 1; i >= 0; i-- {
+            handler = route.Middlewares[i](handler)
+        }
+
+        resp, err := handler(ctx, req)
+        if err != nil {
+            return err
+        }
+
+        return ctx.Result(200, resp)
+    }
+}
+```
+
+编译插件：
+
+```bash
+# 编译插件
+go build -buildmode=plugin -o plugins/example.so plugins/example/main.go
+```
+
+插件配置管理：
+
+```go
+// pkg/plugin/config.go
+package plugin
+
+import (
+    "encoding/json"
+    "os"
+)
+
+type PluginConfig struct {
+    Name    string          `json:"name"`
+    Enabled bool            `json:"enabled"`
+    Config  json.RawMessage `json:"config"`
+}
+
+type PluginConfigManager struct {
+    configs map[string]PluginConfig
+}
+
+func LoadPluginConfigs(path string) (*PluginConfigManager, error) {
+    data, err := os.ReadFile(path)
+    if err != nil {
+        return nil, err
+    }
+
+    var configs []PluginConfig
+    if err := json.Unmarshal(data, &configs); err != nil {
+        return nil, err
+    }
+
+    pcm := &PluginConfigManager{
+        configs: make(map[string]PluginConfig),
+    }
+
+    for _, config := range configs {
+        pcm.configs[config.Name] = config
+    }
+
+    return pcm, nil
+}
+```
+
+插件热重载支持：
+
+```go
+// pkg/plugin/manager.go
+func (pm *PluginManager) ReloadPlugin(name string) error {
+    pm.mu.Lock()
+    defer pm.mu.Unlock()
+
+    if plugin, exists := pm.plugins[name]; exists {
+        // 关闭现有插件
+        if closer, ok := plugin.(io.Closer); ok {
+            closer.Close()
+        }
+        delete(pm.plugins, name)
+    }
+
+    // 重新加载插件
+    return pm.LoadPlugin(filepath.Join(pm.pluginDir, name+".so"))
+}
+
+func (pm *PluginManager) WatchPlugins() {
+    watcher, err := fsnotify.NewWatcher()
+    if err != nil {
+        log.Printf("Failed to create watcher: %v", err)
+        return
+    }
+    defer watcher.Close()
+
+    go func() {
+        for {
+            select {
+            case event := <-watcher.Events:
+                if event.Op&fsnotify.Write == fsnotify.Write {
+                    pluginName := filepath.Base(event.Name)
+                    pluginName = strings.TrimSuffix(pluginName, ".so")
+                    if err := pm.ReloadPlugin(pluginName); err != nil {
+                        log.Printf("Failed to reload plugin %s: %v", pluginName, err)
+                    }
+                }
+            case err := <-watcher.Errors:
+                log.Printf("Watcher error: %v", err)
+            }
+        }
+    }()
+
+    if err := watcher.Add(pm.pluginDir); err != nil {
+        log.Printf("Failed to watch plugin directory: %v", err)
+    }
+}
+```
+
+
 
 ## GraphQL
 
@@ -2166,6 +2543,270 @@ if err := copier.CopyWithOption(req.User, user, copieroptpb.Option()); err != ni
 ```
 
 ## 数据脱敏及安全
+
+> 使用calude ai实现的一个方案
+
+```go
+// pkg/masking/masking.go
+package masking
+
+import (
+    "reflect"
+    "regexp"
+    "strings"
+)
+
+// MaskRule 定义脱敏规则
+type MaskRule struct {
+    Pattern     *regexp.Regexp // 匹配模式
+    Replacement string        // 替换模式
+    Handler     func(string) string // 自定义处理函数
+}
+
+// 预定义的脱敏规则
+var (
+    defaultRules = map[string]MaskRule{
+        "mobile": {
+            Pattern:     regexp.MustCompile(`^(\d{3})\d{4}(\d{4})$`),
+            Replacement: "$1****$2",
+        },
+        "email": {
+            Pattern:     regexp.MustCompile(`^(.{3}).*(@.*)$`),
+            Replacement: "$1***$2",
+        },
+        "idcard": {
+            Pattern:     regexp.MustCompile(`^(.{6}).*(.{4})$`),
+            Replacement: "$1********$2",
+        },
+        "name": {
+            Handler: func(s string) string {
+                if len(s) <= 1 {
+                    return s
+                }
+                return s[:1] + strings.Repeat("*", len(s)-1)
+            },
+        },
+        "address": {
+            Handler: func(s string) string {
+                parts := strings.Split(s, " ")
+                if len(parts) <= 1 {
+                    return "****"
+                }
+                return parts[0] + " ****"
+            },
+        },
+        "bankcard": {
+            Pattern:     regexp.MustCompile(`^(\d{4})\d+(\d{4})$`),
+            Replacement: "$1 **** **** $2",
+        },
+    }
+)
+
+// Masker 脱敏器接口
+type Masker interface {
+    Mask(interface{}) interface{}
+}
+
+// DefaultMasker 默认脱敏器
+type DefaultMasker struct {
+    rules map[string]MaskRule
+}
+
+// NewMasker 创建脱敏器
+func NewMasker(customRules map[string]MaskRule) Masker {
+    rules := make(map[string]MaskRule)
+    
+    // 复制默认规则
+    for k, v := range defaultRules {
+        rules[k] = v
+    }
+    
+    // 添加自定义规则
+    for k, v := range customRules {
+        rules[k] = v
+    }
+    
+    return &DefaultMasker{rules: rules}
+}
+
+// Mask 执行脱敏
+func (m *DefaultMasker) Mask(data interface{}) interface{} {
+    if data == nil {
+        return nil
+    }
+
+    value := reflect.ValueOf(data)
+    
+    // 处理指针
+    if value.Kind() == reflect.Ptr {
+        if value.IsNil() {
+            return nil
+        }
+        value = value.Elem()
+    }
+
+    switch value.Kind() {
+    case reflect.Struct:
+        return m.maskStruct(value)
+    case reflect.Slice, reflect.Array:
+        return m.maskSlice(value)
+    case reflect.Map:
+        return m.maskMap(value)
+    default:
+        return data
+    }
+}
+
+// maskStruct 处理结构体脱敏
+func (m *DefaultMasker) maskStruct(value reflect.Value) interface{} {
+    result := reflect.New(value.Type()).Elem()
+    
+    for i := 0; i < value.NumField(); i++ {
+        field := value.Field(i)
+        fieldType := value.Type().Field(i)
+        
+        // 检查是否需要脱敏
+        maskTag := fieldType.Tag.Get("mask")
+        if maskTag == "" {
+            result.Field(i).Set(field)
+            continue
+        }
+
+        // 处理嵌套结构
+        if field.Kind() == reflect.Struct || 
+           field.Kind() == reflect.Slice || 
+           field.Kind() == reflect.Map {
+            result.Field(i).Set(reflect.ValueOf(m.Mask(field.Interface())))
+            continue
+        }
+
+        // 字符串脱敏处理
+        if field.Kind() == reflect.String {
+            if rule, ok := m.rules[maskTag]; ok {
+                maskedValue := m.applyRule(rule, field.String())
+                result.Field(i).SetString(maskedValue)
+            } else {
+                result.Field(i).Set(field)
+            }
+            continue
+        }
+
+        result.Field(i).Set(field)
+    }
+
+    return result.Interface()
+}
+
+// maskSlice 处理切片脱敏
+func (m *DefaultMasker) maskSlice(value reflect.Value) interface{} {
+    result := reflect.MakeSlice(value.Type(), value.Len(), value.Cap())
+    
+    for i := 0; i < value.Len(); i++ {
+        item := value.Index(i)
+        result.Index(i).Set(reflect.ValueOf(m.Mask(item.Interface())))
+    }
+    
+    return result.Interface()
+}
+
+// maskMap 处理Map脱敏
+func (m *DefaultMasker) maskMap(value reflect.Value) interface{} {
+    result := reflect.MakeMap(value.Type())
+    
+    iter := value.MapRange()
+    for iter.Next() {
+        k := iter.Key()
+        v := iter.Value()
+        result.SetMapIndex(k, reflect.ValueOf(m.Mask(v.Interface())))
+    }
+    
+    return result.Interface()
+}
+
+// applyRule 应用脱敏规则
+func (m *DefaultMasker) applyRule(rule MaskRule, value string) string {
+    if rule.Handler != nil {
+        return rule.Handler(value)
+    }
+    if rule.Pattern != nil && rule.Replacement != "" {
+        return rule.Pattern.ReplaceAllString(value, rule.Replacement)
+    }
+    return value
+}
+```
+
+使用
+
+```go
+// example/main.go
+package main
+
+import (
+    "fmt"
+    "your/pkg/masking"
+)
+
+// User 用户信息
+type User struct {
+    ID       int      `json:"id"`
+    Name     string   `json:"name" mask:"name"`
+    Mobile   string   `json:"mobile" mask:"mobile"`
+    Email    string   `json:"email" mask:"email"`
+    IDCard   string   `json:"id_card" mask:"idcard"`
+    Address  string   `json:"address" mask:"address"`
+    BankCard string   `json:"bank_card" mask:"bankcard"`
+    Tags     []string `json:"tags"`
+    Extra    map[string]string `json:"extra"`
+}
+
+// Order 订单信息
+type Order struct {
+    OrderID    string `json:"order_id"`
+    UserInfo   User   `json:"user_info"`
+    DeliveryTo string `json:"delivery_to" mask:"address"`
+}
+
+func main() {
+    // 创建自定义规则（可选）
+    customRules := map[string]masking.MaskRule{
+        "custom": {
+            Handler: func(s string) string {
+                return "自定义脱敏:" + s
+            },
+        },
+    }
+
+    // 创建脱敏器
+    masker := masking.NewMasker(customRules)
+
+    // 示例数据
+    order := Order{
+        OrderID: "ORDER123456",
+        UserInfo: User{
+            ID:       1,
+            Name:     "张三",
+            Mobile:   "13812345678",
+            Email:    "zhangsan@example.com",
+            IDCard:   "310123199001011234",
+            Address:  "上海市浦东新区张江高科技园区",
+            BankCard: "6222021234567890123",
+            Tags:     []string{"VIP", "新用户"},
+            Extra: map[string]string{
+                "note": "重要客户",
+            },
+        },
+        DeliveryTo: "上海市浦东新区陆家嘴",
+    }
+
+    // 执行脱敏
+    maskedOrder := masker.Mask(order)
+
+    // 输出结果
+    fmt.Printf("%+v\n", maskedOrder)
+}
+```
+
+
 
 ### 参考
 

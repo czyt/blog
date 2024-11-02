@@ -294,78 +294,10 @@ func main() {
 3. 广播数据包有长度限制（通常是31字节）
 4. 某些设备类型可能需要实现特定的服务才能正常工作
 
-## 4. 基础示例
 
-### 4.1 设置设备外观
+## 4. 代码示例
 
-```go
-package main
-
-import (
-	"context"
-	"log"
-
-	"github.com/go-ble/ble"
-	"github.com/go-ble/ble/examples/lib/dev"
-)
-
-func main() {
-	d, err := dev.DefaultDevice()
-	if err != nil {
-		log.Fatalf("初始化设备失败: %v", err)
-	}
-	ble.SetDefaultDevice(d)
-
-	// 创建上下文
-	ctx := context.Background()
-
-	// 开始广播
-	if err := ble.AdvertiseNameAndServices(ctx, "Gopher Device"); err != nil {
-		log.Fatalf("广播失败: %v", err)
-	}
-}
-```
-
-### 4.2 创建不同类型设备
-
-```go
-// 创建耳机设备
-func createHeadphonesDevice(ctx context.Context) error {
-	d, err := dev.DefaultDevice()
-	if err != nil {
-		return fmt.Errorf("初始化设备失败: %v", err)
-	}
-	ble.SetDefaultDevice(d)
-
-	return ble.AdvertiseNameAndServices(ctx, "MyHeadset")
-}
-
-// 创建鼠标设备
-func createMouseDevice(ctx context.Context) error {
-	d, err := dev.DefaultDevice()
-	if err != nil {
-		return fmt.Errorf("初始化设备失败: %v", err)
-	}
-	ble.SetDefaultDevice(d)
-
-	return ble.AdvertiseNameAndServices(ctx, "MyMouse")
-}
-
-// 创建键盘设备
-func createKeyboardDevice(ctx context.Context) error {
-	d, err := dev.DefaultDevice()
-	if err != nil {
-		return fmt.Errorf("初始化设备失败: %v", err)
-	}
-	ble.SetDefaultDevice(d)
-
-	return ble.AdvertiseNameAndServices(ctx, "MyKeyboard")
-}
-```
-
-## 5. 进阶示例
-
-### 5.1 添加自定义电池服务
+### 4.1 添加自定义电池服务
 
 ```go
 // 自定义电池服务示例
@@ -387,7 +319,7 @@ func createBatteryService() *ble.Service {
 }
 ```
 
-### 5.2 添加自定义设备信息服务
+### 4.2 添加自定义设备信息服务
 
 ```go
 // 自定义设备信息服务示例
@@ -417,7 +349,7 @@ func createDeviceInfoService() *ble.Service {
 }
 ```
 
-### 5.3 信号强度监控
+### 4.3 信号强度监控
 
 ```go
 // 信号强度特征示例
@@ -444,7 +376,7 @@ func createRSSICharacteristic() *ble.Characteristic {
 }
 ```
 
-### 5.4 完整的多服务示例
+### 4.4 完整的多服务示例
 
 ```go
 package main
@@ -613,7 +545,7 @@ func main() {
 }
 ```
 
-## 6. 总结
+## 5. 总结
 
 本文展示了如何使用 Go-BLE 创建一个基本的 BLE 服务器。通过这个示例，我们可以看到：
 

@@ -57,34 +57,30 @@ import (
     "log"
 
     "github.com/plgd-dev/go-coap/v3"
+    "github.com/plgd-dev/go-coap/v3/message"
+    "github.com/plgd-dev/go-coap/v3/message/codes"
     "github.com/plgd-dev/go-coap/v3/mux"
 )
 
 func main() {
-    // 创建一个新的 CoAP 服务器
     r := mux.NewRouter()
-
-    // 注册一个处理函数，处理 "/echo" 路径的请求
     r.Handle("/echo", mux.HandlerFunc(func(w mux.ResponseWriter, r *mux.Message) {
-        // 将接收到的消息原样返回
-        fmt.Printf("Received: %s\n", r.Body())
-        err := w.SetResponse(coap.Content, r.MediaType(), r.Body())
+        fmt.Printf("Got message: %+v\n", r)
+        err := w.SetResponse(codes.Content, message.TextPlain, r.Body())
         if err != nil {
             log.Printf("Cannot set response: %v", err)
         }
     }))
 
-    // 启动服务器
-    addr := ":5683"
-    log.Printf("Starting CoAP server on %s\n", addr)
-    err := coap.ListenAndServe("udp", addr, r)
+    log.Printf("Starting CoAP server on :5683")
+    err := coap.ListenAndServe("udp", ":5683", r)
     if err != nil {
         log.Fatal(err)
     }
 }
 ```
 
-Client:
+client:
 
 ```go
 package main
@@ -96,29 +92,24 @@ import (
     "time"
 
     "github.com/plgd-dev/go-coap/v3/udp"
+    "github.com/plgd-dev/go-coap/v3/message"
 )
 
 func main() {
-    // 创建一个 CoAP 客户端
     co, err := udp.Dial("localhost:5683")
     if err != nil {
         log.Fatalf("Error dialing: %v", err)
     }
     defer co.Close()
 
-    // 要发送的消息
-    message := []byte("Hello, CoAP!")
-
     ctx, cancel := context.WithTimeout(context.Background(), time.Second)
     defer cancel()
 
-    // 发送请求到服务端
-    resp, err := co.Post(ctx, "/echo", "text/plain", message)
+    resp, err := co.Post(ctx, "/echo", message.TextPlain, []byte("Hello CoAP!"))
     if err != nil {
         log.Fatalf("Error sending request: %v", err)
     }
 
-    // 读取并打印响应
     body, err := resp.ReadBody()
     if err != nil {
         log.Fatalf("Error reading response: %v", err)
@@ -129,194 +120,140 @@ func main() {
 
 ### 可靠性机制
 
-CoAP本身是基于UDP的协议，但它提供了一些可靠性机制。以下是在Go中实现CoAP可靠性的一些方法：
-
-1. 使用确认消息（Confirmable Messages）:
-
-   CoAP支持确认型消息，这是实现可靠性的主要机制。在发送消息时，将消息类型设置为确认型（CON），接收方需要发送确认（ACK）。
-
-   ```go
-   import (
-       "github.com/plgd-dev/go-coap/v3"
-   )
-   
-   // 创建一个确认型消息
-   msg := coap.Message{
-       Type:      coap.Confirmable,
-       Code:      coap.GET,
-       MessageID: 1234,
-   }
-   
-   // 发送消息并等待确认
-   resp, err := client.Do(context.Background(), msg)
-   if err != nil {
-       // 处理错误
-   }
-   ```
-
-2. 实现重传机制：
-
-   如果没有收到确认，可以实现重传逻辑。Go-CoAP库通常会自动处理重传，但您也可以自定义重传策略。
-
-   ```go
-   package main
-   
-   import (
-       "context"
-       "fmt"
-       "log"
-       "time"
-   
-       "github.com/plgd-dev/go-coap/v3/udp"
-       "github.com/plgd-dev/go-coap/v3/udp/client"
-   )
-   
-   func main() {
-       // 创建自定义的客户端配置
-       opts := []udp.Option{
-           udp.WithRetransmission(udp.RetransmissionParams{
-               MaxRetransmit: 3,
-               AckTimeout:    2 * time.Second,
-               AckRandomFactor: 1.5,
-           }),
-           udp.WithHandlerFunc(func(w *client.ResponseWriter, r *pool.Message) {
-               log.Printf("Received response: %v", r)
-           }),
-       }
-   
-       // 创建客户端
-       co, err := udp.Dial("localhost:5683", opts...)
-       if err != nil {
-           log.Fatalf("Error creating client: %v", err)
-       }
-       defer co.Close()
-   
-       // 发送请求
-       ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-       defer cancel()
-   
-       resp, err := co.Get(ctx, "/test")
-       if err != nil {
-           log.Fatalf("Error sending request: %v", err)
-       }
-   
-       // 读取响应
-       body, err := resp.ReadBody()
-       if err != nil {
-           log.Fatalf("Error reading response: %v", err)
-       }
-       fmt.Printf("Response body: %s\n", body)
-   }
-   ```
-   >WithRetransmission的参数说明：
-   >
-   >+ MaxRetransmit: 3
-   >
-   >含义：最大重传次数
-   >
-   >解释：如果没有收到确认（ACK），消息最多会重传 3 次。这意味着，包括初始传输在内，消息最多会被发送 4 次。
-   >
-   >+ AckTimeout: 2 * time.Second
-   >
-   >含义：确认超时时间
-   >
-   >解释：在重传消息之前，发送方会等待 2 秒钟来接收确认。如果在这个时间内没有收到确认，就会触发重传。
-   >
-   >+ AckRandomFactor: 1.5
-   >
-   >含义：确认随机因子
-   >
-   >解释：这个因子用于计算实际的超时时间。实际超时时间会在 AckTimeout 和 (AckTimeout *AckRandomFactor) 之间随机选择。这种随机化有助于防止网络拥塞。*
-
-
-3. 使用观察者模式（Observe Option）：
-
-   对于需要长期监控的资源，可以使用CoAP的观察者选项，这提供了一种可靠的方式来接收资源的更新。
-
-   server：
-
-   ```go
-   package main
-   
-   import (
-       "log"
-       "time"
-   
-       coap "github.com/plgd-dev/go-coap/v3"
-       "github.com/plgd-dev/go-coap/v3/message"
-       "github.com/plgd-dev/go-coap/v3/message/codes"
-       "github.com/plgd-dev/go-coap/v3/mux"
-   )
-   
-   func main() {
-       r := mux.NewRouter()
-       r.Handle("/temperature", mux.HandlerFunc(handleTemperature))
-   
-       log.Fatal(coap.ListenAndServe("udp", ":5683", r))
-   }
-   
-   func handleTemperature(w mux.ResponseWriter, r *mux.Message) {
-       log.Printf("Got message: %+v", r)
-       
-       // 检查是否是 Observe 请求
-       obs, err := r.Options().Observe()
-       if err != nil {
-           log.Printf("Unable to get observe option: %v", err)
-           w.SetCode(codes.BadOption)
-           return
-       }
-   
-       if obs == 0 { // 0 表示这是一个订阅请求
-           go func() {
-               for i := 0; ; i++ {
-                   // 模拟温度变化
-                   temp := 20 + (i % 10)
-                   msg := w.NewMessage(codes.Content)
-                   msg.SetContentFormat(message.TextPlain)
-                   msg.SetBody([]byte(fmt.Sprintf("%d°C", temp)))
-                   msg.SetOption(message.Observe, uint32(i))
-                   err := w.WriteMessage(msg)
-                   if err != nil {
-                       log.Printf("Error on transmit: %v", err)
-                       return
-                   }
-                   time.Sleep(5 * time.Second)
-               }
-           }()
-       } else if obs == 1 { // 1 表示这是一个取消订阅请求
-           log.Println("Subscription cancelled")
-           w.SetCode(codes.Content)
-       }
-   }
-   ```
-client：
 ```go
 package main
 
 import (
     "context"
+    "log"
+    "time"
+
+    "github.com/plgd-dev/go-coap/v3/udp"
+    "github.com/plgd-dev/go-coap/v3/udp/client"
+)
+
+func main() {
+    opts := []udp.Option{
+        udp.WithRetransmission(udp.RetransmissionParams{
+            MaxRetransmit:   4,
+            AckTimeout:      2 * time.Second,
+            AckRandomFactor: 1.5,
+        }),
+    }
+
+    co, err := udp.Dial("localhost:5683", opts...)
+    if err != nil {
+        log.Fatalf("Error creating client: %v", err)
+    }
+    defer co.Close()
+
+    ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+    defer cancel()
+
+    resp, err := co.Get(ctx, "/test")
+    if err != nil {
+        log.Fatalf("Error sending request: %v", err)
+    }
+
+    // 处理响应
+    body, err := resp.ReadBody()
+    if err != nil {
+        log.Fatalf("Error reading response: %v", err)
+    }
+    log.Printf("Response: %s", body)
+}
+```
+
+### 观察者模式
+
+server:
+
+```go
+package main
+
+import (
     "fmt"
+    "log"
+    "time"
+
+    "github.com/plgd-dev/go-coap/v3"
+    "github.com/plgd-dev/go-coap/v3/message"
+    "github.com/plgd-dev/go-coap/v3/message/codes"
+    "github.com/plgd-dev/go-coap/v3/mux"
+)
+
+func handleTemperature(w mux.ResponseWriter, r *mux.Message) {
+    log.Printf("Got message: %+v", r)
+    
+    obs, err := r.Options().Observe()
+    if err != nil {
+        log.Printf("Unable to get observe option: %v", err)
+        w.SetResponse(codes.BadOption, message.TextPlain, nil)
+        return
+    }
+
+    if obs == 0 { // Subscribe
+        go func() {
+            for i := 0; ; i++ {
+                temp := fmt.Sprintf("%d°C", 20+(i%10))
+                msg := message.Message{
+                    Code:    codes.Content,
+                    Body:    []byte(temp),
+                    Options: message.Options{},
+                }
+                msg.SetOption(message.Observe, uint32(i))
+                msg.SetContentFormat(message.TextPlain)
+                
+                err := w.WriteMessage(&msg)
+                if err != nil {
+                    log.Printf("Error sending: %v", err)
+                    return
+                }
+                time.Sleep(5 * time.Second)
+            }
+        }()
+    }
+}
+
+func main() {
+    r := mux.NewRouter()
+    r.Handle("/temperature", mux.HandlerFunc(handleTemperature))
+
+    log.Printf("Starting CoAP server on :5683")
+    err := coap.ListenAndServe("udp", ":5683", r)
+    if err != nil {
+        log.Fatal(err)
+    }
+}
+```
+
+client:
+
+```go
+package main
+
+import (
+    "context"
     "log"
     "os"
     "os/signal"
     "time"
 
-    coap "github.com/plgd-dev/go-coap/v3"
     "github.com/plgd-dev/go-coap/v3/message"
-    "github.com/plgd-dev/go-coap/v3/message/codes"
+    "github.com/plgd-dev/go-coap/v3/udp"
 )
 
 func main() {
-    co, err := coap.Dial("udp", "localhost:5683")
+    ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+    defer cancel()
+    
+    co, err := udp.Dial("localhost:5683")
     if err != nil {
         log.Fatalf("Error dialing: %v", err)
     }
     defer co.Close()
 
-    ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-    defer cancel()
-
-    resp, err := co.Get(ctx, "/temperature")
+    resp, err := co.Get(ctx, "/temperature", message.Option{ID: message.Observe, Value: []byte{0}})
     if err != nil {
         log.Fatalf("Error sending request: %v", err)
     }
@@ -325,234 +262,67 @@ func main() {
         for {
             msg, err := resp.Observe()
             if err != nil {
-                log.Printf("Error observing: %v", err)
+                log.Printf("Observation failed: %v", err)
                 return
             }
-            if msg.Code() == codes.Content {
-                log.Printf("Received: %s", msg.Body())
-            }
+            log.Printf("Got temperature: %v", string(msg.Body()))
         }
     }()
 
-    // 等待用户中断
+    // Wait for interrupt signal
     c := make(chan os.Signal, 1)
     signal.Notify(c, os.Interrupt)
     <-c
 
-    // 取消订阅
+    // Cancel observation
     ctx, cancel = context.WithTimeout(context.Background(), time.Second)
     defer cancel()
-    _, err = co.Delete(ctx, "/temperature")
+    _, err = co.Get(ctx, "/temperature", message.Option{ID: message.Observe, Value: []byte{1}})
     if err != nil {
         log.Fatalf("Error cancelling observation: %v", err)
     }
 }
 ```
 
-
-4. 使用块传输（Block-wise Transfer）：
-
-   对于大型消息，CoAP支持块传输，这有助于提高可靠性和效率。
-
-   ```go
-   package main
-   
-   import (
-       "context"
-       "fmt"
-       "log"
-   
-       "github.com/plgd-dev/go-coap/v3/message"
-       "github.com/plgd-dev/go-coap/v3/message/codes"
-       "github.com/plgd-dev/go-coap/v3/mux"
-       "github.com/plgd-dev/go-coap/v3/udp"
-   )
-   
-   func main() {
-       // 创建一个新的消息
-       req, err := message.NewMessage(message.MessageParams{
-           Type:      message.Confirmable,
-           Code:      codes.GET,
-           MessageID: 1234,
-       })
-       if err != nil {
-           log.Fatalf("Error creating message: %v", err)
-       }
-   
-       // 添加 Block2 选项以启用块传输
-       err = req.SetOptionUint32(message.Block2, 0)
-       if err != nil {
-           log.Fatalf("Error setting Block2 option: %v", err)
-       }
-   
-       // 创建客户端连接
-       co, err := udp.Dial("localhost:5683")
-       if err != nil {
-           log.Fatalf("Error dialing: %v", err)
-       }
-       defer co.Close()
-   
-       // 发送请求
-       ctx, cancel := context.WithCancel(context.Background())
-       defer cancel()
-   
-       resp, err := co.Do(req)
-       if err != nil {
-           log.Fatalf("Error sending request: %v", err)
-       }
-   
-       // 处理响应
-       fmt.Printf("Response Code: %v\n", resp.Code())
-       if resp.Body() != nil {
-           fmt.Printf("Response Body: %s\n", resp.Body())
-       }
-   }
-   ```
-
-5. 实现应用层确认：
-
-   在应用层实现额外的确认机制，特别是对于关键操作。
-
-   ```go
-   package main
-   
-   import (
-       "context"
-       "fmt"
-   
-       "github.com/plgd-dev/go-coap/v3/message"
-       "github.com/plgd-dev/go-coap/v3/message/codes"
-       "github.com/plgd-dev/go-coap/v3/udp"
-   )
-   
-   func sendWithConfirmation(co *udp.ClientConn, path string, payload []byte) error {
-       // 创建主消息
-       req, err := message.NewMessage(message.MessageParams{
-           Type:      message.Confirmable,
-           Code:      codes.POST,
-           MessageID: 1234,
-           Payload:   payload,
-       })
-       if err != nil {
-           return fmt.Errorf("error creating message: %v", err)
-       }
-   
-       // 设置路径
-       req.SetPath(path)
-   
-       // 发送主消息
-       resp, err := co.Do(req)
-       if err != nil {
-           return fmt.Errorf("error sending message: %v", err)
-       }
-   
-       if resp.Code() != codes.Created {
-           return fmt.Errorf("unexpected response: %v", resp.Code())
-       }
-   
-       // 创建确认消息
-       ackReq, err := message.NewMessage(message.MessageParams{
-           Type:      message.Confirmable,
-           Code:      codes.POST,
-           MessageID: 1235,
-           Payload:   []byte("ACK"),
-       })
-       if err != nil {
-           return fmt.Errorf("error creating ACK message: %v", err)
-       }
-   
-       // 设置确认消息的路径
-       ackReq.SetPath(path)
-   
-       // 发送确认消息
-       _, err = co.Do(ackReq)
-       if err != nil {
-           return fmt.Errorf("error sending ACK message: %v", err)
-       }
-   
-       return nil
-   }
-   
-   func main() {
-       // 创建客户端连接
-       co, err := udp.Dial("localhost:5683")
-       if err != nil {
-           fmt.Printf("Error dialing: %v\n", err)
-           return
-       }
-       defer co.Close()
-   
-       // 使用函数
-       err = sendWithConfirmation(co, "/resource", []byte("Hello, CoAP!"))
-       if err != nil {
-           fmt.Printf("Error: %v\n", err)
-       } else {
-           fmt.Println("Message sent and confirmed successfully")
-       }
-   }
-   ```
-
-   
-
-## 广播
-
-在CoAP中，广播通常是通过使用组播地址来实现的。以下是使用Go语言实现CoAP广播的说明和示例：
-
-1. CoAP广播原理：
-
-      CoAP使用UDP作为传输层协议，因此可以利用UDP的组播功能来实现广播。CoAP的标准组播地址是 `224.0.1.187`。
-
-2. 实现步骤：
-
-- 创建一个CoAP客户端
-- 设置组播地址
-- 构造广播消息
-- 发送消息到组播地址
+### 广播
 
 ```go
 package main
 
 import (
     "context"
-    "fmt"
     "log"
     "time"
 
-    "github.com/plgd-dev/go-coap/v3/udp"
     "github.com/plgd-dev/go-coap/v3/message"
-    "github.com/plgd-dev/go-coap/v3/message/codes"
+    "github.com/plgd-dev/go-coap/v3/udp"
 )
 
 func main() {
-    // CoAP标准组播地址和端口
     multicastAddr := "224.0.1.187:5683"
 
-    // 创建CoAP客户端
     co, err := udp.Dial(multicastAddr)
     if err != nil {
         log.Fatalf("Error dialing: %v", err)
     }
     defer co.Close()
 
-    // 构造广播消息
     ctx, cancel := context.WithTimeout(context.Background(), time.Second)
     defer cancel()
     
-    resp, err := co.Post(ctx, "/broadcast", message.TextPlain, []byte("Hello, CoAP world!"))
+    resp, err := co.Post(ctx, "/broadcast", message.TextPlain, []byte("Hello CoAP world!"))
     if err != nil {
         log.Fatalf("Error sending broadcast: %v", err)
     }
 
-    // 打印响应
     log.Printf("Response Code: %v", resp.Code())
     if resp.Body() != nil {
-        log.Printf("Response Body: %s", resp.Body())
+        body, err := resp.ReadBody()
+        if err != nil {
+            log.Fatalf("Error reading response: %v", err)
+        }
+        log.Printf("Response Body: %s", body)
     }
-
-    // 等待一段时间以接收可能的响应
-    time.Sleep(5 * time.Second)
-
-    fmt.Println("Broadcast completed")
 }
 ```
 

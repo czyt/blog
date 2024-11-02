@@ -12,6 +12,8 @@ author: "czyt"
 
 BLE (Bluetooth Low Energy) 是一种低功耗蓝牙技术。Go-BLE 是 Go 语言的 BLE 库，提供了简单易用的 API 来开发 BLE 应用。本文将通过一个完整的示例来展示如何使用 Go-BLE 创建一个蓝牙服务器。
 
+Go-BLE 主要支持 Linux 和 macOS 平台([1](https://github.com/go-ble/ble/blob/77132411213acf9a93fd0c38f006b940422fd8d4/README.md))，但需要注意 macOS 部分目前并未被积极维护。
+
 ## 2. 环境准备
 
 ### 2.1 安装依赖

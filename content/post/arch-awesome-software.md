@@ -838,6 +838,8 @@ rclone 同步工具 `paru -S rclone` ([同步onedrive配置](https://rclone.org/
 
 axel 安装 `paru -S axel`
 
+[ab-downlaod-manager](https://github.com/amir1376/ab-download-manager)  安装 `paru -S abdownloadmanager-bin`
+
 localsend 安装 `paru -S localsend-bin`
 
 zssh 安装 `paru -S zssh` 配合lrzsz(安装命令 `paru -S lrzsz`)食用效果最佳。

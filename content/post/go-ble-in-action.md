@@ -134,7 +134,7 @@ const (
 )
 ```
 
-2. 设置设备外观的示例：
+2. 设置广播设备名字示例：
 
 ```go
 package main
@@ -164,44 +164,8 @@ func main() {
 }
 ```
 
-3. 创建不同类型设备的示例：
 
-```go
-// 创建耳机设备
-func createHeadphonesDevice(ctx context.Context) error {
-	d, err := dev.DefaultDevice()
-	if err != nil {
-		return fmt.Errorf("初始化设备失败: %v", err)
-	}
-	ble.SetDefaultDevice(d)
-
-	return ble.AdvertiseNameAndServices(ctx, "MyHeadset")
-}
-
-// 创建鼠标设备
-func createMouseDevice(ctx context.Context) error {
-	d, err := dev.DefaultDevice()
-	if err != nil {
-		return fmt.Errorf("初始化设备失败: %v", err)
-	}
-	ble.SetDefaultDevice(d)
-
-	return ble.AdvertiseNameAndServices(ctx, "MyMouse")
-}
-
-// 创建键盘设备
-func createKeyboardDevice(ctx context.Context) error {
-	d, err := dev.DefaultDevice()
-	if err != nil {
-		return fmt.Errorf("初始化设备失败: %v", err)
-	}
-	ble.SetDefaultDevice(d)
-
-	return ble.AdvertiseNameAndServices(ctx, "MyKeyboard")
-}
-```
-
-4. 完整的可配置设备示：
+3. 完整的可配置设备示：
 
 ```go
 type BLEDevice struct {
@@ -295,6 +259,63 @@ func main() {
 2. 图标显示依赖于接收设备的实现
 3. 广播数据包有长度限制（通常是31字节）
 4. 某些设备类型可能需要实现特定的服务才能正常工作
+
+>上面某些代码可能不能按预期运行.这是因为模拟一个完整的BLE设备需要考虑以下几个方面：
+>
+>- **硬件层：** 需要模拟BLE芯片的工作，包括无线电收发、协议栈处理等。
+>
+>- **软件层：** 需要实现BLE协议栈，包括GATT服务、特征、属性等，以及特定的音频或健身设备的协议。
+>
+>- **数据处理：** 需要处理音频数据、传感器数据等，并进行相应的编码和解码
+>
+> go-ble主要提供的是BLE协议栈的上层接口，不涉及底层的硬件实现和协议栈的全部细节。
+>
+>可以考虑使用其他的库实现,下面是一个使用`github.com/paypal/gatt`实现的例子(只支持Linux和mac)
+>
+>```go
+>package main
+>
+>import (
+>        "fmt"
+>        "time"
+>
+>        "github.com/paypal/gatt"
+>        "github.com/paypal/gatt/examples/option"
+>)
+>
+>func main() {
+>        // ... (省略其他代码)
+>
+>        // 创建一个Peripheral实例，代表模拟的BLE设备
+>        peripheral, err := gatt.NewPeripheral(option.DefaultOption)
+>        if err != nil {
+>                panic(err)
+>        }
+>
+>        // 添加一个服务，例如模拟耳机服务
+>        service := peripheral.AddService(gatt.MustParseUUID("your_service_uuid"))
+>
+>        // 添加一个特征，例如模拟音频数据特征
+>        characteristic := service.AddCharacteristic(gatt.MustParseUUID("your_characteristic_uuid"), gatt.CharacteristicPropertiesRead|gatt.CharacteristicPropertiesNotify, nil)
+>
+>        // 实现通知回调函数，定期发送模拟音频数据
+>        characteristic.HandleNotify(func(req *gatt.Request) {
+>                // 生成模拟音频数据
+>                data := generateAudioData()
+>                req.SendValue(data)
+>        })
+>
+>        // 启动广告数据
+>        peripheral.AdvertiseName("MySimulatedHeadset", false)
+>
+>        // 开始监听连接
+>        peripheral.Start()
+>
+>        // 等待连接
+>        fmt.Println("Waiting for connections...")
+>        select {}
+>}
+>```
 
 
 ## 4. 代码示例

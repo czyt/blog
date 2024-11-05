@@ -683,6 +683,18 @@ tor `paru -S tor-browser-bin `
 
 > wechat-uos-qt默认启用沙盒. 设置环境变量 trashAppUnsafe=1 来永久禁用沙盒, 或右击任务栏图标并选择临时禁用沙盒. (警告! 禁用沙盒将允许微信读取 / 修改所有数据)
 >
+> 对于新版本的4.0x，允许访问某个目录，需要调整
+>
+> ```
+> nano ~/.config/wechat-universal/binds.list
+> ```
+>
+> 然后加入要允许访问目录
+>
+> ```
+> /home/czyt
+> ```
+>
 > 更多请参考  https://wiki.archlinuxcn.org/wiki/%E5%BE%AE%E4%BF%A1
 
 QQ 安装 `paru -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`

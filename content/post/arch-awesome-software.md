@@ -1337,7 +1337,13 @@ macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip inst
 
 KDE
 
-（KDE推荐安装部件([下载网站](https://store.kde.org/),最好安装ocs-url `paru -S ocs-url`) `appication title` `全局菜单` `Launchpad plasma` `latte Spacer` `Event calendar` (个人google三色时间配置 `'<font color="#EB4334">'hh'</font>':'<font color="#35AA53">'mm'</font>':'<font color="#4586F3">'ss'</font>'` )）
+（KDE推荐安装部件([下载网站](https://store.kde.org/),最好安装ocs-url `paru -S ocs-url`) 
+
++ `appication title` 或者 `Window Title Applet`
++ `全局菜单`
++  `Launchpad plasma` 
++ `latte Spacer`
++  `Event calendar` (个人google三色时间配置 `'<font color="#EB4334">'hh'</font>':'<font color="#35AA53">'mm'</font>':'<font color="#4586F3">'ss'</font>'` )）
 
 KDE whitesur主题 安装 `paru -S plasma5-themes-whitesur-git `（推荐）或者`paru -S plasma5-themes-macsonoma-git`
 

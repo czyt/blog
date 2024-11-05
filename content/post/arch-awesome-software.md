@@ -643,6 +643,8 @@ brave浏览器 `paru -S brave-bin `
 
 firefox 安装 `paru -S firefox `
 
+[zen](https://github.com/zen-browser/desktop) 安装 `paru -S zen-browser-bin`
+
 社区维护版本firefox `paru -S librewolf-bin`
 
 > 参考

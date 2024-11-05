@@ -2019,7 +2019,16 @@ charles抓包工具  `paru -S charles ` ([注册码生成](https://www.charles.r
 
   `openssl x509 -in charles.pem -inform PEM -out ca.crt`
 
-  信任证书`sudo trust anchor ca.crt`,done
+  信任证书`sudo trust anchor ca.crt`完成。或者手动复制
+  
+  ```bash
+  cd  ~/.charles/ca
+  cp charles-proxy-ssl-proxying-certificate.cer /etc/pki/ca-trust/source/anchors/
+  ln -s /etc/pki/ca-trust/source/anchors/charles-proxy-ssl-proxying-certificate.cer /etc/ssl/certs/charles-proxy-ssl-proxying-certificate.cer
+  update-ca-trust
+  ```
+  
+  
 
 ## 服务器组件
 

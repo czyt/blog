@@ -2252,6 +2252,12 @@ SystemMaxUse=50M
   sudo pacman -Scc # 从缓存中删除所有文件，这是最激进的方法，不会在缓存文件夹中留下任何内容（一般不使用）
   paccache -r # 删除已安装和未安装包的所有缓存版本，但最近 3 个版本除外
   ```
+  一键
+
+  ```bash
+  sudo pacman -Qqdt | sudo pacman -Rs -
+  ```
+
   还可以在 /etc/pacman.d/hooks 文件夹下创建 clean_package_cache.hook 文件来在使用 pacman 时自动执行 paccache。
 
   ```nginx

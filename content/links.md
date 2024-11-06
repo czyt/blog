@@ -4,7 +4,7 @@ description: "一些有用的链接"
 summary: "一些链接"
 ---
 ## 论坛
-+ [Linux Do](https://linux.do/?source=https://czyt.tech)
++ [Linux Do](https://linux.do/?source=czyt_tech)
 ## Go语言相关
 
 ### Blog

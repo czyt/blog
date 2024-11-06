@@ -1383,6 +1383,8 @@ xfconf-query -c xsettings -p /Gtk/ShellShowsMenubar -n -t bool -s true
 
 polybar 安装 `paru -S polybar` [配置教程](https://wiki.archlinuxcn.org/wiki/Polybar)
 
+variety壁纸自动换 安装 `paru -S variety`
+
 ### Zellij
 
 安装 `paru -S zellij`

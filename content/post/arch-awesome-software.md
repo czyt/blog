@@ -1381,6 +1381,8 @@ xfconf-query -c xsettings -p /Gtk/ShellShowsMenubar -n -t bool -s true
 
 [conky](https://github.com/brndnmtthws/conky) 性能显示组件 安装 `paru -S conky conky-manager`
 
+polybar 安装 `paru -S polybar` [配置教程](https://wiki.archlinuxcn.org/wiki/Polybar)
+
 ### Zellij
 
 安装 `paru -S zellij`

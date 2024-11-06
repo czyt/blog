@@ -3,7 +3,8 @@ title: "一些链接"
 description: "一些有用的链接"
 summary: "一些链接"
 ---
-
+## 论坛
++ [Linux Do](https://linux.do/?source=https://czyt.tech)
 ## Go语言相关
 
 ### Blog
@@ -14,6 +15,7 @@ summary: "一些链接"
 + [Neenad Ingole](https://www.iamninad.com)
 + [Boldly Go](https://boldlygo.tech)
 + [shane](https://shane.ai)
++ [lazycat王勇](https://manateelazycat.github.io)
 
 ### Web
 

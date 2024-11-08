@@ -592,6 +592,10 @@ chatbox 聚合聊天工具 `paru -S chatbox-appimage`
 
 深度终端 安装 `paru -S deepin-terminal` 
 
+深度终端gtk 安装 `paru -S  deepin-terminal-gtk`
+
+> 👆推荐这个，在默认程序设置默认终端为这个，就可以替代Konsle了
+
 alacritty 安装 `paru -S alacritty ` 
 
 终端渐变色工具lolcat `paru -S lolcat` 

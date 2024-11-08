@@ -906,6 +906,8 @@ planify todolist软件 `paru -s planify`
 
 [达芬奇视频剪辑](http://www.blackmagicdesign.com/products/davinciresolve/) 安装 `paru -S davinci-resolve` 
 
+audacity音频处理软件 安装 `paru -S audacity`
+
 handbrake 视频格式转换工具 `paru -S handbrake-full`
 
 [zettlr](https://www.zettlr.com) markdown编辑器 安装 `paru -S zettlr ` 
@@ -914,9 +916,13 @@ handbrake 视频格式转换工具 `paru -S handbrake-full`
 
 Wps 安装 `paru -S wps-office ttf-wps-fonts wps-office-mui-zh-cn  wps-office-mime`
 
-> 安装wps国内版可以使用 `paru -S wps-office-cn wps-office-mui-zh-cn ttf-wps-fonts`
+> + 安装wps国内版可以使用 `paru -S wps-office-cn wps-office-mui-zh-cn ttf-wps-fonts`
+> + wps方正字库  `paru -S wps-office-fonts`
 
 libreoffice 安装  `paru -S libreoffice` 
+
+onlyoffice 安装 `paru -S onlyoffice-bin`
+
 geogebra 几何绘图软件 `paru -S geogebra  `
 
 labplot科学绘图 `paru -S labplot ` 
@@ -1214,7 +1220,7 @@ ttf-ms-fonts ttf-sarasa-gothic noto-fonts-cjk  noto-fonts-sc
 下面是一些编程字体
 
 ```bash
-paru -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sarasa-term ttf-maple-latest 	ttc-iosevka
+paru -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sarasa-term ttf-maple-latest 	ttc-iosevka nerd-fonts
 ```
 
 输入法有问题，需要重置，使用命令 `rm -r ~/.config/fcitx` 然后注销即可。
@@ -1318,6 +1324,8 @@ Vita3K PlayStation Vita emulator 安装 `paru -S vita3k-bin`
 ## 媒体软件
 
 网易云音乐 安装 `paru -S netease-cloud-music` 
+
+QQ音乐 安装 `paru -S qqmusic-bin`
 
 腾讯视频 安装 `paru -S tenvideo`
 

@@ -1327,7 +1327,7 @@ Vita3K PlayStation Vita emulator 安装 `paru -S vita3k-bin`
 
 ## 媒体软件
 
-网易云音乐 安装 `paru -S netease-cloud-music` 
+网易云音乐 安装 `paru -S netease-cloud-music` 或者 `paru -S netease-cloud-music-gtk4`(推荐)
 
 QQ音乐 安装 `paru -S qqmusic-bin`
 

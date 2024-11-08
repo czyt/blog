@@ -2257,6 +2257,7 @@ SystemMaxUse=50M
 
 - [https://averagelinuxuser.com/10-things-to-do-after-installing-manjaro/](https://averagelinuxuser.com/10-things-to-do-after-installing-manjaro/)
 - 字体渲染 [http://www.badwolfbay.cn/2020/03/17/manjaro-setting/](http://www.badwolfbay.cn/2020/03/17/manjaro-setting/)
+- KDE字体渲染 https://github.com/xMuu/arch-kde-fontconfig
 
 ## 常见问题
 

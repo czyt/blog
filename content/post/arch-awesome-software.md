@@ -1317,6 +1317,14 @@ bus也可以使用雾凇拼音，不过目录位置在`$HOME/.config/ibus/rime/`
 
 + [白霜拼音](https://github.com/gaboolic/rime-frost) 基于雾凇拼音重制，可以通过 `paru -S rime-frost-git` 进行安装，使用方式和雾凇拼音类似。
 
+>基本和雾凇拼音差不多，修改default.custom.yaml这部分
+>
+>```
+>patch:
+>  # 仅使用「白霜拼音」的默认配置，配置此行即可
+>  __include: rime_frost_suggestion:/
+>```
+
 + [oh-my-rime薄荷输入法](https://github.com/Mintimate/oh-my-rime)
 
 + [Rime auto deploy](https://github.com/Mark24Code/rime-auto-deploy)
@@ -2329,4 +2337,4 @@ sudo pacman-key --populate archlinuxcn
 - https://wiki.archlinuxcn.org/wiki/ALSA
 - https://www.imwxz.com/posts/fc1dd509.html
 - https://wiki.archlinux.org/title/Dell_XPS_13_(9370)
-- https://terminaltrove.com/list/
+- https://terminaltrove.com/list/F

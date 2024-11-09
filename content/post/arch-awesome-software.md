@@ -1315,6 +1315,8 @@ bus也可以使用雾凇拼音，不过目录位置在`$HOME/.config/ibus/rime/`
 
 + [雾凇拼音]( https://github.com/iDvel/rime-ice)  可以通过 `paru -S  rime-ice-git `进行安装
 
++ [白霜拼音](https://github.com/gaboolic/rime-frost) 基于雾凇拼音重制，可以通过 `paru -S rime-frost-git` 进行安装，使用方式和雾凇拼音类似。
+
 + [oh-my-rime薄荷输入法](https://github.com/Mintimate/oh-my-rime)
 
 + [Rime auto deploy](https://github.com/Mark24Code/rime-auto-deploy)

@@ -1805,6 +1805,8 @@ flutter 安装 `paru -S flutter`
 
 .net core 安装 `paru -S dotnet-sdk-bin` 
 
+仓颉 安装 `paru -S cangjie-beta-bin`
+
 bun `paru -S bun-bin`
 
 ## 开发工具

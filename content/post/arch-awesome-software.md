@@ -677,31 +677,13 @@ tor `paru -S tor-browser-bin `
 
 ## 聊天软件
 
-微信 安装 `paru -S deepin-wine-wechat`  (新版可能卡死，可以使用下面的命令`killall WeChatBrowser.exe && /opt/deepinwine/tools/sendkeys.sh w wechat 4`)
+微信 安装 `paru -S wechat`
 
- [微信Spark Store版本](https://aur.archlinux.org/packages/com.qq.weixin.spark) `paru -S com.qq.weixin.spark`
-
-> 这各版本的微信新版本会安装deepin-wine8,如果出现中文字体方框，需要安装文泉驿微米黑字体 `paru -S wqy-microhei`
-
-微信Linux原生版本  `paru -S wechat-universal-bwrap` 或者 `paru -S wechat-uos-qt`
-
-> wechat-uos-qt默认启用沙盒. 设置环境变量 trashAppUnsafe=1 来永久禁用沙盒, 或右击任务栏图标并选择临时禁用沙盒. (警告! 禁用沙盒将允许微信读取 / 修改所有数据)
+> 可以开启和关闭沙盒
 >
-> 对于新版本的4.0x，允许访问某个目录，需要调整
+> deepin-wine-wechat完成了它的使命，对于有Windows版本程序运行的需求者来说，可以安装`paru -S deepine-wine8-stable`来执行Windows程序
 >
-> ```
-> nano ~/.config/wechat-universal/binds.list
-> ```
->
-> 然后加入要允许访问目录
->
-> ```
-> /home/czyt
-> ```
->
-> 更多请参考  https://wiki.archlinuxcn.org/wiki/%E5%BE%AE%E4%BF%A1
-
-QQ 安装 `paru -S deepin-wine-qq`如果你喜欢各种破解，可以试试下载dreamcast的QQ，替换wine下的QQ。命令参考 `sudo mv ./QQ ~/.deepinwine/Deepin-QQ/drive_c/"Program Files"/Tencent`
+> 更多请参考 [wiki](https://wiki.archlinuxcn.org/wiki/%E5%BE%AE%E4%BF%A1#Linux_%E7%89%88)
 
 新版LinuxQQ `paru -S linuxqq`
 

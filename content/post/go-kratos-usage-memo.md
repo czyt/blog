@@ -2825,4 +2825,5 @@ func main() {
 + [通过 Kratos 高扩展性整合任何框架](https://mp.weixin.qq.com/s/zHHPESkcGG82Zc0U5Meelg)
 + [微服务权鉴 - Zanzibar](https://mp.weixin.qq.com/s/0sjS6NZ1dImJaU-8sTiDRA)
 + [Google API 设计指南](https://cloud.google.com/apis/design?hl=zh-cn)
++ [The Copenhagen Book](https://thecopenhagenbook.com) lucia-auth 作者写的一本关于auth的小册
 

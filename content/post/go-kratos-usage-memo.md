@@ -320,6 +320,282 @@ HTTP API 的错误响应还有一些业界的标准，比如RFC 7807、RFC 9457�
 
 ![img](http://webmachine.github.io/images/http-headers-status-v3.png)
 
+## 带模式的HTTP  proto定义
+
+带模式的 HTTP 定义（Pattern Matching）主要有以下几个核心意义：
+
+1. **规范 URL 结构**
+   - 强制使用统一的 URL 格式
+   - 例如：`/v1/projects/123/users` 表示项目123下的用户列表
+   - 保证所有 API 遵循相同的 URL 结构规范
+
+2. **自动参数验证**
+   - 框架自动验证 URL 格式是否正确
+   - 例如：`{name=users/*}` 要求参数必须以 "users/" 开头
+   - 在请求到达业务代码前就能拦截格式错误的请求
+
+3. **资源层级关系**
+   - 清晰表达资源之间的从属关系
+   - 例如：users 资源属于 projects 资源
+   - 便于进行权限控制和资源管理
+
+4. **自动代码生成**
+   - 根据定义自动生成客户端代码
+   - 生成类型安全的 API 调用代码
+   - 减少手动编写重复代码的工作
+
+5. **文档生成**
+   - 自动生成 API 文档（如 Swagger）
+   - URL 结构清晰可见
+   - 便于其他开发者理解和使用 API
+
+这种定义方式已经在 Google API 中广泛使用，是一种经过实践验证的 API 设计方法。它能够提高 API 的可维护性、一致性和开发效率。下面是一些基本的例子：
+
+### 基本路径变量
+
+```protobuf
+// 1. 简单变量
+message GetUserRequest {
+    string name = 1;  // 值将是 "test123"
+}
+
+service UserService {
+    rpc GetUser(GetUserRequest) returns (User) {
+        option (google.api.http) = {
+            get: "/v1/{name}"
+        };
+    }
+}
+// 示例 URL: GET /v1/test123
+
+
+// 2. 带模式的变量
+message ListUsersRequest {
+    string parent = 1;  // 值将是 "projects/123"
+}
+
+service UserService {
+    rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+        option (google.api.http) = {
+            get: "/v1/{parent=projects/*}/users"
+        };
+    }
+}
+// 示例 URL: GET /v1/projects/123/users
+```
+
+### 常见模式示例
+
+```protobuf
+// 1. 单段匹配
+message GetProfileRequest {
+    string name = 1;  // 值将是 "profiles/123"
+}
+
+rpc GetProfile(GetProfileRequest) returns (Profile) {
+    option (google.api.http) = {
+        get: "/v1/{name=profiles/*}"
+    };
+}
+// 示例 URL: GET /v1/profiles/123
+
+
+// 2. 多段匹配
+message GetUserSettingRequest {
+    string name = 1;  // 值将是 "users/123/settings/email"
+}
+
+rpc GetUserSetting(GetUserSettingRequest) returns (Setting) {
+    option (google.api.http) = {
+        get: "/v1/{name=users/*/settings/*}"
+    };
+}
+// 示例 URL: GET /v1/users/123/settings/email
+
+
+// 3. 通配符匹配
+message GetResourceRequest {
+    string path = 1;  // 值将是 "a/b/c/d"
+}
+
+rpc GetResource(GetResourceRequest) returns (Resource) {
+    option (google.api.http) = {
+        get: "/v1/{path=**}"
+    };
+}
+// 示例 URL: GET /v1/a/b/c/d
+```
+
+### HTTP 方法映射
+
+```protobuf
+// 1. GET 请求
+message GetUserRequest {
+    string name = 1;  // 值将是 "users/123"
+}
+
+rpc GetUser(GetUserRequest) returns (User) {
+    option (google.api.http) = {
+        get: "/v1/{name=users/*}"
+    };
+}
+// 示例 URL: GET /v1/users/123
+
+
+// 2. POST 请求
+message CreateUserRequest {
+    string parent = 1;     // 值将是 "projects/123"
+    User user = 2;        // 请求体
+}
+
+rpc CreateUser(CreateUserRequest) returns (User) {
+    option (google.api.http) = {
+        post: "/v1/{parent=projects/*}/users"
+        body: "user"
+    };
+}
+// 示例 URL: POST /v1/projects/123/users
+// 请求体: {"name": "users/123", "display_name": "John Doe", "email": "john@example.com"}
+
+
+// 3. PUT 请求
+message UpdateUserRequest {
+    User user = 1;        // user.name 将是 "users/123"
+    string update_mask = 2;
+}
+
+rpc UpdateUser(UpdateUserRequest) returns (User) {
+    option (google.api.http) = {
+        put: "/v1/{user.name=users/*}"
+        body: "user"
+    };
+}
+// 示例 URL: PUT /v1/users/123
+// 请求体: {"name": "users/123", "display_name": "John Doe Updated"}
+
+
+// 4. PATCH 请求
+message PatchUserRequest {
+    User user = 1;        // user.name 将是 "users/123"
+    google.protobuf.FieldMask update_mask = 2;
+}
+
+rpc PatchUser(PatchUserRequest) returns (User) {
+    option (google.api.http) = {
+        patch: "/v1/{user.name=users/*}"
+        body: "user"
+    };
+}
+// 示例 URL: PATCH /v1/users/123
+// 请求体: {"user": {"name": "users/123", "display_name": "John"}, "update_mask": "display_name"}
+
+
+// 5. DELETE 请求
+message DeleteUserRequest {
+    string name = 1;  // 值将是 "users/123"
+}
+
+rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+        delete: "/v1/{name=users/*}"
+    };
+}
+// 示例 URL: DELETE /v1/users/123
+```
+
+### 自定义方法
+
+```protobuf
+// 1. 激活用户
+message ActivateUserRequest {
+    string name = 1;  // 值将是 "users/123"
+    string reason = 2;
+}
+
+rpc ActivateUser(ActivateUserRequest) returns (User) {
+    option (google.api.http) = {
+        post: "/v1/{name=users/*}:activate"
+        body: "*"
+    };
+}
+// 示例 URL: POST /v1/users/123:activate
+// 请求体: {"name": "users/123", "reason": "Account verified"}
+
+
+// 2. 批量操作
+message BatchCreateUsersRequest {
+    string parent = 1;                    // 值将是 "projects/123"
+    repeated CreateUserRequest requests = 2;
+}
+
+rpc BatchCreateUsers(BatchCreateUsersRequest) returns (BatchCreateUsersResponse) {
+    option (google.api.http) = {
+        post: "/v1/{parent=projects/*}/users:batchCreate"
+        body: "*"
+    };
+}
+// 示例 URL: POST /v1/projects/123/users:batchCreate
+// 请求体: {
+//   "parent": "projects/123",
+//   "requests": [
+//     {"parent": "projects/123", "user": {"display_name": "User 1"}},
+//     {"parent": "projects/123", "user": {"display_name": "User 2"}}
+//   ]
+// }
+```
+
+
+
+### 嵌套资源
+
+```protobuf
+// 1. 列出用户的所有设备
+message ListDevicesRequest {
+    string parent = 1;  // 值将是 "users/123"
+    int32 page_size = 2;
+    string page_token = 3;
+}
+
+rpc ListDevices(ListDevicesRequest) returns (ListDevicesResponse) {
+    option (google.api.http) = {
+        get: "/v1/{parent=users/*}/devices"
+    };
+}
+// 示例 URL: GET /v1/users/123/devices?page_size=10&page_token=next_token
+
+
+// 2. 获取特定设备
+message GetDeviceRequest {
+    string name = 1;  // 值将是 "users/123/devices/456"
+}
+
+rpc GetDevice(GetDeviceRequest) returns (Device) {
+    option (google.api.http) = {
+        get: "/v1/{name=users/*/devices/*}"
+    };
+}
+// 示例 URL: GET /v1/users/123/devices/456
+```
+
+### 多重绑定
+
+```protobuf
+message GetResourceRequest {
+    string name = 1;  // 值可能是 "projects/123/resources/456" 或 "locations/us-east1/resources/456"
+}
+
+rpc GetResource(GetResourceRequest) returns (Resource) {
+    option (google.api.http) = {
+        get: "/v1/{name=projects/*/resources/*}"
+        additional_bindings {
+            get: "/v1/{name=locations/*/resources/*}"
+        }
+    };
+}
+// 示例 URL 1: GET /v1/projects/123/resources/456
+// 示例 URL 2: GET /v1/locations/us-east1/resources/456
+```
+
 ## 通过Context取得信息
 
 Server端取JWT中的key数据

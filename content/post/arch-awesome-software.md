@@ -6,7 +6,13 @@ draft: false
 weight: 9
 ---
 
-> 本文部分内容基于manjaro，另外如果喜欢苹果界面，可以试下[pearos](https://pearos.xyz)。理论上基于Arch的发行版都可以使用本文进行安装。如果您安装好了manajro但是又不想重装系统，可以试下[这个脚本](https://github.com/saeziae/manjaro2archlinux)来将Manjaro自动转换为Arch,。
+>  本文部内容理论上基于Arch的发行版都可以使用本文进行安装。推荐的发行版本
+>
+> + [Manajro](https://manjaro.org)
+> + [EndeavourOS](https://endeavouros.com)
+> + [CachyOS](https://cachyos.org)
+>
+>  如果您安装好了manajro但是又不想重装系统，可以试下[这个脚本](https://github.com/saeziae/manjaro2archlinux)来将Manjaro自动转换为Arch。
 ## Arch 安装后必装的软件
 
 通过archinstall 安装以后，是没图形界面的。需要安装下面的一些软件和配置
@@ -1834,7 +1840,6 @@ Android屏幕共享[Scrcpy](https://github.com/Genymobile/scrcpy) 安装 `paru -
 >User git
 >```
 >
->
 
  Rstudio `paru -S rstudio-desktop-bin`
 
@@ -1955,6 +1960,10 @@ bcompare 安装 `paru -S bcompare `
 tldr 简化版文档工具 ` paru -S tldr` （rust版本 `paru -S  tealdeer ` ）
 
 vscode 安装 `paru -S visual-studio-code-bin` 
+
+cursor 安装 `paru -S cursor-bin`
+
+windsurf 安装 `paru -S windsurf`
 
 [zed editor](https://zed.dev) 安装 `paru -S zed-editor`或者 `paru -S zed`
 

@@ -1319,6 +1319,8 @@ bus也可以使用雾凇拼音，不过目录位置在`$HOME/.config/ibus/rime/`
 
 + https://github.com/yanhuacuo/rimetool
 
++ [万象拼音](https://github.com/amzxyz/rime_wanxiang_pinyin)
+
 ## 模拟器
 
 Vita3K PlayStation Vita emulator 安装 `paru -S vita3k-bin`

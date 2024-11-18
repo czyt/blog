@@ -1325,6 +1325,14 @@ bus也可以使用雾凇拼音，不过目录位置在`$HOME/.config/ibus/rime/`
 
 Vita3K PlayStation Vita emulator 安装 `paru -S vita3k-bin`
 
+switch模拟器 Ryujinx 安装 `paru -S ryujinx`
+
+> 大气层系统 https://github.com/Atmosphere-NX/Atmosphere
+>
+> 模拟器固件 https://prodkeys.net/
+>
+> switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
+
 ## 媒体软件
 
 网易云音乐 安装 `paru -S netease-cloud-music` 或者 `paru -S netease-cloud-music-gtk4`(推荐)
@@ -1617,7 +1625,7 @@ zsh在使用nohup执行任务的时候，可能会出现session注销后，nohup
 > I added `SPACESHIP_PROMPT_ORDER` array to `.zshrc` above `source $ZSH/oh-my-zsh.sh` line.
 >
 > ```
-> SPACESHIP_PROMPT_ORDER=(
+> RyujinxSPACESHIP_PROMPT_ORDER=(
 >   dir           # Current directory section
 >   git           # Git section (git_branch + git_status)
 >   package       # Package version
@@ -2071,7 +2079,6 @@ charles抓包工具  `paru -S charles ` ([注册码生成](https://www.charles.r
   ln -s /etc/pki/ca-trust/source/anchors/charles-proxy-ssl-proxying-certificate.cer /etc/ssl/certs/charles-proxy-ssl-proxying-certificate.cer
   update-ca-trust
   ```
-  
   
 
 ## 服务器组件

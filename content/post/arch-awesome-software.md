@@ -1327,11 +1327,24 @@ Vita3K PlayStation Vita emulator 安装 `paru -S vita3k-bin`
 
 switch模拟器 Ryujinx 安装 `paru -S ryujinx`
 
-> 大气层系统 https://github.com/Atmosphere-NX/Atmosphere
+> + 大气层系统 https://github.com/Atmosphere-NX/Atmosphere
+> + 大气层整合包 https://github.com/AK478BB/AK-Atmosphere/releases
 >
-> 模拟器固件 https://prodkeys.net/
+> + 模拟器固件 https://prodkeys.net/
+>
+> - Check If Your Switch Is Patched: https://ismyswitchpatched.com/
+> - EaseUs Partition: https://www.easeus.com/partition-manager/epm-free.html
+> - TegraRCM: https://github.com/eliboa/TegraRcmGUI/releases
+> - Hekate: https://github.com/CTCaer/hekate/releases
+> - Sig Patches: https://sigmapatches.su
+> - https://rentry.org/EristaEmuNAND
+> - Sig Patches： https://gbatemp.net/threads/sigpatches-for-atmosphere-hekate-fss0-fusee-package3.571543/
+>
+> 
 >
 > switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
+>
+> [Switch 软破、硬破总结](https://chenshake.com/2024/04/10/switch-Hack/)
 
 ## 媒体软件
 

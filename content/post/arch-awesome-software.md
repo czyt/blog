@@ -998,6 +998,8 @@ clash https://aur.archlinux.org/packages?K=clash [福利](https://neko-warp.nlol
 
 [nekoray-bin ](https://github.com/MatsuriDayo/nekoray)Qt based cross-platform GUI proxy configuration manager  安装 `paru -S nekoray-bin`( 可能需要安装相关插件 `paru -S sing-geosite sing-geoip sing-geoip-common sing-geoip-db sing-geoip-rule-set sing-geosite-common sing-geosite-db sing-geosite-rule-set `然后核心位置填写`/usr/share/sing-box`)
 
+[mihomo-party](https://mihomo.party) 安装 `paru -S mihomo-party` 或者 `paru -S mihomo-party-bin`
+
 cloudflare Warp 安装 `paru -S cloudflare-warp-bin`  [基于wiregurd](https://www.ianbashford.net/post/setupcloudflarewarplinuxarch/) [自选ip脚本](https://gitlab.com/rwkgyg/CFwarp) [自选ip脚本2](https://gitlab.com/ProjectWARP/warp-script)
 
 >如报错： DNS connectivity check failed with reason DNSLookupFailed，请尝试

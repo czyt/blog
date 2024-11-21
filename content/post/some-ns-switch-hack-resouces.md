@@ -45,7 +45,9 @@ switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
 
 ### 网站
 
-[悠游任天堂](https://yyrtt.com)
++ [悠游任天堂](https://yyrtt.com)
+
++ [Switch520](https://www.gamer520.com)
 
 ### 相关文章
 

@@ -48,6 +48,8 @@ switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
 + [悠游任天堂](https://yyrtt.com)
 + [Switch520](https://www.gamer520.com)
 + [rutracker的switch板块](https://rutracker.org/forum/viewforum.php?f=1605)
++ [上游世界](https://www.vgter.net)
++ [nsw2u](https://nsw2u.com)
 
 ### 相关文章
 
@@ -56,3 +58,7 @@ switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
 ### 其他
 
 - [BYRUTOR steam游戏破解下载](https://byrutgame.org)
+- [skidrowreloaded](https://www.skidrowreloaded.com)
+- [steamunlocked](https://steamunlocked.net)
+- [Online Fix](https://online-fix.me/)
+- [koyso](https://koyso.com)

@@ -48,6 +48,7 @@ switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
 ### 网站或论坛
 
 + [悠游任天堂](https://yyrtt.com)
++ [2cyshare](https://www.2cyshare.com)
 + [Switch520](https://www.gamer520.com)
 + [rutracker的switch板块](https://rutracker.org/forum/viewforum.php?f=1605)
 + [上游世界](https://www.vgter.net)

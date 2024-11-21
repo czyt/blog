@@ -1346,6 +1346,8 @@ switch模拟器 Ryujinx 安装 `paru -S ryujinx`
 >
 > switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
 >
+> [悠游任天堂](https://yyrtt.com)
+>
 > [Switch 软破、硬破总结](https://chenshake.com/2024/04/10/switch-Hack/)
 
 ## 媒体软件

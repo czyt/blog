@@ -46,11 +46,13 @@ switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
 ### 网站或论坛
 
 + [悠游任天堂](https://yyrtt.com)
-
 + [Switch520](https://www.gamer520.com)
-
 + [rutracker的switch板块](https://rutracker.org/forum/viewforum.php?f=1605)
 
 ### 相关文章
 
 [Switch 软破、硬破总结](https://chenshake.com/2024/04/10/switch-Hack/)
+
+### 其他
+
+- [BYRUTOR steam游戏破解下载](https://byrutgame.org)

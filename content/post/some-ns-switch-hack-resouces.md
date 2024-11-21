@@ -20,13 +20,15 @@ TegraRCM: https://github.com/eliboa/TegraRcmGUI/releases
 > 设备需要硬破
 
 + 大气层系统 https://github.com/Atmosphere-NX/Atmosphere
-+ 大气层整合包 https://github.com/AK478BB/AK-Atmosphere/releases
++ ak大气层整合包 https://github.com/AK478BB/AK-Atmosphere/releases
++ 大气层集成sys-patch插件破解包 https://github.com/laila509/Atmosphere-syspatch
 + Hekate引导: https://github.com/CTCaer/hekate/releases
 
 ### Switch固件
 
 + 模拟器固件和key https://prodkeys.net/
 + [Ryujinx 模拟器](https://github.com/GreemDev/Ryujinx)
++ [Retroarch](https://www.retroarch.com)
 + Switch官方固件分享下载 https://github.com/THZoria/NX_Firmware/
 
 ### 其他

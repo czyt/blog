@@ -1333,6 +1333,12 @@ switch模拟器 Ryujinx 安装 `paru -S ryujinx`
 
 网易云音乐 安装 `paru -S netease-cloud-music` 或者 `paru -S netease-cloud-music-gtk4`(推荐)
 
+spotify 安装 `paru -S spotify`
+
+> spotify需要先导入证书再进行安装 
+>
+> curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg  | gpg --import -
+
 QQ音乐 安装 `paru -S qqmusic-bin`
 
 腾讯视频 安装 `paru -S tenvideo`

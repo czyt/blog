@@ -818,6 +818,8 @@ sudo sed -i "s/PKGEXT='.pkg.tar.xz'/PKGEXT='.pkg.tar'/g" /etc/makepkg.conf
 
 文件蜈蚣 安装 `paru -S  filecentipede-bin ` [激活码](http://www.filecxx.com/zh_CN/activation_code.html)
 
+bitcomet 安装 `paru -S bitcomet`
+
 MegaSync 安装 `paru -S megasync-bin` 或 `paru -S megasync`
 
 115网盘 安装 `paru -S 115pc`

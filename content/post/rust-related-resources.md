@@ -97,3 +97,4 @@ draft: false
 + https://github.com/tyrchen/rust-training
 + https://github.com/drmingdrmer/tips/tree/main/tips/rust
 + https://github.com/Whitecat18/Rust-for-Malware-Development
++ https://rust-gpu.github.io

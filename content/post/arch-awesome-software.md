@@ -1156,6 +1156,8 @@ U盘启动制作[etcher](https://github.com/balena-io/etcher) `paru -S etcher-bi
 
 Screen屏幕共享软件 安装 `paru -S screen-desktop ` 
 
+ universal android debloater 安装 `paru -S universal-android-debloater`
+
 ### 字体
 
 windows11 字体 `paru -S ttf-ms-win11-auto `

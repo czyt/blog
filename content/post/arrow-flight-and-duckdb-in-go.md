@@ -16,7 +16,8 @@ Todo
 
 ### Flight RPC
 
-## 参考文章
+## 参考资源
 
 + [Use Apache Arrow and Go for Your Data Workflows](https://voltrondata.com/blog/use-apache-arrow-and-go-for-your-data-workflows)
 + [Data Transfer with Apache Arrow and Golang](https://voltrondata.com/blog/data-transfer-with-apache-arrow-and-golang)
++ Apache Arrow and Go A match made in Data [ youtube video](https://www.youtube.com/watch?v=ctK9MxDJd2Q)  [slide](https://apachecon.com/acna2022/slides/01_Topol_Arrow_and_Go.pdf)

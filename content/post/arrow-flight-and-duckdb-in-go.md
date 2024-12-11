@@ -39,6 +39,208 @@ func main() {
 
 ### 高级特性
 
+#### Copy
+
+COPY 函数可以用于导入导出数据：
+
+```go
+package main
+
+import (
+    "database/sql"
+    "fmt"
+    _ "github.com/marcboeker/go-duckdb"
+)
+
+func main() {
+    db, err := sql.Open("duckdb", ":memory:")
+    if err != nil {
+        panic(err)
+    }
+    defer db.Close()
+
+    // 1. 创建示例表
+    _, err = db.Exec(`
+        CREATE TABLE employees (
+            id INTEGER,
+            name VARCHAR,
+            department VARCHAR,
+            salary DECIMAL(10,2)
+        )
+    `)
+    if err != nil {
+        panic(err)
+    }
+
+    // 2. 从 CSV 文件导入数据
+    _, err = db.Exec(`
+        COPY employees FROM 'data/employees.csv' (
+            DELIMITER ',',
+            HEADER true,
+            NULL 'NULL'
+        )
+    `)
+    if err != nil {
+        panic(err)
+    }
+
+    // 3. 导出数据到 CSV
+    _, err = db.Exec(`
+        COPY (
+            SELECT * FROM employees 
+            WHERE salary > 50000
+        ) 
+        TO 'data/high_salary_employees.csv' (
+            DELIMITER ',',
+            HEADER true,
+            NULL 'NULL'
+        )
+    `)
+    if err != nil {
+        panic(err)
+    }
+
+    // 4. 导出到 Parquet 文件
+    _, err = db.Exec(`
+        COPY employees 
+        TO 'data/employees.parquet' (
+            FORMAT PARQUET,
+            COMPRESSION 'SNAPPY'
+        )
+    `)
+    if err != nil {
+        panic(err)
+    }
+
+    // 5. 导出查询结果到 JSON
+    _, err = db.Exec(`
+        COPY (
+            SELECT 
+                department,
+                AVG(salary) as avg_salary,
+                COUNT(*) as employee_count
+            FROM employees
+            GROUP BY department
+        ) 
+        TO 'data/department_stats.json' (
+            FORMAT JSON,
+            ARRAY true
+        )
+    `)
+    if err != nil {
+        panic(err)
+    }
+
+    // 6. 从压缩文件导入
+    _, err = db.Exec(`
+        COPY employees 
+        FROM 'data/employees.csv.gz' (
+            DELIMITER ',',
+            HEADER true,
+            COMPRESSION GZIP
+        )
+    `)
+    if err != nil {
+        panic(err)
+    }
+
+    // 7. 导出特定列
+    _, err = db.Exec(`
+        COPY employees (name, salary) 
+        TO 'data/salary_info.csv' (
+            DELIMITER ',',
+            HEADER true
+        )
+    `)
+    if err != nil {
+        panic(err)
+    }
+
+    // 8. 使用自定义分隔符和引号
+    _, err = db.Exec(`
+        COPY employees 
+        TO 'data/custom_format.csv' (
+            DELIMITER '|',
+            QUOTE '"',
+            ESCAPE '\\',
+            HEADER true
+        )
+    `)
+    if err != nil {
+        panic(err)
+    }
+}
+```
+
+COPY 函数的主要特性和选项：
+
+ **文件格式支持**：
+```sql
+-- CSV 格式
+COPY table FROM/TO 'file.csv'
+
+-- Parquet 格式
+COPY table FROM/TO 'file.parquet' (FORMAT PARQUET)
+
+-- JSON 格式
+COPY table FROM/TO 'file.json' (FORMAT JSON)
+```
+
+ **压缩选项**：
+```sql
+-- GZIP 压缩
+COPY table FROM/TO 'file.csv.gz' (COMPRESSION GZIP)
+
+-- Parquet with Snappy 压缩
+COPY table FROM/TO 'file.parquet' (
+    FORMAT PARQUET, 
+    COMPRESSION 'SNAPPY'
+)
+```
+
+ **CSV 格式选项**：
+```sql
+COPY table FROM/TO 'file.csv' (
+    DELIMITER ',',        -- 分隔符
+    HEADER true,         -- 是否包含表头
+    QUOTE '"',           -- 引号字符
+    ESCAPE '\\',         -- 转义字符
+    NULL 'NULL',         -- NULL值表示
+    FORCE_QUOTE true     -- 强制引号
+)
+```
+
+ **选择性导出**：
+```sql
+-- 导出查询结果
+COPY (SELECT * FROM table WHERE condition) TO 'file.csv'
+
+-- 导出特定列
+COPY table (column1, column2) TO 'file.csv'
+```
+
+ **错误处理**：
+```go
+// 添加错误处理和日志记录
+func exportData(db *sql.DB, query, filepath string) error {
+    _, err := db.Exec(fmt.Sprintf(`
+        COPY (%s) TO '%s' (
+            DELIMITER ',',
+            HEADER true,
+            NULL 'NULL'
+        )
+    `, query, filepath))
+    
+    if err != nil {
+        return fmt.Errorf("export failed: %w", err)
+    }
+    
+    return nil
+}
+```
+
+COPY 函数是 DuckDB 中进行数据导入导出的高效方式,可以参考上面部分，根据实际需求选择合适的选项和格式。
+
 #### Appender 接口
 Appender 接口提供了高性能的数据插入方式：
 

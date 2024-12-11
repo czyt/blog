@@ -1883,6 +1883,8 @@ github-cli 安装 `paru -S github-cli-bin`
 
 minicom串口工具 安装 `paru -S minicom` (设置参数 `sudo minicom -s` )
 
+nRF Connect for Desktop `paru -S nrfconnect-appimage`
+
 串口助手 安装 `paru -S serialtool` 
 
 [serial-studio](https://github.com/Serial-Studio/Serial-Studio/blob/master/doc/README_ZH.md) 串行数据可视化工具 安装 `paru -S serial-studio-git`

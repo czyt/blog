@@ -1,12 +1,9 @@
 ---
 title: "对称和反向gRPC连接【译】"
 date: 2024-12-10
-draft: true
+draft: false
 tags: ["golang","gRPC"]
-categories: []
 author: "czyt"
-description: ""
-featured_image: ""
 ---
 
 >原文链接为 https://tilde.town/~hut8/post/grpc-connections/ 使用kimi进行翻译

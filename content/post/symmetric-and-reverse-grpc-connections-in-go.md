@@ -296,3 +296,8 @@ grpc.Dial( // 和之前一样，再加上：
 
 // ... 断开连接时运行的代码
 ```
+
+>其他参考文章，不属于原文，翻译时添加，以备参考
+>
+>+ https://tart.run/blog/2023/04/28/ssh-over-grpc-or-how-orchard-simplifies-accessing-vms-in-private-networks/
+>+ https://github.com/openconfig/grpctunnel

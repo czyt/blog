@@ -544,6 +544,10 @@ func main() {
 }
 ```
 
+### ORM
+
+目前暂时只有gorm的[duckdb驱动](https://github.com/alifiroozi80/duckdb) 
+
 ###  最佳实践
 
 1. 使用 Prepared Statements 避免 SQL 注入
@@ -562,6 +566,7 @@ DuckDB 通过其简单的接口和强大的分析能力，为 Go 开发者提供
 
 参考资源：
 - [go-duckdb Examples](https://github.com/marcboeker/go-duckdb/tree/main/examples)
+- [A Comprehensive Guide for Using DuckDB With Go](https://hackernoon.com/a-comprehensive-guide-for-using-duckdb-with-go)
 
 ## 认识arrow
 

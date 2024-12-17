@@ -1320,6 +1320,27 @@ patch:
 
 执行`fcitx5-remote -r`然后来打字也是一种不错的体验。
 
+然后可以搭配万象输入法的模型，更好地优化体验，先切换到输入法目录,以我这里里为例`$HOME/.local/share/fcitx5/rime/`
+
+下载 [rime-lmdg](https://github.com/amzxyz/RIME-LMDG/releases), 这里下载的是 amz-v2n3m1-zh-hans.gram 文件。
+
+在 rime-ice 目录下新建一个 `rime_ice.custom.yaml` 文件， 内容如下：
+
+如果是白霜输入法，则是`rime_frost.custom.yaml`这个文件名
+
+```yaml
+patch:
+  grammar:
+    language: amz-v2n3m1-zh-hans
+    collocation_max_length: 5
+    collocation_min_length: 2
+  translator/contextual_suggestions: true
+  translator/max_homophones: 7
+  translator/max_homographs: 7
+```
+
+> 参考https://manateelazycat.github.io/2024/12/17/fcitx-best-config/
+
 ### rime
 
 详细介绍[wiki](https://wiki.archlinuxcn.org/wiki/Rime)

@@ -1223,6 +1223,43 @@ paru -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sar
 
 输入法有问题，需要重置，使用命令 `rm -r ~/.config/fcitx` 然后注销即可。
 
+emojis字体需要安装`paru -S noto-fonts-emoji` 然后通过设置`nano ~/.config/fontconfig/fonts.conf`，然后进行配置：
+
+```conf
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+ <alias>
+   <family>sans-serif</family>
+   <prefer>
+     <family>Noto Sans</family>
+     <family>Noto Color Emoji</family>
+     <family>Noto Emoji</family>
+     <family>DejaVu Sans</family>
+   </prefer> 
+ </alias>
+
+ <alias>
+   <family>serif</family>
+   <prefer>
+     <family>Noto Serif</family>
+     <family>Noto Color Emoji</family>
+     <family>Noto Emoji</family>
+     <family>DejaVu Serif</family>
+   </prefer>
+ </alias>
+
+ <alias>
+  <family>monospace</family>
+  <prefer>
+    <family>Noto Mono</family>
+    <family>Noto Color Emoji</family>
+    <family>Noto Emoji</family>
+   </prefer>
+ </alias>
+</fontconfig>
+```
+
 ### fcitx5
 
 基本安装 `paru -S fcitx5-im fcitx5-chinese-addons  `

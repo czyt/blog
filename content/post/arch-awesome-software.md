@@ -855,28 +855,32 @@ zssh 安装 `paru -S zssh` 配合lrzsz(安装命令 `paru -S lrzsz`)食用效果
 >lrzsz 安装后在/usr/bin下面目录下有下面几个文件lrzsz-rb、lrzsz-rx、lrzsz-rz、lrzsz-sb、lrzsz-sx、lrzsz-sz可以使用下面的命令来调整使用
 >
 >```bash
-> sudo ln -s /usr/bin/lrzsz-sz /usr/bin/sz
-> sudo ln -s /usr/bin/lrzsz-rz /usr/bin/rz
-> sudo chmod +x /usr/bin/sz  /usr/bin/rz
+>sudo ln -s /usr/bin/lrzsz-sz /usr/bin/sz
+>sudo ln -s /usr/bin/lrzsz-rz /usr/bin/rz
+>sudo chmod +x /usr/bin/sz  /usr/bin/rz
 >```
 >
 >然后一般搭配zssh来使用
 >
 >**上传文件**
+>
+>```bash
 >先按一下组合键
->\#ctrl+@
->zssh >                           //这里切换到了本地机器
->zssh>pwd                      //看一下本地机器的目录在那
->zssh>ls                        //看一下有那些文件，还能随意的切换目录哦
+>#ctrl+@
+>zssh >                           //这里切换到了本地机器`
+>zssh>pwd                      //看一下本地机器的目录在那`
+>zssh>ls                        //看一下有那些文件，还能随意的切换目录哦`
 >zssh>sz 123.txt             //例如上传本地机器的当前目录的123.txt到远程机器的当前目录，上传完成后会显示Transfer complete的提示，然后回车键回到正常的命令界面
+>```
 >
 >**下载文件**
->\#sz 123.txt                   //在远程服务器上,启动sz, 准备发送文件123.txt到本地计算机
->这时会看到一堆乱码
->按组合键
->\#ctrl+@
+>
+>```bash
+>#sz 123.txt                   //在远程服务器上,启动sz, 准备发送文件123.txt到本地计算机
+>这时会看到一堆乱码按组合键#ctrl+@
 >zssh > pwd                  //看看在那个目录,cd 切换到合适的目录
 >zssh > rz                    //开始接收上面的123.txt文件；注意哦，这里只需输入rz这个命令就可以了
+>```
 
 [trzsz](https://github.com/trzsz/trzsz) 安装 `paru -S trzsz ` 
 

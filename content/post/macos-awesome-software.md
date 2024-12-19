@@ -181,6 +181,8 @@ draft: false
   >homebrew的配置可以使用https://sspai.com/post/32933中的mackup进行备份.`brew install mackup`
   >
   >全部更新 `brew upgrade -g`
+  >
+  >可以通过` brew bundle dump` 来备份所有通过brew 安装的内容，这也在换电脑的时候，可以把 dotenv 和 Brewfile 都弄到一个 repo 当中，可以快速完成迁移。
 
 - FastZip - Mac强大的解压缩工具。
 

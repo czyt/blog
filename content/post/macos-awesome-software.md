@@ -401,6 +401,8 @@ rustup install stable
 - Warp - 有AI功能的终端，开箱即用。缺点是需要登录。
 - iTerm2 - Mac上最好的终端之一，搭配oh-my-zsh，好用又好看，程序员必备终端。
 
+> iterm2支持zmodern文件上传  https://github.com/robberphex/iTerm2-zmodem
+
 ### IDE
 
 - VSCode - 微软出品的宇宙最强编辑器。

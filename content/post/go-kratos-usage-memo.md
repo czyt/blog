@@ -3619,4 +3619,5 @@ func main() {
 + [Google API 设计指南](https://cloud.google.com/apis/design?hl=zh-cn)
 + [Go Style Best Practices](https://google.github.io/styleguide/go/best-practices.html)
 + [The Copenhagen Book](https://thecopenhagenbook.com) lucia-auth 作者写的一本关于auth的小册
++ [protoc-gen-fieldmask插件](https://yeqown.xyz/2022/01/25/protoc-gen-fieldmask%E6%8F%92%E4%BB%B6/)
 

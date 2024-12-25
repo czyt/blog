@@ -587,3 +587,4 @@ func main() {
 ## 6. 其他库
 
 + [go-ble的fork版本](https://github.com/SensefinityCloud/go-ble) 支持自定义广播信息
++ [rigado的go-ble](https://github.com/rigado/ble)

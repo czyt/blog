@@ -587,6 +587,7 @@ func main() {
 ## 6. 其他库或例子
 
 + [go-ble的fork版本](https://github.com/SensefinityCloud/go-ble) 支持自定义广播信息
++ [搜索并显示附近airpod的电量](https://github.com/fagnercarvalho/go-airpods)
 + [rigado的go-ble](https://github.com/rigado/ble)
 + [go-victron](https://github.com/koestler/go-victron)
 + [go-bluetooth](https://github.com/muka/go-bluetooth)

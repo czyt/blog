@@ -583,3 +583,7 @@ func main() {
 2. 广播数据包长度限制为31字节
 3. 使用标准 UUID 时需要确保有适当权限
 4. 建议先使用 nRF Connect 等工具测试
+
+## 6. 其他库
+
++ [go-ble的fork版本](https://github.com/SensefinityCloud/go-ble) 支持自定义广播信息

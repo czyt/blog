@@ -16,6 +16,7 @@ draft: false
 + https://ikrima.dev/dev-notes/zig/zig-metaprogramming/
 + https://zig.guide
 + https://course.ziglang.cc
++ [Introduction to Zig](https://pedropark99.github.io/zig-book/)
 
 ## zig资讯
 + [zig news](https://zig.news)

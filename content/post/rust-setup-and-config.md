@@ -942,11 +942,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@stable
         with:
           profile: minimal
-          # Since rust 1.72, some platforms are tier 3
-          toolchain: 1.75
           default: true
 
       - name: Install OpenSSL
@@ -988,12 +986,12 @@ jobs:
           version: v4.0.2
           files: target/${{ matrix.target }}/release/${{ matrix.exe }}
           args: -q --best --lzma
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: DiscordLauncher-${{ matrix.target }}
           path: target/${{ matrix.target }}/release/${{ matrix.exe }}
       - name: Zip Release
-        uses: TheDoctor0/zip-release@0.6.1
+        uses: TheDoctor0/zip-release@0.7.5
         with:
           type: zip
           filename: DiscordLauncher-${{ matrix.target }}.zip

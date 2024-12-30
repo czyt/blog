@@ -12,6 +12,7 @@ draft: false
 
 ## 教程
 + https://zigbyexample.github.io
++ [Zig Cookbook](https://cookbook.ziglang.cc/intro.html)
 + https://ikrima.dev/dev-notes/zig/zig-crash-course/
 + https://ikrima.dev/dev-notes/zig/zig-metaprogramming/
 + https://zig.guide

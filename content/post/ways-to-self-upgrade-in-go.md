@@ -207,6 +207,12 @@ func doUpdate(url string) error {
 }
 ```
 
+### facebook grace
+
+仓库地址  https://github.com/facebookarchive/grace
+
+cloudflared的代码 https://github.com/cloudflare/cloudflared/blob/master/cmd/cloudflared/updater/update.go
+
 ## 相关文章
 
 - https://mosn.io/docs/products/structure/smooth-upgrade/

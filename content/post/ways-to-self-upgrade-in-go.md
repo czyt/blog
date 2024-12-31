@@ -207,3 +207,6 @@ func doUpdate(url string) error {
 }
 ```
 
+## 相关文章
+
+- https://mosn.io/docs/products/structure/smooth-upgrade/

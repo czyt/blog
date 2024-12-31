@@ -211,3 +211,4 @@ func doUpdate(url string) error {
 
 - https://mosn.io/docs/products/structure/smooth-upgrade/
 - https://blog.cloudflare.com/graceful-upgrades-in-go/
+- https://blog.cloudflare.com/oxy-the-journey-of-graceful-restarts/

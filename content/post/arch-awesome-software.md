@@ -625,12 +625,24 @@ ClientAliveCountMax 2
 
 这些设置将使 SSH 客户端或服务器每300秒(5分钟)向另一端发送一个空包，如果在2次尝试后没有收到任何响应，则放弃，此时连接很可能已被丢弃。对于客户端，可以在配置文件`/etc/ssh/sshd_config`,添加下面内容：
 
-```
+```yaml
 TCPKeepAlive yes
 ServerAliveInterval 60
 ```
 
-参考 `ssh_config`的帮助文档
+如果需要通过代理来ssh到目标主机，比如我们的服务器可能在国外，国内不能直连，那么可以通过nc来进行配置，在`~/.ssh/config`中加入ProxyCommand这段内容，下面是一个例子：
+
+> 如果报错：`nc: invalid option -- X`，那么可能是系统的nc不是openbsd的nc，需要通过 `paru -S openbsd-netcat`
+
+```
+Host github.com
+    HostName github.com
+    User git
+    Port 22
+    ProxyCommand nc -X 5 -x 192.168.49.1:8000 %h %p
+```
+
+其他的选项，请参考 `ssh_config`的帮助文档
 
 > **ServerAliveCountMax**
 > Sets the number of server alive messages (see below) which may be sent without ssh(1) receiving any messages back from the server. If this threshold is reached while server alive messages are being sent, ssh will disconnect from the server, terminating the session. It is important to note that the use of server alive messages is very different from TCPKeepAlive (below). The server alive messages are sent through the encrypted channel and therefore will not be spoofable. The TCP keepalive option enabled by TCPKeepAlive is spoofable. The server alive mechanism is valuable when the client or server depend on knowing when a connection has become inactive.

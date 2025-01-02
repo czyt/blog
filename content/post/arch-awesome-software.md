@@ -231,7 +231,7 @@ paru --needed xfce4-goodies
 ### 中文字体
 
 ```bash
-paru -S adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts noto-fonts-cjk wqy-microhei wqy-microhei-lite wqy-bitmapfont wqy-zenhei ttf-arphic-ukai ttf-arphic-uming nerd-fonts-jetbrains-mono ttf-material-design-icons ttf-joypixels  ttf-dejavu
+paru -S adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts noto-fonts-cjk wqy-microhei wqy-microhei-lite wqy-bitmapfont wqy-zenhei ttf-arphic-ukai ttf-arphic-uming nerd-fonts-jetbrains-mono ttf-material-design-icons ttf-joypixels  ttf-dejavu ttf-sarasa-gothic
 ```
 
 其他配置选项参考 [Arch wiki 简体中文本地化](https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96)

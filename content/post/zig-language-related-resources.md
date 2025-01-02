@@ -18,6 +18,7 @@ draft: false
 + https://zig.guide
 + https://course.ziglang.cc
 + [Introduction to Zig](https://pedropark99.github.io/zig-book/)
++ [Zig Common Tasks](https://renatoathaydes.github.io/zig-common-tasks/)
 
 ## zig资讯
 + [zig news](https://zig.news)

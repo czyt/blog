@@ -53,6 +53,7 @@ switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
 + [rutracker的switch板块](https://rutracker.org/forum/viewforum.php?f=1605)
 + [上游世界](https://www.vgter.net)
 + [nsw2u](https://nsw2u.com)
++ [Game中文网](https://www.ns211.com)
 
 ### 相关文章
 

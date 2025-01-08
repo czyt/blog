@@ -1357,7 +1357,7 @@ patch:
 
 然后可以搭配万象输入法的模型，更好地优化体验，先切换到输入法目录,以我这里里为例`$HOME/.local/share/fcitx5/rime/`
 
-下载 [rime-lmdg](https://github.com/amzxyz/RIME-LMDG/releases), 这里下载的是 amz-v2n3m1-zh-hans.gram 文件。
+下载 [rime-lmdg](https://github.com/amzxyz/RIME-LMDG/releases), 这里下载的是 wanxiang-lts-zh-hans.gram 文件。
 
 在 rime-ice 目录下新建一个 `rime_ice.custom.yaml` 文件， 内容如下：
 
@@ -1366,7 +1366,7 @@ patch:
 ```yaml
 patch:
   grammar:
-    language: amz-v2n3m1-zh-hans
+    language: wanxiang-lts-zh-hans
     collocation_max_length: 5
     collocation_min_length: 2
   translator/contextual_suggestions: true

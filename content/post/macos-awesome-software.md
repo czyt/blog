@@ -72,6 +72,7 @@ draft: false
 ## 代理工具
 
 - [nekoray](https://github.com/abbasnaqdi/nekoray-macos/releases)
+- [v2rayN](https://github.com/2dust/v2rayN)
 - Shadowrocket - 代理工具，遨游世界。
 - [Fclash](https://github.com/chen08209/FlClash)
 - Clash - 代理工具，遨游世界。由于不可抗力因素，原作者删库，推荐这个替代。

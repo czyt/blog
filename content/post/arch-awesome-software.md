@@ -1019,6 +1019,8 @@ realvnc-viewer `paru -S realvnc-vnc-viewer`
 [看雪安全接入](https://ksa.kanxue.com)ksa 安装 `paru -S ksa` 
 v2ray 安装 `paru -S v2ray`  （安装配置工具`paru -S qv2ray ` qv2ray 插件 `paru -S qv2ray-plugin` ，[福利订阅](https://jiang.netlify.app) 新版已经使用AppImage格式发布，下载AppImage格式即可 或者 v2rayDesktop `paru -S v2ray-desktop` ）
 
+[v2rayN](https://github.com/2dust/v2rayN) 安装 `paru -S v2rayn` 或者 `paru -S v2rayn-bin`
+
 gost 安装 `paru -S gost` 
 
 >我们一般当客户端使用，连接服务器：

@@ -49,6 +49,7 @@ draft: false
 + https://www.howtocodeit.com
 + https://speedsheet.io/s/rust
 + https://roadmap.sh/rust
++ [Fast Track to Rust](https://freddiehaddad.github.io/fast-track-to-rust/)
 ### gRPC相关
 + https://blog.logrocket.com/rust-and-grpc-a-complete-guide/
 

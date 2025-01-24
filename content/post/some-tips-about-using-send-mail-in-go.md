@@ -98,8 +98,6 @@ func (w *inviteCode) Email() hermes.Email {
 }
 ```
 
-
-
 ## 参考资料
 
 + https://taoshu.in/net/email-dns.html
@@ -107,6 +105,87 @@ func (w *inviteCode) Email() hermes.Email {
 ## 好用的库
 
 + https://github.com/Shopify/gomail （[源仓库](https://github.com/go-gomail/gomail) 作者已经离开人世 这个是fork继续维护的版本）
+
+> 这个库有个问题就是如果批量发送邮件的时候，接收人的邮箱有一个不存在，就会导致发送失败，如果有批量发送的逻辑，建议使用`Rcpt`指令进行对收件人邮箱进行检测。参考代码：
+>
+> ```go
+> package main
+> 
+> import (
+> 	"fmt"
+> 	"net"
+> 	"net/mail"
+> 	"net/smtp"
+> 	"strings"
+> 	"time"
+> )
+> 
+> func VerifyEmailSMTP(email string) (bool, error) {
+> 	addr, err := mail.ParseAddress(email)
+> 	if err != nil {
+> 		return false, fmt.Errorf("无效的邮箱地址格式: %w", err)
+> 	}
+> 	domain := strings.SplitN(addr.Address, "@", 2)[1]
+> 
+> 	mx, err := net.LookupMX(domain)
+> 	if err != nil {
+> 		return false, fmt.Errorf("找不到邮箱域名 %s 的 MX 记录: %w", domain, err)
+> 	}
+> 
+> 	client, err := smtp.Dial(fmt.Sprintf("%s:%d", mx[0].Host, 25)) // 默认 SMTP 端口 25
+> 	if err != nil {
+> 		return false, fmt.Errorf("连接到 SMTP 服务器失败: %w", err)
+> 	}
+> 	defer client.Close()
+> 
+> 	// 设置超时 (可选，防止长时间等待)
+> 	client.Timeout = 5 * time.Second
+> 
+> 	err = client.Hello("example.com") // 发送 HELO/EHLO 命令 (你的域名或任意域名)
+> 	if err != nil {
+> 		return false, fmt.Errorf("SMTP HELO 失败: %w", err)
+> 	}
+> 
+> 	err = client.Mail("test@example.com") // 发送 MAIL FROM 命令 (任意发件人地址)
+> 	if err != nil {
+> 		return false, fmt.Errorf("SMTP MAIL FROM 失败: %w", err)
+> 	}
+> 
+> 	err = client.Rcpt(email) // 发送 RCPT TO 命令 (目标邮箱地址)
+> 	if err != nil {
+> 		if strings.Contains(err.Error(), "550") || strings.Contains(err.Error(), "551") || strings.Contains(err.Error(), "501") || strings.Contains(err.Error(), "500") {
+> 			// 常见的邮箱不存在或无效错误代码 (可能需要根据实际情况调整判断)
+> 			return false, nil // 邮箱可能不存在
+> 		}
+> 		return false, fmt.Errorf("SMTP RCPT TO 失败: %w", err) // 其他错误，可能是服务器问题或其他原因
+> 	}
+> 
+> 	// 如果 RCPT TO 没有返回错误，可能表示邮箱存在 (但不能完全保证)
+> 	return true, nil
+> }
+> 
+> func main() {
+> 	emails := []string{
+> 		"test@gmail.com",       // 可能是存在的邮箱
+> 		"nonexistent@gmail.com", // 可能是不存在的邮箱
+> 		"invalid-format",      // 无效格式
+> 		"test@example.invalid", // 域名无效
+> 	}
+> 
+> 	for _, email := range emails {
+> 		exists, err := VerifyEmailSMTP(email)
+> 		if err != nil {
+> 			fmt.Printf("校验邮箱 %s 出错: %v\n", email, err)
+> 		} else {
+> 			fmt.Printf("邮箱 %s 是否可能存在: %t\n", email, exists)
+> 		}
+> 	}
+> }
+> 
+> ```
+>
+> 下面的这个go-mail的库已经支持自动检测，发送邮件是部分失败。
+
 + https://github.com/wneessen/go-mail
 + https://github.com/inbucket/inbucket
 

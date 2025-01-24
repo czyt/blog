@@ -14,3 +14,4 @@ tags: ["rust"]
  - [官方教程](https://docs.slint.dev/latest/docs/slint/)
 ## UI 库
 - [SurrealismUI](https://github.com/Surrealism-All/SurrealismUI)
+- [JUI](https://github.com/lifeRobot/jui)

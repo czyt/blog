@@ -38,6 +38,7 @@ TegraRCM: https://github.com/eliboa/TegraRcmGUI/releases
 + https://rentry.org/EristaEmuNAND
 + Sig Patches： https://gbatemp.net/threads/sigpatches-for-atmosphere-hekate-fss0-fusee-package3.571543/
 + EaseUs Partition: https://www.easeus.com/partition-manager/epm-free.html
++ switch主题 https://themezer.net
 
 ## 游戏下载
 
@@ -55,9 +56,11 @@ switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
 + [nsw2u](https://nsw2u.com)
 + [Game中文网](https://www.ns211.com)
 
-### 相关文章
+### 相关文章及博客
 
-[Switch 软破、硬破总结](https://chenshake.com/2024/04/10/switch-Hack/)
+- [Switch 软破、硬破总结](https://chenshake.com/2024/04/10/switch-Hack/)
+
+- [字节智造](https://www.zsxcool.com)
 
 ### 其他
 

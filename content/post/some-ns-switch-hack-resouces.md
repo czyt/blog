@@ -55,6 +55,7 @@ switch游戏下载 https://www.123pan.com/s/sl82jv-6JVV3.html
 + [上游世界](https://www.vgter.net)
 + [nsw2u](https://nsw2u.com)
 + [Game中文网](https://www.ns211.com)
++ [switch主题](https://themezer.net)
 
 ### 相关文章及博客
 

@@ -116,6 +116,7 @@ draft: false
 - Permute3 - Mac上简单好用的视频，音频转换工具。
 - 剪映 - 字节跳动出品的视频剪辑工具。（推荐国际版）。
 - Final Cut Pro - Apple出品的视频剪辑工具，功能无比强大，好莱坞大片御用。
+- [Gifski](https://github.com/sindresorhus/Gifski) 一款专注于将视频转换为高质量 GIF 动图的工具
 
 ## 音乐工具
 

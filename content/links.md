@@ -20,6 +20,7 @@ summary: "一些链接"
 + [Boldly Go](https://boldlygo.tech)
 + [shane](https://shane.ai)
 + [lazycat王勇](https://manateelazycat.github.io)
++ [destel](https://destel.dev)
 
 ### Web
 

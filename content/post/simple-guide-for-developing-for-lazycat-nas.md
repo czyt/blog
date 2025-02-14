@@ -75,6 +75,10 @@ Todo
 
 + `_outbound`(微服局域网的默认出口IP)
 
++ `host.lzcapp` 一个类似"虚拟网卡"的地址。仅lzcapp之间访问。
+
+>  ssh ping上面这个地址是ping不通的
+
 
 ## 软件调试
 

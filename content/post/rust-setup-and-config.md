@@ -275,6 +275,28 @@ panic = "abort"
 
 ## 其他实用工具
 
+### Rustowl
+
+官方仓库 https://github.com/cordx56/rustowl
+
+可视化 Rust 中的所有权和生命周期，以便进行调试和优化
+
+RustOwl 通过使用下划线来可视化这些内容：
+
+- 🟩 绿色：变量的实际生命周期
+- 🟦 蓝色：不可变借款
+- 🟪 紫色：可变借款
+- 🟧 橙色：值移动/函数调用
+- 🟥 红色：生命周期误差 - 实际生命周期与预期生命周期之间的差异
+
+安装 
+
+```bash
+curl -L "https://github.com/cordx56/rustowl/releases/download/v0.1.1/install.sh" | sh
+```
+
+
+
 ### cacon
 
 [bacon](https://dystroy.org/bacon/)是一个后台的 rust 代码检查器.它专为最小化交互而设计，因此您可以让它与编辑器一起运行，并收到有关 Rust 代码中的警告、错误或测试失败的通知。

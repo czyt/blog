@@ -295,7 +295,7 @@ draft: false
 
 - 超级右键 - Mac强大的右键菜单工具。
 
-- Mos - 鼠标反转工具，可设置平滑滚动。
+- [Mos](https://github.com/Caldis/Mos) - 鼠标反转工具，可设置平滑滚动。
 
 - Scroll Reverser - 鼠标反转工具。
 

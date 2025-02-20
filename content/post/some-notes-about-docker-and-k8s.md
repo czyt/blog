@@ -282,7 +282,7 @@ docker rmi <image-id>
    docker logs -f <container-id>
    ```
 
-## 6. 常见问题排查
+### 常见问题排查
 
 -如果无法访问应用，检查端口映射是否正确
 

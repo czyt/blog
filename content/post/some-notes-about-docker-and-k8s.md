@@ -109,6 +109,188 @@ CMD ["./main"]
 docker images your-app-name
 ```
 
+### 一个前端项目
+
+Dockerfile
+
+```dockerfile
+# 第一阶段：依赖安装和构建
+FROM node:18-alpine AS builder
+
+# 设置工作目录
+WORKDIR /app
+
+# 安装 pnpm 并配置国内镜像源
+RUN corepack enable && corepack prepare pnpm@8.15.9 --activate
+
+RUN pnpm config set registry https://registry.npmmirror.com && \
+    pnpm config set disturl https://npmmirror.com/mirrors/node && \
+    pnpm config set electron_mirror https://npmmirror.com/mirrors/electron/
+# 复制 package.json 和 pnpm-lock.yaml
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+
+# 添加 packageManager 字段到 package.json
+RUN npm pkg set packageManager="pnpm@8.15.9"
+
+# 安装依赖（使用配置好的镜像源）
+RUN pnpm install || pnpm install --force
+
+# 复制源代码
+COPY . .
+
+# 构建应用
+RUN pnpm build
+
+# 第二阶段：生产环境
+FROM node:18-alpine AS runner
+
+WORKDIR /app
+
+# 安装 pnpm 并配置国内镜像源
+RUN corepack enable && corepack prepare pnpm@8.15.9 --activate && \
+    pnpm config set registry https://registry.npmmirror.com
+
+# 设置为生产环境
+ENV NODE_ENV production
+
+# 从builder阶段复制必要文件
+COPY --from=builder /app/package.json ./
+COPY --from=builder /app/pnpm-lock.yaml ./
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/next.config.js ./
+
+# 仅安装生产依赖
+RUN npm pkg set packageManager="pnpm@8.15.9" && \
+    pnpm install --prod
+
+# 添加非 root 用户
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs && \
+    chown -R nextjs:nodejs /app
+
+USER nextjs
+
+# 暴露端口 3000
+EXPOSE 3000
+
+# 设置环境变量
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
+# 启动应用
+CMD ["pnpm", "start"]
+```
+
+## 构建与发布
+### 本地构建镜像
+
+```bash
+  # 在Dockerfile 所在目录执行构建命令
+docker build -t your-app-name:latest .
+
+# 示例：如果你的应用名为 my-next-app
+docker build -t my-next-app:latest .
+```
+
+### 本地运行镜像
+
+```bash
+  # 基本运行命令
+docker run -p 3000:3000 your-app-name:latest
+
+# 使用后台运行模式
+docker run -d -p 3000:3000 your-app-name:latest
+
+# 如果需要指定环境变量
+docker run -d -p 3000:3000 \-e NODE_ENV=production \
+  your-app-name:latest
+```
+
+访问 `http://localhost:3000` 即可看到应用运行效果。
+
+### 推送到 DockerHub
+
+#### 准备工作
+
+```bash
+  # 1. 登录到 DockerHub
+docker login
+
+# 2. 为镜像添加标签（格式：用户名/镜像名:标签）
+docker tag your-app-name:latest your-dockerhub-username/your-app-name:latest
+
+# 示例：
+# docker tag my-next-app:latest johndoe/my-next-app:latest
+```
+
+#### 推送镜像
+
+```bash
+  # 推送到 DockerHub
+docker push your-dockerhub-username/your-app-name:latest
+```
+
+### 常用管理命令
+
+```bash
+  # 查看本地镜像列表
+docker images
+
+# 查看运行中的容器
+docker ps
+
+# 停止运行中的容器
+docker stop <container-id>
+
+# 删除容器
+docker rm <container-id>
+
+# 删除镜像
+docker rmi <image-id>
+```
+
+### 注意事项
+
+1. **镜像命名规范**
+
+   - 使用小写字母
+   - 可以包含数字和下划线
+   - 版本标签建议语义化，如 `v1.0.0`、`latest`
+
+2. **安全建议**
+
+   - 不要在镜像中包含敏感信息
+   - 推送前确保镜像已经完全测试
+   - 使用 `.dockerignore` 排除不必要的文件
+
+3. **资源清理**
+
+   ```bash       
+     # 清理未使用的镜像和容器
+   docker system prune -a
+   ```
+
+4. **查看容器日志**
+
+   ```bash
+     # 查看容器运行日志
+   docker logs <container-id>
+   
+   # 实时查看日志
+   docker logs -f <container-id>
+   ```
+
+## 6. 常见问题排查
+
+-如果无法访问应用，检查端口映射是否正确
+
+- 如果推送失败，确认是否正确登录 DockerHub
+- 如果构建失败，检查 Dockerfile 语法和依赖配置
+
+这些步骤将帮助你完成从本地构建到部署到 DockerHub 的完整流程。记得替换示例中的 `your-app-name` 和 `your-dockerhub-username` 为你实际使用的名称。
+
 ## 参考链接
 
 ### docker相关

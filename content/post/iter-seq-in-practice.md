@@ -79,7 +79,7 @@ subSeq := FirstN[string](SkipFirstN[string](it, skip, limit)
 
 从原始序列中创建一系列固定大小的序列，而不创建任何中间切片或数组。
 
-这很有用，当你向只接受 N 个项目的 API 提供数据时。通过一些工作，这可以使其与 goroutines 和 channels 一起工作，以并行处理生成的数据块。
+当你向只接受 N 个项目的 API 提供数据时，这很实用。通过一些编码的改造，可以和 goroutines 和 channels 一起使用来处理通过并行处理生成的数据块。
 
 ```go
 // Chunk returns an iterator over consecutive sub-slices of up to n elements of s.
@@ -154,7 +154,7 @@ func SeqToSeq2[K any, V any](is iter.Seq[V], keyFunc func(v V) K) iter.Seq2[K, V
 
 这是按照定义最接近 Monad 行为的，跳过了 `bind` 语义，直接将 `map` 函数应用于值。如果你的值对象有一个名为 `ID` 的字段作为键，那么 `keyFunc` 可以是简单地返回 `v.ID` ，也可以是复杂地计算对象的 `SHA256` 哈希值作为键。或者，甚至不是映射，比如从 `Person` 结构中返回 `FirstName` 和 `LastName` 。
 
-事实是 `K` 值被键入为 `any` 而不是 `comparable` ，这意味着它不仅适用于来自映射的键。
+事实是 `K` 的值被定义为 `any`类型， 而不是 `comparable` 。这意味着它不只适用于来自Map对象的键值(Key)。
 
 ```go
 func SeqToSeq2[K any, V any](is iter.Seq[V], keyFunc func(v V) K) iter.Seq2[K, V] {

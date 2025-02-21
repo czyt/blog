@@ -1195,6 +1195,8 @@ U盘启动制作[etcher](https://github.com/balena-io/etcher) `paru -S etcher-bi
 
 剪切板工具 [uniclip](https://github.com/quackduck/uniclip) `paru -S uniclip`
 
+一个开源的绘图画布应用[pointless](https://github.com/kkoomen/pointless) `paru -S pointless` 或者 `paru -S pointless-bin`
+
 Screen屏幕共享软件 安装 `paru -S screen-desktop ` 
 
  universal android debloater 安装 `paru -S universal-android-debloater`
@@ -1866,6 +1868,8 @@ fish_path=(status fish-path) exec $fish_path -C "emit _tide_init_install"
 ### nushell
 
 安装 `paru -S nushell` 
+
+ghostty `paru -S ghostty`
 
 [Warp Terminal](https://www.warp.dev)  `paru -S warp-terminal`
 

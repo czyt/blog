@@ -584,7 +584,662 @@ func main() {
 3. 使用标准 UUID 时需要确保有适当权限
 4. 建议先使用 nRF Connect 等工具测试
 
-## 6. 其他库或例子
+
+
+## 6. 蓝牙分包
+
+对于不同设备，可能需要进行分包处理，下面提供一个处理的go库封装
+
+> 使用claude 3.7 基于我现有代码进行优化提炼
+
+类库代码:
+
+```go
+// Package blepacket provides a generic implementation for BLE packet fragmentation and reassembly
+package blepacket
+
+import (
+	"context"
+	"crypto/rand"
+	"encoding/binary"
+	"errors"
+	"fmt"
+	"hash/crc32"
+	"io"
+	"sync"
+	"time"
+)
+
+const (
+	// PacketHeaderSize is the size of the packet header
+	PacketHeaderSize = 10 // Magic(2) + Session(4) + Index(2) + Total(2)
+	
+	// PacketChecksumSize is the size of the packet checksum
+	PacketChecksumSize = 4
+	
+	// MagicBytes is the magic identifier for packets in this protocol
+	MagicBytes uint16 = 0xBEEF
+)
+
+// Errors returned by the packet protocol
+var (
+	ErrInvalidPacket = errors.New("invalid packet format")
+	ErrChecksumMismatch = errors.New("packet checksum mismatch")
+	ErrPayloadTooLarge = errors.New("payload too large for packets")
+	ErrSessionIncomplete = errors.New("session incomplete or timed out")
+)
+
+// PacketTransporter defines an interface for packet transport
+type PacketTransporter interface {
+	// Write sends a packet over the transport
+	Write(data []byte) (int, error)
+	
+	// MTU returns the Maximum Transmission Unit for the transport
+	MTU() int
+}
+
+// BLETransporter implements PacketTransporter for BLE
+type BLETransporter struct {
+	writer      io.Writer
+	mtu         int
+	writeDelay  time.Duration
+}
+
+// NewBLETransporter creates a new BLE transporter
+func NewBLETransporter(writer io.Writer, mtu int) *BLETransporter {
+	return &BLETransporter{
+		writer:     writer,
+		mtu:        mtu,
+		writeDelay: 20 * time.Millisecond,
+	}
+}
+
+// Write sends data over BLE
+func (t *BLETransporter) Write(data []byte) (int, error) {
+	n, err := t.writer.Write(data)
+	time.Sleep(t.writeDelay) // Add delay to avoid overwhelming the receiver
+	return n, err
+}
+
+// MTU returns the Maximum Transmission Unit for BLE
+func (t *BLETransporter) MTU() int {
+	return t.mtu
+}
+
+// SetWriteDelay sets the delay between packet writes
+func (t *BLETransporter) SetWriteDelay(delay time.Duration) {
+	t.writeDelay = delay
+}
+
+// Packet represents a single fragment of a larger payload
+type Packet struct {
+	Magic    uint16
+	Session  uint32
+	Index    uint16
+	Total    uint16
+	Payload  []byte
+	Checksum uint32
+}
+
+// Serialize converts a packet to a byte slice
+func (p *Packet) Serialize() []byte {
+	payloadLen := len(p.Payload)
+	data := make([]byte, PacketHeaderSize+payloadLen+PacketChecksumSize)
+	
+	// Write header
+	binary.BigEndian.PutUint16(data[0:2], p.Magic)
+	binary.BigEndian.PutUint32(data[2:6], p.Session)
+	binary.BigEndian.PutUint16(data[6:8], p.Index)
+	binary.BigEndian.PutUint16(data[8:10], p.Total)
+	
+	// Write payload
+	copy(data[PacketHeaderSize:PacketHeaderSize+payloadLen], p.Payload)
+	
+	// Calculate and write checksum (excluding the checksum field itself)
+	p.Checksum = crc32.ChecksumIEEE(data[:PacketHeaderSize+payloadLen])
+	binary.BigEndian.PutUint32(data[PacketHeaderSize+payloadLen:], p.Checksum)
+	
+	return data
+}
+
+// DeserializePacket converts a byte slice to a packet
+func DeserializePacket(data []byte) (*Packet, error) {
+	if len(data) < PacketHeaderSize+PacketChecksumSize {
+		return nil, ErrInvalidPacket
+	}
+	
+	// Read header
+	magic := binary.BigEndian.Uint16(data[0:2])
+	if magic != MagicBytes {
+		return nil, ErrInvalidPacket
+	}
+	
+	session := binary.BigEndian.Uint32(data[2:6])
+	index := binary.BigEndian.Uint16(data[6:8])
+	total := binary.BigEndian.Uint16(data[8:10])
+	
+	// Read payload
+	payloadLen := len(data) - PacketHeaderSize - PacketChecksumSize
+	payload := make([]byte, payloadLen)
+	copy(payload, data[PacketHeaderSize:PacketHeaderSize+payloadLen])
+	
+	// Verify checksum
+	expectedChecksum := binary.BigEndian.Uint32(data[PacketHeaderSize+payloadLen:])
+	actualChecksum := crc32.ChecksumIEEE(data[:PacketHeaderSize+payloadLen])
+	
+	if expectedChecksum != actualChecksum {
+		return nil, ErrChecksumMismatch
+	}
+	
+	return &Packet{
+		Magic:    magic,
+		Session:  session,
+		Index:    index,
+		Total:    total,
+		Payload:  payload,
+		Checksum: expectedChecksum,
+	}, nil
+}
+
+// CreateSession generates a random session ID
+func CreateSession() (uint32, error) {
+	var sessionBytes [4]byte
+	if _, err := rand.Read(sessionBytes[:]); err != nil {
+		return 0, err
+	}
+	return binary.BigEndian.Uint32(sessionBytes[:]), nil
+}
+
+// PacketSender handles sending large payloads as multiple packets
+type PacketSender struct {
+	transport PacketTransporter
+}
+
+// NewPacketSender creates a new packet sender
+func NewPacketSender(transport PacketTransporter) *PacketSender {
+	return &PacketSender{
+		transport: transport,
+	}
+}
+
+// SendPayload fragments and sends a payload
+func (s *PacketSender) SendPayload(payload []byte) error {
+	if len(payload) == 0 {
+		// Handle empty payload special case
+		session, err := CreateSession()
+		if err != nil {
+			return err
+		}
+		
+		packet := &Packet{
+			Magic:   MagicBytes,
+			Session: session,
+			Index:   0,
+			Total:   1,
+			Payload: []byte{},
+		}
+		
+		packetData := packet.Serialize()
+		_, err = s.transport.Write(packetData)
+		return err
+	}
+	
+	// Calculate maximum payload size per packet
+	mtu := s.transport.MTU()
+	maxPayloadSize := mtu - PacketHeaderSize - PacketChecksumSize
+	if maxPayloadSize <= 0 {
+		return fmt.Errorf("MTU %d is too small for packet overhead", mtu)
+	}
+	
+	// Calculate total number of packets
+	totalPackets := (len(payload) + maxPayloadSize - 1) / maxPayloadSize
+	if totalPackets > 65535 { // max uint16
+		return ErrPayloadTooLarge
+	}
+	
+	// Create session
+	session, err := CreateSession()
+	if err != nil {
+		return err
+	}
+	
+	// Send packets
+	for i := 0; i < totalPackets; i++ {
+		startOffset := i * maxPayloadSize
+		endOffset := startOffset + maxPayloadSize
+		if endOffset > len(payload) {
+			endOffset = len(payload)
+		}
+		
+		packet := &Packet{
+			Magic:   MagicBytes,
+			Session: session,
+			Index:   uint16(i),
+			Total:   uint16(totalPackets),
+			Payload: payload[startOffset:endOffset],
+		}
+		
+		packetData := packet.Serialize()
+		if _, err := s.transport.Write(packetData); err != nil {
+			return err
+		}
+	}
+	
+	return nil
+}
+
+// SessionTracker represents an in-progress packet session
+type SessionTracker struct {
+	Packets    []*Packet
+	UpdateTime time.Time
+	Complete   bool
+}
+
+// Processor defines a function type that processes assembled payloads
+type Processor[T any] func([]byte) (T, error)
+
+// ReceivedPacket represents a packet received from a device
+type ReceivedPacket struct {
+	DeviceID string
+	Data     []byte
+}
+
+// ProcessedPayload represents a processed payload from a device
+type ProcessedPayload[T any] struct {
+	DeviceID string
+	Payload  T
+	Session  uint32
+}
+
+// PacketReceiver handles receiving and assembling packets
+type PacketReceiver[T any] struct {
+	sessions        map[string]map[uint32]*SessionTracker
+	sessionsMutex   sync.RWMutex
+	processor       Processor[T]
+	timeout         time.Duration
+	inputChan       chan ReceivedPacket
+	outputChan      chan ProcessedPayload[T]
+	cleanupInterval time.Duration
+	ctx             context.Context
+	cancel          context.CancelFunc
+}
+
+// NewPacketReceiver creates a new packet receiver
+func NewPacketReceiver[T any](processor Processor[T], bufferSize int) *PacketReceiver[T] {
+	ctx, cancel := context.WithCancel(context.Background())
+	
+	receiver := &PacketReceiver[T]{
+		sessions:        make(map[string]map[uint32]*SessionTracker),
+		processor:       processor,
+		timeout:         5 * time.Minute,
+		inputChan:       make(chan ReceivedPacket, bufferSize),
+		outputChan:      make(chan ProcessedPayload[T], bufferSize),
+		cleanupInterval: 1 * time.Minute,
+		ctx:             ctx,
+		cancel:          cancel,
+	}
+	
+	go receiver.processLoop()
+	go receiver.cleanupLoop()
+	
+	return receiver
+}
+
+// SetSessionTimeout sets the timeout for incomplete sessions
+func (r *PacketReceiver[T]) SetSessionTimeout(timeout time.Duration) {
+	r.timeout = timeout
+}
+
+// ProcessPacket adds a packet for processing
+func (r *PacketReceiver[T]) ProcessPacket(deviceID string, data []byte) {
+	r.inputChan <- ReceivedPacket{
+		DeviceID: deviceID,
+		Data:     data,
+	}
+}
+
+// GetOutputChannel returns the channel for processed payloads
+func (r *PacketReceiver[T]) GetOutputChannel() <-chan ProcessedPayload[T] {
+	return r.outputChan
+}
+
+// Stop stops the packet receiver
+func (r *PacketReceiver[T]) Stop() {
+	r.cancel()
+}
+
+// processLoop processes incoming packets
+func (r *PacketReceiver[T]) processLoop() {
+	for {
+		select {
+		case <-r.ctx.Done():
+			return
+			
+		case receivedPacket := <-r.inputChan:
+			packet, err := DeserializePacket(receivedPacket.Data)
+			if err != nil {
+				fmt.Printf("Error deserializing packet from %s: %v\n", receivedPacket.DeviceID, err)
+				continue
+			}
+			
+			r.handlePacket(receivedPacket.DeviceID, packet)
+		}
+	}
+}
+
+// cleanupLoop periodically cleans up timed-out sessions
+func (r *PacketReceiver[T]) cleanupLoop() {
+	ticker := time.NewTicker(r.cleanupInterval)
+	defer ticker.Stop()
+	
+	for {
+		select {
+		case <-r.ctx.Done():
+			return
+			
+		case <-ticker.C:
+			r.cleanupSessions()
+		}
+	}
+}
+
+// handlePacket processes a single packet
+func (r *PacketReceiver[T]) handlePacket(deviceID string, packet *Packet) {
+	r.sessionsMutex.Lock()
+	defer r.sessionsMutex.Unlock()
+	
+	// Get or create device sessions
+	deviceSessions, exists := r.sessions[deviceID]
+	if !exists {
+		deviceSessions = make(map[uint32]*SessionTracker)
+		r.sessions[deviceID] = deviceSessions
+	}
+	
+	// Get or create session tracker
+	sessionTracker, exists := deviceSessions[packet.Session]
+	if !exists {
+		sessionTracker = &SessionTracker{
+			Packets:    make([]*Packet, packet.Total),
+			UpdateTime: time.Now(),
+			Complete:   false,
+		}
+		deviceSessions[packet.Session] = sessionTracker
+	}
+	
+	// Update session
+	sessionTracker.UpdateTime = time.Now()
+	
+	// Store packet
+	if int(packet.Index) < len(sessionTracker.Packets) {
+		sessionTracker.Packets[packet.Index] = packet
+	}
+	
+	// Check if session is complete
+	if r.isSessionComplete(sessionTracker) {
+		sessionTracker.Complete = true
+		go r.processSession(deviceID, packet.Session, sessionTracker)
+	}
+}
+
+// isSessionComplete checks if all packets in a session have been received
+func (r *PacketReceiver[T]) isSessionComplete(tracker *SessionTracker) bool {
+	for _, packet := range tracker.Packets {
+		if packet == nil {
+			return false
+		}
+	}
+	return true
+}
+
+// processSession processes a complete session
+func (r *PacketReceiver[T]) processSession(deviceID string, sessionID uint32, tracker *SessionTracker) {
+	// Assemble payload
+	totalSize := 0
+	for _, packet := range tracker.Packets {
+		totalSize += len(packet.Payload)
+	}
+	
+	assembledPayload := make([]byte, 0, totalSize)
+	for _, packet := range tracker.Packets {
+		assembledPayload = append(assembledPayload, packet.Payload...)
+	}
+	
+	// Process payload
+	processed, err := r.processor(assembledPayload)
+	if err != nil {
+		fmt.Printf("Error processing payload from %s, session %d: %v\n", deviceID, sessionID, err)
+		return
+	}
+	
+	// Remove session
+	r.sessionsMutex.Lock()
+	if deviceSessions, exists := r.sessions[deviceID]; exists {
+		delete(deviceSessions, sessionID)
+		// If device has no more sessions, remove device entry
+		if len(deviceSessions) == 0 {
+			delete(r.sessions, deviceID)
+		}
+	}
+	r.sessionsMutex.Unlock()
+	
+	// Send result
+	r.outputChan <- ProcessedPayload[T]{
+		DeviceID: deviceID,
+		Payload:  processed,
+		Session:  sessionID,
+	}
+}
+
+// cleanupSessions removes timed-out sessions
+func (r *PacketReceiver[T]) cleanupSessions() {
+	r.sessionsMutex.Lock()
+	defer r.sessionsMutex.Unlock()
+	
+	now := time.Now()
+	
+	for deviceID, deviceSessions := range r.sessions {
+		for sessionID, tracker := range deviceSessions {
+			if !tracker.Complete && now.Sub(tracker.UpdateTime) > r.timeout {
+				delete(deviceSessions, sessionID)
+			}
+		}
+		
+		// Remove device if it has no sessions
+		if len(deviceSessions) == 0 {
+			delete(r.sessions, deviceID)
+		}
+	}
+}
+
+// StringProcessor converts bytes to a string
+func StringProcessor(data []byte) (string, error) {
+	return string(data), nil
+}
+
+// Common processors for convenience
+type BytesProcessor[T any] func([]byte, *T) error
+
+// NewStructProcessor creates a processor that decodes bytes into a struct
+func NewStructProcessor[T any](decoder func([]byte, interface{}) error) Processor[T] {
+	return func(data []byte) (T, error) {
+		var result T
+		err := decoder(data, &result)
+		return result, err
+	}
+}
+```
+
+使用例子
+
+```go
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"log"
+	"os"
+	"time"
+
+	"github.com/yourusername/blepacket" // Replace with your actual import path
+	"github.com/go-ble/ble"             // Example BLE library
+)
+
+// Example struct for JSON processing
+type DeviceInfo struct {
+	ID          string  `json:"id"`
+	Name        string  `json:"name"`
+	Temperature float64 `json:"temperature"`
+	Humidity    float64 `json:"humidity"`
+	Battery     int     `json:"battery"`
+	Timestamp   int64   `json:"timestamp"`
+}
+
+// Demo BLE transporter that wraps a notifier
+type BLENotifierTransport struct {
+	notifier ble.Notifier
+	mtu      int
+	delay    time.Duration
+}
+
+func NewBLENotifierTransport(notifier ble.Notifier, mtu int) *BLENotifierTransport {
+	return &BLENotifierTransport{
+		notifier: notifier,
+		mtu:      mtu,
+		delay:    20 * time.Millisecond,
+	}
+}
+
+func (t *BLENotifierTransport) Write(data []byte) (int, error) {
+	n, err := t.notifier.Write(data)
+	time.Sleep(t.delay)
+	return n, err
+}
+
+func (t *BLENotifierTransport) MTU() int {
+	return t.mtu
+}
+
+func (t *BLENotifierTransport) SetWriteDelay(delay time.Duration) {
+	t.delay = delay
+}
+
+// Example: Sending data
+func ExampleSendData(notifier ble.Notifier, mtu int) {
+	// Create transporter
+	transport := NewBLENotifierTransport(notifier, mtu)
+	
+	// Create sender
+	sender := blepacket.NewPacketSender(transport)
+	
+	// Create sample data
+	deviceInfo := DeviceInfo{
+		ID:          "sensor-1234",
+		Name:        "Living Room Sensor",
+		Temperature: 22.5,
+		Humidity:    45.2,
+		Battery:     87,
+		Timestamp:   time.Now().Unix(),
+	}
+	
+	// Serialize to JSON
+	jsonData, err := json.Marshal(deviceInfo)
+	if err != nil {
+		log.Fatalf("Failed to marshal JSON: %v", err)
+	}
+	
+	// Send data
+	if err := sender.SendPayload(jsonData); err != nil {
+		log.Fatalf("Failed to send payload: %v", err)
+	}
+	
+	fmt.Println("Data sent successfully")
+}
+
+// Example: Receiving and processing packets
+func ExampleReceivePackets() {
+	// Create JSON processor
+	jsonProcessor := blepacket.NewStructProcessor[DeviceInfo](json.Unmarshal)
+	
+	// Create receiver
+	receiver := blepacket.NewPacketReceiver[DeviceInfo](jsonProcessor, 100)
+	defer receiver.Stop()
+	
+	// Set timeout for incomplete sessions
+	receiver.SetSessionTimeout(3 * time.Minute)
+	
+	// Get output channel
+	outputChan := receiver.GetOutputChannel()
+	
+	// Process results in background
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	
+	go func() {
+		for {
+			select {
+			case <-ctx.Done():
+				return
+			case result := <-outputChan:
+				fmt.Printf("Received device info from %s:\n", result.DeviceID)
+				fmt.Printf("  Name: %s\n", result.Payload.Name)
+				fmt.Printf("  Temperature: %.1f°C\n", result.Payload.Temperature)
+				fmt.Printf("  Humidity: %.1f%%\n", result.Payload.Humidity)
+				fmt.Printf("  Battery: %d%%\n", result.Payload.Battery)
+			}
+		}
+	}()
+	
+	// When a packet is received (simulated here)
+	simulatePacketReceive := func(deviceID string, data []byte) {
+		receiver.ProcessPacket(deviceID, data)
+	}
+	
+	// Example usage of simulatePacketReceive
+	_ = simulatePacketReceive // Prevent unused function warning
+}
+
+// Example: Creating a string processor for text data
+func ExampleStringProcessor() {
+	// Create a string processor
+	receiver := blepacket.NewPacketReceiver[string](blepacket.StringProcessor, 10)
+	defer receiver.Stop()
+	
+	go func() {
+		for processed := range receiver.GetOutputChannel() {
+			fmt.Printf("Received message from %s: %s\n", processed.DeviceID, processed.Payload)
+		}
+	}()
+	
+	// Process packets as they arrive...
+}
+
+// Example: Using the library with a file for testing
+func ExampleFileBasedTransport() {
+	// Create a file-based transporter for testing
+	file, err := os.Create("test_packets.bin")
+	if err != nil {
+		log.Fatalf("Failed to create file: %v", err)
+	}
+	defer file.Close()
+	
+	transport := blepacket.NewBLETransporter(file, 100)
+	sender := blepacket.NewPacketSender(transport)
+	
+	// Send some test data
+	testData := []byte("This is test data to demonstrate packet fragmentation and reassembly")
+	if err := sender.SendPayload(testData); err != nil {
+		log.Fatalf("Failed to send payload: %v", err)
+	}
+	
+	fmt.Println("Test data written to file")
+}
+```
+
+
+
+## 7. 其他库或例子
 
 + [go-ble的fork版本](https://github.com/SensefinityCloud/go-ble) 支持自定义广播信息
 + [搜索并显示附近airpod的电量](https://github.com/fagnercarvalho/go-airpods)

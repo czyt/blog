@@ -593,6 +593,8 @@ chatbox 聚合聊天工具 `paru -S chatbox-appimage`
 
 [mods](https://github.com/charmbracelet/mods) `paru -S mods`
 
+ [code2prompt](https://github.com/mufeedvh/code2prompt)`paru -S code2prompt`
+
 
 ## SSH管理工具
 

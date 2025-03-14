@@ -55,6 +55,24 @@ services:
       - GOKAPI_PORT=53842
 ```
 
+当然你也可以不推送到懒猫微服的registry，不过得加上你的镜像地址，比如上面的`f0rc3/gokapi`你就可以改成
+
+```yaml
+services:
+  gokapi:
+    image: docker.hlmirror.com/f0rc3/gokapi:latest
+    binds:
+      - /lzcapp/var/gokapi/data:/app/data 
+      - /lzcapp/var/gokapi/config:/app/config
+    environment:
+      - TZ=UTC
+      - GOKAPI_DATA_DIR=/app/data
+      - GOKAPI_CONFIG_DIR=/app/config
+      - GOKAPI_PORT=53842
+```
+
+docker的镜像地址有很多，这个要去网上自己搜一搜
+
 ### Web 项目
 
 + web项目，懒猫现有的框架不支持Basic Auth认证，所有使用Basic Auth的应用都会返回401
@@ -79,6 +97,169 @@ Todo
 
 >  ssh ping上面这个地址是ping不通的
 
+## 实用技巧
+
+### 添加用户使用的帮助文档
+
+有些软件在使用上需要给用户一些readme之类的东西，但是通过路由映射出来体验不好。可以通过404的handler来实现这一目的，但是帮助文件需要也映射相关的路径。
+
+下面是一个例子
+
+```yaml
+lzc-sdk-version: "0.1"
+name: MTranServer
+package: cloud.lazycat.app.mtranserver
+version: 1.1.1
+description: 一个超低资源消耗超快的离线翻译服务器
+homepage: https://github.com/xxnuo/MTranServer
+usage: "请在浏览器打开应用，通过程序域名+/help获取使用帮助"
+author: xxnuo
+application:
+  subdomain: mtranserver
+  background_task: true
+  multi_instance: false
+  gpu_accel: false
+  kvm_accel: false
+  usb_accel: false
+  handlers:
+    error_page_templates:
+      404: /lzcapp/pkg/content/errors/404.html.tpl
+  public_path:
+    - /
+  routes:
+    - /=http://mtranserver.cloud.lazycat.app.mtranserver.lzcapp:8989/
+    - /help=file:///lzcapp/pkg/content/
+    - /playground=file:///lzcapp/pkg/content/playground.html
+services:
+  mtranserver:
+    image: docker.hlmirror.com/xxnuo/mtranserver:1.1.1
+    binds:
+      - /lzcapp/var/config:/app/config
+      - /lzcapp/var/models:/app/models
+    setup_script: |
+      if [ -z "$(find /app/config/config.ini -mindepth 1 -maxdepth 1)" ]; then
+          cp  /lzcapp/pkg/content/config.ini /app/config/config.ini
+      fi
+      ln -sf /app/config/config.ini /app/config.ini
+      if [ ! -d /app/models/enzh ];then
+        cp -r /lzcapp/pkg/content/models/enzh /app/models/
+      fi
+      if [ ! -d /app/models/zhen ];then
+        cp -r /lzcapp/pkg/content/models/zhen /app/models/
+      fi
+unsupported_platforms:
+  - ios
+  - android
+```
+
+> 路由这里的 `- /=http://mtranserver.cloud.lazycat.app.mtranserver.lzcapp:8989/`
+>
+> 写成 `- /=http://mtranserver:8989/`也是可以的
+
+模板内容
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="MtranServer" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting...</title>
+    页面跳转中...
+    <script>
+      window.location.href = window.location.origin + "/help";
+    </script>
+  </head>
+  <body>
+    <p>
+      If you are not redirected automatically,
+      <a href=" ">click here</a >.
+    </p >
+  </body>
+</html>
+```
+
+### 添加HealthCheck
+
+在Docker compose里面有两种概念
+
+`depends_on`：仅确保容器的启动顺序，不保证依赖服务的就绪状态。
+
+`health_check`：用于检测服务是否真正准备好接收请求
+
+所以当我们的服务依赖于第三方的数据库、KV等软件的时候最好加上health check，下面是一些常见数据库的health check
+
+
+#### 关系型数据库
+
+| 数据库     | 命令行健康检查                                               | Docker健康检查示例                                           | 备注                                       |
+| ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------ |
+| MySQL      | `mysqladmin ping -h localhost -u root -p`                    | `["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]` | 如果服务健康，返回"mysqld is alive"        |
+| PostgreSQL | `pg_isready -U postgres`                                     | `["CMD", "pg_isready", "-U", "postgres"]`                    | 成功连接返回状态码0                        |
+| MariaDB    | `mysqladmin ping -h localhost -u root -p`                    | `["CMD", "mysqladmin", "ping", "-h", "localhost"]`           | 与MySQL类似                                |
+| SQLite     | `sqlite3 <db_file> "SELECT 1;"`                              | 不适用于Docker(文件型数据库)                                 | 通常不需要健康检查，直接检查文件是否可读写 |
+| Oracle     | `sqlplus -s sys/password@//localhost:1521 as sysdba <<< "select 1 from dual;"` | `["CMD", "sqlplus", "-s", "sys/password@//localhost:1521", "as", "sysdba", "<<", "select 1 from dual;"]` | 需要Oracle客户端工具                       |
+| SQL Server | `sqlcmd -S localhost -U sa -P password -Q "SELECT 1"`        | `["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "password", "-Q", "SELECT 1"]` | 需要sqlcmd工具                             |
+
+#### 文档数据库
+
+| 数据库    | 命令行健康检查                                | Docker健康检查示例                                           | 备注                       |
+| --------- | --------------------------------------------- | ------------------------------------------------------------ | -------------------------- |
+| MongoDB   | `mongosh --eval "db.adminCommand('ping')"`    | `["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]`    | 成功返回`{ ok: 1 }`        |
+| CouchDB   | `curl http://localhost:5984/`                 | `["CMD", "curl", "-f", "http://localhost:5984/"]`            | 成功返回JSON状态信息       |
+| RavenDB   | `curl -f http://localhost:8080/admin/stats`   | `["CMD", "curl", "-f", "http://localhost:8080/admin/stats"]` | 需认证的环境需添加认证参数 |
+| Couchbase | `curl -f http://localhost:8091/pools/default` | `["CMD", "curl", "-f", "http://localhost:8091/pools/default"]` | 可通过REST API检查集群状态 |
+
+#### 键值/内存数据库
+
+| 数据库    | 命令行健康检查                                   | Docker健康检查示例                                           | 备注                             |
+| --------- | ------------------------------------------------ | ------------------------------------------------------------ | -------------------------------- |
+| Redis     | `redis-cli ping`                                 | `["CMD", "redis-cli", "ping"]`                               | 成功返回"PONG"                   |
+| Memcached | `echo stats                                      | nc localhost 11211`                                          | `["CMD", "sh", "-c", "echo stats |
+| etcd      | `etcdctl endpoint health`                        | `["CMD", "etcdctl", "endpoint", "health"]`                   | 成功返回"endpoint is healthy"    |
+| Hazelcast | `curl -f http://localhost:5701/hazelcast/health` | `["CMD", "curl", "-f", "http://localhost:5701/hazelcast/health"]` | REST API健康检查                 |
+
+#### 列式数据库
+
+| 数据库     | 命令行健康检查                         | Docker健康检查示例                                    | 备注                                         |
+| ---------- | -------------------------------------- | ----------------------------------------------------- | -------------------------------------------- |
+| Cassandra  | `nodetool status`                      | `["CMD", "nodetool", "status"]`                       | 检查节点状态                                 |
+| HBase      | `echo 'status'                         | hbase shell`                                          | `["CMD", "hbase", "shell", "<<<", "status"]` |
+| ClickHouse | `clickhouse-client --query "SELECT 1"` | `["CMD", "clickhouse-client", "--query", "SELECT 1"]` | 简单的可用性检查                             |
+
+#### 图数据库
+
+| 数据库   | 命令行健康检查                               | Docker健康检查示例                                           | 备注                          |
+| -------- | -------------------------------------------- | ------------------------------------------------------------ | ----------------------------- |
+| Neo4j    | `curl -f http://localhost:7474/`             | `["CMD", "curl", "-f", "http://localhost:7474/"]`            | 也可使用官方的neo4j-admin工具 |
+| ArangoDB | `curl -f http://localhost:8529/_api/version` | `["CMD", "curl", "-f", "http://localhost:8529/_api/version"]` | 返回版本信息表示服务正常      |
+
+#### 时序数据库
+
+| 数据库      | 命令行健康检查                            | Docker健康检查示例                                         | 备注                         |
+| ----------- | ----------------------------------------- | ---------------------------------------------------------- | ---------------------------- |
+| InfluxDB    | `curl -f http://localhost:8086/health`    | `["CMD", "curl", "-f", "http://localhost:8086/health"]`    | 通过HTTP API检查             |
+| TimescaleDB | `pg_isready -U postgres`                  | `["CMD", "pg_isready", "-U", "postgres"]`                  | 基于PostgreSQL，使用相同方法 |
+| Prometheus  | `curl -f http://localhost:9090/-/healthy` | `["CMD", "curl", "-f", "http://localhost:9090/-/healthy"]` | 通过HTTP endpoint检查        |
+
+以postgres为例，在懒猫的服务里面就是这样写的
+
+```yaml
+  cashbook_db:
+    container_name: cashbook_db
+    image: registry.lazycat.cloud/czyt/library/postgres:4bf579971745e6ce
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=cashbook
+    binds:
+      - /lzcapp/var/db:/var/lib/postgresql/data
+    health_check:
+      test:
+        - CMD-SHELL
+        - pg_isready -U postgres
+      start_period: 90s
+```
 
 ## 软件调试
 

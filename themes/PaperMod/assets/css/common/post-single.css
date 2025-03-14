@@ -246,7 +246,7 @@
     content: '';
     height: 12px;
     left: 12px;
-    margin-top: -35px;
+    margin-top: -15px;
     position: absolute;
     width: 12px;
 }
@@ -564,4 +564,11 @@ h6:hover .anchor {
     content: "•";
     margin-left: 12px;
     color: var(--secondary);
+}
+.post-content pre code {
+  margin-top: 0 !important;
+}
+
+.post-content pre code::before {
+    margin-top: -35px !important;
 }

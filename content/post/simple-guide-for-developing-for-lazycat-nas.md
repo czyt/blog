@@ -22,7 +22,7 @@ author: "czyt"
 
 ### Docker应用
 
-对于公网的docker应用如果要使用，需要先进行`copy-image`操作才能在打包过程中使用，参考[官方说明](https://developer.lazycat.cloud/publish-app.html#%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F%E5%88%B0%E5%AE%98%E6%96%B9%E4%BB%93%E5%BA%93)。下面是我的一个执行例子：
+对于公网的docker应用如果要使用，需要先进行`copy-image`来利用懒猫官方提供的镜像源，参考[官方说明](https://developer.lazycat.cloud/publish-app.html#%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F%E5%88%B0%E5%AE%98%E6%96%B9%E4%BB%93%E5%BA%93)。下面是我的一个执行例子：
 
 我在没copy操作之前`lzc-cli project devshell`
 

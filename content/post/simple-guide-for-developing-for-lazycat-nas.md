@@ -95,7 +95,7 @@ Todo
 
 + `host.lzcapp` 一个类似"虚拟网卡"的地址。仅lzcapp之间访问。因为应用是网络隔离的，这个在应用使用host模式下的时候很有用，比如您的应用的一个镜像开启了Host模式，监听地址为`6666`在另外的一个镜像访问，就可以用`host.lzcapp:6666`
 
->  ssh ping上面这个地址是ping不通的
+>  ssh ping上面这个地址是ping不通的,更多请参考[官方文档](https://developer.lazycat.cloud/advanced-domain.html)
 
 ## 实用技巧
 

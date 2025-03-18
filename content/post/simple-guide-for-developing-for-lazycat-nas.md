@@ -154,7 +154,9 @@ unsupported_platforms:
 
 > 路由这里的 `- /=http://mtranserver.cloud.lazycat.app.mtranserver.lzcapp:8989/`
 >
-> 写成 `- /=http://mtranserver:8989/`也是可以的
+> 写成 `- /=http://mtranserver:8989/`也是可以的.
+>
+> 如果要嵌入资源，需要在`lzc-build.yml`通过`contentdir`指定，详情参考[官方文档](https://developer.lazycat.cloud/spec/build.html)
 
 模板内容
 

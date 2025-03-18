@@ -132,3 +132,6 @@ LOG (VoskAPI:ReadDataFiles():model.cc:308) Loading winfo model-small/graph/phone
 
 ```
 
+## 其他相关项目
+
++ [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx/tree/master/go-api-examples)

@@ -294,8 +294,6 @@ lzc-cli docker exec -it xxxxx sh
 
 ### Docker常见退出状态码
 
-#### Docker 容器退出状态码完整参考
-
 以下是Docker容器退出状态码(Exit Status Code)的完整参考表格，包含详细描述和可能的解决方案：
 
 | 状态码    | 名称/信号      | 描述                     | 可能原因                         | 解决方案                       |

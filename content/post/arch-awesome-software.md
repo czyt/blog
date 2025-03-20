@@ -1895,6 +1895,8 @@ ghostty `paru -S ghostty`
 >sudo ln -sv $(which tssh) /usr/local/bin/ssh
 >```
 >
+>当然上面这个也不是必须的，在你的`.zshrc`里面加上`alias ssh=tssh` 效果是一样的。
+>
 >然后在`~/.ssh/config`加入下面的内容
 >
 >```
@@ -1924,7 +1926,7 @@ ghostty `paru -S ghostty`
 >Icon=dev.warp.Warp
 >Exec=xdg-open "warp://action/new_tab?path=%u" 
 >```
-> 然后 `chmod +x open-in-warp.desktop`即可
+>然后 `chmod +x open-in-warp.desktop`即可
 
 ### 自定义主题
 

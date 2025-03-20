@@ -412,6 +412,8 @@ rustup install stable
 > sudo ln -sv $(which tssh) /usr/local/bin/ssh
 > ```
 >
+> 当然，你也可以创建一个命令的alias `alias ssh=tssh`，效果一样。
+>
 > 然后在`~/.ssh/config`加入下面的配置
 >
 > ```ini

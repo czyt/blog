@@ -2,7 +2,7 @@
 title: "在Go程序中使用Vosk进行语音识别STT"
 date: 2025-03-17
 draft: false
-tags: ["golang","stt"]
+tags: ["golang","asr"]
 author: "czyt"
 ---
 ## Vosk 介绍

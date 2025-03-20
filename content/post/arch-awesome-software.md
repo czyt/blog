@@ -1899,12 +1899,32 @@ ghostty `paru -S ghostty`
 >
 >```
 >Host *
->    #!! EnableZmodem Yes
+>#!! EnableZmodem Yes
 >```
 >
 >然后通过tssh远程 `tssh remote_server` ，如果您执行了替换那么命令则是`ssh remote_server`
 >
 >登录成功以后就可以通过`sz`或者`rz`发送和接收文件了。
+>
+>另外可以在dolphin中添加warp-terminal的右键菜单，可以在
+>
+>`/usr/share/kio/servicemenus` 创建`open-in-warp.desktop`,内容如下
+>
+>```ini
+>[Desktop Entry]
+>Type=Service
+>X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+>MimeType=inode/directory;
+>Actions=OpenInWarp
+>X-KDE-Priority=TopLevel
+>X-KDE-StartupNotify=false
+>
+>[Desktop Action OpenInWarp]
+>Name=Open in Warp Terminal
+>Icon=dev.warp.Warp
+>Exec=xdg-open "warp://action/new_tab?path=%u"%  
+>```
+> 然后 `chmod +x open-in-warp.desktop`即可
 
 ### 自定义主题
 

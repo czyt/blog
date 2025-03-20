@@ -404,7 +404,21 @@ rustup install stable
 ## 软件开发
 ### Terminal
 
-- Warp - 有AI功能的终端，开箱即用。缺点是需要登录。
+- Warp - 有AI功能的终端，开箱即用。缺点是需要登录。`brew install warp`
+
+> 配合trzsz-ssh （安装命令 `brew install trzsz-ssh`）可以完美使用lrzsz进行文件传输，安装好以后需要执行下面的命令
+>
+> ```bash
+> sudo ln -sv $(which tssh) /usr/local/bin/ssh
+> ```
+>
+> 然后在`~/.ssh/config`加入下面的配置
+>
+> ```ini
+> Host *
+> #!! EnableZmodem Yes
+> ```
+
 - iTerm2 - Mac上最好的终端之一，搭配oh-my-zsh，好用又好看，程序员必备终端。
 
 > iterm2支持zmodern文件上传  https://github.com/robberphex/iTerm2-zmodem, 可以使用`brew install laggardkernel/tap/iterm2-zmodem`进行安装

@@ -60,7 +60,6 @@ draft: false
 
 ## 下载及同步工具
 - Downie4 - 视频下载工具，可以下载YouTube，bilibili等视频网站的视频，并且是满速下载。
-
 - Neat Download Manager - 多线程下载器，跑满你的带宽。
 - 迅雷
 - 坚果云
@@ -68,6 +67,7 @@ draft: false
 - Aria2GUI
 - [blip](https://blip.net/)
 - [qBittorrent Enhanced Edition](https://github.com/c0re100/qBittorrent-Enhanced-Edition)
+- tssh `brew install trzsz-ssh`
 
 ## 代理工具
 

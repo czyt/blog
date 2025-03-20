@@ -1886,6 +1886,25 @@ ghostty `paru -S ghostty`
 >```
 >
 >[官网说明](https://docs.warp.dev/getting-started/getting-started-with-warp#installing-and-running-warp)
+>
+>warp配合trzsz-ssh已经可以完美支持lrzsz的文件上传和下载
+>
+>先安装`paru -S tssh` ，如果您需要使用tssh替换自带的ssh，可以执行下面的这一步，不替换则可以跳过
+>
+>```bash
+>sudo ln -sv $(which tssh) /usr/local/bin/ssh
+>```
+>
+>然后在`~/.ssh/config`加入下面的内容
+>
+>```
+>Host *
+>    #!! EnableZmodem Yes
+>```
+>
+>然后通过tssh远程 `tssh remote_server` ，如果您执行了替换那么命令则是`ssh remote_server`
+>
+>登录成功以后就可以通过`sz`或者`rz`发送和接收文件了。
 
 ### 自定义主题
 

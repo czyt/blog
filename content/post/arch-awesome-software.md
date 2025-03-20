@@ -1922,7 +1922,7 @@ ghostty `paru -S ghostty`
 >[Desktop Action OpenInWarp]
 >Name=Open in Warp Terminal
 >Icon=dev.warp.Warp
->Exec=xdg-open "warp://action/new_tab?path=%u"%  
+>Exec=xdg-open "warp://action/new_tab?path=%u" 
 >```
 > 然后 `chmod +x open-in-warp.desktop`即可
 

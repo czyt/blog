@@ -85,6 +85,12 @@ Options:
 
 关于关键词识别中增强得分和触发阈值的优化技巧，我从AI那里获取了一些建议：
 
+简单地讲是“增大 keywords_score, 减小 keywords_threshold”
+
+增大 `keywords_score`：这会使系统更容易触发关键词识别
+
+减小 `keywords_threshold`：降低整体触发门槛
+
 ##### 增强得分(Boosting Score)优化技巧
 
 1. **优先级分配**：

@@ -1906,7 +1906,7 @@ ghostty `paru -S ghostty`
 >#!! EnableZmodem Yes
 >```
 >
->如果想在启用拖拽文件时使用 rz 上传，请将 `DragFileUploadCommand` 配置为 `rz`
+>如果想在启用拖拽文件时使用 rz 上传，请将 `DragFileUploadCommand` 配置为 `rz`,否则将会使用tssh来上传。
 >
 >```yaml
 >Host *

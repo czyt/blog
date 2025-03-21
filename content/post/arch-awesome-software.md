@@ -1891,6 +1891,8 @@ ghostty `paru -S ghostty`
 >
 >先安装`paru -S tssh` ，如果您需要使用tssh替换自带的ssh，可以执行下面的这一步，不替换则可以跳过
 >
+>> tssh 中文文档 https://trzsz.github.io/cn/ssh
+>
 >```bash
 >sudo ln -sv $(which tssh) /usr/local/bin/ssh
 >```
@@ -1899,9 +1901,18 @@ ghostty `paru -S ghostty`
 >
 >然后在`~/.ssh/config`加入下面的内容
 >
->```
+>```yaml
 >Host *
 >#!! EnableZmodem Yes
+>```
+>
+>如果想在启用拖拽文件时使用 rz 上传，请将 `DragFileUploadCommand` 配置为 `rz`
+>
+>```yaml
+>Host *
+>#!! EnableZmodem Yes
+>#!! EnableDragFile Yes
+>#!! DragFileUploadCommand rz
 >```
 >
 >然后通过tssh远程 `tssh remote_server` ，如果您执行了替换那么命令则是`ssh remote_server`

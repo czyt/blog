@@ -1,10 +1,6 @@
 @import url("https://static.zeoseven.com/zsft/292/main/result.css");
-@font-face {
-    font-family: "zsft-443";
-    src: url("https://static.zeoseven.com/zsft/443/main.woff2") format('woff2'),
-        url("https://static-host.zeoseven.com/zsft/443/main.woff2") format('woff2');
-    font-display: swap;
-}
+@import url("https://static.zeoseven.com/zsft/442/main/result.css");
+
 *,
 ::after,
 ::before {
@@ -29,7 +25,7 @@ h6 {
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont,'LXGW WenKai', 'zsft-443','Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont,'Maple Mono NF CN','LXGW WenKai', 'zsft-443','Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 18px;
     line-height: 1.6;
     word-break: break-word;

@@ -263,6 +263,54 @@ unsupported_platforms:
       start_period: 90s
 ```
 
+### 集成env文件
+
+   在某些情况下程序需要env文件，但是目前懒猫不支持文件的映射，需要变通实现。
+
+   简单来讲就是创建一个目录，然后把env模板从程序content目录拷贝过去并创建env文件的软连接。如果程序不支持自动读取env，则需要source env 文件。下面是一个例子：
+
+```yaml
+lzc-sdk-version: "0.1"
+name: ImageFlow
+package: cloud.lazycat.app.imageflow
+version: 1.3.0
+description: 高效智能的图像管理和分发系统
+homepage: https://github.com/Yuri-NagaSaki/ImageFlow
+author: Yuri-NagaSaki
+application:
+  subdomain: image-flow
+  background_task: true
+  multi_instance: false
+  gpu_accel: false
+  kvm_accel: false
+  usb_accel: false
+  public_path:
+    - /
+  routes:
+    - /=http://images:8686/
+services:
+  images:
+    image: docker.hlmirror.com/soyorins/imageflow
+    environment:
+      - CUSTOM_DOMAIN=${LAZYCAT_APP_DOMAIN}
+    binds:
+      - /lzcapp/var/images:/app/static/images
+      - /lzcapp/var/config:/app/config
+
+    setup_script: |
+      if [ ! -f /app/config/config.json ]; then
+        cp -f /lzcapp/pkg/content/config.json /app/config/config.json
+      fi
+      
+      if [ ! -f /app/config/env.yaml ]; then
+        cp -f /lzcapp/pkg/content/env.yaml /app/config/env.yaml
+      fi
+
+      if [ -f /app/config/env.yaml ]; then
+        ln -sf /app/config/env.yaml /app/.env
+      fi
+```
+
 ## 软件调试
 
 ###  查看应用日志

@@ -1,5 +1,7 @@
 @import url("https://static.zeoseven.com/zsft/292/main/result.css");
 @import url("https://static.zeoseven.com/zsft/442/main/result.css");
+@import url("https://fontsapi.zeoseven.com/7/main/result.css");
+
 
 *,
 ::after,
@@ -25,7 +27,7 @@ h6 {
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont,'Maple Mono NF CN','LXGW WenKai', 'zsft-443','Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont,'LXGW WenKai','Zhuque Fangsong (technical preview)','Maple Mono NF CN' 'zsft-443','Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 18px;
     line-height: 1.6;
     word-break: break-word;

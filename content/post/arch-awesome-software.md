@@ -1438,7 +1438,12 @@ switch模拟器 Ryujinx 安装 `paru -S ryujinx`
 
 ## 媒体软件
 
-网易云音乐 安装 `paru -S netease-cloud-music` 或者 `paru -S netease-cloud-music-gtk4`(推荐)
+网易云音乐 安装 `paru -S netease-cloud-music` 
+
+> 第三方网易云音乐客户端
+>
+> + [AlgerMusicPlayer](https://github.com/algerkong/AlgerMusicPlayer) 安装 `paru -S algermusicplayer-bin`
+> + `paru -S netease-cloud-music-gtk4`(推荐) 
 
 spotify 安装 `paru -S spotify`
 

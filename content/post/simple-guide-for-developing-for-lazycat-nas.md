@@ -86,8 +86,8 @@ Todo
 
 裸应用是指不是由我们开发但是我们来自定义其行为且不需依赖现有docker的应用。这种类型常见于两种：
 
-1. 官方就没提供docker镜像
-2. 官方镜像使用了`Alpine Linux` 或 `scratch`这样的没有任何shell以及基础命令的镜像。
+1. 官方就没提供docker镜像。你是不是也想放弃过？
+2. 官方镜像使用了`Alpine Linux` 或 `scratch`这样的没有任何shell以及基础命令的镜像。你的`setup_script`是否也令你失望。
 
 > 如果有docker镜像，可以使用[docker-image-extract](https://github.com/jjlin/docker-image-extract)进行提取
 

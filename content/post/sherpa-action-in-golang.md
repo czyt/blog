@@ -153,6 +153,201 @@ Options:
 - **语音命令识别**：识别语音中的命令或指令，并执行相应的操作。
 - **提高效率**：通过语音输入简化操作流程，提高用户效率。
 
+我们可以借助portaudio来进行实时的语音识别任务。对于ubuntu系统，请使用下面的命令进行安装
+
+```
+apt-get install portaudio19-dev
+```
+
+Arch请使用源码编译安装 https://www.portaudio.com
+
+在go语言中使用
+
+```go
+  	import "github.com/gordonklaus/portaudio" 
+
+func (t *ASRServer) SetupEngine(ctx context.Context) {
+	lastText := ""
+
+	err := portaudio.Initialize()
+	if err != nil {
+		t.logger.Fatal().Err(err).Msg("cannot init portaudio")
+	}
+	defer portaudio.Terminate()
+
+	defaultDevice, err := portaudio.DefaultInputDevice()
+	if err != nil {
+		t.logger.Fatal().Err(err).Msg("failed to get default input device")
+	}
+
+	portAudioParam := portaudio.StreamParameters{
+		Input: portaudio.StreamDeviceParameters{
+			Device:   defaultDevice,
+			Channels: 1,
+			Latency:  defaultDevice.DefaultLowInputLatency,
+		},
+		SampleRate:      16000,
+		FramesPerBuffer: 0,
+		Flags:           portaudio.ClipOff,
+	}
+	config := createNewOnlineRecognizerConfig()
+
+	recognizer := sherpa.NewOnlineRecognizer(&config)
+	defer sherpa.DeleteOnlineRecognizer(recognizer)
+
+	stream := sherpa.NewOnlineStream(recognizer)
+	defer sherpa.DeleteOnlineStream(stream)
+
+	// 每次采样的时长
+	samplesPerCall := int32(portAudioParam.SampleRate * 0.1) // 0.1秒
+
+	samples := make([]float32, samplesPerCall)
+	s, err := portaudio.OpenStream(portAudioParam, samples)
+	if err != nil {
+		t.logger.Fatal().Err(err).Msg("failed to open stream")
+	}
+	defer s.Stop()
+	defer s.Close()
+
+	err = s.Start()
+	if err != nil {
+		t.logger.Fatal().Err(err).Msg("failed to start stream")
+	}
+
+	t.logger.Info().Msg("service is ready..")
+
+	for {
+		select {
+		case <-ctx.Done():
+			break
+		default:
+			if t.paused.Load() {
+				continue
+			}
+			err = s.Read()
+			if err != nil {
+				t.logger.Error().Err(err).Msg("failed to read")
+				continue
+			}
+			stream.AcceptWaveform(config.FeatConfig.SampleRate, samples)
+			for recognizer.IsReady(stream) {
+				recognizer.Decode(stream)
+			}
+			text := recognizer.GetResult(stream).Text
+			if len(text) != 0 && lastText != text {
+				lastText = strings.ToLower(text)
+			}
+			if recognizer.IsEndpoint(stream) {
+				if len(text) != 0 {
+					t.logger.Info().Str("text", lastText).Msg("recognized text")
+					t.subscribers.Range(func(ch, _ any) bool {
+						if channel, ok := ch.(chan string); ok {
+							select {
+							case channel <- text:
+							case <-time.After(100 * time.Millisecond):
+								t.logger.Warn().Str("text", text).Msg("failed to broadcast: channel blocked")
+							}
+						}
+						return true
+					})
+				}
+				recognizer.Reset(stream)
+			}
+		}
+	}
+
+}
+```
+
+### 实时语音识别
+
+模型下载 
+
+```bash
+curl -SL -O https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/icefall-asr-zipformer-streaming-wenetspeech-20230615.tar.bz2
+```
+
+参数设置
+
+```go
+sherpa.OnlineRecognizerConfig{
+		ModelConfig: sherpa.OnlineModelConfig{
+			Transducer: sherpa.OnlineTransducerModelConfig{
+				Encoder: "models/icefall-asr-zipformer-streaming-wenetspeech-20230615/exp/encoder-epoch-12-avg-4-chunk-16-left-128.onnx",
+				Decoder: "models/icefall-asr-zipformer-streaming-wenetspeech-20230615/exp/decoder-epoch-12-avg-4-chunk-16-left-128.onnx",
+				Joiner:  "models/icefall-asr-zipformer-streaming-wenetspeech-20230615/exp/joiner-epoch-12-avg-4-chunk-16-left-128.onnx",
+			},
+			Tokens:     "models/icefall-asr-zipformer-streaming-wenetspeech-20230615/data/lang_char/tokens.txt",
+			NumThreads: 1,
+			Debug:      0,
+			ModelType:  "zipformer2",
+			Provider:   "cpu",
+		},
+		DecodingMethod:          "greedy_search",
+		MaxActivePaths:          4,
+		EnableEndpoint:          1,
+		Rule1MinTrailingSilence: 2.4,
+		Rule2MinTrailingSilence: 1.2,
+		Rule3MinUtteranceLength: 20,
+		FeatConfig: sherpa.FeatureConfig{
+			SampleRate: 16000,
+			FeatureDim: 80,
+		},
+	}
+```
+
+### 实时语音识别+热词
+
+文档参考 https://k2-fsa.github.io/sherpa/onnx/hotwords/index.html
+
+模型下载
+
+```bash
+  curl -SL -O https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20.tar.bz2
+
+```
+
+参数设置
+
+```go
+sherpa.OnlineRecognizerConfig{
+		ModelConfig: sherpa.OnlineModelConfig{
+			Transducer: sherpa.OnlineTransducerModelConfig{
+				Encoder: "models/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/encoder-epoch-99-avg-1.onnx",
+				Decoder: "models/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/decoder-epoch-99-avg-1.onnx",
+				Joiner:  "models/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/joiner-epoch-99-avg-1.onnx",
+			},
+			Tokens:       "models/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/tokens.txt",
+			NumThreads:   2,
+			Debug:        0,
+			Provider:     "cpu",
+			ModelingUnit: "cjkchar",
+			BpeVocab:     "models/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/bpe.vocab",
+		},
+
+		HotwordsFile:            "models/sherpa-onnx-streaming-zipformer-bilingual-zh-en-2023-02-20/hotwords.txt",
+		HotwordsScore:           2.0,
+		HotwordsBufSize:         1024,
+		DecodingMethod:          "modified_beam_search",
+		MaxActivePaths:          4,
+		EnableEndpoint:          1,
+		Rule1MinTrailingSilence: 2.4,
+		Rule2MinTrailingSilence: 1.2,
+		Rule3MinUtteranceLength: 20,
+		FeatConfig: sherpa.FeatureConfig{
+			SampleRate: 16000,
+			FeatureDim: 80,
+		},
+	}
+```
+
+热词文件示例
+
+```
+关闭电视:3.5
+打开PC:3.3
+```
+
 ### TTS
 
 文本转语音（Text-to-Speech，简称TTS）是一种技术，用于将文本信息转换为合成语音。它广泛应用于语音助手、有声读物、导航系统等领域，通过合成语音来传达信息。

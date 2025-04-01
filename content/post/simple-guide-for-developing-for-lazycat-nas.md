@@ -82,6 +82,67 @@ docker的镜像地址有很多，这个要去网上自己搜一搜
 
 Todo
 
+### 裸应用 
+
+裸应用是指不是由我们开发但是我们来自定义其行为且不需依赖现有docker的应用。这种类型常见于两种：
+
+1. 官方就没提供docker镜像
+2. 官方镜像使用了`Alpine Linux` 或 `scratch`这样的没有任何shell以及基础命令的镜像。
+
+> 如果有docker镜像，可以使用[docker-image-extract](https://github.com/jjlin/docker-image-extract)进行提取
+
+准备好相关的二进制文件以后，我们就可以把文件放在dist目录，集成到懒猫的lpk文件中，然后通过shell脚本进行一些初始化设置（懒猫微服会为每个应用创建一个docker，且基础命令都是有的），下面是一个脚本和配置的例子：
+
+脚本 `setup.sh`:
+
+```bash
+#!/bin/sh
+set -e
+echo "prepare data dir"
+mkdir  -p /lzcapp/var/data
+if [ ! -d /data ];then
+    ln -s /lzcapp/var/data /data
+fi
+echo "prepare config dir"
+mkdir -p /lzcapp/var/config
+if [ ! -d /config ];then
+    ln -s /lzcapp/var/config /config
+fi
+
+echo "check chfs.ini"
+if [ ! -f /config/chfs.ini ];then
+    cp -f /lzcapp/pkg/content/chfs.ini /config/chfs.ini
+fi
+/lzcapp/pkg/content/chfs --file=/config/chfs.ini
+```
+
+`manifest.yml`文件
+
+```yaml
+lzc-sdk-version: "0.1"
+name: CuteHttpFileServer
+package: cloud.lazycat.app.chfs
+version: 4.0.0
+description: 一个免费的、HTTP协议的文件共享服务器，使用浏览器可以快速访问.
+homepage: http://iscute.cn/chfs
+author: iscute
+application:
+  subdomain: chfs
+  background_task: true
+  multi_instance: false
+  gpu_accel: false
+  kvm_accel: false
+  usb_accel: false
+  public_path:
+    - /
+  routes:
+    - /=exec://8081,/lzcapp/pkg/content/setup.sh
+
+
+```
+
+
+
 ### 网络配置
 
 #### 使用宿主网络

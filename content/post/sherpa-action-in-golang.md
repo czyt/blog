@@ -161,6 +161,150 @@ apt-get install portaudio19-dev
 
 Arch请使用源码编译安装 https://www.portaudio.com
 
+> 需要编译为arm64的架构，可以参考下面的步骤：
+>
+> 1. 安装相关docker及相关工具
+>
+> docker
+>
+> ```bash
+> paru -S docker docker-compose docker-buildx
+> ```
+>
+> 跨平台编译
+>
+>   ```bash
+>   # 1. 安装 QEMU 模拟支持
+>   docker run --privileged --rm tonistiigi/binfmt --install all
+>   # 2. 创建并使用 buildx 构建器
+>   docker buildx create --use --name multiarch-builder
+>   ```
+>   创建dockerfile
+>
+> ```dockerfile
+> FROM   docker.hlmirror.com/ubuntu:noble
+> 
+> # 设置工作目录
+> WORKDIR /app
+> 
+> # 1. 安装基础工具和依赖
+> RUN apt-get update && \
+>     apt-get install -y  \
+>     wget \
+>     build-essential \
+>     gcc \
+>     pkg-config \
+>     portaudio19-dev \
+>     ca-certificates \
+>     && rm -rf /var/lib/apt/lists/*
+> 
+> # 2. 安装 Go (ARM64 版本)
+> ENV GO_VERSION=1.24.2
+> RUN wget -O go.tgz "https://go.dev/dl/go${GO_VERSION}.linux-arm64.tar.gz" && \
+>     tar -C /usr/local -xzf go.tgz && \
+>     rm go.tgz
+> 
+> # 3. 设置 Go 环境变量
+> ENV PATH="/usr/local/go/bin:${PATH}"
+> 
+> # 4. 复制项目代码
+> COPY . .
+> 
+> RUN go env -w GOPROXY='https://goproxy.io,https://goproxy.cn,direct'
+> RUN go mod tidy && go mod download
+> RUN CGO_ENABLED=1 GOOS=linux GOARCH=arm64 go build -v -o tingAutoServer_linux_arm64 ./cmd/app/
+> # 6. 收集所有依赖的 .so 文件到 /output 目录
+> RUN mkdir -p /output && \
+>     cp app /output/ && \
+>     ldd app | awk '/=>/ {print $3}' | xargs -I '{}' cp --parents '{}' /output/ 2>/dev/null || true
+> 
+> # 7. 定义输出目录（用于后续从容器中拷贝文件）
+> VOLUME /output
+> 
+> ```
+>
+> 脚本
+>
+> ```bash
+> #!/bin/bash
+> 
+> # --- 配置 ---
+> IMAGE_NAME="tiny-builder"       # 临时镜像名称 (可以自定义)
+> IMAGE_TAG="latest"            # 镜像标签
+> PLATFORM="linux/arm64"        # 目标平台
+> OUTPUT_DIR="./build_output"   # 宿主机上存放输出文件的目录名
+> CONTAINER_COPY_PATH="/output" # Dockerfile 中存放编译结果的路径
+> 
+> # --- 脚本主体 ---
+> 
+> # 确保输出目录存在
+> mkdir -p "$OUTPUT_DIR"
+> echo "Output directory: $OUTPUT_DIR"
+> 
+> echo "--- Building Docker image using buildx: $IMAGE_NAME:$IMAGE_TAG for $PLATFORM ---"
+> # 执行 Docker Buildx 构建并加载到本地
+> # 如果你的 Docker 不需要 sudo，请去掉下面的 sudo
+> # sudo docker buildx build --platform "$PLATFORM" --load -t "$IMAGE_NAME:$IMAGE_TAG" .
+> docker buildx build --platform "$PLATFORM" --load -t "$IMAGE_NAME:$IMAGE_TAG" .
+> 
+> # 检查构建是否成功
+> if [ $? -ne 0 ]; then
+>   echo "Docker buildx build failed."
+>   exit 1
+> fi
+> 
+> echo "--- Creating temporary container to copy files ---"
+> TEMP_CONTAINER_NAME="temp_copy_$$"
+> # 如果你的 Docker 不需要 sudo，请去掉下面的 sudo
+> # sudo docker create --name "$TEMP_CONTAINER_NAME" "$IMAGE_NAME:$IMAGE_TAG"
+> docker create --name "$TEMP_CONTAINER_NAME" "$IMAGE_NAME:$IMAGE_TAG"
+> if [ $? -ne 0 ]; then
+>   echo "Failed to create temporary container. Was the image loaded correctly?"
+>   # 可选：尝试清理可能未加载的镜像
+>   # sudo docker rmi "$IMAGE_NAME:$IMAGE_TAG"
+>   docker rmi "$IMAGE_NAME:$IMAGE_TAG"
+>   exit 1
+> fi
+> 
+> 
+> echo "--- Copying files from container path $CONTAINER_COPY_PATH to host path $OUTPUT_DIR ---"
+> # 执行拷贝，确保源路径末尾有 '/.' 来拷贝目录内容
+> # 如果你的 Docker 不需要 sudo，请去掉下面的 sudo
+> # sudo docker cp "$TEMP_CONTAINER_NAME:$CONTAINER_COPY_PATH/." "$OUTPUT_DIR/"
+> docker cp "$TEMP_CONTAINER_NAME:$CONTAINER_COPY_PATH/." "$OUTPUT_DIR/"
+> 
+> # 检查拷贝是否成功
+> if [ $? -ne 0 ]; then
+>   echo "docker cp failed."
+>   # 清理临时容器
+>   # 如果你的 Docker 不需要 sudo，请去掉下面的 sudo
+>   # sudo docker rm "$TEMP_CONTAINER_NAME"
+>   docker rm "$TEMP_CONTAINER_NAME"
+>   # 可选：清理镜像
+>   # sudo docker rmi "$IMAGE_NAME:$IMAGE_TAG"
+>   docker rmi "$IMAGE_NAME:$IMAGE_TAG"
+>   exit 1
+> fi
+> 
+> echo "--- Cleaning up temporary container ---"
+> # 删除临时容器
+> # 如果你的 Docker 不需要 sudo，请去掉下面的 sudo
+> # sudo docker rm "$TEMP_CONTAINER_NAME"
+> docker rm "$TEMP_CONTAINER_NAME"
+> 
+> # 可选：构建完成后删除临时镜像
+> echo "--- Cleaning up temporary build image ---"
+> # 如果你的 Docker 不需要 sudo，请去掉下面的 sudo
+> # sudo docker rmi "$IMAGE_NAME:$IMAGE_TAG"
+> docker rmi "$IMAGE_NAME:$IMAGE_TAG"
+> 
+> echo "--- Build successful! Files copied to $OUTPUT_DIR ---"
+> ls -l "$OUTPUT_DIR"
+> exit 0
+> 
+> ```
+
+
 在go语言中使用
 
 ```go

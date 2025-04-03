@@ -236,7 +236,7 @@ Arch请使用源码编译安装 https://www.portaudio.com
 > CONTAINER_COPY_PATH="/output" # Dockerfile 中存放编译结果的路径
 > 
 > # --- 脚本主体 ---
-> 
+> rm -rf "$OUTPUT_DIR"
 > # 确保输出目录存在
 > mkdir -p "$OUTPUT_DIR"
 > echo "Output directory: $OUTPUT_DIR"
@@ -312,7 +312,7 @@ Arch请使用源码编译安装 https://www.portaudio.com
 
 func (t *ASRServer) SetupEngine(ctx context.Context) {
 	lastText := ""
-
+    framesPerBuffer := 1024
 	err := portaudio.Initialize()
 	if err != nil {
 		t.logger.Fatal().Err(err).Msg("cannot init portaudio")
@@ -331,7 +331,7 @@ func (t *ASRServer) SetupEngine(ctx context.Context) {
 			Latency:  defaultDevice.DefaultLowInputLatency,
 		},
 		SampleRate:      16000,
-		FramesPerBuffer: 0,
+		FramesPerBuffer: framesPerBuffer,
 		Flags:           portaudio.ClipOff,
 	}
 	config := createNewOnlineRecognizerConfig()
@@ -343,7 +343,7 @@ func (t *ASRServer) SetupEngine(ctx context.Context) {
 	defer sherpa.DeleteOnlineStream(stream)
 
 	// 每次采样的时长
-	samplesPerCall := int32(portAudioParam.SampleRate * 0.1) // 0.1秒
+	samplesPerCall := int32(framesPerBuffer) 
 
 	samples := make([]float32, samplesPerCall)
 	s, err := portaudio.OpenStream(portAudioParam, samples)

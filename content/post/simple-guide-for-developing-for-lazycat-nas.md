@@ -324,6 +324,28 @@ unsupported_platforms:
       start_period: 90s
 ```
 
+再提供一个mariadb的例子
+
+```yaml
+  pastefy-db:
+    container_name: pastefy-db
+    image:  docker.hlmirror.com/mariadb:10.11
+    environment:
+      - MYSQL_ROOT_PASSWORD=pastefy
+      - MYSQL_DATABASE=pastefy
+      - MYSQL_USER=pastefy
+      - MYSQL_PASSWORD=pastefy
+    binds:
+      - /lzcapp/var/db:/var/lib/mysql
+    health_check:
+      test:
+        - CMD-SHELL
+        - healthcheck.sh --connect --innodb_initialized
+      start_period: 30s
+```
+
+
+
 ### 集成env文件
 
    在某些情况下程序需要env文件，但是目前懒猫不支持文件的映射，需要变通实现。

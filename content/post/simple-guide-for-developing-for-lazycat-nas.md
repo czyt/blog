@@ -264,6 +264,18 @@ unsupported_platforms:
 | Oracle     | `sqlplus -s sys/password@//localhost:1521 as sysdba <<< "select 1 from dual;"` | `["CMD", "sqlplus", "-s", "sys/password@//localhost:1521", "as", "sysdba", "<<", "select 1 from dual;"]` | 需要Oracle客户端工具                       |
 | SQL Server | `sqlcmd -S localhost -U sa -P password -Q "SELECT 1"`        | `["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "password", "-Q", "SELECT 1"]` | 需要sqlcmd工具                             |
 
+对于一些数据库，可以借助`/docker-entrypoint-initdb.d/` 的目录辅助完成一些数据库的初始化操作。这种机制已经成为一种广泛采用的**约定**，使得在首次启动容器时自动执行初始化脚本（如创建数据库、用户、模式、或填充初始数据）变得非常方便。
+
+   目前已知的数据库有
+
++ Postgres 支持: `.sh`, `.sql`, `.sql.gz` 文件。
++ Mysql/mariadb 支持: `.sh`, `.sql`, `.sql.gz` 文件。
++ Mongodb 支持 `.sh`, `.js` (JavaScript shell 脚本) 文件。
+
+对于应用程序有预先创建用户等需求，可以通过这一特性来实现预初始化部分内容。
+
+
+
 #### 文档数据库
 
 | 数据库    | 命令行健康检查                                | Docker健康检查示例                                           | 备注                       |

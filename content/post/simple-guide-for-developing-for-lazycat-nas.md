@@ -264,15 +264,36 @@ unsupported_platforms:
 | Oracle     | `sqlplus -s sys/password@//localhost:1521 as sysdba <<< "select 1 from dual;"` | `["CMD", "sqlplus", "-s", "sys/password@//localhost:1521", "as", "sysdba", "<<", "select 1 from dual;"]` | 需要Oracle客户端工具                       |
 | SQL Server | `sqlcmd -S localhost -U sa -P password -Q "SELECT 1"`        | `["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "password", "-Q", "SELECT 1"]` | 需要sqlcmd工具                             |
 
-对于一些数据库，可以借助`/docker-entrypoint-initdb.d/` 的目录辅助完成一些数据库的初始化操作。这种机制已经成为一种广泛采用的**约定**，使得在首次启动容器时自动执行初始化脚本（如创建数据库、用户、模式、或填充初始数据）变得非常方便。
+对于一些数据库，可以借助`/docker-entrypoint-initdb.d/` 的目录辅助完成一些数据库的初始化操作。
 
-   目前已知的数据库有
+工作原理（以Postgres为例）：
+
++ 首次启动: Docker 启动 postgres 容器 -> 容器入口点脚本发现 /var/lib/postgresql/data 是空的 -> 执行 initdb 创建数据库集群 -> 执行 /docker-entrypoint-initdb.d/ 下的所有脚本 (包括我们挂载的 10-schema.sql) -> 数据库和表结构创建完成。
++ 后续启动: Docker 启动 postgres 容器 -> 容器入口点脚本发现 /var/lib/postgresql/data 已经包含数据 -> 跳过 initdb 和执行 /docker-entrypoint-initdb.d/ 下脚本的步骤 -> 直接启动 PostgreSQL 服务。
+
+这种机制已经成为一种广泛采用的**约定**，使得在首次启动容器时自动执行初始化脚本（如创建数据库、用户、模式、或填充初始数据）变得非常方便。
+
+   目前支持这种初始化方式的数据库有
 
 + Postgres 支持: `.sh`, `.sql`, `.sql.gz` 文件。
 + Mysql/mariadb 支持: `.sh`, `.sql`, `.sql.gz` 文件。
 + Mongodb 支持 `.sh`, `.js` (JavaScript shell 脚本) 文件。
 
-对于应用程序有预先创建用户等需求，可以通过这一特性来实现预初始化部分内容。
+对于应用程序有预先创建用户等需求，可以通过这一特性来实现预初始化部分内容。下面是一个Postgres的例子：
+
+```yaml
+  postgres:
+    image: docker.hlmirror.com/postgres:17.4-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=oxicloud
+    binds:
+      - /lzcapp/var/data:/var/lib/postgresql/data
+      - /lzcapp/pkg/content:/docker-entrypoint-initdb.d/
+```
+
+
 
 
 

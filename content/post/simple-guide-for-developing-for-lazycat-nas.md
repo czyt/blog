@@ -293,7 +293,7 @@ unsupported_platforms:
       - /lzcapp/pkg/content:/docker-entrypoint-initdb.d/
 ```
 
-
+我们只需要把想要初始化执行的sql文件集成到lpk文件中即可自动化初始化调用。
 
 
 

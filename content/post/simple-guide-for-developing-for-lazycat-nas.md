@@ -427,6 +427,38 @@ services:
       fi
 ```
 
+对于程序本身不支持读取文件的时候应该怎么办呢？我们可以通过自定义command来进行处理。对应的setup_script就需要转移到我们写的脚本中来。下面是一个例子:
+
+```yaml
+services:
+  airylark:
+    image: docker.hlmirror.com/wizdy/airylark:latest
+    environment:
+      - NODE_ENV=production
+    binds:
+      - /lzcapp/var/data:/app/data
+    command: /lzcapp/pkg/content/startup.sh 
+```
+
+startup.sh
+
+```bash
+#!/bin/sh
+set -a
+if [ ! -f /app/data/env.yaml ];then
+   cp -f /lzcapp/pkg/content/env.yaml /app/data/env.yaml
+fi
+echo "apply env setting"
+source /app/data/env.yaml
+set +a
+echo "run server"
+node /app/server.js
+```
+
+其中的运行命令请根据不同镜像的Dockerfile进行调整。
+
+> 小知识：`set -a` (或者 `set -o allexport`) 命令告诉 shell 自动标记*之后*定义或修改的任何变量，以便导出。你可以在之后用 `set +a` 关闭这个行为。
+
 ## 软件调试
 
 ###  查看应用日志

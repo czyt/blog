@@ -433,6 +433,7 @@ services:
 services:
   airylark:
     image: docker.hlmirror.com/wizdy/airylark:latest
+    user: root
     environment:
       - NODE_ENV=production
     binds:
@@ -440,11 +441,14 @@ services:
     command: /lzcapp/pkg/content/startup.sh 
 ```
 
+> 这里需要注意我显式使用了root用户，因为我使用的镜像没有data目录的权限, 所以需要使用user来覆写权限。
+
 startup.sh
 
 ```bash
 #!/bin/sh
 set -a
+chown -R nextjs:nodejs /app/data
 if [ ! -f /app/data/env.yaml ];then
    cp -f /lzcapp/pkg/content/env.yaml /app/data/env.yaml
 fi

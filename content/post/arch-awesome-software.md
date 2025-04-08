@@ -589,6 +589,8 @@ chatbox 聚合聊天工具 `paru -S chatbox-appimage`
 
  Cherry Studio 支持多llm来源的ai客户端  `paru -S cherry-studio-git`或者`paru -S cherry-studio-bin`
 
+[DeepChat](https://deepchat.thinkinai.xyz) `paru -S deepchat`
+
 [LynxHub](https://github.com/KindaBrazy/LynxHub) AI 全平台客户端  `paru -S lynxhub-bin`
 
 [mods](https://github.com/charmbracelet/mods) `paru -S mods`

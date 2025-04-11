@@ -81,7 +81,8 @@
 <script defer crossorigin="anonymous" src="{{ $search.RelPermalink }}"></script>
 {{- end }}
 {{- end -}}
-
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4041375411497136"
+     crossorigin="anonymous"></script>
 {{- /* Highlight.js */}}
 {{- $isHLJSdisabled := (.Site.Params.assets.disableHLJS | default .Params.disableHLJS ) }}
 {{- if (and (eq .Kind "page") (ne .Layout "archives") (ne .Layout "search") (not $isHLJSdisabled)) }}

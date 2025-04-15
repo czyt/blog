@@ -2147,7 +2147,7 @@ tldr 简化版文档工具 ` paru -S tldr` （rust版本 `paru -S  tealdeer ` �
 
 vscode 安装 `paru -S visual-studio-code-bin` 
 
-cursor 安装 `paru -S cursor-bin`
+cursor 安装 `paru -S cursor-bin` 或者 `paru -S cursor-bin-patched`(自动解压appimage的版本)
 
 windsurf 安装 `paru -S windsurf`
 

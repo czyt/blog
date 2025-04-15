@@ -2149,6 +2149,12 @@ vscode 安装 `paru -S visual-studio-code-bin`
 
 cursor 安装 `paru -S cursor-bin` 或者 `paru -S cursor-bin-patched`(自动解压appimage的版本)
 
+> 有用的cursor链接
+>
+> + [curs0r GUI](https://github.com/J3n5en/curs0r-release)
+> + [cursor pool](https://poolhub.me)
+> + [cursor auto vip](https://github.com/yeongpin/cursor-free-vip)
+
 windsurf 安装 `paru -S windsurf`
 
 [zed editor](https://zed.dev) 安装 `paru -S zed-editor`或者 `paru -S zed`

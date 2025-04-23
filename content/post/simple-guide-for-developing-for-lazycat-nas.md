@@ -71,7 +71,12 @@ services:
       - GOKAPI_PORT=53842
 ```
 
-docker的镜像地址有很多，这个要去网上自己搜一搜
+docker的镜像地址有很多.我常用的有
+
++ docker.1ms.run
++ docker.hlmirror.com
+
+其他的可以去网上自己搜一搜
 
 ### Web 项目
 

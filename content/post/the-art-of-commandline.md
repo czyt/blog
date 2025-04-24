@@ -6,22 +6,12 @@ draft: false
 ---
 > *** 本文摘自项目** https://github.com/jlevy/the-art-of-command-line 
 
-# 命令行的艺术
-
-- [前言](#前言)
-- [基础](#基础)
-- [日常使用](#日常使用)
-- [文件及数据处理](#文件及数据处理)
-- [系统调试](#系统调试)
-- [单行脚本](#单行脚本)
-- [冷门但有用](#冷门但有用)
-- [仅限 OS X 系统](#仅限-os-x-系统)
-- [仅限 Windows 系统](#仅限-windows-系统)
-- [更多资源](#更多资源)
-- [免责声明](#免责声明)
-
 ![image-20230602093048177](https://assets.czyt.tech/img/cron-cheet-sheet.png)
 
+# 命令行的艺术
+
+
+![curl -s 'https://raw.githubusercontent.com/jlevy/the-art-of-command-line/master/README.md' | egrep -o '`\w+`' | tr -d '`' | cowsay -W50](cowsay.png)
 
 熟练使用命令行是一种常常被忽视，或被认为难以掌握的技能，但实际上，它会提高你作为工程师的灵活性以及生产力。本文是一份我在 Linux 上工作时，发现的一些命令行使用技巧的摘要。有些技巧非常基础，而另一些则相当复杂，甚至晦涩难懂。这篇文章并不长，但当你能够熟练掌握这里列出的所有技巧时，你就学会了很多关于命令行的东西了。
 
@@ -30,7 +20,7 @@ draft: false
 [首次](http://www.quora.com/What-are-some-lesser-known-but-useful-Unix-commands)
 [出现](http://www.quora.com/What-are-the-most-useful-Swiss-army-knife-one-liners-on-Unix)
 于 [Quora](http://www.quora.com/What-are-some-time-saving-tips-that-every-Linux-user-should-know)，
-但已经迁移到了 Github，并由众多高手做出了许多改进。
+但已经迁移到了 GitHub，并由众多高手做出了许多改进。
 如果你在本文中发现了错误或者存在可以改善的地方，请[**贡献你的一份力量**](/CONTRIBUTING.md)。
 
 ## 前言
@@ -178,7 +168,7 @@ draft: false
 
 - 一些其他的关于 ssh 的选项是与安全相关的，应当小心翼翼的使用。例如你应当只能在可信任的网络中启用 `StrictHostKeyChecking=no`，`ForwardAgent=yes`。
 
-- 考虑使用 [`mosh`](https://mosh.mit.edu/) 作为 ssh 的替代品，它使用 UDP 协议。它可以避免连接被中断并且对带宽需求更小，但它需要在服务端做相应的配置。
+- 考虑使用 [`mosh`](https://mosh.org/) 作为 ssh 的替代品，它使用 UDP 协议。它可以避免连接被中断并且对带宽需求更小，但它需要在服务端做相应的配置。
 
 - 获取八进制形式的文件访问权限（修改系统设置时通常需要，但 `ls` 的功能不那么好用并且通常会搞砸），可以使用类似如下的代码：
 ```sh
@@ -556,7 +546,7 @@ mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 
 以下是*仅限于* Windows 系统的技巧。
 
-### 在 Windows下获取 Unix 工具
+### 在 Windows 下获取 Unix 工具
 
 - 可以安装 [Cygwin](https://cygwin.com/) 允许你在 Microsoft Windows 中体验 Unix shell 的威力。这样的话，本文中介绍的大多数内容都将适用。
 
@@ -602,9 +592,6 @@ mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 - [shellcheck](https://github.com/koalaman/shellcheck)：一个静态 shell 脚本分析工具，本质上是 bash／sh／zsh 的 lint。
 - [Filenames and Pathnames in Shell](http://www.dwheeler.com/essays/filenames-in-shell.html)：有关如何在 shell 脚本里正确处理文件名的细枝末节。
 - [Data Science at the Command Line](http://datascienceatthecommandline.com/#tools)：用于数据科学的一些命令和工具，摘自同名书籍。
-> 增补
-+ [最牛B的Linux Shell命令](https://plantegg.github.io/2017/01/01/top_linux_commands/)
-+ [linux network performance parameters](https://github.com/leandromoreira/linux-network-performance-parameters)
 
 ## 免责声明
 
@@ -618,6 +605,4 @@ mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
 本文使用授权协议 [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/)。
 
 
-
-## 增补
 

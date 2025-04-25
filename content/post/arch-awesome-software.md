@@ -709,7 +709,7 @@ tor `paru -S tor-browser-bin `
 
 > 可以开启和关闭沙盒
 >
-> deepin-wine-wechat完成了它的使命，对于有Windows版本程序运行的需求者来说，可以安装`paru -S deepine-wine8-stable`来执行Windows程序
+> deepin-wine-wechat完成了它的使命，对于有Windows版本程序运行的需求者来说，可以安装`paru -S wine-staging`来执行Windows程序
 >
 > 更多请参考 [wiki](https://wiki.archlinuxcn.org/wiki/%E5%BE%AE%E4%BF%A1#Linux_%E7%89%88)
 

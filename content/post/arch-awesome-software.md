@@ -2507,6 +2507,14 @@ sudo pacman-key --populate archlinuxcn
 + 高分辨率屏幕登录界面如何放大
 
   修改 /etc/sddm.conf 配置文件， 在 `ServerArguments=-nolisten tcp` 行后面增加 `-dpi 196`， 放大登录界面的分辨率为2倍.可以参考[Arch Linux的wiki](https://wiki.archlinuxcn.org/wiki/SDDM)
+  
++ 安装软件包并跳过checksum
+
+   ```bash
+   paru -S apifox --mflags "--skipchecksums --skippgpcheck"
+   ```
+
+
 
 ## 参考连接
 

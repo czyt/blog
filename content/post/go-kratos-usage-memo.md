@@ -1492,6 +1492,56 @@ server {
 
 ```
 
+## MCP 支持
+
+新版本的go-kratos支持了mcp的协议，下面是一个demo
+
+```go
+import(
+    tm "github.com/go-kratos/kratos/contrib/transport/mcp/v2"
+    mcp "github.com/mark3labs/mcp-go/mcp"
+)
+
+func helloHandler(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+    name, ok := request.Params.Arguments["name"].(string)
+    if !ok {
+        return nil, errors.New("name must be a string")
+    }
+    return mcp.NewToolResultText(fmt.Sprintf("Hello, %s!", name)), nil
+}
+
+func Health(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/health/ready" {
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
+
+func main() {
+    srv := tm.NewServer("kratos-mcp", "v1.0.0", tm.Address(":8000"), tm.Middleware(Health))
+    tool := mcp.NewTool("hello_world",
+        mcp.WithDescription("Say hello to someone"),
+        mcp.WithString("name",
+            mcp.Required(),
+            mcp.Description("Name of the person to greet"),
+        ),
+    )
+    // Add tool handler
+    srv.AddTool(tool, helloHandler)
+    // creates a kratos application
+    app := kratos.New(
+        kratos.Name("kratos-app"),
+        kratos.Server(srv),
+    )
+    if err := app.Run(); err != nil {
+        panic(err)
+    }
+}
+```
+
 ## 支持文件上传
 
 因为protobuf官方限制，并不能通过protobuf生成http服务，需要创建相关逻辑，参考[example](https://github.com/go-kratos/examples/tree/main/http/upload)中的实现：

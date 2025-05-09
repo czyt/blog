@@ -498,7 +498,7 @@ rustup install stable
 - https://oc.skk.moe
 - https://www.tonymacx86.com
 
-## 参阅网站
+## 附录
 
 ### 破解补丁
 
@@ -532,11 +532,128 @@ rustup install stable
 - https://happyhackingkb.com/download
 - https://github.com/jaywcjlove/awesome-swift-macos-apps
 - https://aerolite.dev/applite 第三方的苹果软件应用商店
-### 指南技巧
+### 使用技巧
+
+#### 使用brewfile
+Brewfile 允许你批量安装命令行工具、应用程序、字体，甚至 Visual Studio Code（及其分支/变体）扩展，而不是逐个安装。
+
+下面是我的配置
+
+```bash
+# command-line utilities
+
+#brew "oven-sh/bun/bun"
+#brew "ffmpeg"
+brew "cask"
+brew "zsh"
+brew "zsh-autosuggestions"
+brew "zsh-completions"
+brew "zsh-syntax-highlighting"
+
+
+# apps
+
+# 微信
+cask "wechat"
+cask "qq"
+cask "discord"
+#cask "raycast"
+#cask "whatsapp"
+cask "warp"
+cask "cleanshot"
+#cask "google-chrome"
+cask "vivalidi"
+#cask "screen-studio"
+#cask "imageoptim"
+#cask "bitwarden"
+cask "docker"
+cask "obs"
+#cask "elgato-stream-deck"
+#cask "elgato-camera-hub"
+#cask "zoom"
+cask "vlc"
+# 网易云音乐
+cask "neteasemusic"
+#cask "pgadmin4"
+#cask "nordvpn"
+cask "zed"
+#cask "ngrok"
+cask "rustdesk"
+
+# development
+brew "git"
+#brew "node"
+brew "go"
+brew "zig"
+brew "rustup"
+cask "duckdb"
+#brew "postgresql@17"
+cask "jetbrains-toolbox"
+#cask "postman"
+cask "apifox"
+cask "cursor"
+brew "pnpm"
+brew "npm"
+brew "uv"
+#brew "gh"
+
+# tools
+# 剪切板工具
+cask "maccy"
+
+
+# fonts
+
+cask "font-hack-nerd-font"
+cask "font-menlo-for-powerline"
+cask "font-jetbrains-mono"
+cask "font-jetbrains-mono-nerd-font"
+```
+
+你可以在你的机器的根目录下创建 `Brewfile` ，并在完成后运行 `brew bundle` 。
+
+`bundle` 命令会安装你在文件中指定的所有内容。
+
+#### 设置 `defaults`
+
+macOS 还提供了 `defaults` 工具来定制你的 MacBook 和某些应用程序的设置。
+
+可以通过终端中的 `defaults` 工具来达到同样的效果，而不是通过 UI 更新设置。
+
+```bash
+# Enable tap-to-click for the trackpad and show the correct state in System Preferences
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults -currentHost write -g com.apple.mouse.tapBehavior -int 1
+
+# Disable the .DS file creation
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+# Show the path bar in the Finder
+defaults write com.apple.finder "ShowPathbar" -bool "true" && killall Finder
+
+# Show hidden files in the Finder
+defaults write com.apple.finder "AppleShowAllFiles" -bool "false" && killall Finder
+
+# Keep folders on top in Finder
+defaults write com.apple.finder "_FXSortFoldersFirst" -bool "true" && killall Finder
+
+# Keep folders on top on Desktop
+defaults write com.apple.finder "_FXSortFoldersFirstOnDesktop" -bool "true" && killall Finder
+
+# Apply the settings
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u12345678910111213141516171819202122
+```
+
+这非常方便，因为你不必手动进行所有更改。
+
+### 相关文章
 
 - https://44maker.github.io/wiki/Mac/index.html#start
 
 - https://sumingyd.github.io/OpenCore-Post-Install/
 
+  
+  
   
 

@@ -509,6 +509,8 @@ rustup install stable
 
 - https://xmac.app
 
+- https://haxmac.cc
+
 - https://www.digit77.com
 
 - https://appstorrent.ru

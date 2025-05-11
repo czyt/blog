@@ -574,6 +574,7 @@ cask "obs"
 #cask "elgato-camera-hub"
 #cask "zoom"
 cask "vlc"
+cask "iina"
 # 网易云音乐
 cask "neteasemusic"
 #cask "pgadmin4"

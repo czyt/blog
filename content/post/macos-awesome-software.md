@@ -425,6 +425,10 @@ rustup install stable
 
 > iterm2支持zmodern文件上传  https://github.com/robberphex/iTerm2-zmodem, 可以使用`brew install laggardkernel/tap/iterm2-zmodem`进行安装
 
+GitButler- Git 客户端，用于在现有工作流之上同时进行分支
+
+ `brew install --cask gitbutler`
+
 ### IDE
 
 - VSCode - 微软出品的宇宙最强编辑器。

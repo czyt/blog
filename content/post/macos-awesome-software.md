@@ -143,6 +143,7 @@ draft: false
 - Fantastical
 - Things，很简洁的备忘 Todo 软件，正是由于太简单了，反而能够让你更加聚焦使用。
 - Vitamin-R 3 番茄计划定制工作任务
+- [Quickly Change Stores](https://apps.apple.com/us/app/quickly-change-stores/id6745314361?l=zh-Hans-CN) 快速轻松地切换App Store地区工具
 
 ### 虚拟机及虚拟化
 - Parallels Desktop

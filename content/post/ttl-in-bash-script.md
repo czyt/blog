@@ -1,7 +1,7 @@
 ---
-title: "【译】TIL：Bash 脚本中的超时"
+title: "TIL：Bash 脚本中的超时【译】"
 date: 2025-05-30T08:55:18+08:00
-draft: true
+draft: false
 tags: ["bash","trick"]
 author: "czyt"
 ---

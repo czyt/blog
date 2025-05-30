@@ -128,6 +128,7 @@ draft: false
 - Transmit - FTP工具。
 - FileZilla - FTP工具。
 - LocalSend 局域网传输软件 `brew install localsend`
+- [Piclist](https://github.com/Kuingsmile/PicList) `brew install piclist --cask`
 
 ### 远程控制
 - rustdesk

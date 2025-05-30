@@ -2,7 +2,7 @@
 title: "在 Go 中构建可扩展的多租户应用程序【译】"
 date: 2025-05-30T14:50:27+08:00
 draft: false
-tags: ["golang","ent]
+tags: ["golang","ent"]
 author: "czyt"
 ---
 
@@ -421,7 +421,7 @@ func (s *Server) GetCustomers(w http.ResponseWriter, r *http.Request) {
 
 总而言之，以下是我们的应用程序中请求的流程：
 
-![img](https://atlasgo.io/assets/images/entpriv-journey-48f03d480b272cc114032834cada7b45.png)
+![img](https://assets.czyt.tech/img/entpriv-journey-48f03d480b272cc114032834cada7b45.png)
 
 这种方法使我们能够在利用 Ent 的隐私规则在 ORM 层级强制执行租户隔离的同时编写单租户代码。
 
@@ -479,7 +479,7 @@ users := client.Customer.Query().AllX(ctx)
 
 使用租户模式，我们使用单个数据库实例，但每个租户在该数据库中都有自己的模式（表在模式之间进行复制）。这使我们能够隔离每个租户的数据，同时仍然保持成本较低。
 
-![img](https://atlasgo.io/assets/images/schema-per-tenant-5a65933ed1f4980e158e1a03cb64915e.png)
+![img](https://assets.czyt.tech/img/schema-per-tenant-5a65933ed1f4980e158e1a03cb64915e.png)
 
 请求作用域是在中间件级别处理的，我们根据请求上下文中的租户 ID 为每个租户创建一个作用域数据库客户端。
 

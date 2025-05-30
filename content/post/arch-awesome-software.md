@@ -1472,6 +1472,8 @@ smPlayer `paru -S smplayer`
 [macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `paru -S 
 macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
 
+[fooyin](https://github.com/fooyin/fooyin) Linux 的 Foobar2000`paru -S fooyin-bin`或者 `paru -S fooyin`
+
 ## 美化
 
 ### docky 安装
@@ -2532,3 +2534,4 @@ sudo pacman-key --populate archlinuxcn
 - https://www.imwxz.com/posts/fc1dd509.html
 - https://wiki.archlinux.org/title/Dell_XPS_13_(9370)
 - https://terminaltrove.com/list/F
+- https://github.com/luisbocanegra/plasma-panel-colorizer

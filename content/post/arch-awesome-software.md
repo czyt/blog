@@ -1472,6 +1472,8 @@ smPlayer `paru -S smplayer`
 [macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `paru -S 
 macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
 
+[fooyin](https://github.com/fooyin/fooyin) Linux 的 Foobar2000`paru -S fooyin-bin`或者 `paru -S fooyin`
+
 ## 美化
 
 ### docky 安装
@@ -1986,6 +1988,8 @@ bun `paru -S bun-bin`
 Git  `paru -S git git-extras`
 
 [vfox SDK管理工具](https://github.com/version-fox/vfox) 安装 `curl -sSL https://raw.githubusercontent.com/version-fox/vfox/main/install.sh | bash`
+
+Git客户端[GitButler](https://app.gitbutler.com) `paru -S gitbutler-bin`
 
 [Homebrew](https://brew.sh) 安装 `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"` ([设置镜像源](https://mirrors.tuna.tsinghua.edu.cn/help/homebrew/) [使用指南](https://sspai.com/post/56009))
 
@@ -2532,3 +2536,4 @@ sudo pacman-key --populate archlinuxcn
 - https://www.imwxz.com/posts/fc1dd509.html
 - https://wiki.archlinux.org/title/Dell_XPS_13_(9370)
 - https://terminaltrove.com/list/F
+- https://github.com/luisbocanegra/plasma-panel-colorizer

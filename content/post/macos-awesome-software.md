@@ -128,6 +128,7 @@ draft: false
 - Transmit - FTP工具。
 - FileZilla - FTP工具。
 - LocalSend 局域网传输软件 `brew install localsend`
+- [Piclist](https://github.com/Kuingsmile/PicList) `brew install piclist --cask`
 
 ### 远程控制
 - rustdesk
@@ -143,6 +144,7 @@ draft: false
 - Fantastical
 - Things，很简洁的备忘 Todo 软件，正是由于太简单了，反而能够让你更加聚焦使用。
 - Vitamin-R 3 番茄计划定制工作任务
+- [Quickly Change Stores](https://apps.apple.com/us/app/quickly-change-stores/id6745314361?l=zh-Hans-CN) 快速轻松地切换App Store地区工具
 
 ### 虚拟机及虚拟化
 - Parallels Desktop
@@ -425,6 +427,10 @@ rustup install stable
 
 > iterm2支持zmodern文件上传  https://github.com/robberphex/iTerm2-zmodem, 可以使用`brew install laggardkernel/tap/iterm2-zmodem`进行安装
 
+GitButler- Git 客户端，用于在现有工作流之上同时进行分支
+
+ `brew install --cask gitbutler`
+
 ### IDE
 
 - VSCode - 微软出品的宇宙最强编辑器。
@@ -575,6 +581,7 @@ cask "obs"
 #cask "elgato-camera-hub"
 #cask "zoom"
 cask "vlc"
+cask "iina"
 # 网易云音乐
 cask "neteasemusic"
 #cask "pgadmin4"
@@ -595,6 +602,7 @@ cask "jetbrains-toolbox"
 #cask "postman"
 cask "apifox"
 cask "cursor"
+cask "gitbutler"
 brew "pnpm"
 brew "npm"
 brew "uv"

@@ -466,6 +466,7 @@ rustup install stable
 ### 其他
 
 - JD-GUI - Java反编译工具，字节码文件反编译为Java文件。
+- Git  `brew install git git-extras`
 - Latest 软件升级工具
 - [CodemerxDecompile](https://decompiler.codemerx.com) 跨平台的.net反编译工具
 - [chsrc ](https://github.com/RubyMetric/chsrc)软件换源，加速

@@ -6,7 +6,7 @@ tags: ["tricks"]
 author: "czyt"
 ---
 
-​    最近听说Claude Code很好用，但是国内很难稳定直连Claude，手上的硅基余额还有上百块，于是突发奇想，如何把手上的硅基DeepSeek用到Claude Code上。找了下，发现[Claude Code Router](https://github.com/musistudio/claude-code-router) 这个项目。下面是使用方法。
+​    最近听说[Claude Code](https://docs.anthropic.com/zh-CN/docs/claude-code/overview)很好用，但是国内很难稳定直连Claude，手上的硅基余额还有上百块，于是突发奇想，如何把手上的硅基DeepSeek用到Claude Code上。找了下，发现[Claude Code Router](https://github.com/musistudio/claude-code-router) 这个项目。下面是使用方法。
 ## 安装
 > 你需要有nodejs这样的环境，bun没进行测试.需要安装npm或者pnpm包管理器
 > 

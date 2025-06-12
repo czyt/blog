@@ -33,4 +33,12 @@ pnpm install -g @musistudio/claude-code-router
 ccr code
 ```
 
+当然你也可以创建一个alias方便使用
+
+```
+alias claude='ccr code'
+```
+
+将这个加入到您的.zshrc获取.bashrc中即可。
+
 ![image-20250612155248337](https://assets.czyt.tech/img/claude-code-router-usage)

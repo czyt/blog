@@ -20,7 +20,10 @@ pnpm install -g @anthropic-ai/claude-code
 pnpm install -g @musistudio/claude-code-router
 ```
 ## 使用
-在使用之前需要在您的`$HOME/.claude-code-router/`下创建`config.json`文件，下面是我使用硅基流动的一个示例
+在使用之前需要在您的`$HOME/.claude-code-router/`下创建`config.json`文件，下面是我使用
+
+硅基流动示例 [邀请注册](https://cloud.siliconflow.cn/i/a7NqR0rS)
+
 ```json
 {
     "OPENAI_API_KEY": "sk-xxxxxxxx",
@@ -28,7 +31,21 @@ pnpm install -g @musistudio/claude-code-router
     "OPENAI_MODEL": "deepseek-ai/DeepSeek-V3"
 }
 ```
+使用火山引擎的示例
+
+```json
+{
+    "LOG": true,
+    "OPENAI_API_KEY": "xxxxx",
+    "OPENAI_BASE_URL": "https://ark.cn-beijing.volces.com/api/v3/",
+    "OPENAI_MODEL": "deepseek-v3-250324"
+}
+```
+
+
+
 然后通过 claude-code-router启动你的Claude Code
+
 ```bash
 ccr code
 ```

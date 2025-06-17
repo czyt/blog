@@ -75,6 +75,8 @@ docker的镜像地址有很多.我常用的有
 
 + docker.1ms.run
 + docker.hlmirror.com
++ dockerproxy.net
++ docker.xuanyuan.me
 
 其他的可以去网上自己搜一搜
 

@@ -2009,6 +2009,8 @@ Git客户端[GitButler](https://app.gitbutler.com) `paru -S gitbutler-bin`
 
 [fleek ]( https://getfleek.dev) "Home as Code" for Humans
 
+开发环境管理工具 [mise](https://github.com/jdx/mise) `paru -S mise`
+
 wireshark    GUI `paru -S  wireshark-qt `  Cli `paru -S wireshark-cli`
 
 > wireshark的一篇好文章 https://www.ilikejobs.com/posts/wireshark/

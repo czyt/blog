@@ -167,6 +167,78 @@ application:
 
 ## 实用技巧
 
+### 配置向导
+
+> lazaycat os 1.3.8 开始支持了配置向导的设置,官方文档 https://developer.lazycat.cloud/spec/deploy-params.html
+
+下面是一个例子
+
+deploy_params.yml
+
+```yaml
+params:
+  - id: target
+    type: string
+    name: "target"
+    description: "the target IP you want forward"
+
+  - id: listen.port
+    type: string
+    name: "listen port"
+    description: "the forwarder listen port, can't be 80, 81"
+    default_value: "33"
+    optional: true
+
+locales:
+  zh:
+    target:
+      name: "目标地址"
+      description: "期望被转发的目标IP, 支持任何您在微服内可以访问到的IP"
+    listen.port:
+      name: "监听端口"
+      description: "用来接受系统流量进入的端口，不要填写80,81即可，本端口号自身依旧可以被转发"
+
+
+
+```
+
+manifest.yml
+
+```yaml
+package: org.snyh.netmap
+
+version: 0.0.1
+
+{{ if .U.target }}
+name: to {{.U.target}}
+{{ else }}
+name: netmap
+{{ end }}
+
+min_os_version: 1.3.8
+
+application:
+  subdomain: netmap
+
+  upstreams:
+    - location: /
+      backend_launch_command: /lzcapp/pkg/content/netmap -target={{ .U.target }} -port={{ index .U "listen.port" }}
+      backend: file:///lzcapp/var/docs/  #实际文件由后端程序动态生成的
+
+  ingress:
+    - protocol: tcp
+      port: {{ index .U "listen.port" }}
+      publish_port: 0-65536
+      send_port_info: true
+      yes_i_want_80_443: true
+
+ext_config:
+  default_prefix_domain: config
+
+```
+
+
+
 ### 添加用户使用的帮助文档
 
 有些软件在使用上需要给用户一些readme之类的东西，但是通过路由映射出来体验不好。可以通过404的handler来实现这一目的，但是帮助文件需要也映射相关的路径。

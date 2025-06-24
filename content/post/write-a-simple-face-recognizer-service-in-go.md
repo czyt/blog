@@ -34,7 +34,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// 人脸数据结构
+// FaceData 人脸数据结构
 type FaceData struct {
 	ID         int    `json:"id"`
 	Name       string `json:"name"`
@@ -43,14 +43,14 @@ type FaceData struct {
 	ImageURL   string `json:"image_url"`  // 图片访问URL
 }
 
-// 响应结构
+// Response 响应结构
 type Response struct {
 	Success bool        `json:"success"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data,omitempty"`
 }
 
-// 人脸识别服务
+// FaceService 人脸识别服务
 type FaceService struct {
 	recognizer *face.Recognizer
 	faceData   map[int]FaceData
@@ -62,7 +62,7 @@ type FaceService struct {
 	labels  []string
 }
 
-// 初始化人脸识别服务
+// NewFaceService 初始化人脸识别服务
 func NewFaceService(modelsDir string) (*FaceService, error) {
 	// 初始化人脸识别器
 	rec, err := face.NewRecognizer(modelsDir)
@@ -86,7 +86,7 @@ func NewFaceService(modelsDir string) (*FaceService, error) {
 	}, nil
 }
 
-// 关闭资源
+// Close 关闭资源
 func (fs *FaceService) Close() {
 	fs.recognizer.Close()
 }
@@ -133,7 +133,7 @@ func (fs *FaceService) updateClassifier() {
 	}
 }
 
-// 人脸登记接口
+// RegisterFace 人脸登记接口
 func (fs *FaceService) RegisterFace(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "只支持POST方法", http.StatusMethodNotAllowed)
@@ -232,7 +232,7 @@ func (fs *FaceService) RegisterFace(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// 人脸识别接口
+// RecognizeFace 人脸识别接口
 func (fs *FaceService) RecognizeFace(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "只支持POST方法", http.StatusMethodNotAllowed)
@@ -293,8 +293,9 @@ func (fs *FaceService) RecognizeFace(w http.ResponseWriter, r *http.Request) {
 	// 使用RecognizeSingleFile进行单人脸识别
 	detectedFace, err := fs.recognizer.RecognizeSingleFile(tempFile)
 	if err != nil {
-		switch err.(type) {
-		case face.ImageLoadError:
+		var imageLoadError face.ImageLoadError
+		switch {
+		case errors.As(err, &imageLoadError):
 			fs.sendResponse(w, false, "图片格式不支持或已损坏", nil)
 		default:
 			fs.sendResponse(w, false, "人脸识别失败", nil)
@@ -365,7 +366,7 @@ func (fs *FaceService) calculateDistance(desc1, desc2 face.Descriptor) float32 {
 	return float32(math.Sqrt(sum))
 }
 
-// 获取所有已登记人脸列表
+// GetFaceList 获取所有已登记人脸列表
 func (fs *FaceService) GetFaceList(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "只支持GET方法", http.StatusMethodNotAllowed)
@@ -387,7 +388,7 @@ func (fs *FaceService) GetFaceList(w http.ResponseWriter, r *http.Request) {
 	fs.sendResponse(w, true, "获取成功", faceList)
 }
 
-// 删除已登记人脸
+// DeleteFace 删除已登记人脸
 func (fs *FaceService) DeleteFace(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
 		http.Error(w, "只支持DELETE方法", http.StatusMethodNotAllowed)
@@ -427,7 +428,7 @@ func (fs *FaceService) DeleteFace(w http.ResponseWriter, r *http.Request) {
 	fs.sendResponse(w, true, "删除成功", nil)
 }
 
-// 批量识别接口（处理多人脸图片）
+// RecognizeMultipleFaces 批量识别接口（处理多人脸图片）
 func (fs *FaceService) RecognizeMultipleFaces(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "只支持POST方法", http.StatusMethodNotAllowed)
@@ -488,8 +489,9 @@ func (fs *FaceService) RecognizeMultipleFaces(w http.ResponseWriter, r *http.Req
 	// 识别图片中的所有人脸
 	faces, err := fs.recognizer.RecognizeFile(tempFile)
 	if err != nil {
-		switch err.(type) {
-		case face.ImageLoadError:
+		var imageLoadError face.ImageLoadError
+		switch {
+		case errors.As(err, &imageLoadError):
 			fs.sendResponse(w, false, "图片格式不支持或已损坏", nil)
 		default:
 			fs.sendResponse(w, false, "人脸识别失败", nil)

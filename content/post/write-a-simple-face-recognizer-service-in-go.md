@@ -1,14 +1,16 @@
 ---
 title: "使用go编写一个简单的人脸识别服务"
 date: 2025-06-24T15:26:06+08:00
-draft: true
+draft: false
 tags: ["golang"]
 author: "czyt"
 ---
 
 > 需要下载相关的模型 https://github.com/Kagami/go-face-testdata 下面的models
 
-简单实现的代码如下
+## 代码实现
+
+代码如下
 
 ```go
 package main
@@ -627,3 +629,116 @@ func main() {
 
 ```
 
+## 用到的数学方法
+
+上面的代码用到了欧几里得距离计算公式解析，下面内容来自AI
+
+### 基本概念
+
+欧几里得距离（Euclidean Distance）是衡量两个点在多维空间中实际距离的最常用方法。在人脸识别领域，我们用它来计算两个人脸特征向量（通常是128维或更高维）之间的相似度。
+
+### 公式表达
+
+在n维空间中，两点$p$和$q$之间的欧几里得距离公式为：
+
+$$
+d(p,q) = \sqrt{\sum_{i=1}^{n}(p_i - q_i)^2}
+$$
+
+其中：
+- $p$ 和 $q$ 是两个特征向量
+- $p_i$ 和 $q_i$ 分别是向量$p$和$q$在第$i$个维度的值
+- $n$ 是特征向量的维度数
+
+#### 在人脸识别中的具体应用
+
+在人脸识别领域，我们处理的是128维的特征向量（由dlib的ResNet模型生成），所以公式变为：
+
+$$
+distance = \sqrt{\sum_{i=0}^{127}(d1_i - d2_i)^2}
+$$
+
+其中：
+- $d1$ 和 $d2$ 是两个128维的人脸特征向量
+- $d1_i$ 和 $d2_i$ 是向量在维度$i$上的值
+
+### 相似度转换
+
+在实现中，我们通常会将距离转换为更直观的相似度百分比：
+
+$$
+similarity = (1 - \frac{distance}{max\_possible}) \times 100\%
+$$
+
+但在实践中，由于dlib模型的特性，我们更常使用：
+
+$$
+confidence = (1 - distance) \times 100\%
+$$
+
+这里需要注意：
+1. 当$distance > 1$时，$confidence$会变为负数
+2. 因此我们在实际应用中会将其限制为0：
+```go
+if confidence < 0 {
+    confidence = 0
+}
+```
+
+### 阈值设置
+
+| 阈值水平     | 距离范围       | 置信度范围       | 识别结果                 |
+| ------------ | -------------- | ---------------- | ------------------------ |
+| 非常严格     | distance < 0.3 | confidence > 70% | 几乎可以确定是同一人     |
+| 严格         | distance < 0.4 | confidence > 60% | 高度可能是同一人         |
+| 正常（默认） | distance < 0.6 | confidence > 40% | 可能是同一人             |
+| 宽松         | distance < 0.8 | confidence > 20% | 可能是同一人（但误差大） |
+| 非常宽松     | distance < 1.0 | confidence > 0%  | 不可靠的匹配             |
+
+### 实际应用代码
+
+```go
+// 计算两个人脸特征向量之间的欧几里得距离
+func calculateDistance(desc1, desc2 face.Descriptor) float32 {
+    var sum float64
+    for i := 0; i < len(desc1); i++ {
+        diff := float64(desc1[i] - desc2[i])
+        sum += diff * diff
+    }
+    return float32(math.Sqrt(sum))
+}
+
+// 距离转换为相似度百分比
+func distanceToConfidence(distance float32) float32 {
+    confidence := (1 - distance) * 100
+    if confidence < 0 {
+        return 0
+    }
+    return confidence
+}
+```
+
+### 数学特性
+
+1. **非负性**：$distance \geqslant 0$
+2. **同一性**：$d(x,y) = 0$ 当且仅当 $x = y$
+3. **对称性**：$d(x,y) = d(y,x)$
+4. **三角不等式**：$d(x,z) \leqslant d(x,y) + d(y,z)$
+
+### 性能优化考虑
+
+1. **平方距离替代**：可以只计算平方和而不开方以提升性能：
+   $$ squaredDistance = \sum_{i=0}^{127}(d1_i - d2_i)^2 $$
+
+2. **距离提前终止**：在遍历计算过程中，如果部分和已超过阈值，可提前终止计算
+
+3. **向量化计算**：使用SIMD指令并行处理多个维度计算（在Go中可使用`gorgonia`等库）
+
+### 与其他距离度量的对比
+
+| 度量方式     | 公式                        | 特点               | 适用场景           |
+| ------------ | --------------------------- | ------------------ | ------------------ |
+| 欧几里得距离 | $\sqrt{\sum(p_i-q_i)^2}$    | 直观性强，计算简单 | 人脸识别，图像检索 |
+| 余弦相似度   | $\frac{p·q}{\|p\|\|q\|}$    | 关注方向而非大小   | 文本分析，高维空间 |
+| 曼哈顿距离   | $\sum\|p_i-q_i\|$           | 计算成本低         | 网格路径规划       |
+| 马氏距离     | $\sqrt{(p-q)^TΣ^{-1}(p-q)}$ | 考虑特征相关性     | 统计分类           |

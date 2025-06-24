@@ -171,7 +171,7 @@ application:
 
 > lazaycat os 1.3.8 开始支持了配置向导的设置,官方文档 https://developer.lazycat.cloud/spec/deploy-params.html
 
-下面是一个例子
+下面是一个例子([项目源码](https://gitee.com/lazycatcloud/netmap))
 
 deploy_params.yml
 

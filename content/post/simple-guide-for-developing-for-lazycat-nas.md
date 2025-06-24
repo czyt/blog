@@ -169,7 +169,10 @@ application:
 
 ### 配置向导
 
-> lazaycat os 1.3.8 开始支持了配置向导的设置,官方文档 https://developer.lazycat.cloud/spec/deploy-params.html
+> lazaycat os 1.3.8 开始支持了配置向导的设置,官方文档
+>
+> + https://developer.lazycat.cloud/spec/deploy-params.html
+> + https://developer.lazycat.cloud/advanced-manifest-render.html
 
 下面是一个例子([项目源码](https://gitee.com/lazycatcloud/netmap))
 

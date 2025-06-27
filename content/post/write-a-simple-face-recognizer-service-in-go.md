@@ -744,3 +744,11 @@ func distanceToConfidence(distance float32) float32 {
 | 余弦相似度   | $\frac{p·q}{\|p\|\|q\|}$    | 关注方向而非大小   | 文本分析，高维空间 |
 | 曼哈顿距离   | $\sum\|p_i-q_i\|$           | 计算成本低         | 网格路径规划       |
 | 马氏距离     | $\sqrt{(p-q)^TΣ^{-1}(p-q)}$ | 考虑特征相关性     | 统计分类           |
+
+## 其他相关的仓库
+
++ [基于gocv实现的人脸识别登录](https://github.com/Mahmoud-Italy/face-recognition-login)
++ [A simple and fast face detector using gocv and har cascade classifier.](https://github.com/ashwin-rajeev/golang-face-detector)
++ [golang facial recognition project based on the go-face library](https://github.com/andre-ols/go-face-recognition)
++ [Fast face detection, pupil/eyes localization and facial landmark points detection library in pure Go.](https://github.com/esimov/pigo)
++ [Face detection and recognition using golang](https://github.com/leandroveronezi/go-recognizer)

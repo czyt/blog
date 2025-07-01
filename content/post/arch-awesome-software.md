@@ -1729,6 +1729,8 @@ zsh在使用nohup执行任务的时候，可能会出现session注销后，nohup
 
 如果您想给您的zsh支持上ai功能，还可以安装插件[zsh_codex](https://github.com/tom-doerr/zsh_codex) 
 
+Get AI-powered command suggestions  [smart-suggestion](https://github.com/yetone/smart-suggestion)
+
 另外还有一个[SpaceShip](https://github.com/spaceship-prompt/spaceship-prompt)的插件也不错，可以试下。参考[这篇文章](https://garrytrinder.github.io/2020/12/my-wsl2-windows-terminal-setup)，下面是引用部分
 
 > ## paceship ZSH

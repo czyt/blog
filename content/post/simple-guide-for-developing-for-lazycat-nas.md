@@ -643,3 +643,7 @@ docker run -it --entrypoint /bin/sh <image_name>
 ```
 
 了解这些状态码有助于快速诊断Docker容器问题，提高排障效率。
+
+### 一些有用的仓库
+
++ [All common docker scripts in one place](https://github.com/a-h-abid/docker-commons)

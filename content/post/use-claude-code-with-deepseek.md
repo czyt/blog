@@ -59,3 +59,14 @@ alias claude='ccr code'
 将这个加入到您的.zshrc获取.bashrc中即可。
 
 ![image-20250612155248337](https://assets.czyt.tech/img/claude-code-router-usage)
+
+当然，也可以使用[anyrouter](https://anyrouter.top/register?aff=myZ5) 这样的在线服务，配合calude使用即可，只要在您的.zsrhrc中加入下面的一个函数.
+
+```bash
+function set_claude(){
+ export ANTHROPIC_AUTH_TOKEN=sk-xxxxxxx<改成您自己的key>
+ export ANTHROPIC_BASE_URL=https://anyrouter.top
+}
+```
+
+然后在调用claude之前set_claude即可。

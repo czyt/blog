@@ -9,6 +9,51 @@ draft: false
 
 最近看到有些go开源项目中的代码，看到其中的功能，故整理备用。
 
+## 密码
+
+### 阈值解密（Threshold Decryption）
+
+[来源](https://github.com/hashicorp/vault/blob/main/shamir/shamir_test.go) 取自[公众号文章](https://mp.weixin.qq.com/s/6EfbTI8McGiYOd9R_YFZhg)
+
+```go
+package main
+
+import (
+"crypto/rand"
+"fmt"
+"github.com/hashicorp/vault/shamir"
+)
+
+func main() {
+// 1. 生成一个随机密钥（如AES-256密钥）
+	secretKey := make([]byte, 32)
+	_, err := rand.Read(secretKey)
+       if err != nil {
+           panic(err)
+	}
+	fmt.Printf("原始密钥: %x\n", secretKey)
+
+// 2. 分片为3份，至少需要2份恢复（阈值k=2，总分片n=3）
+	shards, err := shamir.Split(secretKey, 3, 2)
+        if err != nil {
+            panic(err)
+	}
+
+// 3. 模拟分片存储（实际中分发给不同机构）
+	shard1, shard2, shard3 := shards[0], shards[1], shards[2]
+	fmt.Printf("分片1: %x\n分片2: %x\n分片3: %x\n", shard1, shard2, shard3)
+
+// 4. 恢复密钥（任意2个分片）
+	recoveredKey, err := shamir.Combine([][]byte{shard1, shard2}) // 使用分片1和2
+        if err != nil {
+            panic(err)
+	}
+	fmt.Printf("恢复的密钥: %x\n", recoveredKey)
+}
+```
+
+
+
 ## 数据结构
 
 ### 优先级队列

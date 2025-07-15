@@ -103,6 +103,18 @@ alias claude='ccr code'
 
 将这个加入到您的.zshrc获取.bashrc中即可。
 
+### Kimi K2
+
+Kimi K2直接支持在Calude Code中使用
+
+```bash
+export ANTHROPIC_AUTH_TOKEN=你的月之暗面 API Key
+export ANTHROPIC_BASE_URL=https://api.moonshot.ai/anthropic
+claude
+```
+
+> 月之暗面的API KEY获取途径：登录[月之暗面开发者平台](https://platform.moonshot.cn/console/account),创建 API Key即可。
+
 ## claudeCode MCP
 
 可以安装一些mcp来优化体验

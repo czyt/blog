@@ -1,5 +1,5 @@
 ---
-title: "ClaudeCode使用笔记"
+title: "Claude Code使用笔记"
 date: 2025-06-12T15:36:50+08:00
 draft: false
 tags: ["tricks","claude-code"]
@@ -58,7 +58,7 @@ alias cc="claude --dangerously-skip-permissions"
  只有输入cc时才启动这个模式。对于不需要交互的场景，可以使用下面的别名：
 
 ```bash
- alias ccp="claude --dangerously-skip-permissions"
+ alias ccp="claude --dangerously-skip-permissions -p"
 ```
 
 

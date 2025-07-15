@@ -43,6 +43,26 @@ claude Code可以设置自动更新
 claude config set autoUpdates true --global
 ```
 
+Claude Code运行需要一直确认。 每次都选择第一项或第二项，和让程序自动运行差不多。 如果想绕过确认，可在终端执行指令：
+
+ ```bash
+ bashclaude --dangerously-skip-permissions
+ ```
+
+为了方便使用，可加个别名：
+
+```bash
+alias cc="claude --dangerously-skip-permissions"
+```
+
+ 只有输入cc时才启动这个模式。对于不需要交互的场景，可以使用下面的别名：
+
+```bash
+ alias ccp="claude --dangerously-skip-permissions"
+```
+
+
+
 ### Claude Code Router
 
 ![image-20250612155248337](https://assets.czyt.tech/img/claude-code-router-usage)

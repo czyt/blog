@@ -89,6 +89,29 @@ alias cc="claude --dangerously-skip-permissions"
 }
 ```
 
+使用OpenRouter的Kimi K2的例子
+
+```json
+{
+  "Providers": [
+    {
+      "name": "kimi-k2",
+      "api_base_url": "https://openrouter.ai/api/v1/chat/completions",
+      "api_key": "OPENROUTER_API_KEY",
+      "models": [
+        "moonshotai/kimi-k2"
+      ],
+      "transformer": {
+        "use": ["openrouter"]
+      }
+    }
+  ],
+  "Router": {
+    "default": "kimi-k2,moonshotai/kimi-k2"
+  }
+}
+```
+
 然后通过 claude-code-router启动你的Claude Code
 
 ```bash

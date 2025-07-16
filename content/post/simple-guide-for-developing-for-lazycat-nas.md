@@ -644,6 +644,397 @@ docker run -it --entrypoint /bin/sh <image_name>
 
 了解这些状态码有助于快速诊断Docker容器问题，提高排障效率。
 
+### Lzc-cli Zsh Completions
+
+_lzc-cli
+
+```
+#compdef lzc-cli
+
+# Zsh completion for lzc-cli
+# Generated based on lzc-cli help documentation
+
+_lzc-cli() {
+    local context state line
+    typeset -A opt_args
+
+    # Global options
+    local -a global_options
+    global_options=(
+        '(-h --help)'{-h,--help}'[显示帮助信息]'
+        '--version[显示版本号]'
+        '--log[log level]:level:(trace debug info warn error)'
+    )
+
+    _arguments -C \
+        $global_options \
+        '1: :_lzc_cli_commands' \
+        '*::arg:->args' \
+        && return 0
+
+    case $line[1] in
+        config)
+            _lzc_cli_config
+            ;;
+        box)
+            _lzc_cli_box
+            ;;
+        app)
+            _lzc_cli_app
+            ;;
+        project)
+            _lzc_cli_project
+            ;;跑姿
+        appstore)
+            _lzc_cli_appstore
+            ;;
+        docker)
+            _lzc_cli_docker
+            ;;
+        docker-compose)
+            _lzc_cli_docker_compose
+            ;;
+    esac
+}
+
+_lzc_cli_commands() {
+    local -a commands
+    commands=(
+        'config:配置管理'
+        'box:盒子管理'
+        'app:应用管理'
+        'project:项目管理'
+        'appstore:应用商店'
+        'docker:微服应用 docker 管理'
+        'docker-compose:微服应用 docker-compose 管理'
+    )
+    _describe 'commands' commands
+}
+
+_lzc_cli_config() {
+    local -a global_options
+    global_options=(
+        '(-h --help)'{-h,--help}'[显示帮助信息]'
+        '--version[显示版本号]'
+        '--log[log level]:level:(trace debug info warn error)'
+    )
+
+    _arguments -C \
+        $global_options \
+        '1: :_lzc_cli_config_commands' \
+        '*::arg:->args' \
+        && return 0
+
+    case $line[1] in
+        set)
+            _arguments \
+                $global_options \
+                '2:key:_lzc_cli_config_keys' \
+                '3:value:'
+            ;;
+        del)
+            _arguments \
+                $global_options \
+                '2:key:_lzc_cli_config_keys'
+            ;;
+        get)
+            _arguments \
+                $global_options \
+                '2:key:_lzc_cli_config_keys'
+            ;;
+    esac
+}
+
+_lzc_cli_config_commands() {
+    local -a commands
+    commands=(
+        'set:设置配置'
+        'del:删除配置'
+        'get:获取配置'
+    )
+    _describe 'config commands' commands
+}
+
+_lzc_cli_config_keys() {
+    # Try to get actual configuration keys from lzc-cli config get
+    local -a keys
+    if (( $+commands[lzc-cli] )); then
+        # Get existing config keys from lzc-cli config get output
+        local config_output
+        config_output=$(lzc-cli config get 2>/dev/null)
+        if [[ -n "$config_output" ]]; then
+            keys=(${(f)"$(echo "$config_output" | grep -E '^[[:space:]]*[a-zA-Z][a-zA-Z0-9_-]*[[:space:]]*:' | sed 's/^[[:space:]]*//;s/[[:space:]]*:.*$//' 2>/dev/null)"})
+        fi
+    fi
+    
+    # Add common known keys
+    keys+=(
+        'noCheckVersion:禁用lzc-cli的版本检测'
+    )
+    
+    if [[ ${#keys[@]} -gt 0 ]]; then
+        _describe 'config keys' keys
+    else
+        _message "config key"
+    fi
+}
+
+_lzc_cli_box() {
+    local -a global_options
+    global_options=(
+        '(-h --help)'{-h,--help}'[显示帮助信息]'
+        '--version[显示版本号]'
+        '--log[log level]:level:(trace debug info warn error)'
+    )
+
+    _arguments -C \
+        $global_options \
+        '1: :_lzc_cli_box_commands' \
+        '*::arg:->args' \
+        && return 0
+
+    case $line[1] in
+        switch)
+            _arguments \
+                $global_options \
+                '2:boxname:_lzc_cli_box_names'
+            ;;
+        default|list|add-public-key)
+            _arguments $global_options
+            ;;
+    esac
+}### 2. 
+
+_lzc_cli_box_commands() {
+    local -a commands
+    commands=(
+        'switch:设置默认的盒子'
+        'default:输出当前默认的盒子名'
+        'list:查看盒子列表'
+        'add-public-key:添加public-key到开发者工具中'
+    )
+    _describe 'box commands' commands
+}
+
+_lzc_cli_box_names() {
+    # Try to get actual box names from lzc-cli box list
+    local -a box_names
+    if (( $+commands[lzc-cli] )); then
+        box_names=(${(f)"$(lzc-cli box list 2>/dev/null | grep -E '^[[:space:]]*[a-zA-Z0-9_-]+[[:space:]]*$' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' 2>/dev/null)"})
+    fi
+    
+    if [[ ${#box_names[@]} -gt 0 ]]; then
+        _describe 'box names' box_names
+    else
+        _message "boxname"
+    fi
+}
+
+_lzc_cli_app() {
+    local -a global_options
+    global_options=(
+        '(-h --help)'{-h,--help}'[显示帮助信息]'
+        '--version[显示版本号]'
+        '--log[log level]:level:(trace debug info warn error)'
+    )
+
+    _arguments -C \
+        $global_options \
+        '1: :_lzc_cli_app_commands' \
+        '*::arg:->args' \
+        && return 0
+
+    case $line[1] in
+        install)
+            _arguments \
+                $global_options \
+                '--apk[是否生成APK(y/n)]:apk:(y n)' \
+                '2:pkgPath:_files -g "*.lpk"'
+            ;;
+        uninstall|status|log)
+            _arguments \
+                $global_options \
+                '2:pkgId:_lzc_cli_package_ids'
+            ;;
+    esac
+}
+
+_lzc_cli_app_commands() {
+    local -a commands
+    commands=(
+        'install:部署应用至设备'
+        'uninstall:从设备中卸载某一个应用'
+        'status:获取某一个应用的状态'
+        'log:查看某一个app的日志'
+    )
+    _describe 'app commands' commands
+}
+
+_lzc_cli_package_ids() {
+    # Try to get actual package IDs from installed apps
+    # This is a placeholder - actual implementation would depend on lzc-cli having a list command
+    local -a package_ids
+    # package_ids=(${(f)"$(lzc-cli app list 2>/dev/null | awk '{print $1}' 2>/dev/null)"})
+    
+    if [[ ${#package_ids[@]} -gt 0 ]]; then
+        _describe 'package IDs' package_ids
+    else
+        _message "pkgId"
+    fi
+}
+
+_lzc_cli_project() {
+    local -a global_options
+    global_options=(
+        '(-h --help)'{-h,--help}'[显示帮助信息]'
+        '--version[显示版本号]'
+        '--log[log level]:level:(trace debug info warn error)'
+    )
+
+    _arguments -C \
+        $global_options \
+        '1: :_lzc_cli_project_commands' \
+        '*::arg:->args' \
+        && return 0
+
+    case $line[1] in
+        init)
+            _arguments $global_options
+            ;;
+        create)
+            _arguments \
+                $global_options \
+                '2:name:'
+            ;;
+        build)
+            _arguments \
+                $global_options \
+                '(-o --output)'{-o,--output}'[输出文件]:output file:_files' \
+                '(-f --file)'{-f,--file}'[指定构建的lzc-build.yml文件]:build file:_files -g "*.yml"' \
+                '2:context:_directories'
+            ;;
+        devshell)
+            _arguments \
+                $global_options \
+                '2:context:_directories'
+            ;;
+    esac
+}
+
+_lzc_cli_project_commands() {
+    local -a commands
+    commands=(
+        'init:初始化懒猫云应用(提供最基础的模板)'
+        'create:创建懒猫云应用'
+        'build:构建'
+        'devshell:进入盒子的开发环境'
+    )
+    _describe 'project commands' commands
+}
+
+_lzc_cli_appstore() {
+    local -a global_options
+    global_options=(
+        '(-h --help)'{-h,--help}'[显示帮助信息]'
+        '--version[显示版本号]'
+        '--log[log level]:level:(trace debug info warn error)'
+    )
+
+    _arguments -C \
+        $global_options \
+        '1: :_lzc_cli_appstore_commands' \
+        '*::arg:->args' \
+        && return 0
+
+    case $line[1] in
+        login|my-images)
+            _arguments $global_options
+            ;;
+        pre-publish)
+            _arguments \
+                $global_options \
+                '(-c --changelog)'{-c,--changelog}'[更改日志]:changelog:' \
+                '(-F --file)'{-F,--file}'[更改日志文件]:changelog file:_files' \
+                '(-G --gid)'{-G,--gid}'[内测组ID]:group id:' \
+                '2:pkgPath:_files -g "*.lpk"'
+            ;;
+        publish)
+            _arguments \
+                $global_options \
+                '(-c --changelog)'{-c,--changelog}'[更改日志]:changelog:' \
+                '(-F --file)'{-F,--file}'[更改日志文件]:changelog file:_files' \
+                '2:pkgPath:_files -g "*.lpk"'
+            ;;
+        copy-image)
+            _arguments \
+                $global_options \
+                '2:imageName:'
+            ;;
+    esac
+}
+
+_lzc_cli_appstore_commands() {
+    local -a commands
+    commands=(
+        'login:登录'
+        'pre-publish:发布到内测'
+        'publish:发布到商店'
+        'copy-image:复制镜像至懒猫微服官方源'
+        'my-images:查看已上传镜像列表'
+    )
+    _describe 'appstore commands' commands
+}
+
+_lzc_cli_docker() {
+    local -a global_options
+    global_options=(
+        '(-h --help)'{-h,--help}'[显示帮助信息]'
+        '--version[显示版本号]'
+        '--log[log level]:level:(trace debug info warn error)'
+    )
+
+    _arguments $global_options
+}
+
+_lzc_cli_docker_compose() {
+    local -a global_options
+    global_options=(
+        '(-h --help)'{-h,--help}'[显示帮助信息]'
+        '--version[显示版本号]'
+        '--log[log level]:level:(trace debug info warn error)'
+    )
+
+    _arguments $global_options
+}
+
+_lzc-cli "$@"
+
+```
+
+使用方法
+
+
+将以下行添加到你的 `~/.zshrc` 文件中：
+
+```bash
+# 添加 lzc-cli 自动补全
+source /home/czyt/_lzc-cli
+```
+重新加载配置
+
+执行以下命令之一来重新加载配置：
+
+```bash
+# 方法1：重新加载 .zshrc
+source ~/.zshrc
+
+# 方法2：重新启动终端
+exec zsh
+
+# 方法3：手动加载补全脚本
+source /home/czyt/_lzc-cli
+```
+
 ### 一些有用的仓库
 
 + [All common docker scripts in one place](https://github.com/a-h-abid/docker-commons)

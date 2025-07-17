@@ -138,6 +138,62 @@ claude
 
 > 月之暗面的API KEY获取途径：登录[月之暗面开发者平台](https://platform.moonshot.cn/console/account),创建 API Key即可。
 
+## Github集成
+
+首先先安装ClaudeCode到您的GitHub上去，[安装地址](https://github.com/apps/claude)。
+
+然后找到对应的项目，配置项目的 Secrets，注意要配置
+
+`ANTHROPIC_BASE_URL` 和 `CLAUDE_CODE_OAUTH_TOKEN`,假如您使用国内的月之暗面，大致就是这样的
+
+```
+ANTHROPIC_BASE_URL  → https://api.moonshot.cn/anthropic
+CLAUDE_CODE_OAUTH_TOKEN →sk-xxxx
+```
+
+使用openrouter的api可以参考[这个项目](https://github.com/luohy15/y-router)
+
+下面是一个GitHub Action的例子
+
+```yaml
+name: Claude Code
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [opened, assigned]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  claude:
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude')) ||
+      (github.event_name == 'issues' && (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+      issues: read
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Run Claude Code
+        id: claude
+        uses: anthropics/claude-code-action@beta
+        env:
+          ANTHROPIC_BASE_URL: "${{ secrets.ANTHROPIC_BASE_URL }}"
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+```
 ## claudeCode MCP
 
 可以安装一些mcp来优化体验

@@ -5,6 +5,23 @@ tags: ["windows", "avalonia"]
 draft: false
 ---
 
+## 安装
+
+### 模板
+
+可以安装一些Avalonia的dotnet模板
+
+```bash
+dotnet new install Templates.Prism.Avalonia
+dotnet new install Avalonia.Templates
+```
+
+### IDE插件
+
+Rider里面安装插件 [AvaloniaRider](https://plugins.jetbrains.com/plugin/14839-avaloniarider)
+
+VisualStudio安装插件 [Avalonia for Visual Studio](https://marketplace.visualstudio.com/items?itemName=AvaloniaTeam.AvaloniaVS)
+
 ## Avalonia 中的一些特性
 
 ### Binding

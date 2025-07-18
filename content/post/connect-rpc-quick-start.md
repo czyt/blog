@@ -36,6 +36,8 @@ func (c *CustomCompressor) Compress(w io.Writer) (io.WriteCloser, error)
 func (c *CustomCompressor) Decompress(r io.Reader) (io.Reader, error)
 ```
 
+> [connect的brotli压缩](https://github.com/mattrobenolt/connect-brotli)
+
 ### Get 请求
 
 Connect 支持通过 HTTP GET 进行无副作用的请求，这使得可以在浏览器、CDN 或代理中缓存某些类型的请求。

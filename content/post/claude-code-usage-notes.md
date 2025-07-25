@@ -26,16 +26,7 @@ pnpm install -g @musistudio/claude-code-router
 ## 配置
 ### Claude Code
 
-正常使用，直接登录即可。当然，也可以使用[anyrouter](https://anyrouter.top/register?aff=myZ5) 这样的在线服务，配合calude使用即可，只要在您的.zsrhrc中加入下面的一个函数.
-
-```bash
-function set_claude(){
- export ANTHROPIC_AUTH_TOKEN=sk-xxxxxxx<改成您自己的key>
- export ANTHROPIC_BASE_URL=https://anyrouter.top
-}
-```
-
-然后在调用claude之前set_claude即可。
+正常使用，直接登录即可。
 
 claude Code可以设置自动更新
 

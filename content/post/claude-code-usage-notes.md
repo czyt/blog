@@ -450,6 +450,39 @@ alias cc="claude --dangerously-skip-permissions"
 }
 ```
 
+[魔搭社区](https://modelscope.cn)
+
+```json
+{
+  "Providers": [
+    {
+      "name": "modelscope",
+      "api_base_url": "https://api-inference.modelscope.cn/v1/chat/completions",
+      "api_key": "xxxx",
+      "models": ["Qwen/Qwen3-Coder-480B-A35B-Instruct"],
+      "transformer": {
+        "use": [
+          [
+            "maxtoken",
+            {
+              "max_tokens": 65536
+            }
+          ],
+          "enhancetool"
+        ]
+      }
+    }
+  ],
+  "Router": {
+    "default": "modelscope,Qwen/Qwen3-Coder-480B-A35B-Instruct"
+  },
+  "HOST": "127.0.0.1",
+  "LOG": true
+}
+```
+
+
+
 然后通过 claude-code-router启动你的Claude Code
 
 ```bash
@@ -597,5 +630,25 @@ DeepWiki
 
 ```bash
 claude mcp add  mcp-deepwiki -- npx -y mcp-deepwiki@latest
+```
+
+## 国内厂商的Calude Code配置
+
+国内的API厂商已经提供了Claude格式的API端点，可以直接通过环境变量配置使用。
+
+### 智谱AI
+
+```bash
+export ANTHROPIC_BASE_URL=https://open.bigmodel.cn/api/anthropic
+export ANTHROPIC_AUTH_TOKEN="你的 API"
+```
+
+获取apikey[地址](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)
+
+### Kimi
+
+```bash
+export ANTHROPIC_AUTH_TOKEN=sk-YOURKEY
+export ANTHROPIC_BASE_URL=https://api.moonshot.ai/anthropic
 ```
 

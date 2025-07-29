@@ -752,3 +752,4 @@ func distanceToConfidence(distance float32) float32 {
 + [golang facial recognition project based on the go-face library](https://github.com/andre-ols/go-face-recognition)
 + [Fast face detection, pupil/eyes localization and facial landmark points detection library in pure Go.](https://github.com/esimov/pigo)
 + [Face detection and recognition using golang](https://github.com/leandroveronezi/go-recognizer)
++ [arcface-go](https://github.com/Danile71/arcface-go)

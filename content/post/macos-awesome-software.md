@@ -224,6 +224,7 @@ draft: false
 
 - [cleanclip](https://cleanclip.cc/zh/)
 - CopyLess 2
+- [PasteBarApp](https://github.com/PasteBar/PasteBarApp)
 - [EcoPaste]( https://github.com/ayangweb/EcoPaste/)
 - [maccy](https://maccy.app)
 - [Clipy ](https://github.com/Clipy/Clipy)

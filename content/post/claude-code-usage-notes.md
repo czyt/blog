@@ -645,6 +645,8 @@ export ANTHROPIC_AUTH_TOKEN="你的 API"
 
 获取apikey[地址](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)
 
+[我的邀请注册地址](https://www.bigmodel.cn/invite?icode=Y%2B9%2Fq2VTKquO2qR%2BYhdY4%2F2gad6AKpjZefIo3dVEQyA%3D)
+
 ### Kimi
 
 ```bash

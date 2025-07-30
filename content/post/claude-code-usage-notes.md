@@ -6,7 +6,12 @@ tags: ["tricks","claude-code"]
 author: "czyt"
 ---
 
+> 来自https://x.com/shao__meng/status/1950196917595754662的ClaudeCode技巧
+
+![image-20250730111459693](https://assets.czyt.tech/img/claude-code-tricks.png)
+
 ## 安装
+
 > 你需要有nodejs这样的环境，bun没进行测试.需要安装npm或者pnpm包管理器
 > 
 

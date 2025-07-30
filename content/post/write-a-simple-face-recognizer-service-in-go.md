@@ -28,62 +28,130 @@ import (
 	"path/filepath"
 	"strconv"
 	"sync"
+	"time"
 	"unsafe"
 
 	"github.com/Kagami/go-face"
 	"github.com/gorilla/mux"
 )
 
-// FaceData 人脸数据结构
-type FaceData struct {
-	ID         int    `json:"id"`
-	Name       string `json:"name"`
-	Descriptor string `json:"descriptor"` // base64编码的特征向量
-	ImagePath  string `json:"image_path"` // 图片文件路径
-	ImageURL   string `json:"image_url"`  // 图片访问URL
+// Config 配置结构
+type Config struct {
+	Port           string  `json:"port"`
+	ModelsDir      string  `json:"models_dir"`
+	UploadsDir     string  `json:"uploads_dir"`
+	TempDir        string  `json:"temp_dir"`
+	DataFile       string  `json:"data_file"`
+	MaxFileSize    int64   `json:"max_file_size"`
+	DefaultThreshold float32 `json:"default_threshold"`
+	LogLevel       string  `json:"log_level"`
 }
 
-// Response 响应结构
+// Person 人员结构（支持多样本）
+type Person struct {
+	ID       int           `json:"id"`
+	Name     string        `json:"name"`
+	Samples  []FaceSample  `json:"samples"`
+	Created  time.Time     `json:"created"`
+	Updated  time.Time     `json:"updated"`
+}
+
+// FaceSample 人脸样本
+type FaceSample struct {
+	ID         int    `json:"id"`
+	PersonID   int    `json:"person_id"`
+	Descriptor string `json:"descriptor"` // base64编码的特征向量
+	ImagePath  string `json:"image_path"`
+	ImageURL   string `json:"image_url"`
+	Quality    float32 `json:"quality"`    // 人脸质量评分
+	Created    time.Time `json:"created"`
+}
+
+// RecognitionResult 识别结果
+type RecognitionResult struct {
+	PersonID   int     `json:"person_id"`
+	PersonName string  `json:"person_name"`
+	Confidence float32 `json:"confidence"`
+	Distance   float32 `json:"distance"`
+	SampleID   int     `json:"sample_id"`
+}
+
+// FaceDetection 人脸检测结果
+type FaceDetection struct {
+	Index      int                `json:"index"`
+	Rectangle  map[string]int     `json:"rectangle"`
+	Recognized bool               `json:"recognized"`
+	Result     *RecognitionResult `json:"result,omitempty"`
+	Message    string             `json:"message,omitempty"`
+}
+
+// Response 通用响应结构
 type Response struct {
-	Success bool        `json:"success"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data,omitempty"`
+	Success   bool        `json:"success"`
+	Message   string      `json:"message"`
+	Data      interface{} `json:"data,omitempty"`
+	Timestamp time.Time   `json:"timestamp"`
+}
+
+// Statistics 统计信息
+type Statistics struct {
+	TotalPersons     int `json:"total_persons"`
+	TotalSamples     int `json:"total_samples"`
+	RecognitionCount int `json:"recognition_count"`
+	RegistrationCount int `json:"registration_count"`
 }
 
 // FaceService 人脸识别服务
 type FaceService struct {
+	config     *Config
 	recognizer *face.Recognizer
-	faceData   map[int]FaceData
+	persons    map[int]*Person
+	samples    map[int]*FaceSample
 	mu         sync.RWMutex
-	nextID     int
+	nextPersonID int
+	nextSampleID int
+	stats      Statistics
+	
 	// 用于分类的数据
-	samples []face.Descriptor
-	cats    []int32
-	labels  []string
+	classifierSamples []face.Descriptor
+	classifierCats    []int32
+	classifierLabels  []string
 }
 
 // NewFaceService 初始化人脸识别服务
-func NewFaceService(modelsDir string) (*FaceService, error) {
+func NewFaceService(config *Config) (*FaceService, error) {
 	// 初始化人脸识别器
-	rec, err := face.NewRecognizer(modelsDir)
+	rec, err := face.NewRecognizer(config.ModelsDir)
 	if err != nil {
 		return nil, fmt.Errorf("无法初始化人脸识别器: %v", err)
 	}
 
-	// 创建图片存储目录
-	uploadsDir := "uploads"
-	if err := os.MkdirAll(uploadsDir, 0755); err != nil {
-		return nil, fmt.Errorf("创建上传目录失败: %v", err)
+	// 创建必要的目录
+	dirs := []string{config.UploadsDir, config.TempDir}
+	for _, dir := range dirs {
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			return nil, fmt.Errorf("创建目录 %s 失败: %v", dir, err)
+		}
 	}
 
-	return &FaceService{
+	fs := &FaceService{
+		config:     config,
 		recognizer: rec,
-		faceData:   make(map[int]FaceData),
-		nextID:     1,
-		samples:    make([]face.Descriptor, 0),
-		cats:       make([]int32, 0),
-		labels:     make([]string, 0),
-	}, nil
+		persons:    make(map[int]*Person),
+		samples:    make(map[int]*FaceSample),
+		nextPersonID: 1,
+		nextSampleID: 1,
+		classifierSamples: make([]face.Descriptor, 0),
+		classifierCats:    make([]int32, 0),
+		classifierLabels:  make([]string, 0),
+	}
+
+	// 加载已保存的数据
+	if err := fs.loadData(); err != nil {
+		log.Printf("加载数据失败: %v", err)
+	}
+
+	return fs, nil
 }
 
 // Close 关闭资源
@@ -91,272 +159,566 @@ func (fs *FaceService) Close() {
 	fs.recognizer.Close()
 }
 
-// 将face.Descriptor转换为base64字符串
+// 数据持久化相关方法
+func (fs *FaceService) saveData() error {
+	fs.mu.RLock()
+	defer fs.mu.RUnlock()
+
+	data := struct {
+		Persons      map[int]*Person      `json:"persons"`
+		Samples      map[int]*FaceSample  `json:"samples"`
+		NextPersonID int                  `json:"next_person_id"`
+		NextSampleID int                  `json:"next_sample_id"`
+		Stats        Statistics           `json:"stats"`
+	}{
+		Persons:      fs.persons,
+		Samples:      fs.samples,
+		NextPersonID: fs.nextPersonID,
+		NextSampleID: fs.nextSampleID,
+		Stats:        fs.stats,
+	}
+
+	file, err := os.Create(fs.config.DataFile)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	encoder := json.NewEncoder(file)
+	encoder.SetIndent("", "  ")
+	return encoder.Encode(data)
+}
+
+func (fs *FaceService) loadData() error {
+	if _, err := os.Stat(fs.config.DataFile); os.IsNotExist(err) {
+		return nil // 文件不存在，使用默认值
+	}
+
+	file, err := os.Open(fs.config.DataFile)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	var data struct {
+		Persons      map[int]*Person      `json:"persons"`
+		Samples      map[int]*FaceSample  `json:"samples"`
+		NextPersonID int                  `json:"next_person_id"`
+		NextSampleID int                  `json:"next_sample_id"`
+		Stats        Statistics           `json:"stats"`
+	}
+
+	if err := json.NewDecoder(file).Decode(&data); err != nil {
+		return err
+	}
+
+	fs.mu.Lock()
+	fs.persons = data.Persons
+	fs.samples = data.Samples
+	fs.nextPersonID = data.NextPersonID
+	fs.nextSampleID = data.NextSampleID
+	fs.stats = data.Stats
+	fs.mu.Unlock()
+
+	// 重建分类器
+	fs.updateClassifier()
+
+	log.Printf("加载数据成功: %d个人员, %d个样本", len(fs.persons), len(fs.samples))
+	return nil
+}
+
+// 特征向量转换方法
 func descriptorToString(d face.Descriptor) string {
 	b := (*[128 * 4]byte)(unsafe.Pointer(&d))
 	return base64.StdEncoding.EncodeToString(b[:])
 }
 
-// 将base64字符串转换为face.Descriptor
 func stringToDescriptor(s string) (face.Descriptor, error) {
 	b, err := base64.StdEncoding.DecodeString(s)
 	if err != nil {
 		return face.Descriptor{}, err
 	}
 	if len(b) != 128*4 {
-		return face.Descriptor{}, fmt.Errorf("invalid descriptor length")
+		return face.Descriptor{}, fmt.Errorf("invalid descriptor length: %d", len(b))
 	}
 	return *(*face.Descriptor)(unsafe.Pointer(&b[0])), nil
 }
 
-// 更新分类器的训练数据
+// 计算人脸质量评分（简单实现）
+func (fs *FaceService) calculateFaceQuality(faceData face.Face) float32 {
+	// 基于人脸区域大小和位置计算质量评分
+	rect := faceData.Rectangle
+	width := rect.Max.X - rect.Min.X
+	height := rect.Max.Y - rect.Min.Y
+	area := width * height
+	
+	// 面积越大，质量越高（简化评分）
+	quality := float32(area) / 10000.0
+	if quality > 1.0 {
+		quality = 1.0
+	}
+	
+	return quality
+}
+
+// 更新分类器
 func (fs *FaceService) updateClassifier() {
-	fs.samples = make([]face.Descriptor, 0, len(fs.faceData))
-	fs.cats = make([]int32, 0, len(fs.faceData))
-	fs.labels = make([]string, 0, len(fs.faceData))
+	fs.classifierSamples = make([]face.Descriptor, 0)
+	fs.classifierCats = make([]int32, 0)
+	fs.classifierLabels = make([]string, 0)
 
 	catID := int32(0)
-	for _, face := range fs.faceData {
-		descriptor, err := stringToDescriptor(face.Descriptor)
-		if err != nil {
-			continue
-		}
+	for _, person := range fs.persons {
+		for _, sample := range person.Samples {
+			descriptor, err := stringToDescriptor(sample.Descriptor)
+			if err != nil {
+				log.Printf("解析样本 %d 的特征向量失败: %v", sample.ID, err)
+				continue
+			}
 
-		fs.samples = append(fs.samples, descriptor)
-		fs.cats = append(fs.cats, catID)
-		fs.labels = append(fs.labels, strconv.Itoa(face.ID))
-		catID++
+			fs.classifierSamples = append(fs.classifierSamples, descriptor)
+			fs.classifierCats = append(fs.classifierCats, catID)
+			fs.classifierLabels = append(fs.classifierLabels, fmt.Sprintf("%d:%d", person.ID, sample.ID))
+			catID++
+		}
 	}
 
-	if len(fs.samples) > 0 {
-		fs.recognizer.SetSamples(fs.samples, fs.cats)
+	if len(fs.classifierSamples) > 0 {
+		fs.recognizer.SetSamples(fs.classifierSamples, fs.classifierCats)
+		log.Printf("分类器更新完成: %d个样本", len(fs.classifierSamples))
 	}
 }
 
-// RegisterFace 人脸登记接口
-func (fs *FaceService) RegisterFace(w http.ResponseWriter, r *http.Request) {
+// RegisterPerson 人员登记接口
+func (fs *FaceService) RegisterPerson(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "只支持POST方法", http.StatusMethodNotAllowed)
+		fs.sendErrorResponse(w, "只支持POST方法", http.StatusMethodNotAllowed)
 		return
 	}
 
 	// 解析表单数据
-	err := r.ParseMultipartForm(10 << 20) // 10MB最大文件大小
+	err := r.ParseMultipartForm(fs.config.MaxFileSize)
 	if err != nil {
-		fs.sendResponse(w, false, "解析表单失败", nil)
+		fs.sendErrorResponse(w, "解析表单失败", http.StatusBadRequest)
 		return
 	}
 
 	// 获取姓名
 	name := r.FormValue("name")
 	if name == "" {
-		fs.sendResponse(w, false, "姓名不能为空", nil)
+		fs.sendErrorResponse(w, "姓名不能为空", http.StatusBadRequest)
+		return
+	}
+
+	// 检查姓名是否已存在
+	fs.mu.RLock()
+	for _, person := range fs.persons {
+		if person.Name == name {
+			fs.mu.RUnlock()
+			fs.sendErrorResponse(w, "该姓名已存在", http.StatusConflict)
+			return
+		}
+	}
+	fs.mu.RUnlock()
+
+	// 获取上传的图片文件
+	file, handler, err := r.FormFile("image")
+	if err != nil {
+		fs.sendErrorResponse(w, "获取图片文件失败", http.StatusBadRequest)
+		return
+	}
+	defer file.Close()
+
+	// 处理图片并创建样本
+	sample, err := fs.processImageFile(file, handler, 0) // personID为0，稍后更新
+	if err != nil {
+		fs.sendErrorResponse(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// 创建人员记录
+	fs.mu.Lock()
+	person := &Person{
+		ID:      fs.nextPersonID,
+		Name:    name,
+		Samples: []FaceSample{*sample},
+		Created: time.Now(),
+		Updated: time.Now(),
+	}
+	
+	// 更新样本的人员ID
+	sample.PersonID = person.ID
+	
+	fs.persons[person.ID] = person
+	fs.samples[sample.ID] = sample
+	fs.nextPersonID++
+	fs.stats.TotalPersons++
+	fs.stats.TotalSamples++
+	fs.stats.RegistrationCount++
+	
+	// 更新分类器
+	fs.updateClassifier()
+	fs.mu.Unlock()
+
+	// 保存数据
+	go fs.saveData()
+
+	fs.sendSuccessResponse(w, "人员登记成功", map[string]interface{}{
+		"person_id":  person.ID,
+		"name":       person.Name,
+		"sample_id":  sample.ID,
+		"image_url":  sample.ImageURL,
+		"quality":    sample.Quality,
+	})
+}
+
+// AddSample 为已存在人员添加样本
+func (fs *FaceService) AddSample(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		fs.sendErrorResponse(w, "只支持POST方法", http.StatusMethodNotAllowed)
+		return
+	}
+
+	vars := mux.Vars(r)
+	personIDStr := vars["person_id"]
+	personID, err := strconv.Atoi(personIDStr)
+	if err != nil {
+		fs.sendErrorResponse(w, "无效的人员ID", http.StatusBadRequest)
+		return
+	}
+
+	// 检查人员是否存在
+	fs.mu.RLock()
+	person, exists := fs.persons[personID]
+	if !exists {
+		fs.mu.RUnlock()
+		fs.sendErrorResponse(w, "人员不存在", http.StatusNotFound)
+		return
+	}
+	fs.mu.RUnlock()
+
+	// 解析表单数据
+	err = r.ParseMultipartForm(fs.config.MaxFileSize)
+	if err != nil {
+		fs.sendErrorResponse(w, "解析表单失败", http.StatusBadRequest)
 		return
 	}
 
 	// 获取上传的图片文件
 	file, handler, err := r.FormFile("image")
 	if err != nil {
-		fs.sendResponse(w, false, "获取图片文件失败", nil)
+		fs.sendErrorResponse(w, "获取图片文件失败", http.StatusBadRequest)
 		return
 	}
 	defer file.Close()
 
-	// 生成唯一的文件名
-	ext := filepath.Ext(handler.Filename)
-	if ext == "" {
-		ext = ".jpg" // 默认扩展名
+	// 处理图片并创建样本
+	sample, err := fs.processImageFile(file, handler, personID)
+	if err != nil {
+		fs.sendErrorResponse(w, err.Error(), http.StatusBadRequest)
+		return
 	}
 
-	// 保存到uploads目录，使用ID作为文件名
-	uploadsDir := "uploads"
-	savedImagePath := filepath.Join(uploadsDir, fmt.Sprintf("face_%d%s", fs.nextID, ext))
-	imageURL := fmt.Sprintf("/uploads/face_%d%s", fs.nextID, ext)
+	// 添加样本
+	fs.mu.Lock()
+	person.Samples = append(person.Samples, *sample)
+	person.Updated = time.Now()
+	fs.samples[sample.ID] = sample
+	fs.stats.TotalSamples++
+	
+	// 更新分类器
+	fs.updateClassifier()
+	fs.mu.Unlock()
 
+	// 保存数据
+	go fs.saveData()
+
+	fs.sendSuccessResponse(w, "样本添加成功", map[string]interface{}{
+		"person_id": personID,
+		"sample_id": sample.ID,
+		"image_url": sample.ImageURL,
+		"quality":   sample.Quality,
+		"total_samples": len(person.Samples),
+	})
+}
+
+// processImageFile 处理上传的图片文件
+func (fs *FaceService) processImageFile(file io.Reader, handler *multipart.FileHeader, personID int) (*FaceSample, error) {
+	// 生成文件名
+	ext := filepath.Ext(handler.Filename)
+	if ext == "" {
+		ext = ".jpg"
+	}
+
+	fs.mu.Lock()
+	sampleID := fs.nextSampleID
+	fs.nextSampleID++
+	fs.mu.Unlock()
+
+	savedImagePath := filepath.Join(fs.config.UploadsDir, fmt.Sprintf("sample_%d%s", sampleID, ext))
+	imageURL := fmt.Sprintf("/uploads/sample_%d%s", sampleID, ext)
+
+	// 保存图片文件
 	dst, err := os.Create(savedImagePath)
 	if err != nil {
-		fs.sendResponse(w, false, "保存图片失败", nil)
-		return
+		return nil, fmt.Errorf("保存图片失败: %v", err)
 	}
 	defer dst.Close()
 
 	_, err = io.Copy(dst, file)
 	if err != nil {
-		fs.sendResponse(w, false, "保存图片失败", nil)
-		return
+		os.Remove(savedImagePath)
+		return nil, fmt.Errorf("保存图片失败: %v", err)
 	}
 
-	// 使用RecognizeSingleFile进行单人脸识别
-	faceRecognizeReult, err := fs.recognizer.RecognizeSingleFile(savedImagePath)
+	// 人脸识别
+	faceResult, err := fs.recognizer.RecognizeSingleFile(savedImagePath)
 	if err != nil {
-		// 如果识别失败，删除已保存的图片
 		os.Remove(savedImagePath)
-		// 处理具体的错误类型
 		var imageLoadError face.ImageLoadError
-		switch {
-		case errors.As(err, &imageLoadError):
-			fs.sendResponse(w, false, "图片格式不支持或已损坏", nil)
-		default:
-			fs.sendResponse(w, false, "人脸识别失败", nil)
+		if errors.As(err, &imageLoadError) {
+			return nil, fmt.Errorf("图片格式不支持或已损坏")
 		}
-		return
+		return nil, fmt.Errorf("人脸识别失败: %v", err)
 	}
 
-	if faceRecognizeReult == nil {
-		// 如果没有检测到人脸，删除已保存的图片
+	if faceResult == nil {
 		os.Remove(savedImagePath)
-		fs.sendResponse(w, false, "未检测到人脸", nil)
-		return
+		return nil, fmt.Errorf("未检测到人脸")
 	}
 
-	// 保存人脸数据
-	fs.mu.Lock()
-	faceData := FaceData{
-		ID:         fs.nextID,
-		Name:       name,
-		Descriptor: descriptorToString(faceRecognizeReult.Descriptor),
+	// 计算人脸质量
+	quality := fs.calculateFaceQuality(*faceResult)
+
+	// 创建样本
+	sample := &FaceSample{
+		ID:         sampleID,
+		PersonID:   personID,
+		Descriptor: descriptorToString(faceResult.Descriptor),
 		ImagePath:  savedImagePath,
 		ImageURL:   imageURL,
+		Quality:    quality,
+		Created:    time.Now(),
 	}
-	fs.faceData[fs.nextID] = faceData
-	fs.nextID++
 
-	// 更新分类器
-	fs.updateClassifier()
-	fs.mu.Unlock()
-
-	fs.sendResponse(w, true, "人脸登记成功", map[string]interface{}{
-		"id":        faceData.ID,
-		"name":      faceData.Name,
-		"image_url": faceData.ImageURL,
-	})
+	return sample, nil
 }
 
 // RecognizeFace 人脸识别接口
 func (fs *FaceService) RecognizeFace(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "只支持POST方法", http.StatusMethodNotAllowed)
+		fs.sendErrorResponse(w, "只支持POST方法", http.StatusMethodNotAllowed)
 		return
 	}
 
 	// 解析表单数据
-	err := r.ParseMultipartForm(10 << 20)
+	err := r.ParseMultipartForm(fs.config.MaxFileSize)
 	if err != nil {
-		fs.sendResponse(w, false, "解析表单失败", nil)
+		fs.sendErrorResponse(w, "解析表单失败", http.StatusBadRequest)
 		return
 	}
 
-	// 获取阈值参数（可选）
-	thresholdStr := r.FormValue("threshold")
-	threshold := float32(0.6) // 默认阈值
-	if thresholdStr != "" {
+	// 获取阈值参数
+	threshold := fs.config.DefaultThreshold
+	if thresholdStr := r.FormValue("threshold"); thresholdStr != "" {
 		if t, err := strconv.ParseFloat(thresholdStr, 32); err == nil {
 			threshold = float32(t)
 		}
 	}
 
-	// 获取上传的图片文件
-	file, handler, err := r.FormFile("image")
+	// 处理上传的图片
+	tempFile, err := fs.saveTemporaryFile(r)
 	if err != nil {
-		fs.sendResponse(w, false, "获取图片文件失败", nil)
+		fs.sendErrorResponse(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	defer file.Close()
-
-	// 保存临时文件
-	tempDir := "temp"
-	os.MkdirAll(tempDir, 0755)
-	tempFile := filepath.Join(tempDir, handler.Filename)
-
-	dst, err := os.Create(tempFile)
-	if err != nil {
-		fs.sendResponse(w, false, "创建临时文件失败", nil)
-		return
-	}
-	defer dst.Close()
 	defer os.Remove(tempFile)
 
-	_, err = io.Copy(dst, file)
-	if err != nil {
-		fs.sendResponse(w, false, "保存图片失败", nil)
-		return
-	}
-
 	fs.mu.RLock()
-	defer fs.mu.RUnlock()
-
-	if len(fs.faceData) == 0 {
-		fs.sendResponse(w, false, "暂无已登记的人脸数据", nil)
+	if len(fs.persons) == 0 {
+		fs.mu.RUnlock()
+		fs.sendErrorResponse(w, "暂无已登记的人脸数据", http.StatusBadRequest)
 		return
 	}
+	fs.mu.RUnlock()
 
-	// 使用RecognizeSingleFile进行单人脸识别
+	// 识别人脸
 	detectedFace, err := fs.recognizer.RecognizeSingleFile(tempFile)
 	if err != nil {
 		var imageLoadError face.ImageLoadError
-		switch {
-		case errors.As(err, &imageLoadError):
-			fs.sendResponse(w, false, "图片格式不支持或已损坏", nil)
-		default:
-			fs.sendResponse(w, false, "人脸识别失败", nil)
+		if errors.As(err, &imageLoadError) {
+			fs.sendErrorResponse(w, "图片格式不支持或已损坏", http.StatusBadRequest)
+		} else {
+			fs.sendErrorResponse(w, "人脸识别失败", http.StatusInternalServerError)
 		}
 		return
 	}
 
 	if detectedFace == nil {
-		fs.sendResponse(w, false, "未检测到人脸", nil)
+		fs.sendErrorResponse(w, "未检测到人脸", http.StatusBadRequest)
 		return
 	}
 
-	// 使用分类器进行识别
-	catID := fs.recognizer.ClassifyThreshold(detectedFace.Descriptor, threshold)
+	// 执行分类
+	result := fs.classifyFace(detectedFace.Descriptor, threshold)
+	
+	fs.mu.Lock()
+	fs.stats.RecognitionCount++
+	fs.mu.Unlock()
+	
+	go fs.saveData()
 
-	if catID < 0 {
-		fs.sendResponse(w, false, "未找到匹配的人脸", nil)
+	if result == nil {
+		fs.sendSuccessResponse(w, "未找到匹配的人脸", map[string]interface{}{
+			"recognized": false,
+		})
+	} else {
+		fs.sendSuccessResponse(w, "人脸识别成功", map[string]interface{}{
+			"recognized": true,
+			"result":     result,
+		})
+	}
+}
+
+// RecognizeMultipleFaces 多人脸识别接口
+func (fs *FaceService) RecognizeMultipleFaces(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		fs.sendErrorResponse(w, "只支持POST方法", http.StatusMethodNotAllowed)
 		return
 	}
 
-	// 获取识别结果
-	if catID >= len(fs.labels) {
-		fs.sendResponse(w, false, "分类结果无效", nil)
-		return
-	}
-
-	faceIDStr := fs.labels[catID]
-	faceID, err := strconv.Atoi(faceIDStr)
+	// 解析表单数据
+	err := r.ParseMultipartForm(fs.config.MaxFileSize)
 	if err != nil {
-		fs.sendResponse(w, false, "解析人脸ID失败", nil)
+		fs.sendErrorResponse(w, "解析表单失败", http.StatusBadRequest)
 		return
 	}
 
-	matchedFace, exists := fs.faceData[faceID]
-	if !exists {
-		fs.sendResponse(w, false, "匹配的人脸数据不存在", nil)
+	// 获取阈值参数
+	threshold := fs.config.DefaultThreshold
+	if thresholdStr := r.FormValue("threshold"); thresholdStr != "" {
+		if t, err := strconv.ParseFloat(thresholdStr, 32); err == nil {
+			threshold = float32(t)
+		}
+	}
+
+	// 处理上传的图片
+	tempFile, err := fs.saveTemporaryFile(r)
+	if err != nil {
+		fs.sendErrorResponse(w, err.Error(), http.StatusBadRequest)
 		return
+	}
+	defer os.Remove(tempFile)
+
+	fs.mu.RLock()
+	if len(fs.persons) == 0 {
+		fs.mu.RUnlock()
+		fs.sendErrorResponse(w, "暂无已登记的人脸数据", http.StatusBadRequest)
+		return
+	}
+	fs.mu.RUnlock()
+
+	// 识别所有人脸
+	faces, err := fs.recognizer.RecognizeFile(tempFile)
+	if err != nil {
+		var imageLoadError face.ImageLoadError
+		if errors.As(err, &imageLoadError) {
+			fs.sendErrorResponse(w, "图片格式不支持或已损坏", http.StatusBadRequest)
+		} else {
+			fs.sendErrorResponse(w, "人脸识别失败", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	if len(faces) == 0 {
+		fs.sendErrorResponse(w, "未检测到人脸", http.StatusBadRequest)
+		return
+	}
+
+	// 处理每个检测到的人脸
+	var detections []FaceDetection
+	for i, detectedFace := range faces {
+		detection := FaceDetection{
+			Index: i,
+			Rectangle: map[string]int{
+				"left":   detectedFace.Rectangle.Min.X,
+				"top":    detectedFace.Rectangle.Min.Y,
+				"right":  detectedFace.Rectangle.Max.X,
+				"bottom": detectedFace.Rectangle.Max.Y,
+			},
+		}
+
+		// 尝试识别
+		result := fs.classifyFace(detectedFace.Descriptor, threshold)
+		if result != nil {
+			detection.Recognized = true
+			detection.Result = result
+		} else {
+			detection.Recognized = false
+			detection.Message = "未找到匹配的人脸"
+		}
+
+		detections = append(detections, detection)
+	}
+
+	fs.mu.Lock()
+	fs.stats.RecognitionCount++
+	fs.mu.Unlock()
+	
+	go fs.saveData()
+
+	fs.sendSuccessResponse(w, fmt.Sprintf("检测到%d张人脸", len(faces)), detections)
+}
+
+// classifyFace 分类人脸
+func (fs *FaceService) classifyFace(descriptor face.Descriptor, threshold float32) *RecognitionResult {
+	fs.mu.RLock()
+	defer fs.mu.RUnlock()
+
+	if len(fs.classifierSamples) == 0 {
+		return nil
+	}
+
+	catID := fs.recognizer.ClassifyThreshold(descriptor, threshold)
+	if catID < 0 || catID >= len(fs.classifierLabels) {
+		return nil
+	}
+
+	// 解析标签（格式：personID:sampleID）
+	label := fs.classifierLabels[catID]
+	var personID, sampleID int
+	if n, err := fmt.Sscanf(label, "%d:%d", &personID, &sampleID); n != 2 || err != nil {
+		return nil
+	}
+
+	person, personExists := fs.persons[personID]
+	sample, sampleExists := fs.samples[sampleID]
+	if !personExists || !sampleExists {
+		return nil
 	}
 
 	// 计算相似度
-	matchedDescriptor, err := stringToDescriptor(matchedFace.Descriptor)
+	sampleDescriptor, err := stringToDescriptor(sample.Descriptor)
 	if err != nil {
-		fs.sendResponse(w, false, "解析人脸特征失败", nil)
-		return
+		return nil
 	}
 
-	distance := fs.calculateDistance(detectedFace.Descriptor, matchedDescriptor)
+	distance := fs.calculateDistance(descriptor, sampleDescriptor)
 	confidence := (1 - distance) * 100
 	if confidence < 0 {
 		confidence = 0
 	}
 
-	fs.sendResponse(w, true, "人脸识别成功", map[string]interface{}{
-		"id":         matchedFace.ID,
-		"name":       matchedFace.Name,
-		"confidence": fmt.Sprintf("%.2f%%", confidence),
-		"distance":   fmt.Sprintf("%.4f", distance),
-	})
+	return &RecognitionResult{
+		PersonID:   person.ID,
+		PersonName: person.Name,
+		Confidence: confidence,
+		Distance:   distance,
+		SampleID:   sample.ID,
+	}
 }
 
-// 计算两个人脸特征向量之间的欧几里得距离
+// calculateDistance 计算欧几里得距离
 func (fs *FaceService) calculateDistance(desc1, desc2 face.Descriptor) float32 {
 	var sum float64
 	for i := 0; i < len(desc1); i++ {
@@ -366,246 +728,457 @@ func (fs *FaceService) calculateDistance(desc1, desc2 face.Descriptor) float32 {
 	return float32(math.Sqrt(sum))
 }
 
-// GetFaceList 获取所有已登记人脸列表
-func (fs *FaceService) GetFaceList(w http.ResponseWriter, r *http.Request) {
+// saveTemporaryFile 保存临时文件
+func (fs *FaceService) saveTemporaryFile(r *http.Request) (string, error) {
+	file, handler, err := r.FormFile("image")
+	if err != nil {
+		return "", fmt.Errorf("获取图片文件失败: %v", err)
+	}
+	defer file.Close()
+
+	tempFile := filepath.Join(fs.config.TempDir, fmt.Sprintf("temp_%d_%s", time.Now().UnixNano(), handler.Filename))
+	
+	dst, err := os.Create(tempFile)
+	if err != nil {
+		return "", fmt.Errorf("创建临时文件失败: %v", err)
+	}
+	defer dst.Close()
+
+	_, err = io.Copy(dst, file)
+	if err != nil {
+		os.Remove(tempFile)
+		return "", fmt.Errorf("保存图片失败: %v", err)
+	}
+
+	return tempFile, nil
+}
+
+// GetPersonList 获取人员列表
+func (fs *FaceService) GetPersonList(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		http.Error(w, "只支持GET方法", http.StatusMethodNotAllowed)
+		fs.sendErrorResponse(w, "只支持GET方法", http.StatusMethodNotAllowed)
 		return
 	}
 
 	fs.mu.RLock()
 	defer fs.mu.RUnlock()
 
-	var faceList []map[string]interface{}
-	for _, face := range fs.faceData {
-		faceList = append(faceList, map[string]interface{}{
-			"id":        face.ID,
-			"name":      face.Name,
-			"image_url": face.ImageURL,
-		})
+	var personList []map[string]interface{}
+	for _, person := range fs.persons {
+		personInfo := map[string]interface{}{
+			"id":           person.ID,
+			"name":         person.Name,
+			"sample_count": len(person.Samples),
+			"created":      person.Created,
+			"updated":      person.Updated,
+		}
+
+		// 添加样本信息
+		var samples []map[string]interface{}
+		for _, sample := range person.Samples {
+			samples = append(samples, map[string]interface{}{
+				"id":        sample.ID,
+				"image_url": sample.ImageURL,
+				"quality":   sample.Quality,
+				"created":   sample.Created,
+			})
+		}
+		personInfo["samples"] = samples
+
+		personList = append(personList, personInfo)
 	}
 
-	fs.sendResponse(w, true, "获取成功", faceList)
+	fs.sendSuccessResponse(w, "获取成功", personList)
 }
 
-// DeleteFace 删除已登记人脸
-func (fs *FaceService) DeleteFace(w http.ResponseWriter, r *http.Request) {
+// DeletePerson 删除人员
+func (fs *FaceService) DeletePerson(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodDelete {
-		http.Error(w, "只支持DELETE方法", http.StatusMethodNotAllowed)
+		fs.sendErrorResponse(w, "只支持DELETE方法", http.StatusMethodNotAllowed)
 		return
 	}
 
 	vars := mux.Vars(r)
-	idStr := vars["id"]
-	id, err := strconv.Atoi(idStr)
+	personIDStr := vars["person_id"]
+	personID, err := strconv.Atoi(personIDStr)
 	if err != nil {
-		fs.sendResponse(w, false, "无效的ID", nil)
+		fs.sendErrorResponse(w, "无效的人员ID", http.StatusBadRequest)
 		return
 	}
 
 	fs.mu.Lock()
 	defer fs.mu.Unlock()
 
-	faceData, exists := fs.faceData[id]
+	person, exists := fs.persons[personID]
 	if !exists {
-		fs.sendResponse(w, false, "人脸数据不存在", nil)
+		fs.sendErrorResponse(w, "人员不存在", http.StatusNotFound)
 		return
 	}
 
-	// 删除图片文件
-	if faceData.ImagePath != "" {
-		if err := os.Remove(faceData.ImagePath); err != nil {
-			log.Printf("删除图片文件失败: %v", err)
+	// 删除所有样本文件和数据
+	for _, sample := range person.Samples {
+		if sample.ImagePath != "" {
+			if err := os.Remove(sample.ImagePath); err != nil {
+				log.Printf("删除图片文件失败: %v", err)
+			}
 		}
+		delete(fs.samples, sample.ID)
+		fs.stats.TotalSamples--
 	}
 
-	// 删除数据
-	delete(fs.faceData, id)
+	// 删除人员数据
+	delete(fs.persons, personID)
+	fs.stats.TotalPersons--
 
 	// 更新分类器
 	fs.updateClassifier()
 
-	fs.sendResponse(w, true, "删除成功", nil)
+	// 保存数据
+	go fs.saveData()
+
+	fs.sendSuccessResponse(w, "删除成功", nil)
 }
 
-// RecognizeMultipleFaces 批量识别接口（处理多人脸图片）
-func (fs *FaceService) RecognizeMultipleFaces(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "只支持POST方法", http.StatusMethodNotAllowed)
+// DeleteSample 删除样本
+func (fs *FaceService) DeleteSample(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodDelete {
+		fs.sendErrorResponse(w, "只支持DELETE方法", http.StatusMethodNotAllowed)
 		return
 	}
 
-	// 解析表单数据
-	err := r.ParseMultipartForm(10 << 20)
+	vars := mux.Vars(r)
+	sampleIDStr := vars["sample_id"]
+	sampleID, err := strconv.Atoi(sampleIDStr)
 	if err != nil {
-		fs.sendResponse(w, false, "解析表单失败", nil)
+		fs.sendErrorResponse(w, "无效的样本ID", http.StatusBadRequest)
 		return
 	}
 
-	// 获取阈值参数（可选）
-	thresholdStr := r.FormValue("threshold")
-	threshold := float32(0.6) // 默认阈值
-	if thresholdStr != "" {
-		if t, err := strconv.ParseFloat(thresholdStr, 32); err == nil {
-			threshold = float32(t)
+	fs.mu.Lock()
+	defer fs.mu.Unlock()
+
+	sample, exists := fs.samples[sampleID]
+	if !exists {
+		fs.sendErrorResponse(w, "样本不存在", http.StatusNotFound)
+		return
+	}
+
+	person, personExists := fs.persons[sample.PersonID]
+	if !personExists {
+		fs.sendErrorResponse(w, "关联的人员不存在", http.StatusNotFound)
+		return
+	}
+
+	// 检查是否为最后一个样本
+	if len(person.Samples) <= 1 {
+		fs.sendErrorResponse(w, "不能删除最后一个样本，请删除整个人员", http.StatusBadRequest)
+		return
+	}
+
+	// 删除图片文件
+	if sample.ImagePath != "" {
+		if err := os.Remove(sample.ImagePath); err != nil {
+			log.Printf("删除图片文件失败: %v", err)
 		}
 	}
 
-	// 获取上传的图片文件
-	file, handler, err := r.FormFile("image")
-	if err != nil {
-		fs.sendResponse(w, false, "获取图片文件失败", nil)
-		return
+	// 从人员的样本列表中移除
+	for i, s := range person.Samples {
+		if s.ID == sampleID {
+			person.Samples = append(person.Samples[:i], person.Samples[i+1:]...)
+			break
+		}
 	}
-	defer file.Close()
+	person.Updated = time.Now()
 
-	// 保存临时文件
-	tempDir := "temp"
-	os.MkdirAll(tempDir, 0755)
-	tempFile := filepath.Join(tempDir, handler.Filename)
+	// 删除样本数据
+	delete(fs.samples, sampleID)
+	fs.stats.TotalSamples--
 
-	dst, err := os.Create(tempFile)
-	if err != nil {
-		fs.sendResponse(w, false, "创建临时文件失败", nil)
-		return
-	}
-	defer dst.Close()
-	defer os.Remove(tempFile)
+	// 更新分类器
+	fs.updateClassifier()
 
-	_, err = io.Copy(dst, file)
-	if err != nil {
-		fs.sendResponse(w, false, "保存图片失败", nil)
+	// 保存数据
+	go fs.saveData()
+
+	fs.sendSuccessResponse(w, "样本删除成功", nil)
+}
+
+// GetStatistics 获取统计信息
+func (fs *FaceService) GetStatistics(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		fs.sendErrorResponse(w, "只支持GET方法", http.StatusMethodNotAllowed)
 		return
 	}
 
 	fs.mu.RLock()
-	defer fs.mu.RUnlock()
+	stats := fs.stats
+	fs.mu.RUnlock()
 
-	if len(fs.faceData) == 0 {
-		fs.sendResponse(w, false, "暂无已登记的人脸数据", nil)
-		return
-	}
-
-	// 识别图片中的所有人脸
-	faces, err := fs.recognizer.RecognizeFile(tempFile)
-	if err != nil {
-		var imageLoadError face.ImageLoadError
-		switch {
-		case errors.As(err, &imageLoadError):
-			fs.sendResponse(w, false, "图片格式不支持或已损坏", nil)
-		default:
-			fs.sendResponse(w, false, "人脸识别失败", nil)
-		}
-		return
-	}
-
-	if len(faces) == 0 {
-		fs.sendResponse(w, false, "未检测到人脸", nil)
-		return
-	}
-
-	// 识别每个人脸
-	var results []map[string]interface{}
-	for i, detectedFace := range faces {
-		result := map[string]interface{}{
-			"face_index": i,
-			"rectangle": map[string]interface{}{
-				"left":   detectedFace.Rectangle.Min.X,
-				"top":    detectedFace.Rectangle.Min.Y,
-				"right":  detectedFace.Rectangle.Max.X,
-				"bottom": detectedFace.Rectangle.Max.Y,
-			},
-		}
-
-		// 使用分类器进行识别
-		catID := fs.recognizer.ClassifyThreshold(detectedFace.Descriptor, threshold)
-
-		if catID >= 0 && catID < len(fs.labels) {
-			faceIDStr := fs.labels[catID]
-			faceID, err := strconv.Atoi(faceIDStr)
-			if err == nil {
-				if matchedFace, exists := fs.faceData[faceID]; exists {
-					// 计算相似度
-					matchedDescriptor, err := stringToDescriptor(matchedFace.Descriptor)
-					if err == nil {
-						distance := fs.calculateDistance(detectedFace.Descriptor, matchedDescriptor)
-						confidence := (1 - distance) * 100
-						if confidence < 0 {
-							confidence = 0
-						}
-
-						result["recognized"] = true
-						result["id"] = matchedFace.ID
-						result["name"] = matchedFace.Name
-						result["confidence"] = fmt.Sprintf("%.2f%%", confidence)
-						result["distance"] = fmt.Sprintf("%.4f", distance)
-					}
-				}
-			}
-		}
-
-		if _, exists := result["recognized"]; !exists {
-			result["recognized"] = false
-			result["message"] = "未找到匹配的人脸"
-		}
-
-		results = append(results, result)
-	}
-
-	fs.sendResponse(w, true, fmt.Sprintf("检测到%d张人脸", len(faces)), results)
+	fs.sendSuccessResponse(w, "获取统计信息成功", stats)
 }
 
-// 发送JSON响应
-func (fs *FaceService) sendResponse(w http.ResponseWriter, success bool, message string, data interface{}) {
-	w.Header().Set("Content-Type", "application/json")
-
-	response := Response{
-		Success: success,
-		Message: message,
-		Data:    data,
+// GetPersonDetail 获取人员详情
+func (fs *FaceService) GetPersonDetail(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		fs.sendErrorResponse(w, "只支持GET方法", http.StatusMethodNotAllowed)
+		return
 	}
 
-	if !success {
-		w.WriteHeader(http.StatusBadRequest)
+	vars := mux.Vars(r)
+	personIDStr := vars["person_id"]
+	personID, err := strconv.Atoi(personIDStr)
+	if err != nil {
+		fs.sendErrorResponse(w, "无效的人员ID", http.StatusBadRequest)
+		return
+	}
+
+	fs.mu.RLock()
+	person, exists := fs.persons[personID]
+	fs.mu.RUnlock()
+
+	if !exists {
+		fs.sendErrorResponse(w, "人员不存在", http.StatusNotFound)
+		return
+	}
+
+	// 构建详细信息
+	personDetail := map[string]interface{}{
+		"id":           person.ID,
+		"name":         person.Name,
+		"sample_count": len(person.Samples),
+		"created":      person.Created,
+		"updated":      person.Updated,
+	}
+
+	// 添加样本详情
+	var samples []map[string]interface{}
+	for _, sample := range person.Samples {
+		samples = append(samples, map[string]interface{}{
+			"id":        sample.ID,
+			"image_url": sample.ImageURL,
+			"quality":   sample.Quality,
+			"created":   sample.Created,
+		})
+	}
+	personDetail["samples"] = samples
+
+	fs.sendSuccessResponse(w, "获取人员详情成功", personDetail)
+}
+
+// UpdatePersonName 更新人员姓名
+func (fs *FaceService) UpdatePersonName(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPut {
+		fs.sendErrorResponse(w, "只支持PUT方法", http.StatusMethodNotAllowed)
+		return
+	}
+
+	vars := mux.Vars(r)
+	personIDStr := vars["person_id"]
+	personID, err := strconv.Atoi(personIDStr)
+	if err != nil {
+		fs.sendErrorResponse(w, "无效的人员ID", http.StatusBadRequest)
+		return
+	}
+
+	// 解析JSON请求体
+	var requestData struct {
+		Name string `json:"name"`
+	}
+
+	if err := json.NewDecoder(r.Body).Decode(&requestData); err != nil {
+		fs.sendErrorResponse(w, "解析请求数据失败", http.StatusBadRequest)
+		return
+	}
+
+	if requestData.Name == "" {
+		fs.sendErrorResponse(w, "姓名不能为空", http.StatusBadRequest)
+		return
+	}
+
+	fs.mu.Lock()
+	defer fs.mu.Unlock()
+
+	person, exists := fs.persons[personID]
+	if !exists {
+		fs.sendErrorResponse(w, "人员不存在", http.StatusNotFound)
+		return
+	}
+
+	// 检查新姓名是否已存在
+	for _, p := range fs.persons {
+		if p.ID != personID && p.Name == requestData.Name {
+			fs.sendErrorResponse(w, "该姓名已存在", http.StatusConflict)
+			return
+		}
+	}
+
+	// 更新姓名
+	person.Name = requestData.Name
+	person.Updated = time.Now()
+
+	// 保存数据
+	go fs.saveData()
+
+	fs.sendSuccessResponse(w, "姓名更新成功", map[string]interface{}{
+		"id":   person.ID,
+		"name": person.Name,
+	})
+}
+
+// HealthCheck 健康检查
+func (fs *FaceService) HealthCheck(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		fs.sendErrorResponse(w, "只支持GET方法", http.StatusMethodNotAllowed)
+		return
+	}
+
+	fs.mu.RLock()
+	totalPersons := len(fs.persons)
+	totalSamples := len(fs.samples)
+	fs.mu.RUnlock()
+
+	fs.sendSuccessResponse(w, "服务正常", map[string]interface{}{
+		"status":        "healthy",
+		"total_persons": totalPersons,
+		"total_samples": totalSamples,
+		"timestamp":     time.Now(),
+	})
+}
+
+// 响应辅助方法
+func (fs *FaceService) sendSuccessResponse(w http.ResponseWriter, message string, data interface{}) {
+	fs.sendResponse(w, true, message, data, http.StatusOK)
+}
+
+func (fs *FaceService) sendErrorResponse(w http.ResponseWriter, message string, statusCode int) {
+	fs.sendResponse(w, false, message, nil, statusCode)
+}
+
+func (fs *FaceService) sendResponse(w http.ResponseWriter, success bool, message string, data interface{}, statusCode int) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(statusCode)
+
+	response := Response{
+		Success:   success,
+		Message:   message,
+		Data:      data,
+		Timestamp: time.Now(),
 	}
 
 	json.NewEncoder(w).Encode(response)
 }
 
+// 加载配置
+func loadConfig(configPath string) (*Config, error) {
+	// 默认配置
+	config := &Config{
+		Port:             ":8080",
+		ModelsDir:        "models",
+		UploadsDir:       "uploads",
+		TempDir:          "temp",
+		DataFile:         "face_data.json",
+		MaxFileSize:      10 << 20, // 10MB
+		DefaultThreshold: 0.6,
+		LogLevel:         "info",
+	}
+
+	// 如果配置文件存在，则加载配置
+	if _, err := os.Stat(configPath); err == nil {
+		file, err := os.Open(configPath)
+		if err != nil {
+			return nil, fmt.Errorf("打开配置文件失败: %v", err)
+		}
+		defer file.Close()
+
+		if err := json.NewDecoder(file).Decode(config); err != nil {
+			return nil, fmt.Errorf("解析配置文件失败: %v", err)
+		}
+	}
+
+	return config, nil
+}
+
+// 定期保存数据的后台任务
+func (fs *FaceService) startAutoSave() {
+	go func() {
+		ticker := time.NewTicker(5 * time.Minute) // 每5分钟保存一次
+		defer ticker.Stop()
+
+		for range ticker.C {
+			if err := fs.saveData(); err != nil {
+				log.Printf("自动保存数据失败: %v", err)
+			}
+		}
+	}()
+}
+
 func main() {
-	// 从命令行参数获取模型路径，默认为"models"
-	modelsDir := "models"
+	// 加载配置
+	configPath := "config.json"
 	if len(os.Args) > 1 {
-		modelsDir = os.Args[1]
+		configPath = os.Args[1]
+	}
+
+	config, err := loadConfig(configPath)
+	if err != nil {
+		log.Printf("加载配置失败，使用默认配置: %v", err)
+		config = &Config{
+			Port:             ":8080",
+			ModelsDir:        "models",
+			UploadsDir:       "uploads",
+			TempDir:          "temp",
+			DataFile:         "face_data.json",
+			MaxFileSize:      10 << 20,
+			DefaultThreshold: 0.6,
+			LogLevel:         "info",
+		}
 	}
 
 	// 初始化人脸识别服务
-	faceService, err := NewFaceService(modelsDir)
+	faceService, err := NewFaceService(config)
 	if err != nil {
 		log.Fatal("初始化人脸识别服务失败:", err)
 	}
 	defer faceService.Close()
+
+	// 启动自动保存
+	faceService.startAutoSave()
 
 	// 创建路由
 	r := mux.NewRouter()
 
 	// API路由
 	api := r.PathPrefix("/api/v1").Subrouter()
-	api.HandleFunc("/face/register", faceService.RegisterFace).Methods("POST")
+	
+	// 人员管理
+	api.HandleFunc("/person/register", faceService.RegisterPerson).Methods("POST")
+	api.HandleFunc("/person/list", faceService.GetPersonList).Methods("GET")
+	api.HandleFunc("/person/{person_id}", faceService.GetPersonDetail).Methods("GET")
+	api.HandleFunc("/person/{person_id}", faceService.UpdatePersonName).Methods("PUT")
+	api.HandleFunc("/person/{person_id}", faceService.DeletePerson).Methods("DELETE")
+	
+	// 样本管理
+	api.HandleFunc("/person/{person_id}/sample", faceService.AddSample).Methods("POST")
+	api.HandleFunc("/sample/{sample_id}", faceService.DeleteSample).Methods("DELETE")
+	
+	// 识别接口
 	api.HandleFunc("/face/recognize", faceService.RecognizeFace).Methods("POST")
 	api.HandleFunc("/face/recognize-multiple", faceService.RecognizeMultipleFaces).Methods("POST")
-	api.HandleFunc("/face/list", faceService.GetFaceList).Methods("GET")
-	api.HandleFunc("/face/{id}", faceService.DeleteFace).Methods("DELETE")
+	
+	// 统计和健康检查
+	api.HandleFunc("/statistics", faceService.GetStatistics).Methods("GET")
+	api.HandleFunc("/health", faceService.HealthCheck).Methods("GET")
 
-	// 静态文件服务 - 提供图片访问
-	r.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir("uploads/"))))
+	// 静态文件服务
+	r.PathPrefix("/uploads/").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir(config.UploadsDir))))
 
-	// 添加CORS支持
+	// CORS中间件
 	r.Use(func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Access-Control-Allow-Origin", "*")
-			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS")
-			w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 
 			if r.Method == "OPTIONS" {
 				w.WriteHeader(http.StatusOK)
@@ -616,20 +1189,68 @@ func main() {
 		})
 	})
 
-	port := ":8080"
-	fmt.Printf("人脸识别服务启动在端口 %s\n", port)
-	fmt.Printf("模型路径: %s\n", modelsDir)
-	fmt.Println("API接口:")
-	fmt.Println("POST /api/v1/face/register - 人脸登记")
-	fmt.Println("POST /api/v1/face/recognize - 单人脸识别")
-	fmt.Println("POST /api/v1/face/recognize-multiple - 多人脸识别")
-	fmt.Println("GET  /api/v1/face/list - 获取人脸列表")
-	fmt.Println("DELETE /api/v1/face/{id} - 删除人脸")
+	// 启动服务
+	fmt.Printf("=== 人脸识别服务启动 ===\n")
+	fmt.Printf("端口: %s\n", config.Port)
+	fmt.Printf("模型路径: %s\n", config.ModelsDir)
+	fmt.Printf("上传目录: %s\n", config.UploadsDir)
+	fmt.Printf("数据文件: %s\n", config.DataFile)
+	fmt.Printf("默认阈值: %.2f\n", config.DefaultThreshold)
+	fmt.Printf("最大文件大小: %d MB\n", config.MaxFileSize/(1024*1024))
+	fmt.Println("\n=== API接口列表 ===")
+	fmt.Println("人员管理:")
+	fmt.Println("  POST   /api/v1/person/register        - 人员登记")
+	fmt.Println("  GET    /api/v1/person/list           - 获取人员列表")
+	fmt.Println("  GET    /api/v1/person/{id}           - 获取人员详情")
+	fmt.Println("  PUT    /api/v1/person/{id}           - 更新人员姓名")
+	fmt.Println("  DELETE /api/v1/person/{id}           - 删除人员")
+	fmt.Println("\n样本管理:")
+	fmt.Println("  POST   /api/v1/person/{id}/sample    - 添加样本")
+	fmt.Println("  DELETE /api/v1/sample/{id}           - 删除样本")
+	fmt.Println("\n识别接口:")
+	fmt.Println("  POST   /api/v1/face/recognize        - 单人脸识别")
+	fmt.Println("  POST   /api/v1/face/recognize-multiple - 多人脸识别")
+	fmt.Println("\n系统接口:")
+	fmt.Println("  GET    /api/v1/statistics            - 获取统计信息")
+	fmt.Println("  GET    /api/v1/health                - 健康检查")
+	fmt.Println("\n静态文件:")
+	fmt.Println("  GET    /uploads/*                    - 图片文件访问")
 
-	log.Fatal(http.ListenAndServe(port, r))
-}
+	log.Fatal(http.ListenAndServe(config.Port, r))
 
 ```
+
+配置文件 (config.json)
+
+```json
+{
+  "port": ":8080",
+  "models_dir": "models",
+  "uploads_dir": "uploads",
+  "temp_dir": "temp",
+  "data_file": "face_data.json",
+  "max_file_size": 10485760,
+  "default_threshold": 0.6,
+  "log_level": "info"
+}
+```
+
+>⚠️ 使用建议
+>
+> 样本采集
+>
+>- 每人建议采集3-8个高质量样本
+>- 包含不同角度：正面、左侧、右侧
+>- 包含不同表情：微笑、严肃
+>- 确保良好的光线条件
+>- 避免模糊、遮挡的图片
+>
+> 阈值设置
+>
+>- 默认阈值0.6适用于大多数场景
+>- 安全性要求高的场景可提高到0.7-0.8
+>- 便利性要求高的场景可降低到0.4-0.5
+>- 建议根据实际测试效果调整
 
 ## 用到的数学方法
 

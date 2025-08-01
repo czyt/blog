@@ -216,9 +216,10 @@ draft: false
 - Permute 3
 - [HandBrake for mac](https://handbrake.fr/) 视频压缩转换利器
 
-### 屏幕取色
+### 屏幕&取色
 - Sip - 好用的屏幕取色软件。
 - Drop，取色软件，特别是UI开发过程中，假如想去配一个好看的颜色，可以借助这个工具看看做得好的软件的颜色是什么。
+- [MonitorControl](https://github.com/MonitorControl)  外接显示器的用户安装后能直接调节外接显示的亮度和音量
 
 ### 剪切板
 

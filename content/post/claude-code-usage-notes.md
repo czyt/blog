@@ -654,3 +654,8 @@ claude
 
 > 月之暗面的API KEY获取途径：登录[月之暗面开发者平台](https://platform.moonshot.cn/console/account),创建 API Key即可。
 
+
+
+## 其他的一些工具
+
++ https://github.com/charmbracelet/crush

@@ -656,6 +656,21 @@ claude
 
 
 
+## 其他技巧
+
+> 转自x [原文链接](https://x.com/dngzsn37461/status/1951204841482756170)
+
++ `claude-code --context-aware analyze`：项目上下文分析深入10倍！   
++  `Ctrl+Shift+A` + `claude explain`：瞬间解析代码+性能风险！ 
++ `CLAUDE_DEBUG_MODE=true`：查看Claude的思考与决策逻辑！
++ `claude-code refactor --pattern="legacy/*"`：一键现代化旧代码库！
++  `.claude-ignore`：自动清理无用依赖，项目体积减30%！
++  `claude-code profile --deep-analysis`：发现隐藏性能瓶颈！
++ `.claude-config.json`：统一团队代码风格，智能优化建议！
++ `claude-code sync --workspace-mode`：多项目API自动同步！
++  `// @claude`：注释生成中间件或优化数据库查询！   
++ `claude-code debug --trace-execution`：定位Bug+完整推理过程！
+
 ## 其他的一些工具
 
 + https://github.com/charmbracelet/crush

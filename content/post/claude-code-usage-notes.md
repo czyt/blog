@@ -675,6 +675,8 @@ claude
 
 + https://github.com/wasabeef/claude-code-cookbook
 + https://github.com/davepoon/claude-code-subagents-collection
++ https://github.com/zebbern/claude-code-guide
++ https://github.com/iannuttall/claude-agents
 
 ## 其他的一些工具
 

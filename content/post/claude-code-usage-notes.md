@@ -671,6 +671,10 @@ claude
 +  `// @claude`：注释生成中间件或优化数据库查询！   
 + `claude-code debug --trace-execution`：定位Bug+完整推理过程！
 
+以及下面的这些仓库
+
++ https://github.com/wasabeef/claude-code-cookbook
+
 ## 其他的一些工具
 
 + https://github.com/charmbracelet/crush

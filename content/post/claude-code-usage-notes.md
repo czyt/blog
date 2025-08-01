@@ -674,6 +674,7 @@ claude
 以及下面的这些仓库
 
 + https://github.com/wasabeef/claude-code-cookbook
++ https://github.com/davepoon/claude-code-subagents-collection
 
 ## 其他的一些工具
 

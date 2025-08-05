@@ -1265,7 +1265,7 @@ ttf-ms-fonts ttf-sarasa-gothic noto-fonts-cjk  noto-fonts-sc
 下面是一些编程字体
 
 ```bash
-paru -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sarasa-term ttf-maple-latest 	ttc-iosevka nerd-fonts
+paru -S ttf-fira-code nerd-fonts-complete ttf-lilex otf-monaspace nerd-fonts-sarasa-term ttf-maple-latest 	ttc-iosevka nerd-fonts ttf-google-sans-code-vf
 ```
 
 输入法有问题，需要重置，使用命令 `rm -r ~/.config/fcitx` 然后注销即可。

@@ -621,6 +621,7 @@ cask "font-hack-nerd-font"
 cask "font-menlo-for-powerline"
 cask "font-jetbrains-mono"
 cask "font-jetbrains-mono-nerd-font"
+cask "font-google-sans-code"
 ```
 
 你可以在你的机器的根目录下创建 `Brewfile` ，并在完成后运行 `brew bundle` 。

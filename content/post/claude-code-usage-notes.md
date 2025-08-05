@@ -677,6 +677,7 @@ claude
 + https://github.com/davepoon/claude-code-subagents-collection
 + https://github.com/zebbern/claude-code-guide
 + https://github.com/iannuttall/claude-agents
++ https://github.com/FradSer/dotclaude
 
 ## 其他的一些工具
 

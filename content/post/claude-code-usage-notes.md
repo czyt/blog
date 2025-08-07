@@ -682,3 +682,4 @@ claude
 ## 其他的一些工具
 
 + https://github.com/charmbracelet/crush
++ https://github.com/build-with-groq/groq-code-cli

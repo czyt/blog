@@ -12,7 +12,7 @@ weight: 9
 > + [EndeavourOS](https://endeavouros.com)
 > + [CachyOS](https://cachyos.org)
 >
->  如果您安装好了manajro但是又不想重装系统，可以试下[这个脚本](https://github.com/saeziae/manjaro2archlinux)来将Manjaro自动转换为Arch。
+>  如果您安装好了manajro但是又不想重装系统，可以试下[这个脚本](https://github.com/saeziae/manjaro2archlinux)来将Manjaro自动转换为Arch。此外，DHH的[omarchy](https://omarchy.org) ([github](https://github.com/basecamp/omarchy))也值得一试~
 ## Arch 安装后必装的软件
 
 通过archinstall 安装以后，是没图形界面的。需要安装下面的一些软件和配置

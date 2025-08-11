@@ -502,7 +502,118 @@ alias claude='ccr code'
 
 将这个加入到您的.zshrc获取.bashrc中即可。
 
+#### qwencode
 
+正常安装和使用qwen-code
+
+```bash
+npm install -g @qwen-code/qwen-code@latest
+qwen --version
+```
+
+需要在`~/.claude-code-router/plugins` 下面创建**[qwen-cli.js](https://gist.github.com/musistudio/f5a67841ced39912fd99e42200d5ca8b)** 的插件，然后再到`~/.claude-code-router`下面的`config.json`创建对应的transformer以及provider
+
+```json
+{
+    "LOG": true,
+    "CLAUDE_PATH": "",
+    "HOST": "0.0.0.0",
+    "PORT": 3456,
+    "APIKEY": "sk-czyt",
+    "API_TIMEOUT_MS": "600000",
+    "PROXY_URL": "",
+    "transformers": [
+        {
+            "path": "/Users/czyt/.claude-code-router/plugins/qwen-cli.js"
+        }
+    ],
+    "Providers": [
+        {
+            "name": "qwen-cli",
+            "api_base_url": "https://portal.qwen.ai/v1/chat/completions",
+            "api_key": "sk-czyt",
+            "models": ["qwen3-coder-plus"],
+            "transformer": {
+                "use": ["qwen-cli"],
+                "qwen3-coder-plus": { "use": ["enhancetool"] }
+            }
+        }
+    ],
+    "Router": {
+        "default": "qwen-cli,qwen3-coder-plus",
+        "background": "",
+        "think": "",
+        "longContext": "",
+        "longContextThreshold": 60000,
+        "webSearch": ""
+    }
+}
+```
+
+> 上面提到的js的内容
+>
+> ```javascript
+> const os = require("os");
+> const path = require("path");
+> const fs = require("fs/promises");
+> 
+> const OAUTH_FILE = path.join(os.homedir(), ".qwen", "oauth_creds.json");
+> 
+> class QwenCLITransformer {
+>   name = "qwen-cli";
+> 
+>   async transformRequestIn(request, provider) {
+>     if (!this.oauth_creds) {
+>       await this.getOauthCreds();
+>     }
+>     if (this.oauth_creds && this.oauth_creds.expiry_date < +new Date()) {
+>       await this.refreshToken(this.oauth_creds.refresh_token);
+>     }
+>     return {
+>       body: request,
+>       config: {
+>         headers: {
+>           Authorization: `Bearer ${this.oauth_creds.access_token}`,
+>         },
+>       },
+>     };
+>   }
+> 
+>   refreshToken(refresh_token) {
+>     const urlencoded = new URLSearchParams();
+>     urlencoded.append("client_id", "f0304373b74a44d2b584a3fb70ca9e56");
+>     urlencoded.append("refresh_token", refresh_token);
+>     urlencoded.append("grant_type", "refresh_token");
+>     return fetch("https://chat.qwen.ai/api/v1/oauth2/token", {
+>       method: "POST",
+>       headers: {
+>         "Content-Type": "application/json",
+>       },
+>       body: urlencoded,
+>     })
+>       .then((response) => response.json())
+>       .then(async (data) => {
+>         data.expiry_date =
+>           new Date().getTime() + data.expires_in * 1000 - 1000 * 60;
+>         data.refresh_token = refresh_token;
+>         delete data.expires_in;
+>         this.oauth_creds = data;
+>         await fs.writeFile(OAUTH_FILE, JSON.stringify(data, null, 2));
+>       });
+>   }
+> 
+>   async getOauthCreds() {
+>     try {
+>       const data = await fs.readFile(OAUTH_FILE);
+>       this.oauth_creds = JSON.parse(data);
+>     } catch (e) {}
+>   }
+> }
+> 
+> module.exports = QwenCLITransformer;
+> ```
+>
+> 
 
 ## Github集成
 

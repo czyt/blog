@@ -502,7 +502,7 @@ alias claude='ccr code'
 
 将这个加入到您的.zshrc获取.bashrc中即可。
 
-#### qwencode
+#### qwen-code
 
 正常安装和使用qwen-code
 

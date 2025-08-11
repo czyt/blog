@@ -412,7 +412,9 @@ alias cc="claude --dangerously-skip-permissions"
 
 在使用之前需要在您的`$HOME/.claude-code-router/`下创建`config.json`文件，下面是我使用
 
-硅基流动示例 [邀请注册](https://cloud.siliconflow.cn/i/a7NqR0rS)
+#### 硅基流动
+
+ [邀请注册](https://cloud.siliconflow.cn/i/a7NqR0rS)
 
 ```json
 {
@@ -421,7 +423,7 @@ alias cc="claude --dangerously-skip-permissions"
     "OPENAI_MODEL": "deepseek-ai/DeepSeek-V3"
 }
 ```
-使用火山引擎的示例
+#### 火山引擎
 
 ```json
 {
@@ -432,7 +434,9 @@ alias cc="claude --dangerously-skip-permissions"
 }
 ```
 
-使用OpenRouter的Kimi K2的例子
+#### OpenRouter
+
+Kimi K2的例子
 
 ```json
 {
@@ -454,6 +458,8 @@ alias cc="claude --dangerously-skip-permissions"
   }
 }
 ```
+
+#### 魔搭社区
 
 [魔搭社区](https://modelscope.cn)
 

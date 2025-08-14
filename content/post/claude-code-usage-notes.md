@@ -575,11 +575,17 @@ qwen --version
 >     if (this.oauth_creds && this.oauth_creds.expiry_date < +new Date()) {
 >       await this.refreshToken(this.oauth_creds.refresh_token);
 >     }
+>     if (request.stream) {
+>       request.stream_options = {
+>         include_usage: true,
+>       };
+>     }
 >     return {
 >       body: request,
 >       config: {
 >         headers: {
 >           Authorization: `Bearer ${this.oauth_creds.access_token}`,
+>           "User-Agent": "QwenCode/v22.12.0 (darwin; arm64)",
 >         },
 >       },
 >     };

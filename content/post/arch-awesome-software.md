@@ -1047,6 +1047,8 @@ clash https://aur.archlinux.org/packages?K=clash [福利](https://neko-warp.nlol
 
 [mihomo-party](https://mihomo.party) 安装 `paru -S mihomo-party` 或者 `paru -S mihomo-party-bin`
 
+[sparkle](https://github.com/xishang0128/sparkle) 安装 `paru -S sparkle-bin` 或者 `paru -S sparkle-git` **推荐**
+
 cloudflare Warp 安装 `paru -S cloudflare-warp-bin`  [基于wiregurd](https://www.ianbashford.net/post/setupcloudflarewarplinuxarch/) [自选ip脚本](https://gitlab.com/rwkgyg/CFwarp) [自选ip脚本2](https://gitlab.com/ProjectWARP/warp-script)
 
 >如报错： DNS connectivity check failed with reason DNSLookupFailed，请尝试

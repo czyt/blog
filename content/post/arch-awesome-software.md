@@ -1476,6 +1476,10 @@ macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip inst
 
 [fooyin](https://github.com/fooyin/fooyin) Linux 的 Foobar2000`paru -S fooyin-bin`或者 `paru -S fooyin`
 
+> 一些命令行的影视小工具
+>
+> - https://github.com/auv-sh/av
+
 ## 美化
 
 ### docky 安装

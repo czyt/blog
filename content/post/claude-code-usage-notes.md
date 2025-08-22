@@ -17,8 +17,46 @@ author: "czyt"
 
 ### 安装 Claude Code
 
+#### nodejs环境
+
 ```bash
 pnpm install -g @anthropic-ai/claude-code
+```
+#### bun环境
+Option 1: Install globally and run
+```bash
+bun add -g @anthropic-ai/claude-code
+bun run --bun claude
+```
+Option 2: Use bunx to run directly
+```bash
+bunx --bun @anthropic-ai/claude-code
+```
+Add MCP Server (This works!)
+You can add the MCP server using this command:
+```bash
+claude mcp add context7 -- bunx -y @upstash/context7-mcp
+```
+
+#### deno环境
+
+安装Deno
+
+```bash
+curl -fsSL https://deno.land/install.sh | sh
+```
+
+全局按照Claude code
+
+```bash
+deno install --global -A npm:@anthropic-ai/claude-code
+```
+
+将 `~/.deno/bin` 添加到PATH
+
+```bash
+claude --version
+1.0.65 (Claude Code)
 ```
 
 ### Claude Code Router使用

@@ -145,6 +145,7 @@ draft: false
 - Things，很简洁的备忘 Todo 软件，正是由于太简单了，反而能够让你更加聚焦使用。
 - Vitamin-R 3 番茄计划定制工作任务
 - [Quickly Change Stores](https://apps.apple.com/us/app/quickly-change-stores/id6745314361?l=zh-Hans-CN) 快速轻松地切换App Store地区工具
+- [LunarBar](https://github.com/LunarBar-app/LunarBar)完全免费且开源的 Mac 状态栏极简日历，支持农历、公共假日、系统日历及提醒等功能
 
 ### 虚拟机及虚拟化
 - Parallels Desktop

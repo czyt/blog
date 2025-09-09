@@ -665,6 +665,92 @@ qwen --version
 >
 > 
 
+#### zai
+
+[zai.js](https://gist.github.com/musistudio/b35402d6f9c95c64269c7666b8405348)
+
+配置
+
+```json
+{
+  "LOG": false,
+  "LOG_LEVEL": "debug",
+  "CLAUDE_PATH": "",
+  "HOST": "127.0.0.1",
+  "PORT": 3456,
+  "APIKEY": "",
+  "API_TIMEOUT_MS": "600000",
+  "PROXY_URL": "",
+  "transformers": [
+    {
+      "name": "",
+      "path": "****/.claude-code-router/plugins/zai.js(这里填写zai.js的绝对路径)",
+      "options": {}
+    }
+  ],
+  "Providers": [
+    {
+      "name": "GLM",
+      "api_base_url": "http://0.0.0.0/v1/chat/completions",
+      "api_key": "sk-123456",
+      "models": [
+        "0727-360B-API"
+      ],
+      "transformer": {
+        "use": [
+          "zai"
+        ]
+      }
+    }
+  ],
+  "StatusLine": {
+    "enabled": true,
+    "currentStyle": "default",
+    "default": {
+      "modules": [
+        {
+          "type": "gitBranch",
+          "icon": "🌿",
+          "text": "{{gitBranch}}",
+          "color": "bright_green"
+        },
+        {
+          "type": "workDir",
+          "icon": "📁",
+          "text": "{{workDirName}}",
+          "color": "bright_blue"
+        },
+        {
+          "type": "model",
+          "icon": "🤖",
+          "text": "{{model}}",
+          "color": "bright_yellow"
+        },
+        {
+          "type": "usage",
+          "icon": "📊",
+          "text": "{{inputTokens}} → {{outputTokens}}",
+          "color": "bright_magenta"
+        }
+      ]
+    },
+    "powerline": {
+      "modules": []
+    }
+  },
+  "Router": {
+    "default": "GLM,0727-360B-API",
+    "background": "GLM,0727-360B-API",
+    "think": "GLM,0727-360B-API",
+    "longContext": "GLM,0727-360B-API",
+    "longContextThreshold": 60000,
+    "webSearch": "GLM,0727-360B-API",
+    "image": "GLM,0727-360B-API"
+  },
+  "CUSTOM_ROUTER_PATH": ""
+}
+```
+
 ## Github集成
 
 首先先安装ClaudeCode到您的GitHub上去，[安装地址](https://github.com/apps/claude)。

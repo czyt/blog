@@ -1905,6 +1905,8 @@ fish_path=(status fish-path) exec $fish_path -C "emit _tide_init_install"
 
 安装 `paru -S nushell` 
 
+### 其他终端工具
+
 ghostty `paru -S ghostty`
 
 [Warp Terminal](https://www.warp.dev)  `paru -S warp-terminal`
@@ -1970,6 +1972,8 @@ ghostty `paru -S ghostty`
 >Exec=xdg-open "warp://action/new_tab?path=%u" 
 >```
 >然后 `chmod +x open-in-warp.desktop`即可
+
+[Termora](https://github.com/TermoraDev/termora) 一款跨平台终端模拟器和 SSH 客户端 `paru -S termora-bin`
 
 ### 自定义主题
 

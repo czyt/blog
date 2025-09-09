@@ -1476,6 +1476,21 @@ macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip inst
 
 [fooyin](https://github.com/fooyin/fooyin) Linux 的 Foobar2000`paru -S fooyin-bin`或者 `paru -S fooyin`
 
+[rhythm](https://github.com/dexter-xD/rhythm) 具有令人惊叹的可视化效果的现代 Linux 音乐播放器。
+
+```
+# Core dependencies for CLI
+sudo pacman -S \
+    portaudio mpg123 cmake gcc
+
+# For GUI support, install LÖVE2D
+sudo pacman -S love
+```
+
+
+
+
+
 > 一些命令行的影视小工具
 >
 > - https://github.com/auv-sh/av

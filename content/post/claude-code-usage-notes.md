@@ -929,5 +929,12 @@ claude
 ## 其他的一些工具
 
 + https://github.com/charmbracelet/crush
+
 + https://github.com/build-with-groq/groq-code-cli
+
+  安装 `pnpm install -g groq-code-cli@latest`
+
 + https://github.com/iflow-ai/iflow-cli
+
++ 腾讯codebuddy-code
+  安装 `pnpm install -g @tencent-ai/codebuddy-code`

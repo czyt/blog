@@ -2330,6 +2330,8 @@ neofetch `paru -S neofetch`
 
 easystroke 鼠标手势 `paru -S easystroke`
 
+ [vicinae](https://github.com/vicinaehq/vicinae) 快速搜索启动的一个程序 `paru -S vicinae-bin`
+
 ![image-20220409140401125](https://assets.czyt.tech/img/image-20220409140401125.png)
 
 copyQ (类似ditto) 安装 `paru -S copyq`
@@ -2568,3 +2570,4 @@ sudo pacman-key --populate archlinuxcn
 - https://wiki.archlinux.org/title/Dell_XPS_13_(9370)
 - https://terminaltrove.com/list/F
 - https://github.com/luisbocanegra/plasma-panel-colorizer
+- https://github.com/EndeavourOS-Community-Editions

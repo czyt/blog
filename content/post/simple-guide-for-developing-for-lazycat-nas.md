@@ -148,7 +148,7 @@ application:
 
 ```
 
-
+>注意app其实也是支持环境变量的，可以参考 https://github.com/lazycat-contrib/cat-led 项目
 
 ### 网络配置
 

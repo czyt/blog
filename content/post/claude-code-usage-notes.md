@@ -938,3 +938,5 @@ claude
 
 + 腾讯codebuddy-code
   安装 `pnpm install -g @tencent-ai/codebuddy-code`
+  
++  [Claude Code StatusLine](https://github.com/Haleclipse/CCometixLine) 安装 `pnpm install -g @cometix/ccline`

@@ -50,3 +50,6 @@ patch:
       - { when: has_menu, accept: period, send: Page_Down }
 ```
 添加输入法的时候查找`rime`即可。其他输入法，比如 [白霜](https://github.com/gaboolic/rime-frost)操作应该类似。
+
+### 不能卸载的软件
+omarchy里面可以方便地进行软件卸载，但是注意不要卸载`alacritty`,现阶段（3.0版本发布）很多脚本都依赖这个tty软件，卸载掉这个软件很多功能都会失效。

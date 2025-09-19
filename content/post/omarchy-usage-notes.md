@@ -8,8 +8,15 @@ author: "czyt"
 omarchy是DHH发布的一款Arch内核的Linux发行版。最近安装了下，稍作记录
 
 ## 快捷键
+我常用到的几个
+- `super` + `space` 唤起程序启动菜单
+- `super`对应的是win或者🅾️键
+- `super`+ `B` 打开浏览器
+- `super`+ `W` 关闭
+- `super`+ `enter` 打开控制台
+- `super`+ `1/2/3/4/5/6/7/8/9` 切换到工作区
 
-omarchy 的快捷键，请参考 https://learn.omacom.io/2/the-omarchy-manual/53/hotkeys
+更多 omarchy 的快捷键，请参考 https://learn.omacom.io/2/the-omarchy-manual/53/hotkeys
 
 ## 遇见的坑
 
@@ -26,6 +33,16 @@ monitor=,preferred,auto,auto
 
 > 我的屏幕是1920x1080分辨率的，所以看着很明显
 
+
+### 不能卸载的软件
+omarchy里面可以方便地进行软件卸载，但是注意不要卸载`alacritty`,现阶段（3.0版本发布）很多脚本都依赖这个tty软件，卸载掉这个软件很多功能都会失效。
+
+## 安装设置
+### 快捷键
+``` yaml
+bindd = SUPER, R, WeRead, exec, omarchy-launch-webapp "https://weread.qq.com"
+bindd = SUPER, E, Email, exec, omarchy-launch-webapp "https://mail.qq.com"
+```
 ### 中文输入法
 omarchy自带输入法，默认为fcitx5，可以使用fcitx5-config进行配置。
 以雾凇拼音为例,需要安装基本的输入法框架
@@ -50,6 +67,3 @@ patch:
       - { when: has_menu, accept: period, send: Page_Down }
 ```
 添加输入法的时候查找`rime`即可。其他输入法，比如 [白霜](https://github.com/gaboolic/rime-frost)操作应该类似。
-
-### 不能卸载的软件
-omarchy里面可以方便地进行软件卸载，但是注意不要卸载`alacritty`,现阶段（3.0版本发布）很多脚本都依赖这个tty软件，卸载掉这个软件很多功能都会失效。

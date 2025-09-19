@@ -1923,15 +1923,25 @@ ghostty `paru -S ghostty`
 >
 >warp配合trzsz-ssh已经可以完美支持lrzsz的文件上传和下载
 >
->先安装`paru -S tssh` ，如果您需要使用tssh替换自带的ssh，可以执行下面的这一步，不替换则可以跳过
+>先安装`paru -S tssh` ，可以临时通过下面的脚本替换下
+>
+>```bash
+> function i_need_szrz(){
+>    # check tssh is installed
+>    if ! command -v tssh &> /dev/null; then
+>        echo "tssh is not installed"
+>        return 1
+>    fi
+>    aliase ssh=tssh
+>    echo "tssh setup done."
+>}
+>```
+>
+>然后正常ssh即可。
 >
 >> tssh 中文文档 https://trzsz.github.io/cn/ssh
 >
->```bash
->sudo ln -sv $(which tssh) /usr/local/bin/ssh
->```
 >
->当然上面这个也不是必须的，在你的`.zshrc`里面加上`alias ssh=tssh` 效果是一样的。
 >
 >然后在`~/.ssh/config`加入下面的内容
 >

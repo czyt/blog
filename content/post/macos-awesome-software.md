@@ -45,7 +45,7 @@ draft: false
 
 - [Reeder](http://www.pc6.com/mac/158839.html) 界面优美的RSS订阅应用.
 
-  
+
 
 
 ## 浏览器
@@ -63,7 +63,7 @@ draft: false
 - Neat Download Manager - 多线程下载器，跑满你的带宽。
 - 迅雷
 - 坚果云
-- Motrix 
+- Motrix
 - Aria2GUI
 - [blip](https://blip.net/)
 - [qBittorrent Enhanced Edition](https://github.com/c0re100/qBittorrent-Enhanced-Edition)
@@ -102,7 +102,7 @@ draft: false
 
 - Revezone
 - MindNode
-- OmniGraffle 
+- OmniGraffle
 
 ## 视频工具
 
@@ -133,14 +133,14 @@ draft: false
 ### 远程控制
 - rustdesk
 - 向日葵
-- SplashTop 
+- SplashTop
 - [TeamViewer](http://www.pc6.com/mac/115425.html) 远程开发或协助必备应用.
 - Parsec
 - Microsoft Remote Desktop
 - Jump Desktop
 ## 实用工具
 ### 时间和任务管理
-- OmniFocus 
+- OmniFocus
 - Fantastical
 - Things，很简洁的备忘 Todo 软件，正是由于太简单了，反而能够让你更加聚焦使用。
 - Vitamin-R 3 番茄计划定制工作任务
@@ -361,8 +361,8 @@ draft: false
 
 ## 磁盘清理
 
-+ [Pearcleaner](https://itsalin.com/appInfo/?id=pearcleaner) 开源的 Mac 软件卸载工具 
-+ [PrettyClean](https://www.prettyclean.cc/) macOS 最佳磁盘清理工具 
++ [Pearcleaner](https://itsalin.com/appInfo/?id=pearcleaner) 开源的 Mac 软件卸载工具
++ [PrettyClean](https://www.prettyclean.cc/) macOS 最佳磁盘清理工具
 + [OmniDiskSweeper](http://newping.cn/322) 硬盘空间扫描应用, 帮助mac减肥.
 + [AppCleaner](http://freemacsoft.net/appcleaner/) mac应用卸载工具, 结合 [`AppCleaner`](https://github.com/Louiszhai/tool/blob/master/workflow/AppCleaner.alfredworkflow?raw=true) 的workflow, 使用效果更佳.
 + CleanMyMac X
@@ -411,13 +411,21 @@ rustup install stable
 
 - Warp - 有AI功能的终端，开箱即用。缺点是需要登录。`brew install warp`
 
-> 配合trzsz-ssh （安装命令 `brew install trzsz-ssh`）可以完美使用lrzsz进行文件传输，安装好以后需要执行下面的命令
+> 配合trzsz-ssh （安装命令 `brew install trzsz-ssh`）可以完美使用lrzsz进行文件传输，你可以创建一个命令的alias `alias ssh=tssh`,但是这个会导致以前ssh的很多功能用不了，建议创建一个函数。
 >
 > ```bash
-> sudo ln -sv $(which tssh) /usr/local/bin/ssh
+> function i_need_szrz(){
+>  # check tssh is installed
+>  if ! command -v tssh &> /dev/null; then
+>      echo "tssh is not installed"
+>      return 1
+>  fi
+>  aliase ssh=tssh
+>  echo "tssh setup done."
+> }
 > ```
 >
-> 当然，你也可以创建一个命令的alias `alias ssh=tssh`，效果一样。
+> 这样在要使用的时候临时切换下即可。
 >
 > 然后在`~/.ssh/config`加入下面的配置
 >
@@ -693,8 +701,3 @@ killall Finder
 - https://44maker.github.io/wiki/Mac/index.html#start
 
 - https://sumingyd.github.io/OpenCore-Post-Install/
-
-  
-  
-  
-

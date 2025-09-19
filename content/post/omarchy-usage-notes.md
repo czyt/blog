@@ -28,7 +28,7 @@ monitor=,preferred,auto,auto
 
 ### 中文输入法
 omarchy自带输入法，默认为fcitx5，可以使用fcitx5-config进行配置。
-以薄雾输入法为例,需要安装基本的输入法框架
+以雾凇拼音为例,需要安装基本的输入法框架
 ```bash
 paru -S fcitx5 fcitx5-configtool fcitx5-chinese-addons fcitx5-qt fcitx5-gtk  fcitx5-rime
 ```
@@ -36,7 +36,7 @@ paru -S fcitx5 fcitx5-configtool fcitx5-chinese-addons fcitx5-qt fcitx5-gtk  fci
 ```bash
 paru -S rime-ice-git
 ```
-并以补丁方式启用薄雾输入法，具体方法是在 `mkdir -p $HOME/.local/share/fcitx5/rime/`后，在该文件夹下创建`default.custom.yaml`文件，输入下面的内容
+并以补丁方式启用雾凇拼音，具体方法是在 `mkdir -p $HOME/.local/share/fcitx5/rime/`后，在该文件夹下创建`default.custom.yaml`文件，输入下面的内容
 ```yaml
 patch:
   # 仅使用「雾凇拼音」的默认配置，配置此行即可

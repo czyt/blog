@@ -249,3 +249,7 @@ vimcmd_visual_symbol = '[](bold fg:color_yellow)'
 ████████▀   ▀██████▀  ████████▀    ██████████   ███    ███      ████████▀   ▀████████▀  ▀█████▀     ▄████▀
                                                ███    ███
 ```
+貌似可以通过连接快速生成
+```
+https://patorjk.com/software/taag/?p=display&f=Delta%20Corps%20Priest%201&t=coder%20czyt&x=none
+```

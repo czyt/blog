@@ -70,9 +70,12 @@ relay-server = 'IPADDRESS'
 api-server = 'https://IPADDRESS'
 custom-rendezvous-server = 'rustdesk.xxxx.tech'
 verification-method = 'use-permanent-password'
+# 只需要密码进行
+approve-mode=password
+default-connect-password=abcd1234
 ```
+> 完整文档参考 [approve-mode](https://rustdesk.com/docs/en/self-host/client-configuration/advanced-settings/#approve-mode)
 
 这样可以结合命令行参数和配置文件进行rustdesk的自动化配置，然后通过`--import-config`导入配置。对于key配置项，需要服务器也开启key认证。
 
 可以通过`rustdesk://connection/new/{{agent.rustdeskid}}?password={{agent.rustdeskpwd}}`这样的私有协议在web上进行rustdesk的唤起连接。
-

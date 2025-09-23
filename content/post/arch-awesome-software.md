@@ -2071,6 +2071,11 @@ Android屏幕共享[Scrcpy](https://github.com/Genymobile/scrcpy) 安装 `paru -
 >User git
 >```
 >
+>也key创建一个alias，来方便调用
+>
+>``` bash
+>alias update_github_hosts="sudo sh -c 'sed -i \"/# GitHub520 Host Start/Q\" /etc/hosts && curl https://raw.hellogithub.com/hosts >> /etc/hosts'"
+>```
 
  Rstudio `paru -S rstudio-desktop-bin`
 

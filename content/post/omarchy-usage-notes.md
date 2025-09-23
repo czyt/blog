@@ -262,11 +262,8 @@ paru -S clipse-bin
 然后打开hyperland的配置文件，添加下面的行
 ```
 exec-once = clipse -listen # run listener on startup
-
-windowrulev2 = float,class:(clipse) # ensure you have a floating window class set if you want this behavior
-windowrulev2 = size 622 652,class:(clipse) # set the size of the window as necessary
 ```
 然后再到快捷键配置里面加上下面的内容
 ```
-bindd = SUPER, V, Clipse, exec, $terminal --class clipse -e 'clipse'
+bindd = SUPER, V, Clipse, exec, $terminal -e 'clipse'
 ```

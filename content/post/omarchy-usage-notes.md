@@ -7,6 +7,10 @@ author: "czyt"
 ---
 omarchy是DHH发布的一款Arch内核的Linux发行版。最近安装了下，稍作记录
 
+## 特色功能
+### 命令行
+ - 可以使用 `eza`替换`ls`
+
 ## 快捷键
 我常用到的几个
 - `super` + `space` 唤起程序启动菜单
@@ -17,6 +21,7 @@ omarchy是DHH发布的一款Arch内核的Linux发行版。最近安装了下，�
 - `super`+ `1/2/3/4/5/6/7/8/9` 切换到工作区
 
 更多 omarchy 的快捷键，请参考 https://learn.omacom.io/2/the-omarchy-manual/53/hotkeys
+
 
 ## 遇见的坑
 

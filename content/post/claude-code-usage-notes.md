@@ -13,7 +13,7 @@ author: "czyt"
 ## 安装
 
 > 你需要有nodejs这样的环境，bun没进行测试.需要安装npm或者pnpm包管理器
-> 
+>
 
 ### 安装 Claude Code
 
@@ -153,9 +153,9 @@ validate_api_key() {
 test_api_connection() {
     local base_url="$1"
     local api_key="$2"
-    
+
     print_info "Testing API connection..."
-    
+
     # Test a simple request to the API
     local response
     response=$(curl -s -w "%{http_code}" -o /tmp/claude_test_response \
@@ -163,7 +163,7 @@ test_api_connection() {
         -H "Content-Type: application/json" \
         -H "X-API-Key: $api_key" \
         2>/dev/null || echo "000")
-    
+
     if [ "$response" = "200" ]; then
         local balance
         balance=$(cat /tmp/claude_test_response | jq -r '.balance' 2>/dev/null || echo "unknown")
@@ -189,7 +189,7 @@ test_api_connection() {
 create_settings() {
     local base_url="$1"
     local api_key="$2"
-    
+
     local settings_json
     settings_json=$(cat <<EOF
 {
@@ -226,13 +226,13 @@ create_settings() {
 }
 EOF
     )
-    
+
     # Validate JSON
     if ! echo "$settings_json" | jq . > /dev/null 2>&1; then
         print_error "Generated settings JSON is invalid"
         return 1
     fi
-    
+
     # Write settings file
     echo "$settings_json" > "$CLAUDE_SETTINGS_FILE"
     print_success "Claude Code settings written to: $CLAUDE_SETTINGS_FILE"
@@ -255,16 +255,16 @@ main() {
     print_info "Claude Code Configuration Script for YesCode"
     echo "======================================================="
     echo
-    
+
     # Check dependencies
     check_jq
-    
+
     # Parse command line arguments
     local base_url=""
     local api_key=""
     local test_only=false
     local show_settings=false
-    
+
     while [[ $# -gt 0 ]]; do
         case $1 in
             -u|--url)
@@ -311,24 +311,24 @@ EOF
                 ;;
         esac
     done
-    
+
     # Show settings and exit if requested
     if [ "$show_settings" = true ]; then
         display_settings
         exit 0
     fi
-    
+
     # Interactive mode if no arguments provided
     if [ -z "$base_url" ] && [ -z "$api_key" ]; then
         print_info "Interactive setup mode"
         echo
-        
+
         # Get base URL
         read -p "Enter YesCode URL [$DEFAULT_BASE_URL]: " base_url
         if [ -z "$base_url" ]; then
             base_url="$DEFAULT_BASE_URL"
         fi
-        
+
         # Get API key
         while [ -z "$api_key" ]; do
             read -p "Enter your API key: " api_key
@@ -339,33 +339,33 @@ EOF
             fi
         done
     fi
-    
+
     # Validate inputs
     if [ -z "$base_url" ] || [ -z "$api_key" ]; then
         print_error "Both URL and API key are required"
         print_info "Use --help for usage information"
         exit 1
     fi
-    
+
     # Validate API key
     if ! validate_api_key "$api_key"; then
         exit 1
     fi
-    
+
     # Remove trailing slash from URL
     base_url="${base_url%/}"
-    
+
     print_info "Configuration:"
     print_info "  Base URL: $base_url"
     print_info "  API Key: ${api_key:0:8}...${api_key: -4}"
     echo
-    
+
     # Test API connection
     if ! test_api_connection "$base_url" "$api_key"; then
         if [ "$test_only" = true ]; then
             exit 1
         fi
-        
+
         read -p "API test failed. Continue anyway? (y/N): " -n 1 -r
         echo
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -373,19 +373,19 @@ EOF
             exit 1
         fi
     fi
-    
+
     # Exit if test only
     if [ "$test_only" = true ]; then
         print_success "API test completed successfully"
         exit 0
     fi
-    
+
     # Create settings directory
     create_settings_dir
-    
+
     # Backup existing settings
     backup_settings
-    
+
     # Create new settings
     if create_settings "$base_url" "$api_key"; then
         echo
@@ -396,7 +396,7 @@ EOF
         print_info "  claude --version"
         print_info ""
         print_info "Configuration file location: $CLAUDE_SETTINGS_FILE"
-        
+
         if [ -f "$CLAUDE_SETTINGS_FILE" ]; then
             echo
             print_info "Current settings:"
@@ -600,12 +600,12 @@ qwen --version
 > const os = require("os");
 > const path = require("path");
 > const fs = require("fs/promises");
-> 
+>
 > const OAUTH_FILE = path.join(os.homedir(), ".qwen", "oauth_creds.json");
-> 
+>
 > class QwenCLITransformer {
 >   name = "qwen-cli";
-> 
+>
 >   async transformRequestIn(request, provider) {
 >     if (!this.oauth_creds) {
 >       await this.getOauthCreds();
@@ -628,7 +628,7 @@ qwen --version
 >       },
 >     };
 >   }
-> 
+>
 >   refreshToken(refresh_token) {
 >     const urlencoded = new URLSearchParams();
 >     urlencoded.append("client_id", "f0304373b74a44d2b584a3fb70ca9e56");
@@ -651,7 +651,7 @@ qwen --version
 >         await fs.writeFile(OAUTH_FILE, JSON.stringify(data, null, 2));
 >       });
 >   }
-> 
+>
 >   async getOauthCreds() {
 >     try {
 >       const data = await fs.readFile(OAUTH_FILE);
@@ -659,11 +659,11 @@ qwen --version
 >     } catch (e) {}
 >   }
 > }
-> 
+>
 > module.exports = QwenCLITransformer;
 > ```
 >
-> 
+>
 
 #### zai
 
@@ -873,6 +873,10 @@ DeepWiki
 ```bash
 claude mcp add  mcp-deepwiki -- npx -y mcp-deepwiki@latest
 ```
+Chrome DevTools
+```bash
+claude mcp add  mcp-deepwiki -- npx -y chrome-devtools-mcp@latest
+```
 
 ## 国内厂商的Calude Code配置
 
@@ -907,15 +911,15 @@ claude
 
 > 转自x [原文链接](https://x.com/dngzsn37461/status/1951204841482756170)
 
-+ `claude-code --context-aware analyze`：项目上下文分析深入10倍！   
-+  `Ctrl+Shift+A` + `claude explain`：瞬间解析代码+性能风险！ 
++ `claude-code --context-aware analyze`：项目上下文分析深入10倍！
++  `Ctrl+Shift+A` + `claude explain`：瞬间解析代码+性能风险！
 + `CLAUDE_DEBUG_MODE=true`：查看Claude的思考与决策逻辑！
 + `claude-code refactor --pattern="legacy/*"`：一键现代化旧代码库！
 +  `.claude-ignore`：自动清理无用依赖，项目体积减30%！
 +  `claude-code profile --deep-analysis`：发现隐藏性能瓶颈！
 + `.claude-config.json`：统一团队代码风格，智能优化建议！
 + `claude-code sync --workspace-mode`：多项目API自动同步！
-+  `// @claude`：注释生成中间件或优化数据库查询！   
++  `// @claude`：注释生成中间件或优化数据库查询！
 + `claude-code debug --trace-execution`：定位Bug+完整推理过程！
 
 以及下面的这些仓库
@@ -939,5 +943,5 @@ claude
 
 + 腾讯codebuddy-code
   安装 `pnpm install -g @tencent-ai/codebuddy-code`
-  
+
 +  [Claude Code StatusLine](https://github.com/Haleclipse/CCometixLine) 安装 `pnpm install -g @cometix/ccline`

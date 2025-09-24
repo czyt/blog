@@ -51,7 +51,7 @@ api server是高级版的功能，但是我们可以通过自建api server实现
 #### RustDesk 配置文件
 
 RustDesk的配置文件，windows为`"%appdata%\RustDesk\config\RustDesk2.toml"`linux则为`~/.config/rustdesk/RustDesk2.toml`,下面是一个完整的配置文件示例：
-
+> 新版貌似会读取登录用户的目录下的，老的版本是修改root用户目录下的文件
 ```toml
 rendezvous_server = 'rustdesk.xxxx.tech:21116'
 nat_type = 1
@@ -66,7 +66,7 @@ direct-server = 'Y'
 allow-auto-disconnect = 'Y'
 stop-service = 'Y'
 key = 'KEY'
-relay-server = 'IPADDRESS'
+relay-server = 'rustdesk.xxxx.tech'
 api-server = 'https://IPADDRESS'
 custom-rendezvous-server = 'rustdesk.xxxx.tech'
 verification-method = 'use-permanent-password'

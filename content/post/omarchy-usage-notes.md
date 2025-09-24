@@ -259,6 +259,69 @@ vimcmd_visual_symbol = '[](bold fg:color_yellow)'
 https://patorjk.com/software/taag/?p=display&f=Delta%20Corps%20Priest%201&t=coder%20czyt&x=none
 ```
 
+### Terminal和文件管理器的集成
+omarchy使用的是Nautilus文件管理器，
+#### warp terminal
+我日常使用warp terminal比较多，所以这里提供warp terminal的集成方式。
+先创建Nautilus 脚本文件
+```bash
+mkdir -p ~/.local/share/nautilus/scripts
+touch ~/.local/share/nautilus/scripts/open-in-warp.sh
+```
+然后编辑脚本文件
+```bash
+#!/bin/bash
+# Open current directory in Warp Terminal
+
+# 获取当前目录路径
+if [ -n "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" ]; then
+    # 如果选中了文件，获取第一个选中文件所在的目录
+    SELECTED_PATH=$(echo "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" | head -n1)
+    if [ -d "$SELECTED_PATH" ]; then
+        # 如果选中的是目录，直接使用
+        CURRENT_DIR="$SELECTED_PATH"
+    else
+        # 如果选中的是文件，获取其父目录
+        CURRENT_DIR=$(dirname "$SELECTED_PATH")
+    fi
+elif [ -n "$NAUTILUS_SCRIPT_CURRENT_URI" ]; then
+    # 使用当前浏览的目录
+    CURRENT_DIR="$NAUTILUS_SCRIPT_CURRENT_URI"
+    # 移除 file:// 前缀并进行 URL 解码
+    CURRENT_DIR=${CURRENT_DIR#file://}
+    CURRENT_DIR=$(python3 -c "import urllib.parse; print(urllib.parse.unquote('$CURRENT_DIR'))" 2>/dev/null)
+else
+    # 备用方案：使用 pwd
+    CURRENT_DIR=$(pwd)
+fi
+
+# 确保路径存在且不为空
+if [ -z "$CURRENT_DIR" ] || [ ! -d "$CURRENT_DIR" ]; then
+    CURRENT_DIR=$(pwd)
+fi
+
+# 调试输出（可选，用于排查问题）
+# echo "Current directory: $CURRENT_DIR" > /tmp/nautilus-warp-debug.log
+
+# 启动 Warp Terminal
+warp-terminal "$CURRENT_DIR" 2>/dev/null || xdg-open "warp://action/new_tab?path=$CURRENT_DIR"
+```
+#### Ghostty
+创建文件 `~/.local/share/nautilus/scripts/open-in-ghostty.sh`
+```bash
+#!/bin/bash
+# Open current directory in Ghostty Terminal
+
+# 获取当前目录
+if [ -n "$NAUTILUS_SCRIPT_CURRENT_URI" ]; then
+    CURRENT_DIR=$(echo "$NAUTILUS_SCRIPT_CURRENT_URI" | sed 's|file://||' | python3 -c "import sys, urllib.parse; print(urllib.parse.unquote(sys.stdin.read().strip()))")
+else
+    CURRENT_DIR="$PWD"
+fi
+
+# 启动 Ghostty 并切换到当前目录
+ghostty --working-directory="$CURRENT_DIR" &
+```
 ### 剪切板
 我这里使用了`clipse-bin`这个软件，先安装
 ``` bash

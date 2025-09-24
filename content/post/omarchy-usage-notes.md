@@ -263,6 +263,10 @@ https://patorjk.com/software/taag/?p=display&f=Delta%20Corps%20Priest%201&t=code
 omarchy使用的是Nautilus文件管理器，
 #### warp terminal
 我日常使用warp terminal比较多，所以这里提供warp terminal的集成方式。
+> 替换默认的`super`+`enter` 快捷键打开Warp terminal
+> ` bindd = SUPER, return, Warp Terminal, exec, uwsm app -- xdg-open warp://action/new_tab?path="$(omarchy-cmd-terminal-cwd)"
+`
+>
 先创建Nautilus 脚本文件
 ```bash
 mkdir -p ~/.local/share/nautilus/scripts

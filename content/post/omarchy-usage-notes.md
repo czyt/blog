@@ -340,6 +340,7 @@ exec-once = clipse -listen # run listener on startup
 bindd = SUPER, V, Clipse, exec, $terminal -e 'clipse'
 ```
 ### 天气插件
+#### shell版本
 网上找了一圈，没找到好用的waybar的天气插件，于是让ai写了一个，创建
 `~/.config/waybar/scripts/weather.sh`，写入下面的内容
 > apikey需要到 [https://openweathermap.org/api](https://openweathermap.org/api)去申请,然后替换下面脚本的apikey
@@ -551,4 +552,40 @@ main
   "custom/weather",
   .......
 ],
+```
+#### wttrbar
+使用wttrbar也key实现类似的功能，需要先安装 `wttrbar`这个包，使用命令安装
+``` bash
+paru -S wttrbar
+```
+在配置中添加
+```json
+"custom/weather": {
+    "format": "{}°",
+    "tooltip": true,
+    "interval": 3600,
+    "exec": "wttrbar",
+    "return-type": "json"
+},
+```
+参数说明
+```
+--ampm - display time in AM/PM format
+--location STRING - pass a specific location to wttr.in
+--main-indicator - decide which current_conditions key will be shown on waybar. defaults to temp_C
+--date-format - defaults to %Y-%m-%d, formats the date next to the days. see reference
+--nerd - use nerd font symbols instead of emojis
+--hide-conditions - show a shorter descrpition next to each hour, like 7° Mist instead of 7° Mist, Overcast 81%, Sunshine 17%, Frost 15%
+--fahrenheit - use fahrenheit instead of celsius
+--mph - use mph instead of km/h for wind speed
+--custom-indicator STRING - optional expression that will be shown instead of main indicator. current_conditions and nearest_area keys surrounded by {} can be used. For example, "{ICON} {FeelsLikeC} ({areaName})" will be transformed to "text":"🌧️ -4 (Amsterdam)" in the output
+--lang LANG - set language (currently en, de, pl, tr, fr, ru, zh, be, es, pt, it, ja, uk, sv; submit a PR to add yours)
+--observation-time - show the time the current weather conditions were measured
+e.g. wttrbar --date-format "%m/%d" --location Paris --hide-conditions
+```
+以及相关的样式
+``` css
+#custom-weather.sunny {
+  background-color: yellow;
+}
 ```

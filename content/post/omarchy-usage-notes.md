@@ -71,7 +71,7 @@ patch:
       - { when: paging, accept: comma, send: Page_Up }
       - { when: has_menu, accept: period, send: Page_Down }
 ```
-添加输入法的时候查找`rime`即可。其他输入法，比如 [白霜](https://github.com/gaboolic/rime-frost)操作应该类似。
+添加输入法的时候查找`Rime`即可。其他输入法，比如 [白霜](https://github.com/gaboolic/rime-frost)操作应该类似。
 
 ### starship美化
 omarchy集成了startship，修改配置文件 `~/.config/starship.toml` 为下面这个[gruvbox-rainbow主题](https://github.com/fang2hou/starship-gruvbox-rainbow)

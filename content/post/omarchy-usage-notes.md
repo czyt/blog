@@ -554,7 +554,7 @@ main
 ],
 ```
 #### wttrbar
-使用wttrbar也key实现类似的功能，需要先安装 `wttrbar`这个包，使用命令安装
+使用wttrbar也可以实现类似的功能，需要先安装 `wttrbar`这个包，使用命令安装
 ``` bash
 paru -S wttrbar
 ```
@@ -564,7 +564,7 @@ paru -S wttrbar
     "format": "{}°",
     "tooltip": true,
     "interval": 3600,
-    "exec": "wttrbar",
+    "exec": "wttrbar --lang zh",
     "return-type": "json"
 },
 ```
@@ -583,7 +583,16 @@ paru -S wttrbar
 --observation-time - show the time the current weather conditions were measured
 e.g. wttrbar --date-format "%m/%d" --location Paris --hide-conditions
 ```
-以及相关的样式
+放在waybar的中间，显示效果不错
+``` json
+"modules-center": [
+    "custom/weather",
+    "clock",
+    "custom/update",
+    "custom/screenrecording-indicator",
+  ],
+```
+可以调整相关的样式
 ``` css
 #custom-weather.sunny {
   background-color: yellow;

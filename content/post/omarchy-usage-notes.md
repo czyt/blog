@@ -339,3 +339,216 @@ exec-once = clipse -listen # run listener on startup
 ```
 bindd = SUPER, V, Clipse, exec, $terminal -e 'clipse'
 ```
+### 天气插件
+网上找了一圈，没找到好用的waybar的天气插件，于是让ai写了一个，创建
+`~/.config/waybar/scripts/weather.sh`，写入下面的内容
+> apikey需要到 [https://openweathermap.org/api](https://openweathermap.org/api)去申请,然后替换下面脚本的apikey
+>
+
+```bash
+#!/bin/bash
+# 配置
+API_KEY="${OPENWEATHER_API_KEY:-<你的apikey>}"
+CITY="${CITY:-Chengdu}"
+UNITS="${UNITS:-metric}"
+LANG="${LANG:-zh_cn}"
+CACHE_FILE="/tmp/waybar_weather_cache.json"
+
+# 检查依赖
+if ! command -v jq &> /dev/null; then
+    printf '{"text":"❌ jq missing","tooltip":"jq is not installed"}\n'
+    exit 0
+fi
+
+if ! command -v curl &> /dev/null; then
+    printf '{"text":"❌ curl missing","tooltip":"curl is not installed"}\n'
+    exit 0
+fi
+
+# 检查API密钥
+if [[ -z "$API_KEY" ]]; then
+    printf '{"text":"❌ No API Key","tooltip":"Please set OPENWEATHER_API_KEY"}\n'
+    exit 0
+fi
+
+# 获取天气数据
+fetch_weather_data() {
+    local max_retries=3
+    local retry_delay=2
+    local attempt=1
+
+    while [[ $attempt -le $max_retries ]]; do
+        local weather_data=$(curl -s --connect-timeout 5 --max-time 15 \
+            "https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=${UNITS}&lang=${LANG}")
+        local curl_exit_code=$?
+
+        if [[ $curl_exit_code -eq 0 ]] && [[ -n "$weather_data" ]]; then
+            local api_error=$(echo "$weather_data" | jq -r '.cod // empty' 2>/dev/null)
+            if [[ "$api_error" == "200" ]]; then
+                echo "$weather_data"
+                return 0
+            fi
+        fi
+
+        if [[ $attempt -lt $max_retries ]]; then
+            sleep $retry_delay
+            retry_delay=$((retry_delay * 2))
+        fi
+
+        attempt=$((attempt + 1))
+    done
+
+    return 1
+}
+
+# 解析天气数据
+parse_weather_data() {
+    local weather_data="$1"
+
+    # 解析数据
+    local temp=$(echo "$weather_data" | jq -r '.main.temp | round')
+    local feels_like=$(echo "$weather_data" | jq -r '.main.feels_like | round')
+    local temp_min=$(echo "$weather_data" | jq -r '.main.temp_min | round')
+    local temp_max=$(echo "$weather_data" | jq -r '.main.temp_max | round')
+    local humidity=$(echo "$weather_data" | jq -r '.main.humidity')
+    local description=$(echo "$weather_data" | jq -r '.weather[0].description')
+    local icon_code=$(echo "$weather_data" | jq -r '.weather[0].icon')
+    local wind_speed=$(echo "$weather_data" | jq -r '.wind.speed')
+    local visibility=$(echo "$weather_data" | jq -r '.visibility // 0 | . / 1000 | . * 10 | round / 10')
+
+    # 图标和class映射
+    local icon weather_class
+    case "$icon_code" in
+        "01d") icon="☀️"; weather_class="sunnyDay" ;;
+        "01n") icon="🌙"; weather_class="clearNight" ;;
+        "02d") icon="⛅"; weather_class="sunnyDay" ;;
+        "02n") icon="⛅"; weather_class="clearNight" ;;
+        "03d"|"04d") icon="☁️"; weather_class="cloudyFoggyDay" ;;
+        "03n"|"04n") icon="☁️"; weather_class="cloudyFoggyNight" ;;
+        "09d"|"10d") icon="🌧️"; weather_class="rainyDay" ;;
+        "09n"|"10n") icon="🌧️"; weather_class="rainyNight" ;;
+        "11d"|"11n") icon="⛈️"; weather_class="severe" ;;
+        "13d") icon="❄️"; weather_class="snowyIcyDay" ;;
+        "13n") icon="❄️"; weather_class="snowyIcyNight" ;;
+        "50d") icon="🌫️"; weather_class="cloudyFoggyDay" ;;
+        "50n") icon="🌫️"; weather_class="cloudyFoggyNight" ;;
+        *) icon="🌤️"; weather_class="default" ;;
+    esac
+
+    # 单位符号
+    local unit wind_unit
+    case "$UNITS" in
+        "metric") unit="°C"; wind_unit="m/s" ;;
+        "imperial") unit="°F"; wind_unit="mph" ;;
+        "kelvin") unit="K"; wind_unit="m/s" ;;
+        *) unit="°C"; wind_unit="m/s" ;;
+    esac
+
+    # 构建tooltip文本
+    local tooltip_text="<span size=\"xx-large\">${temp}${unit}</span>
+<big>${icon} ${description}</big>
+<small>Feels like ${feels_like}${unit}</small>
+
+🔻 ${temp_min}${unit}  🔺 ${temp_max}${unit}
+💨 ${wind_speed} ${wind_unit}  💧 ${humidity}%
+👁 ${visibility} km"
+
+    # 使用jq安全构建JSON (紧凑格式)
+    jq -nc \
+        --arg text "${icon} ${temp}${unit}" \
+        --arg alt "$description" \
+        --arg tooltip "$tooltip_text" \
+        --arg class "$weather_class" \
+        '{text: $text, alt: $alt, tooltip: $tooltip, class: $class}'
+}
+
+# 主逻辑（简化版，移除复杂的缓存时间检查）
+main() {
+    local weather_data
+    weather_data=$(fetch_weather_data)
+
+    if [[ $? -eq 0 ]]; then
+        local output=$(parse_weather_data "$weather_data")
+        echo "$output" > "$CACHE_FILE" 2>/dev/null  # 静默保存缓存
+        printf '%s\n' "$output"
+    else
+        # 尝试读取缓存（如果存在）
+        if [[ -f "$CACHE_FILE" ]]; then
+            local cached_output=$(cat "$CACHE_FILE" 2>/dev/null)
+            if [[ -n "$cached_output" ]]; then
+                echo "$cached_output" | jq -c '.tooltip += "\n\n⚠️ Using cached data"' 2>/dev/null || echo "$cached_output"
+            else
+                printf '{"text":"❌ Offline","tooltip":"Network error, no cached data","class":"default"}\n'
+            fi
+        else
+            printf '{"text":"❌ Offline","tooltip":"Network error, no cached data","class":"default"}\n'
+        fi
+    fi
+}
+
+main
+
+```
+在 `~/.config/waybar/style.css`添加样式
+``` css
+/* 天气模块基础样式 */
+#custom-weather {
+    margin: 0 8px; /* 左右边距 8px */
+    padding: 0 6px; /* 内边距 */
+    border-radius: 4px; /* 可选：圆角 */
+    font-weight: 500;
+}
+
+/* 不同天气状况的颜色样式 */
+#custom-weather.severe {
+    color: #eb937d;
+}
+
+#custom-weather.sunnyDay {
+    color: #c2ca76;
+}
+
+#custom-weather.clearNight {
+    color: #2b2b2a;
+}
+
+#custom-weather.cloudyFoggyDay,
+#custom-weather.cloudyFoggyNight {
+    color: #c2ddda;
+}
+
+#custom-weather.rainyDay,
+#custom-weather.rainyNight {
+    color: #5aaca5;
+}
+
+#custom-weather.snowyIcyDay,
+#custom-weather.snowyIcyNight {
+    color: #d6e7e5;
+}
+
+#custom-weather.default {
+    color: #dbd9d8;
+}
+
+```
+在waybar的配置`config.jsonc`中启用
+``` json
+"custom/weather": {
+    "exec": "~/.config/waybar/scripts/weather.sh",
+    "format": "{text}",
+    "format-alt": "{alt}",
+    "return-type": "json",
+    "interval": 600,
+    "restart-interval": 300,
+    "tooltip": true,
+    "signal": 9,
+  },
+```
+配置显示位置
+```json
+"modules-right": [
+  "custom/weather",
+  .......
+],
+```

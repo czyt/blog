@@ -935,13 +935,27 @@ claude
 
 + https://github.com/charmbracelet/crush
 
++ github copilot
+安装
+``` bash
+pnpm install -g @github/copilot
+```
 + https://github.com/build-with-groq/groq-code-cli
 
-  安装 `pnpm install -g groq-code-cli@latest`
+  安装 ```bash
+  pnpm install -g groq-code-cli@latest
+  ```
 
 + https://github.com/iflow-ai/iflow-cli
 
 + 腾讯codebuddy-code
-  安装 `pnpm install -g @tencent-ai/codebuddy-code`
+  安装
+  ```bash
+  pnpm install -g @tencent-ai/codebuddy-code
+  ```
 
-+  [Claude Code StatusLine](https://github.com/Haleclipse/CCometixLine) 安装 `pnpm install -g @cometix/ccline`
++  [Claude Code StatusLine](https://github.com/Haleclipse/CCometixLine)
+安装
+```bash
+pnpm install -g @cometix/ccline
+```

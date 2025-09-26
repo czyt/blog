@@ -935,7 +935,7 @@ claude
 
 + https://github.com/charmbracelet/crush
 
-+ github copilot
++ github copilot cli
 安装
 ``` bash
 pnpm install -g @github/copilot

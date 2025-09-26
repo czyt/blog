@@ -258,7 +258,49 @@ vimcmd_visual_symbol = '[](bold fg:color_yellow)'
 ```
 https://patorjk.com/software/taag/?p=display&f=Delta%20Corps%20Priest%201&t=coder%20czyt&x=none
 ```
+### 启动logo
+omarchy的启动logo是在主题omarchy中定义的。主题的路径是 `/usr/share/plymouth/themes/omarchy`，你需要替换或者创建一个新的主题，如果是替换，则只需要替换logo.png文件,更换logo后，可以通过命令配置或切换主题,下面是相关的命令。
 
+查看当前正在使用的主题
+```bash
+plymouth-set-default-theme
+```
+该命令会直接输出当前默认的Plymouth主题名称。我这返回的信息
+```bash
+omarchy
+```
+查看系统所有可用的主题
+```bash
+plymouth-set-default-theme --list
+```
+或者更简化的
+```bash
+plymouth-set-default-theme -l
+```
+我这边返回的列表
+```bash
+bgrt
+details
+fade-in
+glow
+omarchy
+script
+solar
+spinfinity
+spinner
+text
+tribar
+```
+要设置默认的主题，我这还是选择omarchy主题
+```bash
+sudo update-alternatives --config omarchy.plymouth
+```
+应用以后，刷新Plymouth缓存：
+
+```bash
+sudo update-initramfs -u
+```
+最后重启系统，就能看到新的logo显示在开机动画里。
 ### Terminal和文件管理器的集成
 omarchy使用的是Nautilus文件管理器，
 #### warp terminal

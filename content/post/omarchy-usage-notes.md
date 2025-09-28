@@ -644,3 +644,4 @@ e.g. wttrbar --date-format "%m/%d" --location Paris --hide-conditions
 
 ## 有用的链接
  + https://github.com/catppuccin/waybar
+ + https://github.com/tahayvr/omarchist

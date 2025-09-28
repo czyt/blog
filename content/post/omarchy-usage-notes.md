@@ -298,7 +298,7 @@ sudo update-alternatives --config omarchy.plymouth
 应用以后，刷新Plymouth缓存：
 
 ```bash
-sudo update-initramfs -u
+sudo mkinitcpio -P
 ```
 最后重启系统，就能看到新的logo显示在开机动画里。
 ### Terminal和文件管理器的集成

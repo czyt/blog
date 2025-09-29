@@ -299,8 +299,14 @@ sudo update-alternatives --config omarchy.plymouth
 
 ```bash
 sudo mkinitcpio -P
+sudo  limine-update
 ```
-最后重启系统，就能看到新的logo显示在开机动画里。
+> sudo limine-update 主要用于更新引导加载器本身的程序文件如果只是修改主题、logo 或配置文件，通常不需要运行只有在以下情况才需要：
+> + 升级了 Limine 软件包
+> + 更改了引导加载器的安装位置
+> + 系统提示需要更新引导记录
+>
+>最后重启系统，就能看到新的logo显示在开机动画里。
 ### Terminal和文件管理器的集成
 omarchy使用的是Nautilus文件管理器，
 #### warp terminal

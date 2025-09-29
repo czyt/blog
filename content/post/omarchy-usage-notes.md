@@ -697,6 +697,22 @@ monitor = [端口名], [分辨率@刷新率], [位置], [缩放]
 2. 保存更改
 3. 重启 Hyprland：`Super+Esc` → `Relaunch`
 
+### 多显示器的workspace设置
+我需要外置显示器管控我的1-5号workspace，那么同样地，在monitor配置文件里面进行设置
+``` yaml
+# 指定工作区到显示器的绑定
+workspace = 1, monitor:HDMI-A-1
+workspace = 2, monitor:HDMI-A-1
+workspace = 3, monitor:HDMI-A-1
+workspace = 4, monitor:HDMI-A-1
+workspace = 5, monitor:HDMI-A-1
+workspace = 6, monitor:HDMI-A-1
+workspace = 7, monitor:HDMI-A-1
+workspace = 8, monitor:eDP-1
+workspace = 9, monitor:eDP-1
+```
+然后通过`hyprctl reload`重新加载配置或者重启 Hyprland即可。可以通过`hyprctl workspaces` 查看当前工作区状态。
+> 完全禁用笔记本屏幕 `monitor = eDP-1, disable`（以我设备为例，具体名称自行修改）
 
 ## 有用的链接
  + https://github.com/catppuccin/waybar

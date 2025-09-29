@@ -959,3 +959,10 @@ pnpm install -g @github/copilot
 ```bash
 pnpm install -g @cometix/ccline
 ```
+
+[opcode](https://github.com/winfunc/opcode)
+arch aur 安装
+```bash
+paru -S opcode-bin
+```
+> 可能需要安装依赖 `webkit2gtk-4.1`

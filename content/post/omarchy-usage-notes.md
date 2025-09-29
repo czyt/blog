@@ -304,7 +304,10 @@ sudo mkinitcpio -P
 ### Terminal和文件管理器的集成
 omarchy使用的是Nautilus文件管理器，
 #### warp terminal
-我日常使用warp terminal比较多，所以这里提供warp terminal的集成方式。
+我日常使用warp terminal比较多，所以这里提供warp terminal的集成方式。默认的是
+```bash
+bindd = SUPER, return, Terminal, exec, $terminal --working-directory="$(omarchy-cmd-terminal-cwd)"
+```
 > 替换默认的`super`+`enter` 快捷键打开Warp terminal
 > ` bindd = SUPER, return, Warp Terminal, exec, uwsm app -- xdg-open warp://action/new_tab?path="$(omarchy-cmd-terminal-cwd)"
 `

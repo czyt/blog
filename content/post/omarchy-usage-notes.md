@@ -726,3 +726,4 @@ workspace = 9, monitor:eDP-1
 ## 有用的链接
  + https://github.com/catppuccin/waybar
  + https://github.com/tahayvr/omarchist
+ + https://github.com/bjarneo/tema

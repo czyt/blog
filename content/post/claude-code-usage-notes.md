@@ -875,7 +875,7 @@ claude mcp add  mcp-deepwiki -- npx -y mcp-deepwiki@latest
 ```
 Chrome DevTools
 ```bash
-claude mcp add  mcp-deepwiki -- npx -y chrome-devtools-mcp@latest
+claude mcp add  chrome-devtools-mcp -- npx -y chrome-devtools-mcp@latest
 ```
 
 ## 国内厂商的Calude Code配置

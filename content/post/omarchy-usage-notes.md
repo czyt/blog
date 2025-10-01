@@ -38,6 +38,12 @@ monitor=,preferred,auto,auto
 
 > 我的屏幕是1920x1080分辨率的，所以看着很明显
 
+### 4K屏幕下的软件显示
+在4k的显示屏下面，wps打开的文本大小像蚊子一样，完全看不清，需要打开monitors配置，加上qt的缩放设置,打开就稍微正常了
+```
+env = QT_AUTO_SCREEN_SCALE_FACTOR,1
+env =  QT_SCALE_FACTOR,2
+```
 
 ### 不能卸载的软件
 omarchy里面可以方便地进行软件卸载，但是注意不要卸载`alacritty`,现阶段（3.0版本发布）很多脚本都依赖这个tty软件，卸载掉这个软件很多功能都会失效。

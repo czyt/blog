@@ -25,22 +25,22 @@ weight: 9
 ### 连接无线网
 
 ```bash
-iwctl 
+iwctl
 # 进入交互式命令行
 
-device list 
+device list
 # 列出无线网卡设备名，比如无线网卡看到叫 wlan0
 
-station wlan0 scan 
+station wlan0 scan
 # 扫描网络
 
-station wlan0 get-networks 
+station wlan0 get-networks
 # 列出所有 wifi 网络
 
-station wlan0 connect wifi-name 
+station wlan0 connect wifi-name
 # 进行连接，注意这里无法输入中文。回车后输入密码即可
 
-exit 
+exit
 # 连接成功后退出
 ```
 
@@ -69,9 +69,9 @@ sudo systemctl enable --now bluetooth
 ### 微码
 
 ```bash
-pacman -S intel-ucode 
+pacman -S intel-ucode
 # Intel
-pacman -S amd-ucode 
+pacman -S amd-ucode
 # AMD
 ```
 
@@ -116,7 +116,7 @@ paru -S ntfs-3g ntfs-3g-fuse
 >
 > >所有 5.15 及更新版本的[官方支持的内核](https://wiki.archlinuxcn.org/wiki/内核#官方支持的内核)都默认使用了 `CONFIG_NTFS3_FS=m` 参数，因此支持该驱动。在 5.15 版本前，NTFS 读写支持由 [NTFS-3G](https://wiki.archlinuxcn.org/wiki/NTFS-3G) FUSE 文件系统提供。或者也可以通过 [ntfs3-dkms](https://aur.archlinux.org/packages/ntfs3-dkms/)AUR 使用向后移植的 NTFS3。
 > >
-> 
+>
 > 新版本的都不需要安装上述组件.挂载失败后，可以通过`dmesg`查看失败原因，一般比较常遇到的是`sda1: volume is dirty and "force" flag is not set!`这个错误，可以通过 `ntfsfix -d /dev/sdx`进行修复就可以正常挂载了。
 
 ### 语言编码配置
@@ -236,7 +236,7 @@ paru -S adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts noto-font
 
 其他配置选项参考 [Arch wiki 简体中文本地化](https://wiki.archlinuxcn.org/wiki/%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87%E6%9C%AC%E5%9C%B0%E5%8C%96)
 
-### cinnamon 
+### cinnamon
 
 ```bash
 sudo pacman -S cinnamon gnome-terminal xorg lightdm lightdm-gtk-greeter
@@ -260,7 +260,7 @@ sudo systemctl enable --now lightdm
 Arch可以使用 reflector 来选择速度比较好的源：
 
 ```bash
-reflector -p https -c China --delay 3 --completion-percent 95 --sort score 
+reflector -p https -c China --delay 3 --completion-percent 95 --sort score
 ```
 
 > 2020 年，archlinux 安装镜像中加入了 reflector 服务，它会自己更新 mirrorlist。在特定情况下，它会误删某些有用的源信息。这里进入安装环境后的第一件事就是将其禁用。也许它是一个好用的工具，但是很明显，因为地理上造成的特殊网络环境，这项服务并不适合加入到守护进程。使用下列命令禁用：
@@ -354,7 +354,7 @@ sudo pacman-key --init && sudo pacman-key --populate
 
 可以使用[chsrc](https://github.com/RubyMetric/chsrc)来配置软件源
 
-可选安装 编译包 `paru -S base-devel` 
+可选安装 编译包 `paru -S base-devel`
 
 
 >`paru <target>` -- Interactively search and install `<target>`.
@@ -606,15 +606,15 @@ chatbox 聚合聊天工具 `paru -S chatbox-appimage`
 
 Tabby `paru -S tabby-bin`
 
-深度终端 安装 `paru -S deepin-terminal` 
+深度终端 安装 `paru -S deepin-terminal`
 
 深度终端gtk 安装 `paru -S  deepin-terminal-gtk`
 
 > 👆推荐这个，在默认程序设置默认终端为这个，就可以替代Konsle了
 
-alacritty 安装 `paru -S alacritty ` 
+alacritty 安装 `paru -S alacritty `
 
-终端渐变色工具lolcat `paru -S lolcat` 
+终端渐变色工具lolcat `paru -S lolcat`
 
 ssh设置如果只是修改客户端选项,创建`~/.ssh/config`或者修改`/etc/ssh/ssh_config`(需要root权限),文件输入下面内容：
 
@@ -642,14 +642,23 @@ ServerAliveInterval 60
 
 > 如果报错：`nc: invalid option -- X`，那么可能是系统的nc不是openbsd的nc，需要通过 `paru -S openbsd-netcat`
 
-```
+``` bash
 Host github.com
     HostName github.com
     User git
     Port 22
-    ProxyCommand nc -X 5 -x 192.168.49.1:8000 %h %p
+    ProxyCommand nc -X 5 -x localhost:10808 %h %p
+```
+github还支持ssh over https,可以写成下面这样
+``` bash
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+  User git
+  ProxyCommand nc -v -x 127.0.0.1:10808 %h %p
 ```
 
+> 如果是https的代理可以通过 `git config --global http.https://github.com.proxy socks5://127.0.0.1:10808`来设置
 其他的选项，请参考 `ssh_config`的帮助文档
 
 > **ServerAliveCountMax**
@@ -663,7 +672,7 @@ Host github.com
 
 ## 浏览器
 
-vivaldi 安装 `paru -S vivaldi vivaldi-ffmpeg-codecs` 
+vivaldi 安装 `paru -S vivaldi vivaldi-ffmpeg-codecs`
 
 microsoft Edge `paru -S microsoft-edge-stable-bin`
 
@@ -690,7 +699,7 @@ tor `paru -S tor-browser-bin `
 
 有道词典 安装 `paru -S youdao-dict`
 
-金山词霸 安装 `paru -S powerword-bin` 
+金山词霸 安装 `paru -S powerword-bin`
 
 [goldendict ](https://github.com/goldendict/goldendict)安装 `paru -S goldendict` [Mdict词库](https://mdict.org) [DictionaryByGPT4](https://github.com/Ceelog/DictionaryByGPT4) [skywind3000](https://github.com/skywind3000/ECDICT/wiki/%E7%AE%80%E6%98%8E%E8%8B%B1%E6%B1%89%E5%AD%97%E5%85%B8%E5%A2%9E%E5%BC%BA%E7%89%88) [GoldenDict++OCR](https://www.autoptr.top/gdocr/GoldenDict-OCR-Deployment/) [freemdict](https://downloads.freemdict.com/Recommend/)
 
@@ -715,13 +724,13 @@ tor `paru -S tor-browser-bin `
 
 新版LinuxQQ `paru -S linuxqq`
 
-tim `paru -S com.qq.tim.spark` 
+tim `paru -S com.qq.tim.spark`
 
 ipmsg 安装`paru -S iptux`
 
 mattermost 安装 `paru -S mattermost-desktop`
 
-slack 安装 `paru -S slack-desktop` 
+slack 安装 `paru -S slack-desktop`
 
 Discord  安装 `paru -S discord`
 
@@ -768,7 +777,7 @@ Discord  安装 `paru -S discord`
 >
 >参考 https://gist.github.com/mzpqnxow/ca4b4ae0accf2d3b275537332ccbe86e
 
-Telegram `paru -S telegram-desktop` 
+Telegram `paru -S telegram-desktop`
 
 > telegram的中文语言包
 >
@@ -783,7 +792,7 @@ Telegram `paru -S telegram-desktop`
 > * 中文(简体)-@teslacn:  t.me/setlanguage/vexzh
 > * 中文(简体)-:  t.me/setlanguage/cnsimplified
 >
-> 个性化语言包 
+> 个性化语言包
 > * 中文(简体)-@oxoao：花里胡哨: t.me/setlanguage/qingwa 🌸
 > * 中文(简体)-@oxoao：稀奇古怪: t.me/setlanguage/xiaowa 🥸
 > * 中文(简体)-@oxoao：羊村主题: t.me/setlanguage/wayang 🌴
@@ -810,7 +819,7 @@ Telegram `paru -S telegram-desktop`
 
 mattermost 安装 `paru -S mattermost` [参阅](https://wiki.archlinux.org/title/Mattermost)
 
-rocketchat-server 安装 `paru -S rocketchat-server ` 
+rocketchat-server 安装 `paru -S rocketchat-server `
 
 说明：
 
@@ -856,11 +865,11 @@ OneDive 安装 `paru -S onedrive` 或者 `paru -S onedrive-abraunegg` (GUI `paru
 
 [^坚果云窗口太小，看不到输入框。]: 可以用 `sudo pacman -S gvfs libappindicator-gtk3`
 
-DropBox 安装 `paru -S dropbox` 
+DropBox 安装 `paru -S dropbox`
 
-resilio sync 安装 ` paru -S rslsync` 
+resilio sync 安装 ` paru -S rslsync`
 
-迅雷linux版本 安装 `paru -S xunlei-bin` 
+迅雷linux版本 安装 `paru -S xunlei-bin`
 
 迅雷极速版 `paru -S deepin-wine-thunderspeed`
 
@@ -904,19 +913,19 @@ zssh 安装 `paru -S zssh` 配合lrzsz(安装命令 `paru -S lrzsz`)食用效果
 >zssh > rz                    //开始接收上面的123.txt文件；注意哦，这里只需输入rz这个命令就可以了
 >```
 
-[trzsz](https://github.com/trzsz/trzsz) 安装 `paru -S trzsz ` 
+[trzsz](https://github.com/trzsz/trzsz) 安装 `paru -S trzsz `
 
-motrix 安装 `paru -S motrix`  
+motrix 安装 `paru -S motrix`
 
 gopeed 安装 `paru -S gopeed-bin`
 
 uget 安装 `paru -S uget`
 
-Mega网盘安装 `paru -S megatools-git` 
+Mega网盘安装 `paru -S megatools-git`
 
 qbittorrent 安装  `paru -S qbittorrent`([增强版](https://github.com/c0re100/qBittorrent-Enhanced-Edition/releases) `paru -S qbittorrent-enhanced-git` [搜索插件](https://github.com/qbittorrent/search-plugins/wiki/Unofficial-search-plugins))
 
-moose 支持边下边播的BT工具 `paru -S moose ` 
+moose 支持边下边播的BT工具 `paru -S moose `
 
 youtube视频下载器 `paru -S yt-dlp `或者 `paru -S yt-dlp-git `
 
@@ -929,9 +938,9 @@ youtube视频下载器 `paru -S yt-dlp `或者 `paru -S yt-dlp-git `
 
 ## 办公软件
 
-钉钉 安装 `paru -S  dingtalk-electron ` 
+钉钉 安装 `paru -S  dingtalk-electron `
 
-企业微信 `paru -S deepin-wine-wxwork` 
+企业微信 `paru -S deepin-wine-wxwork`
 
 腾讯会议 `paru -S wemeet-bin`
 
@@ -939,30 +948,30 @@ planify todolist软件 `paru -s planify`
 
 飞书 `paru -S feishu-bin`
 
-[tailscale](https://tailscale.com) 安装 `paru -S tailscale` 
+[tailscale](https://tailscale.com) 安装 `paru -S tailscale`
 
-[达芬奇视频剪辑](http://www.blackmagicdesign.com/products/davinciresolve/) 安装 `paru -S davinci-resolve` 
+[达芬奇视频剪辑](http://www.blackmagicdesign.com/products/davinciresolve/) 安装 `paru -S davinci-resolve`
 
 audacity音频处理软件 安装 `paru -S audacity`
 
 handbrake 视频格式转换工具 `paru -S handbrake-full`
 
-[zettlr](https://www.zettlr.com) markdown编辑器 安装 `paru -S zettlr ` 
+[zettlr](https://www.zettlr.com) markdown编辑器 安装 `paru -S zettlr `
 
-[vnode](https://tamlok.github.io/vnote/zh_cn/#!index.md) markdown编辑器 安装 `paru -S vnote` 
+[vnode](https://tamlok.github.io/vnote/zh_cn/#!index.md) markdown编辑器 安装 `paru -S vnote`
 
 Wps 安装 `paru -S wps-office ttf-wps-fonts wps-office-mui-zh-cn  wps-office-mime`
 
 > + 安装wps国内版可以使用 `paru -S wps-office-cn wps-office-mui-zh-cn ttf-wps-fonts`
 > + wps方正字库  `paru -S wps-office-fonts`
 
-libreoffice 安装  `paru -S libreoffice` 
+libreoffice 安装  `paru -S libreoffice`
 
 onlyoffice 安装 `paru -S onlyoffice-bin`
 
 geogebra 几何绘图软件 `paru -S geogebra  `
 
-labplot科学绘图 `paru -S labplot ` 
+labplot科学绘图 `paru -S labplot `
 xmind-2020 安装 `paru -S xmind-2020` ([福利链接](https://mega.nz/folder/MxpkmaCZ#Il82PxQ5s9iLgLCMbMf68g))
 
 yed 安装 `paru -S yed`
@@ -973,7 +982,7 @@ drawio  安装` paru -S drawio-desktop-bin` 或者 ` paru -S drawio-desktop`
 
 ### 截图及录屏工具
 
-flameshot 截图工具 安装 `paru -S flameshot` 
+flameshot 截图工具 安装 `paru -S flameshot`
 
 Snipaste 截图工具  安装 `paru -S Snipaste  `
 
@@ -985,13 +994,13 @@ kazam录屏软件 安装 `paru -S kazam `
 
 ### 阅读工具
 
-福昕pdf阅读器 `paru -S foxitreader` 
+福昕pdf阅读器 `paru -S foxitreader`
 
 masterpdfeditor 对linux用户免费的PDF浏览及编辑器,支持实时预览 `paru -S masterpdfeditor  `
 
-Okular （[KDE上的通用文档阅读器](https://www.appinn.com/okular/)）` paru -S okular` 
+Okular （[KDE上的通用文档阅读器](https://www.appinn.com/okular/)）` paru -S okular`
 
-Foliate [简单、现代的电子书阅读器](https://www.appinn.com/foliate-for-linux/) 安装 `paru -S foliate` 
+Foliate [简单、现代的电子书阅读器](https://www.appinn.com/foliate-for-linux/) 安装 `paru -S foliate`
 
 pdf合并工具 `paru -S pdfmerger`
 
@@ -1017,19 +1026,19 @@ rustdesk `paru -S rustdesk-bin`
 
 toDesk远程工具 安装 `paru -S todesk-bin` (设置服务 `systemctl start\enable todeskd` 才能正常运行)
 
-parsec 远程工具 安装 `paru -S parsec-bin ` 
+parsec 远程工具 安装 `paru -S parsec-bin `
 realvnc-server `paru -S realvnc-vnc-server ` (安装完毕后需要注册`sudo vnclicense -add 3TH6P-DV5AE-BLHY6-PNENS-B3AQA`,启动服务 `systemctl enable vncserver-x11-serviced`)
 
 realvnc-viewer `paru -S realvnc-vnc-viewer`
 
 ### 网络代理工具
 
-[看雪安全接入](https://ksa.kanxue.com)ksa 安装 `paru -S ksa` 
+[看雪安全接入](https://ksa.kanxue.com)ksa 安装 `paru -S ksa`
 v2ray 安装 `paru -S v2ray`  （安装配置工具`paru -S qv2ray ` qv2ray 插件 `paru -S qv2ray-plugin` ，[福利订阅](https://jiang.netlify.app) 新版已经使用AppImage格式发布，下载AppImage格式即可 或者 v2rayDesktop `paru -S v2ray-desktop` ）
 
 [v2rayN](https://github.com/2dust/v2rayN) 安装 `paru -S v2rayn` 或者 `paru -S v2rayn-bin`
 
-gost 安装 `paru -S gost` 
+gost 安装 `paru -S gost`
 
 >我们一般当客户端使用，连接服务器：
 >
@@ -1067,7 +1076,7 @@ cloudflare Warp 安装 `paru -S cloudflare-warp-bin`  [基于wiregurd](https://w
 >
 >更多问题解决，请参考 [Cloudflare Troubleshooting](https://github.com/cloudflare/cloudflare-docs/blob/production/content/cloudflare-one/faq/teams-troubleshooting.md)
 
-n2n [VPN软件](https://www.meirenji.info/2018/02/03/N2N%E7%BB%84%E7%BD%91-%E5%AE%9E%E7%8E%B0%E5%AE%B6%E9%87%8C%E8%AE%BF%E4%B8%8E%E5%85%AC%E5%8F%B8%E7%BD%91%E7%BB%9C%E4%BA%92%E8%AE%BF-%E7%B2%BE%E7%BC%96%E7%89%88/) `paru -S n2n` 
+n2n [VPN软件](https://www.meirenji.info/2018/02/03/N2N%E7%BB%84%E7%BD%91-%E5%AE%9E%E7%8E%B0%E5%AE%B6%E9%87%8C%E8%AE%BF%E4%B8%8E%E5%85%AC%E5%8F%B8%E7%BD%91%E7%BB%9C%E4%BA%92%E8%AE%BF-%E7%B2%BE%E7%BC%96%E7%89%88/) `paru -S n2n`
 
 [Nyanpasu](https://github.com/LibNyanpasu/clash-nyanpasu) `paru -S clash-nyanpasu-bin`
 
@@ -1176,11 +1185,11 @@ daed  `paru -S daed` (自带 Web 操作界面的 dae)
 
 ### 笔记软件
 
-evernote 开源版本 nixnote2 安装 `paru -S nixnote2` 
+evernote 开源版本 nixnote2 安装 `paru -S nixnote2`
 
 joplin 安装 `paru -S joplin` or `paru -S joplin-desktop`
 
-onenote `paru -S p3x-onenote` 
+onenote `paru -S p3x-onenote`
 
 Zotero  `paru -S zotero-bin`
 
@@ -1189,7 +1198,7 @@ AFFiNE `paru -S affine-bin` or  `paru -S affine-latest-bin`
 ### U盘启动制作
 
 
-U盘启动制作[etcher](https://github.com/balena-io/etcher) `paru -S etcher-bin` 
+U盘启动制作[etcher](https://github.com/balena-io/etcher) `paru -S etcher-bin`
 
 [ isoimagewriter](https://aur.archlinux.org/packages/isoimagewriter) `paru -S isoimagewriter`
 
@@ -1203,7 +1212,7 @@ U盘启动制作[etcher](https://github.com/balena-io/etcher) `paru -S etcher-bi
 
 一个开源的绘图画布应用[pointless](https://github.com/kkoomen/pointless) `paru -S pointless` 或者 `paru -S pointless-bin`
 
-Screen屏幕共享软件 安装 `paru -S screen-desktop ` 
+Screen屏幕共享软件 安装 `paru -S screen-desktop `
 
  universal android debloater 安装 `paru -S universal-android-debloater`
 
@@ -1216,7 +1225,7 @@ windows11 字体 `paru -S ttf-ms-win11-auto `
 >ttf-ms-win11-auto-japanese			Microsoft Windows 11 Japanese TrueType fonts
 >ttf-ms-win11-auto-korean Microsoft Windows 11 Korean TrueType fonts
 >ttf-ms-win11-auto-sea		Microsoft Windows 11 Southeast Asian TrueType fonts
->ttf-ms-win11-auto-thai	Microsoft Windows 11 Thai TrueType fonts	
+>ttf-ms-win11-auto-thai	Microsoft Windows 11 Thai TrueType fonts
 >ttf-ms-win11-auto-zh_cn	Microsoft Windows 11 Simplified Chinese TrueType fonts
 >ttf-ms-win11-auto-zh_tw	Microsoft Windows 11 Traditional Chinese TrueType fonts
 >ttf-ms-win11-auto-other
@@ -1233,35 +1242,35 @@ windows11 字体 `paru -S ttf-ms-win11-auto `
 
 sun输入法 安装 `paru -S fcitx fcitx-im fcitx-configtool fcitx-sunpinyin fcitx-googlepinyin fcitx-cloudpinyin fcitx-libpinyin`
 
-皮肤 安装 `paru -S fcitx-skin-material` 
+皮肤 安装 `paru -S fcitx-skin-material`
 
 百度输入法 安装 `paru -S fcitx-baidupinyin` 安装完成以后记得重启下，不然输入候选框会乱码。
 
-讯飞输入法 安装 `paru -S  iflyime` 
-or `paru -S manjaro-asian-input-support-fcitx` 
+讯飞输入法 安装 `paru -S  iflyime`
+or `paru -S manjaro-asian-input-support-fcitx`
 
-KDM, GDM, LightDM 等显示管理器，请使用 ~/.xprofile 
+KDM, GDM, LightDM 等显示管理器，请使用 ~/.xprofile
 警告: 上述用户不要在~/.xinitrc中加入下述脚本，否则会造成无法登陆。(但在里头加了也没挂) 如果您用 startx 或者 Slim 启动，请使用~/.xinitrc 中加入
 
 ```bash
-export GTK_IM_MODULE=fcitx 
-export QT_IM_MODULE=fcitx 
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
 export @=fcitx
 ```
 
 如果你使用的是较新版本的GNOME，使用 Wayland 显示管理器，则请在/etc/environment中加入
 
 ```bash
-GTK_IM_MODULE=fcitx 
-QT_IM_MODULE=fcitx 
+GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
 @=fcitx
 ```
 
 安装相关字体fcitx5
 
 ```bash
-paru -S wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-code-pro-fonts  adobe-source-han-sans-cn-fonts ttf-monaco noto-fonts-emoji 
-ttf-ms-fonts ttf-sarasa-gothic noto-fonts-cjk  noto-fonts-sc 
+paru -S wqy-bitmapfont wqy-microhei wqy-zenhei adobe-source-code-pro-fonts  adobe-source-han-sans-cn-fonts ttf-monaco noto-fonts-emoji
+ttf-ms-fonts ttf-sarasa-gothic noto-fonts-cjk  noto-fonts-sc
 ```
 
 下面是一些编程字体
@@ -1285,7 +1294,7 @@ emojis字体需要安装`paru -S noto-fonts-emoji` 然后通过设置`nano ~/.co
      <family>Noto Color Emoji</family>
      <family>Noto Emoji</family>
      <family>DejaVu Sans</family>
-   </prefer> 
+   </prefer>
  </alias>
 
  <alias>
@@ -1395,7 +1404,7 @@ patch:
 详细介绍[wiki](https://wiki.archlinuxcn.org/wiki/Rime)
 
 参考官网 [传送门](https://rime.im)
-基本库 `paru -S ibus ibus-qt ibus-rime` 
+基本库 `paru -S ibus ibus-qt ibus-rime`
 在`$HOME/.bashrc`加入下面的配置内容
 
 ```json
@@ -1409,7 +1418,7 @@ ibus-daemon -d -x
 
 bus也可以使用雾凇拼音，不过目录位置在`$HOME/.config/ibus/rime/`，其他的步骤相同。
 
-[四叶草输入法](https://github.com/fkxxyz/rime-cloverpinyin) `paru -S rime-cloverpinyin` 
+[四叶草输入法](https://github.com/fkxxyz/rime-cloverpinyin) `paru -S rime-cloverpinyin`
 参考 https://wiki.archlinux.org/index.php/Fcitx
 
 #### 有用的仓库
@@ -1442,16 +1451,16 @@ switch模拟器 Ryujinx 安装 `paru -S ryujinx`
 
 ## 媒体软件
 
-网易云音乐 安装 `paru -S netease-cloud-music` 
+网易云音乐 安装 `paru -S netease-cloud-music`
 
 > 第三方网易云音乐客户端
 >
 > + [AlgerMusicPlayer](https://github.com/algerkong/AlgerMusicPlayer) 安装 `paru -S algermusicplayer-bin`
-> + `paru -S netease-cloud-music-gtk4`(推荐) 
+> + `paru -S netease-cloud-music-gtk4`(推荐)
 
 spotify 安装 `paru -S spotify`
 
-> spotify需要先导入证书再进行安装 
+> spotify需要先导入证书再进行安装
 >
 > curl -sS https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg  | gpg --import -
 
@@ -1459,9 +1468,9 @@ QQ音乐 安装 `paru -S qqmusic-bin`
 
 腾讯视频 安装 `paru -S tenvideo`
 
-全聚合影视 安装 `paru -S vst-video-bin` 
+全聚合影视 安装 `paru -S vst-video-bin`
 
-OBS推流工具 `paru -S obs-studio` 
+OBS推流工具 `paru -S obs-studio`
 
 bilibili `paru -S bilibili-bin`
 
@@ -1471,7 +1480,7 @@ smPlayer `paru -S smplayer`
 
 [yt-dlp](https://github.com/yt-dlp/yt-dlp) youtube 下载软件 `paru -S yt-dlp`
 
-[macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `paru -S 
+[macast-git](https://github.com/xfangfang/Macast)跨平台的 DLNA 投屏接收端 `paru -S
 macast-git`(需要安装相关pip包 `pip install -U urllib3 requests` `pip install requests[socks]`)
 
 [fooyin](https://github.com/fooyin/fooyin) Linux 的 Foobar2000`paru -S fooyin-bin`或者 `paru -S fooyin`
@@ -1506,15 +1515,15 @@ sudo pacman -S love
 > XFCE桌面下安装plank后可能会出现屏幕下方会有一条阴影直线，十分影响视觉。解决方案是在开始菜单的设置管理器(Settings Manager)-窗口管理器微调(Window Manager Tweaks)-合成器(Compositor)中去掉dock阴影(Show shadows under dock windows)前面的勾。
 
 如果是KDE桌面
-`paru -S latte-dock` 
+`paru -S latte-dock`
 
 KDE
 
-（KDE推荐安装部件([下载网站](https://store.kde.org/),最好安装ocs-url `paru -S ocs-url`) 
+（KDE推荐安装部件([下载网站](https://store.kde.org/),最好安装ocs-url `paru -S ocs-url`)
 
 + `appication title` 或者 `Window Title Applet`
 + `全局菜单`
-+  `Launchpad plasma` 
++  `Launchpad plasma`
 + `latte Spacer`
 +  `Event calendar` (个人google三色时间配置 `'<font color="#EB4334">'hh'</font>':'<font color="#35AA53">'mm'</font>':'<font color="#4586F3">'ss'</font>'` )）
 
@@ -1524,7 +1533,7 @@ KDE whitesur主题 安装 `paru -S plasma5-themes-whitesur-git `（推荐）或�
 >
 >其他的 https://github.com/vinceliuice/WhiteSur-gtk-theme
 
-XFCE whitesur主题 
+XFCE whitesur主题
 
 + https://github.com/vinceliuice/WhiteSur-gtk-theme
 + https://github.com/paullinuxthemer/McOS-XFCE-Edition
@@ -1550,7 +1559,7 @@ variety壁纸自动换 安装 `paru -S variety`
 
 安装 `paru -S zellij`
 
-在zsh中集成 
+在zsh中集成
 
 ```bash
 echo 'eval "$(zellij setup --generate-auto-start zsh)"' >> ~/.zshrc
@@ -1740,7 +1749,7 @@ git clone https://github.com/qoomon/zsh-lazyload $ZSH_CUSTOM/plugins/zsh-lazyloa
 git clone https://github.com/skywind3000/z.lua.git $ZSH_CUSTOM/plugins/z.lua
 ```
 
-配置插件 ` vim ~/.zshrc` 
+配置插件 ` vim ~/.zshrc`
 
 ```
 plugins=(git z.lua zsh-lazyload zsh-syntax-highlighting docker docker-compose zsh-autosuggestions zsh-completions)
@@ -1748,7 +1757,7 @@ plugins=(git z.lua zsh-lazyload zsh-syntax-highlighting docker docker-compose zs
 
 zsh在使用nohup执行任务的时候，可能会出现session注销后，nohup自动被终止的情况，若要保持运行，请执行`setopt NO_HUP` 参考[Zsh](http://zsh.sourceforge.net/Guide/zshguide02.html)文档
 
-如果您想给您的zsh支持上ai功能，还可以安装插件[zsh_codex](https://github.com/tom-doerr/zsh_codex) 
+如果您想给您的zsh支持上ai功能，还可以安装插件[zsh_codex](https://github.com/tom-doerr/zsh_codex)
 
 Get AI-powered command suggestions  [smart-suggestion](https://github.com/yetone/smart-suggestion)
 
@@ -1860,11 +1869,11 @@ echo 'eval "$(atuin init zsh)"' >> ~/.zshrc
 
 ### fish
 
-`paru -S fish` 
-安装oh-my-fish 
+`paru -S fish`
+安装oh-my-fish
 
 ```bash
-curl -L https://get.oh-my.fish | fish 
+curl -L https://get.oh-my.fish | fish
 ```
 
   推荐插件
@@ -1903,7 +1912,7 @@ fish_path=(status fish-path) exec $fish_path -C "emit _tide_init_install"
 
 ### nushell
 
-安装 `paru -S nushell` 
+安装 `paru -S nushell`
 
 ### 其他终端工具
 
@@ -1979,7 +1988,7 @@ ghostty `paru -S ghostty`
 >[Desktop Action OpenInWarp]
 >Name=Open in Warp Terminal
 >Icon=dev.warp.Warp
->Exec=xdg-open "warp://action/new_tab?path=%u" 
+>Exec=xdg-open "warp://action/new_tab?path=%u"
 >```
 >然后 `chmod +x open-in-warp.desktop`即可
 
@@ -2014,7 +2023,7 @@ rust 安装 `paru -S rustup`
 
 flutter 安装 `paru -S flutter`
 
-.net core 安装 `paru -S dotnet-sdk-bin` 
+.net core 安装 `paru -S dotnet-sdk-bin`
 
 仓颉 安装 `paru -S cangjie-beta-bin`
 
@@ -2097,23 +2106,23 @@ github Desktop `paru -S github-desktop-bin`
 
 代码生成图片[silicon](https://github.com/Aloxaf/silicon) `paru -S --needed pkgconf freetype2 fontconfig libxcb xclip silicon `
 
-redis管理工具 `paru -S redis-desktop-manager` 
+redis管理工具 `paru -S redis-desktop-manager`
 
-github-cli 安装 `paru -S github-cli-bin` 
+github-cli 安装 `paru -S github-cli-bin`
 
 minicom串口工具 安装 `paru -S minicom` (设置参数 `sudo minicom -s` )
 
 nRF Connect for Desktop `paru -S nrfconnect-appimage`
 
-串口助手 安装 `paru -S serialtool` 
+串口助手 安装 `paru -S serialtool`
 
 [serial-studio](https://github.com/Serial-Studio/Serial-Studio/blob/master/doc/README_ZH.md) 串行数据可视化工具 安装 `paru -S serial-studio-git`
 
 nodejs 安装 ` paru -S nodejs npm` （安装cnpm `npm install -g cnpm --registry=https://registry.npm.taobao.org  ` ）
 
-跨平台编译工具链 安装 `paru -S arm-linux-gnueabihf-g++ arm-linux-gnueabihf-gcc` 
+跨平台编译工具链 安装 `paru -S arm-linux-gnueabihf-g++ arm-linux-gnueabihf-gcc`
 
-c/c++开发  安装 `paru -S make cmake gdb gcc` 
+c/c++开发  安装 `paru -S make cmake gdb gcc`
 
 jetbrains toolbox `paru -S`jetbrains-toolbox
 
@@ -2137,9 +2146,9 @@ studio 3T (mongoDB开发工具) `paru -S studio-3t`
 
 mongodb compass `paru -S mongodb-compass`
 
-Android Studio 安装 `paru -S android-studio` (安卓SDK `paru -S android-sdk`) 
+Android Studio 安装 `paru -S android-studio` (安卓SDK `paru -S android-sdk`)
 
-clion 安装 `paru -S clion clion-jre` 
+clion 安装 `paru -S clion clion-jre`
 
 > 可选下面这些包
 >
@@ -2147,11 +2156,11 @@ clion 安装 `paru -S clion clion-jre`
 > + clion-gdb	(JetBrains packaged GNU Debugger for CLion)
 > + clion-lldb	(JetBrains packaged LLVM Debugger for CLion)
 
-pycharm 安装 `paru -S pycharm-professional` 
+pycharm 安装 `paru -S pycharm-professional`
 
-rider安装 `paru -S rider` 
+rider安装 `paru -S rider`
 
-webstorm 安装 `paru -S webstorm webstorm-jre` 
+webstorm 安装 `paru -S webstorm webstorm-jre`
 
 vmware 安装 `paru -S vmware-workstation`
 
@@ -2189,15 +2198,15 @@ kitty 漂亮的终端 安装 `paru -S kitty-git` 或者 `paru -S kitty `
 
 [onefetch](https://github.com/o2sh/onefetch)  一个命令行工具，可以显示 Git 仓库的详细统计信息，比如代码行数、体积、贡献者等等 `paru -S onefetch`
 
-API文档工具 zeal 安装 `paru -S zeal` 
+API文档工具 zeal 安装 `paru -S zeal`
 
 [windterm](https://github.com/kingToolbox/WindTerm) 安装 `paru -S windterm-bin `
 
-bcompare 安装 `paru -S bcompare ` 
+bcompare 安装 `paru -S bcompare `
 
 tldr 简化版文档工具 ` paru -S tldr` （rust版本 `paru -S  tealdeer ` ）
 
-vscode 安装 `paru -S visual-studio-code-bin` 
+vscode 安装 `paru -S visual-studio-code-bin`
 
 cursor 安装 `paru -S cursor-bin` 或者 `paru -S cursor-bin-patched`(自动解压appimage的版本)
 
@@ -2211,7 +2220,7 @@ windsurf 安装 `paru -S windsurf`
 
 [zed editor](https://zed.dev) 安装 `paru -S zed-editor`或者 `paru -S zed`
 
-> zed编辑器可能需要你自己安装vulkan，参考[wiki](https://wiki.archlinux.org/title/Vulkan) 
+> zed编辑器可能需要你自己安装vulkan，参考[wiki](https://wiki.archlinux.org/title/Vulkan)
 >
 > - intel`paru  -S vulkan-intel`
 > - NVIDIA `paru -S vulkan-nouveau`
@@ -2219,7 +2228,7 @@ windsurf 安装 `paru -S windsurf`
 >
 > 我的zed配置文件 [gist](https://gist.github.com/czyt/cd01da0764a73d1d0c568f8c42987920)
 
-终端录屏幕[asciinema](https://asciinema.org/) 安装 `paru -S asciinema` 
+终端录屏幕[asciinema](https://asciinema.org/) 安装 `paru -S asciinema`
 
 [zoxide](https://github.com/ajeetdsouza/zoxide) **smarter cd command** `paru -S zoxide`
 
@@ -2235,13 +2244,13 @@ windsurf 安装 `paru -S windsurf`
 >
 > 其他可以参考 https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#installation
 
-证书生成工具 mkcert 安装 `paru -S mkcert` 
+证书生成工具 mkcert 安装 `paru -S mkcert`
 
-netcat `paru -S  --noconfirm gnu-netcat` 或者 `paru -S --noconfirm openbsd-netcat ` 
+netcat `paru -S  --noconfirm gnu-netcat` 或者 `paru -S --noconfirm openbsd-netcat `
 
-微信开发者工具 `paru -S wechat-devtool ` 
+微信开发者工具 `paru -S wechat-devtool `
 
-Platform-Tools for Google Android SDK (adb and fastboot) 安装 `paru -S android-sdk-platform-tools` 
+Platform-Tools for Google Android SDK (adb and fastboot) 安装 `paru -S android-sdk-platform-tools`
 
 neovim `paru -S neovim` (插件 [lazyvim](https://www.lazyvim.org))
 
@@ -2255,35 +2264,35 @@ neovim `paru -S neovim` (插件 [lazyvim](https://www.lazyvim.org))
 
 [sublime-text-4](https://aur.archlinux.org/packages/sublime-text-4)  `paru -S sublime-text-4 `
 
-编译链工具[xmake](http://xmake.io) 安装 `paru -S xmake` 
+编译链工具[xmake](http://xmake.io) 安装 `paru -S xmake`
 
 [goreleaser](https://goreleaser.com) 安装 `paru -S goreleaser-bin`
 
-percona-toolkit (mysql辅助分析工具) `paru -S percona-toolkit` 
+percona-toolkit (mysql辅助分析工具) `paru -S percona-toolkit`
 
 注：
 
-jetbrains系列软件，自带更新功能，但是我们一般使用非root用户进行登录，这时需要将安装目录授权给当前登录用户即可。以goland为例，只需要执行 ` chown -R $(whoami) /opt/goland ` 即可进行自动升级。 
+jetbrains系列软件，自带更新功能，但是我们一般使用非root用户进行登录，这时需要将安装目录授权给当前登录用户即可。以goland为例，只需要执行 ` chown -R $(whoami) /opt/goland ` 即可进行自动升级。
 
-strace `paru -S strace` 
+strace `paru -S strace`
 
 dtrace `paru -S dtrace-utils`  (使用[教程](https://zhuanlan.zhihu.com/p/180053751))
 
 cloudflare Argo tunnel `paru -S cloudflared` （使用[教程](https://www.blueskyxn.com/202102/4176.html)）
 
-nmon `paru -S nmon` 
+nmon `paru -S nmon`
 
 [nmap](https://nmap.org/man/zh/) `paru -S nmap`
 
 >示例:扫描局域网的22端口
 >
 >```bash
->nmap -p 22  --open 192.168.1.0/24 
+>nmap -p 22  --open 192.168.1.0/24
 >```
 
-nload `paru -S nload` 
+nload `paru -S nload`
 
-tcpflow `paru -S tcpflow` 
+tcpflow `paru -S tcpflow`
 
  pyroscope性能监测工具  `paru -S pyroscope-bin` (使用[教程](https://colobu.com/2022/01/27/pyroscope-a-continuous-profiling-platform/) [官方教程](https://pyroscope.io/docs/server-install-linux/))
 
@@ -2306,26 +2315,26 @@ charles抓包工具  `paru -S charles ` ([注册码生成](https://www.charles.r
   `openssl x509 -in charles.pem -inform PEM -out ca.crt`
 
   信任证书`sudo trust anchor ca.crt`完成。或者手动复制
-  
+
   ```bash
   cd  ~/.charles/ca
   cp charles-proxy-ssl-proxying-certificate.cer /etc/pki/ca-trust/source/anchors/
   ln -s /etc/pki/ca-trust/source/anchors/charles-proxy-ssl-proxying-certificate.cer /etc/ssl/certs/charles-proxy-ssl-proxying-certificate.cer
   update-ca-trust
   ```
-  
+
 
 ## 服务器组件
 
 ### 数据库
 
-redis `paru -S redis` 
+redis `paru -S redis`
 
 percona-Server `paru -S percona-server`
 
-postresql `paru -S postgresql` 
+postresql `paru -S postgresql`
 
-mongoDB `paru -S mongodb ` 或者 `paru -S mongodb-bin` 
+mongoDB `paru -S mongodb ` 或者 `paru -S mongodb-bin`
 
 percona-mongoDB `paru -S percona-server-mongodb-bin`  (mongosh `paru -S mongosh-bin`)
 
@@ -2339,7 +2348,7 @@ clickhouse `paru -S clickhouse` ([官方文档](https://clickhouse.com/docs/en/g
 
 screenfetch (终端打印出你的系统信息) 安装 `paru -S screenfetch`
 
-neofetch `paru -S neofetch` 
+neofetch `paru -S neofetch`
 
 > neofetch 已经停止维护，后续更新版本为hyfetch 安装命令为`paru -S hyfetch`
 
@@ -2359,17 +2368,17 @@ Stow配置管理软件 安装 `paru -S stow`
 
 snap 安装 `paru -S --noconfirm --needed snapd`
 
-figlet 字符串logo生成工具 `paru -S figlet` 
+figlet 字符串logo生成工具 `paru -S figlet`
 
 libnewt （包含[whiptail](https://whiptail.readthedocs.io/en/latest/)等实用工具 text mode windowing with slang） `paru -S libnewt `
 
-软件包降级工具 downgrade `paru -S downgrade` 
+软件包降级工具 downgrade `paru -S downgrade`
 
-thefuck输错命令更正工具 `paru -S thefuck` 
+thefuck输错命令更正工具 `paru -S thefuck`
 
-appimagelauncher 安装 `paru -S  appimagelauncher` 
+appimagelauncher 安装 `paru -S  appimagelauncher`
 
-终端文件管理器ranger 安装 `paru -S ranger` 
+终端文件管理器ranger 安装 `paru -S ranger`
 
 ventoy U盘启动制作 `paru -S ventoy-bin`
 
@@ -2443,11 +2452,11 @@ thinkpad 充电阀值软件 `paru -S tlp tp_smapi acpi_call  threshy threshy-gui
 - 指纹识别 [https://wiki.archlinux.org/index.php/Fprint](https://wiki.archlinux.org/index.php/Fprint)
 - [Fix Intel CPU Throttling on Linux](https://github.com/erpalma/throttled)
 
-dell充电阀值设置 
+dell充电阀值设置
 安装 `paru -S dell-command-configure` 可用于修改设置，而无需重新启动进入 UEFI 菜单。例如，配置电池在 75% 时停止充电，只有在耗尽至 60% 时才重新开始充电：
 
 ```bash
-cctk --PrimaryBattChargeCfg=Custom:60-75 
+cctk --PrimaryBattChargeCfg=Custom:60-75
 ```
 
 ## 显卡
@@ -2532,14 +2541,14 @@ SystemMaxUse=50M
   Operation = Remove
   Type = Package
   Target = *
-  
+
   [Action]
   Description = Cleaning pacman cache...
   When = PostTransaction
   Exec = /usr/bin/paccache -rk 2
   ```
 
-  
+
 
 + swappinessinvalid or corrupted package (PGP signature)
 
@@ -2561,7 +2570,7 @@ sudo pacman-key --populate archlinuxcn
 + 高分辨率屏幕登录界面如何放大
 
   修改 /etc/sddm.conf 配置文件， 在 `ServerArguments=-nolisten tcp` 行后面增加 `-dpi 196`， 放大登录界面的分辨率为2倍.可以参考[Arch Linux的wiki](https://wiki.archlinuxcn.org/wiki/SDDM)
-  
+
 + 安装软件包并跳过checksum
 
    ```bash

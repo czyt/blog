@@ -367,6 +367,7 @@ draft: false
 + [AppCleaner](http://freemacsoft.net/appcleaner/) mac应用卸载工具, 结合 [`AppCleaner`](https://github.com/Louiszhai/tool/blob/master/workflow/AppCleaner.alfredworkflow?raw=true) 的workflow, 使用效果更佳.
 + CleanMyMac X
 + 腾讯 Lemon 清理
++ [Mole](https://github.com/tw93/mole) macOS 磁盘清理工具 `brew install tw93/tap/mole`
 
 ## 编程语言
 

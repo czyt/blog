@@ -921,6 +921,8 @@ gopeed 安装 `paru -S gopeed-bin`
 
 uget 安装 `paru -S uget`
 
+[varia](https://github.com/giantpinkrobots/varia) 安装 `paru -S varia`
+
 Mega网盘安装 `paru -S megatools-git`
 
 qbittorrent 安装  `paru -S qbittorrent`([增强版](https://github.com/c0re100/qBittorrent-Enhanced-Edition/releases) `paru -S qbittorrent-enhanced-git` [搜索插件](https://github.com/qbittorrent/search-plugins/wiki/Unofficial-search-plugins))
@@ -983,6 +985,7 @@ drawio  安装` paru -S drawio-desktop-bin` 或者 ` paru -S drawio-desktop`
 ### 截图及录屏工具
 
 flameshot 截图工具 安装 `paru -S flameshot`
+[gradia](https://github.com/AlexanderVanhee/Gradia) 截图工具`paru -S gradia`
 
 Snipaste 截图工具  安装 `paru -S Snipaste  `
 
@@ -1475,6 +1478,7 @@ OBS推流工具 `paru -S obs-studio`
 bilibili `paru -S bilibili-bin`
 
 smPlayer `paru -S smplayer`
+[Tauon](https://github.com/Taiko2k/Tauon) `paru -S  tauon-music-box`
 
 [kdenlive](https://kdenlive.org)非线性视频编辑器 `paru -S kdenlive`
 

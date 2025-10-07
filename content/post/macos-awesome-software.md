@@ -358,6 +358,8 @@ draft: false
 
 - [Fruit Juice](http://www.pc6.com/mac/119197.html) 电池管理应用, 帮助延迟电池的使用时间.
 
+- [launchie](https://www.launchie.app/) macos 26使用的launchpad
+
 > 系统dock Dock 隐藏设置 Hover 后不延迟的方式快速出现，在终端输入这三个命令 来源于[@HiTw93](https://x.com/HiTw93/status/1974985956802580778)
 > ``` bash
 > defaults write http://com.apple.dock autohide-time-modifier -float 0.2

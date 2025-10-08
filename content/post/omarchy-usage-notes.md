@@ -734,3 +734,4 @@ workspace = 9, monitor:eDP-1
  + https://github.com/tahayvr/omarchist
  + https://github.com/bjarneo/tema
  + https://github.com/mpriem/omarchy-background-changer
+ + https://github.com/komagata/omarchy-kawasaki-foundry-theme

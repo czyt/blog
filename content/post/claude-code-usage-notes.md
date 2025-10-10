@@ -973,7 +973,8 @@ paru -S cc-swith-bin
 ```
 
 ## Plugins
-新版的claude code支持了插件和市场，详见官网的[博客文章](https://www.anthropic.com/news/claude-code-plugins)
+新版的claude code支持了插件和市场，详见官网的[博客文章](https://www.anthropic.com/news/claude-code-plugins),只要你有一个公开的 GitHub Repo，按照它的规范提供一个 .claude-plugin/marketplace.json 文件就好，官方也提供了官方插件市场，只要在 CC 中输入
+`/plugin marketplace add anthropics/claude-code `即可
 
 ### 一些有用的市场
 + https://github.com/wshobson/agents

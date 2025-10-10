@@ -966,3 +966,14 @@ arch aur 安装
 paru -S opcode-bin
 ```
 > 可能需要安装依赖 `webkit2gtk-4.1`
+
++ cc switch
+``` bash
+paru -S cc-swith-bin
+```
+
+## Plugins
+新版的claude code支持了插件和市场，详见官网的[博客文章](https://www.anthropic.com/news/claude-code-plugins)
+
+### 一些有用的市场
++ https://github.com/wshobson/agents

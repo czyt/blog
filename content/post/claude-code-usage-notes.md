@@ -978,3 +978,6 @@ paru -S cc-swith-bin
 
 ### 一些有用的市场
 + https://github.com/wshobson/agents
+
+### 一些网站
++ https://github.com/davila7/claude-code-templates

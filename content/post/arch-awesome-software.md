@@ -602,6 +602,8 @@ chatbox 聚合聊天工具 `paru -S chatbox-appimage`
 
 ### 终端工具
 
+[SSH Pilot](https://github.com/mfat/sshpilot) `paru -S sshpilot`
+
 [rio terminal](https://raphamorim.io/rio/) `paru -S rio`
 
 Tabby `paru -S tabby-bin`

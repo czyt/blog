@@ -2601,3 +2601,4 @@ sudo pacman-key --populate archlinuxcn
 - https://terminaltrove.com/list/F
 - https://github.com/luisbocanegra/plasma-panel-colorizer
 - https://github.com/EndeavourOS-Community-Editions
+- https://github.com/HyDE-Project/HyDE

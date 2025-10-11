@@ -35,7 +35,7 @@ bunx --bun @anthropic-ai/claude-code
 Add MCP Server (This works!)
 You can add the MCP server using this command:
 ```bash
-claude mcp add context7 -- bunx -y @upstash/context7-mcp
+claude mcp add --transport http context7 https://mcp.context7.com/mcp --header "CONTEXT7_API_KEY: $CONTEXT_API_KEY"
 ```
 
 #### deno环境

@@ -678,6 +678,7 @@ e.g. wttrbar --date-format "%m/%d" --location Paris --hide-conditions
 ```
 
 ### 多显示器位置调整
+最便捷的可能是试试 [nwg-displays](https://github.com/nwg-piotr/nwg-displays),你可以通过`paru -S nwg-displays`安装即可，下面是手动设置的方法。
 我有两个显示器：
 - 外置 2K 显示器（2560x1440）物理放置在左边
 - 笔记本内置屏幕（1920x1080）物理放置在右边

@@ -44,7 +44,12 @@ monitor=,preferred,auto,auto
 env = QT_AUTO_SCREEN_SCALE_FACTOR,1
 env =  QT_SCALE_FACTOR,2
 ```
-
+### jetbrains如何强制使用wayland
+> 此方法要求jetbrains软件版本至少为2024.2，参考官网文章 https://blog.jetbrains.com/platform/2024/07/wayland-support-preview-in-2024-2/
+通过菜单Help | Edit Custom VM Options… 打开虚拟机选项，然后追加
+```
+-Dawt.toolkit.name=WLToolkit
+```
 ### 不能卸载的软件
 omarchy里面可以方便地进行软件卸载，但是注意不要卸载`alacritty`,现阶段（3.0版本发布）很多脚本都依赖这个tty软件，卸载掉这个软件很多功能都会失效。
 
@@ -247,6 +252,9 @@ vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
 vimcmd_replace_symbol = '[](bold fg:color_purple)'
 vimcmd_visual_symbol = '[](bold fg:color_yellow)'
 ```
+### 配置备份和迁移
+#### omadot
+[omadot](https://github.com/tomhayes/omadot)是一个简单、强大的点文件管理工具，作为 GNU Stow 的简单包装器构建而成。轻松管理您的配置文件！
 ### 屏保文字自定义
 通过`super`+`alt`+ `space`打开选项菜单，选择`style`->`screen saver`,打开以后，在下面的网站https://patorjk.com/software/taag/ 输入文字，字体选择`Delta Corps Priest 1`,生成完毕以后，粘贴即可。比如我生成的logo
 ```
@@ -384,7 +392,9 @@ fi
 ghostty --working-directory="$CURRENT_DIR" &
 ```
 ### 剪切板
-我这里使用了`clipse-bin`这个软件，先安装
+> 截止omarchy 3.0.2 官方还没出内置的剪切板管理器，但是根据[github issue](https://github.com/basecamp/omarchy/issues/1667),官方大概率会walker 2.0发布的时候采用walker来作为剪切板管理器
+#### clipse
+要使用`clipse-bin`这个软件，先安装
 ``` bash
 paru -S clipse-bin
 ```
@@ -396,6 +406,17 @@ exec-once = clipse -listen # run listener on startup
 ```
 bindd = SUPER, V, Clipse, exec, $terminal -e 'clipse'
 ```
+#### oma-clipmanager
+社区 提供了 [oma-clipmanager](https://github.com/YuriRCosta/oma-clipmanager)，这个依赖下面的组件
++ kitty - Terminal emulator with image support
++ fzf - Fuzzy finder for quick searching
++ cliphist - Clipboard history manager for Wayland
++ wl-clipboard - Wayland clipboard utilities
++ wtype - Wayland keyboard input emulator
++ bat - Syntax highlighting for text preview
++ imagemagick - Image manipulation (for the convert command)
+#### clipboard-manager
+这个是一个rust版本的剪切板管理器[github](https://github.com/Grenish/clipboard-manager)
 ### 天气插件
 #### shell版本
 网上找了一圈，没找到好用的waybar的天气插件，于是让ai写了一个，创建
@@ -731,6 +752,8 @@ workspace = 9, monitor:eDP-1
 
 ## 有用的链接
  + https://github.com/catppuccin/waybar
+ + https://github.com/deepakness/omarchy-hub
+ + https://github.com/thatmechguy/omarchy-material-waybar
  + https://github.com/tahayvr/omarchist
  + https://github.com/bjarneo/tema
  + https://github.com/bjarneo/aether

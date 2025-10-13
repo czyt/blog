@@ -50,6 +50,13 @@ env =  QT_SCALE_FACTOR,2
 ```
 -Dawt.toolkit.name=WLToolkit
 ```
+### linuxqq不能使用中文输入法
+以fcitx5为例，只需要在`~/.config/qq-flags.conf`里添加下面的参数：
+```
+--ozone-platform-hint=auto
+--enable-wayland-ime
+```
+重启linuxqq即可正常使用输入
 ### 不能卸载的软件
 omarchy里面可以方便地进行软件卸载，但是注意不要卸载`alacritty`,现阶段（3.0版本发布）很多脚本都依赖这个tty软件，卸载掉这个软件很多功能都会失效。
 

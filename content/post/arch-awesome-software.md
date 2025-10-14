@@ -994,6 +994,11 @@ Snipaste 截图工具  安装 `paru -S Snipaste  `
 kazam录屏软件 安装 `paru -S kazam `
 
 屏幕录制为gif 工具 peek `paru -S peek`
+屏幕标注工具[hyprmarker](https://github.com/devmobasa/hyprmarker) `paru -S hyprmarker`
+> # Enable systemd service (starts on login)
+>systemctl --user enable --now hyprmarker.service
+># Add keybind to ~/.config/hypr/hyprland.conf
+>bind = SUPER, D, exec, pkill -SIGUSR1 hyprmarker
 
 > 这个工具已经停止维护
 

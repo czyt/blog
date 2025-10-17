@@ -935,6 +935,11 @@ claude
 
 + https://github.com/charmbracelet/crush
 
++ [openspect](https://github.com/Fission-AI/OpenSpec) Spec-driven development for AI coding assistants.
+```
+pnpm install -g @fission-ai/openspec@latest
+```
+
 + github copilot cli
 安装
 ``` bash
